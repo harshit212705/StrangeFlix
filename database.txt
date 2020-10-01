@@ -1,0 +1,46 @@
+TABLES:
+
+MySQL STRUCTURE :-- 
+
+Admin - admin_id, username, password, email,
+
+User - user_id, username, password, email, wallet_money
+
+Provider - provider_id, username, password, email, 
+
+Parent_series_name - parent_id, provider_id, name(movie_name/series_name), description, date_of_creation
+
+videos - video_id, name, video_link, category (set - 'fiction', 'drama' , etc),
+description, tags, thumbnail_link, date_of_upload (date time), date_of_release, episode_no, duration_of_video, original_quality(720p, 1080p), season_no, if_verified(by admin), cost_per_video
+
+free_videos - video_id, name, video_link, category (set - 'fiction', 'drama' , etc), description, tags, thumbnail_link, date_of_upload (date time), date_of_release, episode_no, duration_of_video, original_quality(720p, 1080p), season_no, if_verified(by admin)
+
+tags - tag_id, video_id, tag_word
+
+category - category_id, video_id, category 
+
+subscription_plans - subscription_plan_id, duration, cost
+
+Subscription - subscription_id, user_id, subscription_plan_id, end_date, transaction_id
+
+transaction - transaction_id, user_id,, timestamp, type(wallet/card), amount
+
+transaction_token - transaction_id, token
+
+pay_per_view - id, video_id, user_id, end_date time, transaction_id
+
+flag_video - video_id, user_id, flag(inappropriate, etc), timestamp
+
+Like - like_id, video_id, user_id, timestamp
+
+Comment - comment_id, video_id, user_id, comment_message, timestamp
+
+Rating - parent_series_name_id, user_id, rating, timestamp
+
+flag_comment - comment_id, user_id, flag(inappropriate, etc), timestamp
+
+favourites - user_id, video_id, added_timestamp
+
+history - user_id, video_id, last_seen_time, timestamp
+
+ 
