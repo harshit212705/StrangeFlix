@@ -1,11 +1,13 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Streamflix</title>
+    <title>StrangeFlix</title>
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}">
     <link rel="stylesheet" href="{% static "css/fontawesome.min.css"%}">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -16,7 +18,7 @@
     <link rel="stylesheet" href="{%static "css/home.css"%}">
 </head>
 
-<body>
+<body id="check">
     <div class="navbar-section">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a href="#" class="navbar-brand">Brand</a>
@@ -37,8 +39,26 @@
                     <input type="text" class="form-control mr-sm-2" placeholder="Search">
                     <button type="submit" class="btn btn-outline-light">Search</button>
 
-                    <!-- login  -->
-                    <a href="#" class="nav-item nav-link ml-2" data-toggle="modal" data-target="#loginModal">Login</a>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <div class="dropdown">
+                                <button class="dropbtn">{{ user.username }}</button>
+                                <div class="dropdown-content">
+                                  <a href="#">Profile</a>
+                                  <a href="#">Subscibe</a>
+                                  <a href="#">Wallet</a>
+                                  <a href="#">Create Room</a>
+                                  <a href="#">Join Room</a>
+                                  <a href="{% url "account_logout" %}">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li>
+                            <!-- login  -->
+                            <a href="#" class="nav-item nav-link ml-2" data-toggle="modal" data-target="#loginModal">Login</a>
+                        </li>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -57,16 +77,15 @@
                             <h4>Login</h4>
                         </div>
                         <div class="d-flex flex-column text-center">
-                            <form>
+                            <form method="POST" action="/accounts/login/">
+                                {% csrf_token %}
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="email1"
-                                        placeholder="Your email address...">
+                                    {{ login_form.username|as_crispy_field }}
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="password1"
-                                        placeholder="Your password...">
+                                    {{ login_form.password|as_crispy_field }}
                                 </div>
-                                <button type="button" class="btn btn-info btn-block btn-round">Login</button>
+                                <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
                             </form>
                         </div>
                     </div>
@@ -93,20 +112,21 @@
                             <h4>Register</h4>
                         </div>
                         <div class="d-flex flex-column text-center">
-                            <form>
+                            <form method="POST" action="/accounts/register/">
+                                {% csrf_token %}
                                 <div class="form-group">
-                                    <input type="name" class="form-control" id="username"
-                                        placeholder="Your username...">
+                                    {{ registration_form.username|as_crispy_field }}
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="email1"
-                                        placeholder="Your email address...">
+                                    {{ registration_form.email|as_crispy_field }}
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="password1"
-                                        placeholder="Your password...">
+                                    {{ registration_form.password1|as_crispy_field }}
                                 </div>
-                                <button type="button" class="btn btn-info btn-block btn-round">Register</button>
+                                <div class="form-group">
+                                    {{ registration_form.password2|as_crispy_field }}
+                                </div>
+                                <button type="submit" class="btn btn-info btn-block btn-round">Register</button>
                             </form>
                         </div>
                     </div>

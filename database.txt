@@ -17,13 +17,13 @@ free_videos - video_id, name, video_link, category (set - 'fiction', 'drama' , e
 
 tags - tag_id, video_id, tag_word
 
-category - category_id, video_id, category 
+category - category_id, video_id, category
 
 subscription_plans - subscription_plan_id, duration, cost
 
 Subscription - subscription_id, user_id, subscription_plan_id, end_date, transaction_id
 
-transaction - transaction_id, user_id,, timestamp, type(wallet/card), amount
+transaction - transaction_id, user_id, timestamp, type(wallet/card), amount, status
 
 transaction_token - transaction_id, token
 

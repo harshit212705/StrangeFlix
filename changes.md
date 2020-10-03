@@ -5,3 +5,7 @@
 ### By <b>_Harshit Garg_</b> on <b>_October 1, 2020_</b>
 * Initial setup complete.
 * Navigation bar with login signup button added.
+
+### By <b>_Harshit Garg_</b> on <b>_October 3, 2020_</b>
+* Login and signup feature implemented.
+* Email verification during registration added.

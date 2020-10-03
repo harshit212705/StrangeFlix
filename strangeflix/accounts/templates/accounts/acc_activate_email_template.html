@@ -1,0 +1,13 @@
+{% autoescape off %}
+<br>
+Hi {{ user }},<br><br>
+
+Please click on the link to verify your email,<br><br>
+http://{{ domain }}{% url 'account_register_activate' uidb64=uid token=token %} <br> <br>
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser
+window instead.<br><br>
+
+From<br>
+StrangeFlix<br>
+{% endautoescape %}
