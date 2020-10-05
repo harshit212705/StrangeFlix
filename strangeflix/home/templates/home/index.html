@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{%static "css/home.css"%}">
 </head>
 
-<body id="check">
+<body>
     <div class="navbar-section">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a href="#" class="navbar-brand">Brand</a>
@@ -45,8 +45,8 @@
                                 <button class="dropbtn">{{ user.username }}</button>
                                 <div class="dropdown-content">
                                   <a href="#">Profile</a>
-                                  <a href="#">Subscibe</a>
-                                  <a href="#">Wallet</a>
+                                  <a href="{% url "subscription_plans" %}">Subscribe</a>
+                                  <a href="{% url "wallet_details" %}">Wallet</a>
                                   <a href="#">Create Room</a>
                                   <a href="#">Join Room</a>
                                   <a href="{% url "account_logout" %}">Logout</a>

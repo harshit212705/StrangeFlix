@@ -26,7 +26,7 @@ class UserDetails(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    wallet_money = models.DecimalField(max_digits=10, decimal_places=2)
+    wallet_money = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "User Details"

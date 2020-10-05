@@ -131,7 +131,7 @@ def activate(request, uidb64, token):
             context = {}
             count = 1
             for obj in subscription_plans:
-                context.update({'plan_' + str(count): (obj.plan_duration, obj.plan_cost)})
+                context.update({'plan_' + str(count): (obj.pk, obj.plan_duration, obj.plan_cost)})
                 count += 1
 
             return render(request, 'subscribe/templates/subscribe/subscribe.html', {'context': context})

@@ -144,9 +144,20 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# Configurations to send email
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+
+
+# Instamojo configurations
+from instamojo_wrapper import Instamojo
+
+INSTAMOJO_API_KEY=config('INSTAMOJO_API_KEY')
+INSTAMOJO_AUTH_TOKEN=config('INSTAMOJO_AUTH_TOKEN')
+INSTAMOJO_PRIVATE_SALT=config('INSTAMOJO_PRIVATE_SALT')
+
+INSTAMOJO_API = Instamojo(api_key=INSTAMOJO_API_KEY,auth_token=INSTAMOJO_AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')

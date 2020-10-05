@@ -31,3 +31,13 @@ class Subscriptions(models.Model):
 
     class Meta:
         verbose_name_plural = "Subscriptions"
+
+
+class SubscriptionAdditionalTransaction(models.Model):
+
+    subscription_id = models.ForeignKey(Subscriptions, on_delete=models.PROTECT)
+
+    transaction_id = models.ForeignKey(Transaction, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name_plural = "Subscription Additional Transaction"
