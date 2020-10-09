@@ -1,0 +1,226 @@
+var v = document.querySelectorAll(".special");
+v.forEach(element => {
+	element.addEventListener('click', function () {
+		element.setAttribute("class", "special");
+	});
+});
+
+
+// custom-select 
+
+// series-category
+var selected = document.querySelector('#series-category');
+var entsel = document.querySelectorAll("#chkbx");
+var sprtslct = document.querySelector("#sports-subcategory");
+var showent = document.querySelector(".ws-entmnt");
+var showsports = document.querySelector(".ws-sports");
+var showtxt = document.querySelector(".ws-txt");
+var txtval = document.querySelector("#subcategory__choosen");
+var chkb = document.querySelector("#savech");
+var category;
+selected.addEventListener('change', function (e) {
+	var content = selected.options[selected.selectedIndex].value;
+	if (content == "Sports") {
+		category=content;
+		showent.style.display = "none";
+		showsports.style.display = "block";
+		txtval.value = "";
+		showtxt.style.display = "block";
+		sprtslct.addEventListener('change', function (e) {
+			var sportsub = sprtslct.options[sprtslct.selectedIndex].value;
+			if (sportsub != "Subcategory")
+				txtval.value = sportsub;
+			else
+				txtval.value = "";
+		});
+	} else if (content == "Entertainment") {
+		category=content;
+		showsports.style.display = "none";
+		txtval.value = "";
+		showtxt.style.display = "block";
+		showent.style.display = "block";
+		chkb.addEventListener('click', function (e) {
+			txtval.value = "";
+			entsel.forEach(element => {
+				if (element.checked) {
+					txtval.value += element.value + ",";
+				}
+			});
+			if (txtval.value.length > 0) {
+				txtval.value = txtval.value.substring(0, txtval.value.length-1);
+			}
+		});
+
+	} else {
+		category="";
+		showent.style.display = "none";
+		showsports.style.display = "none";
+		txtval.value = "";
+		showtxt.style.display = "none";
+	}
+});
+
+// submitting series form using ajax call
+// $("#seriesForm").submit(function (e) {
+// 	e.preventDefault(); //prevent default action 
+// 	var post_url = $(this).attr("action"); //get form action url
+// 	var form_data = $(this).serialize(); //Encode form elements for submission
+// 	$('#list-seriesform-list').css('pointer-events', 'none');
+// 	$('#list-seriesinfo-list').css('pointer-events', 'all');
+// 	$('#list-seriesinfo-list').tab('show');
+// 	// $.post( post_url, form_data, function( response ) {
+// 	// //   $("#server-results").html( response ); // data from server
+// 	// });
+// });
+
+// submitting season form using ajax call
+// $('#seasonForm').submit(function (e) {
+// 	e.preventDefault();
+// 	var post_url = $(this).attr("action");
+// 	var form_data = $(this).serialize();  
+//  $('#list-seasoninfo-list').css('pointer-events', 'all');
+//  $('#list-seasoninfo-list').tab('show');
+// 	console.log(form_data);
+// 	// $.post( post_url, form_data, function( response ) {
+// 	// //   $("#server-results").html( response ); // data from server(recieved dat should have parent id="season+{{seasonno}}" and have a button which will take it to next page)
+// 	// });
+
+// 	// if successfully posted then
+// 	var seasoncount = $('#season-right li').length;
+// 	seasoncount++;
+// 	var htmlgen='<div id="season'+seasoncount+'"><h4>Season'+seasoncount+'</h4></div>';
+// 	$('#season-right').append('<li><a href="#season' + seasoncount + '">season' + seasoncount + '</a></li>');
+// 	$('#apnd').append(htmlgen);
+// 	// reset the form
+// 	$('#seasonForm').each(function(){
+// 		this.reset();
+// 	});
+// 	$('#collapseExample').collapse('toggle');
+// 	$('#seasonvalue').attr("value",seasoncount+1);
+// });
+
+
+// reset everything on click on series in add-content section
+
+$("#list-series-list").on('click', function (e) {
+    $('#list-seriesform-list').css('pointer-events', 'all');
+    $('#list-seriesinfo-list').css('pointer-events', 'none');
+    $('#list-seasoninfo-list').css('pointer-events', 'none');
+    $('#list-seriesform-list').tab('show');
+    //reset seasonForm
+    $('#seasonForm').each(function () {
+        this.reset();
+    });
+    // reset seriesForm
+    $('#seriesForm').each(function () {
+        this.reset();
+    });
+});
+
+// reset everything on click on series in added-content section
+$("#list-added-series-list").on('click', function (e) {
+    $('#list-added-seriesform-list').css('pointer-events', 'all');
+    $('#list-added-seriesinfo-list').css('pointer-events', 'none');
+    $('#list-added-seasoninfo-list').css('pointer-events', 'none');
+    $('#list-added-seriesform-list').tab('show');
+    //reset seasonForm
+    $('#seasonForm').each(function () {
+        this.reset();
+    });
+});
+
+
+// once moved to add season remove pointer-events for add section
+$('#list-seriesinfo-list').on('click', function (e) {
+    $('#list-seasoninfo-list').css('pointer-events', 'none');
+})
+
+// once moved to add season remove pointer-events for add section
+$('#list-add-seriesinfo-list').on('click', function (e) {
+    $('#list-add-seasoninfo-list').css('pointer-events', 'none');
+})
+
+// initial season form-setups for added section
+$('#list-add-seriesinfo-list').on('show.bs.tab', function (e) {
+    var addCountEle = $('#add-season-right li').length;
+    $('#add-seasonvalue').attr("value", addCountEle + 1);
+});
+
+// initial episode form-setups for added section
+$('#list-add-seasoninfo-list').on('show.bs.tab', function (e) {
+    var addCountEle = $('#add-episode-right li').length;
+    $('#add__series__season__episodeno').attr("value", addCountEle + 1);
+});
+
+
+
+// handling tags for add section
+
+var addTag = document.querySelector("#add-tag");
+var tagText = document.querySelector("#tag-text");
+var showTags = document.querySelector("#selected-tags");
+var selectedTags = document.querySelectorAll("#tag-toggler");
+addTag.addEventListener('click', function (e) {
+	console.log('called')
+	var span = document.createElement('span');
+	var textValue = tagText.value;
+	span.setAttribute("value", textValue);
+	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+	span.style.border = "2px solid blue";
+	span.style.borderRadius = "50%";
+	span.innerHTML = textValue + '<a id="tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+	showTags.append(span);
+	selectedTags = document.querySelectorAll("#tag-toggler");
+	selectedTags.forEach(element => {
+		element.addEventListener('click', function (e) {
+			var obj = element.parentNode;
+			obj.remove();
+		});
+	});
+});
+
+
+// handling tags for added section
+
+var addAddTag = document.querySelector("#add-add-tag");
+var addTagText = document.querySelector("#add-tag-text");
+var addShowTags = document.querySelector("#add-selected-tags");
+var addSelectedTags = document.querySelectorAll("#add-tag-toggler");
+addAddTag.addEventListener('click', function (e) {
+	console.log('hii');
+	var span = document.createElement('span');
+	var textValue = addTagText.value;
+	span.setAttribute("value", textValue);
+	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+	span.style.border = "2px solid blue";
+	span.style.borderRadius = "50%";
+	span.innerHTML = textValue + '<a id="add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+	addShowTags.append(span);
+	addSelectedTags = document.querySelectorAll("#add-tag-toggler");
+	addSelectedTags.forEach(element => {
+		element.addEventListener('click', function (e) {
+			var obj = element.parentNode;
+			obj.remove();
+		});
+	});
+});
+
+
+var linkorvideo=document.querySelector('#linkorvideo');
+var episodeVideo=document.querySelector('#episode-video');
+var episodeLink=document.querySelector('#episode-link');
+linkorvideo.addEventListener('change',function(e){
+	 var cont=linkorvideo.options[linkorvideo.selectedIndex].value;
+	 if(cont!="Link")
+	 {
+		 episodeVideo.style.display="block";
+		 episodeLink.value="";
+		 episodeLink.style.display="none";
+	 }
+	 else
+	 {
+		episodeVideo.style.display="none";
+		episodeLink.style.display="block";
+		episodeVideo.value="";
+	 }
+});

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'subscribe.apps.SubscribeConfig',
     'transaction.apps.TransactionConfig',
+    'provider.apps.ProviderConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+# DATA_UPLOAD_MAX_NUMBER_FIELDS= 20000
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -161,3 +163,15 @@ INSTAMOJO_AUTH_TOKEN=config('INSTAMOJO_AUTH_TOKEN')
 INSTAMOJO_PRIVATE_SALT=config('INSTAMOJO_PRIVATE_SALT')
 
 INSTAMOJO_API = Instamojo(api_key=INSTAMOJO_API_KEY,auth_token=INSTAMOJO_AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
+
+
+
+# Firebase configurations
+FIREBASE_API_KEY=config('FIREBASE_API_KEY')
+FIREBASE_AUTH_DOMAIN=config('FIREBASE_AUTH_DOMAIN')
+FIREBASE_DATABASE_URL=config('FIREBASE_DATABASE_URL')
+FIREBASE_PROJECT_ID=config('FIREBASE_PROJECT_ID')
+FIREBASE_STORAGE_BUCKET=config('FIREBASE_STORAGE_BUCKET')
+FIREBASE_MESSAGING_SENDER_ID=config('FIREBASE_MESSAGING_SENDER_ID')
+FIREBASE_APP_ID=config('FIREBASE_APP_ID')
+FIREBASE_MEASUREMENT_ID=config('FIREBASE_MEASUREMENT_ID')

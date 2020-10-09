@@ -13,6 +13,7 @@ from django.conf import settings
 import hashlib
 
 
+
 @login_required(login_url='home_page')
 def subscription_plans(request):
     if request.method == 'GET':

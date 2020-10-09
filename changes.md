@@ -2,6 +2,9 @@
 ## Log your changes/modifications here with date and name in specified format.
 ## DO NOT add new events at last. Recent changes should be at the top.
 
+### By <b>_Harshit Garg_</b> on <b>_October 9, 2020_</b>
+* Provider dashboard added.
+* Upload series and add season and episodes forms added.
 
 ### By <b>_Harshit Garg_</b> on <b>_October 5, 2020_</b>
 * Payment Gateway integrated.

@@ -1,0 +1,79 @@
+
+
+<!-- 1. added col-md for each form-group  -->
+
+<!-- season form  -->
+<div class="season__info">
+    <!-- info about series  -->
+    <div id="add-server-series-result">
+
+    </div>
+    <!-- add new season  -->
+    <div class="add__season">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9" id="add-apnd">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addCollapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    Add season
+                </button>
+                <div class="collapse" id="addCollapseExample">
+                    <div class="card card-body">
+                        <!-- add season form  -->
+                        <form id="add-seasonForm" method="post" action="">
+                            <!-- season no  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2">Season No</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type="number" readonly name="series-season-no"
+                                            class="form-control-plaintext" id="add-seasonvalue" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- season description  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label for="series__season__description" class="mt-2">Season
+                                            description</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <textarea class="form-control" name="series-season-description"
+                                            id="add__series__season__description" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- season thumbnail  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2">Upload Thumbnail</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type='file' class="form-control" name='season-image'
+                                            accept='.png, .jpg, .jpeg' required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary my-4">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- right navigation  -->
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="fix">
+                    <ul id="add-season-right">
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

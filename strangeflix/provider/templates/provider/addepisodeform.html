@@ -1,0 +1,157 @@
+<!-- 1. added col-md for each form-group  2.changed tag sections-->
+<!-- need to add video-link option  -->
+<div class="episode__info">
+    <div id="add-server-result">
+        <p>info from server</p>
+    </div>
+
+    <!-- add season videos  -->
+    <div class="add__season__videos">
+        <div class="row">
+            <div class="col-lg-9" id="add-epiapnd">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-seasonVideos"
+                    aria-expanded="false" aria-controls="seasonVideos">
+                    Add episodes
+                </button>
+                <div class="collapse" id="add-seasonVideos">
+                    <div class="card card-body">
+                        <!-- adding episode form  -->
+                        <form id="add-episodeForm" method="post" action="">
+                            <!-- episode no  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2" for="series__season__episodeno">
+                                            Episode No
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type="number" readonly name="series-season-episodeno"
+                                            class="form-control-plaintext" id="add__series__season__episodeno" value="1">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- episode name  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2" for="series__season__episodename">Episode
+                                            name</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type="text" name="series-season-episodename" class="form-control"
+                                            id="add__series__season__episodename" placeholder="Enter video name" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- episode description  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2" for="series__season__episodedescription">Episode
+                                            description</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <textarea class="form-control" name="series-season-episodedescription"
+                                            id="add__series__season__episodedescription" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- episode tags  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2">Episode
+                                            tags</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <div class="row">
+                                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                                <input type="text" id="add-tag-text" class="form-control" placeholder="enter tag" />
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <button type="button" class="btn btn-sm btn-primary" id="add-add-tag">Add tag</button>
+                                            </div>
+                                        </div>
+                                        <div id="add-selected-tags" class="my-3">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- quality  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2">Quality</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <select name="quality" class="custom-select">
+                                            <option selected>Quality</option>
+                                            <option value="480">480p</option>
+                                            <option value="720">720p</option>
+                                            <option value="1080">1080p</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- released date  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2" for="series__season__episodedate">Episode
+                                            Release Date</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type="date" class="form-control" name="series-season-episodedate"
+                                            id="add__series__season__episodedate" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- thumbnail  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2">Upload Thumbnail</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type='file' class="form-control" name='episode-image'
+                                            accept='.png, .jpg, .jpeg' required>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- upload video  -->
+                            <div class="form-group my-4">
+                                <div class="row pado">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="mt-2">Upload Video</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type='file' class="form-control" name='episode-video'
+                                            accept='.mp4, .wmv, .avi,.mov,.3gp,.flv' required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary my-4">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- right navigation  -->
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="fix">
+                    <ul id="add-episode-right">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

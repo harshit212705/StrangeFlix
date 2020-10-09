@@ -1,0 +1,984 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>provider</title>
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
+    <script src="{% static "js/jquery-3.5.1.js"%}"></script>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{%static "css/provider.css"%}">
+</head>
+
+<body>
+
+    <div class="main__section">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="wrapper ">
+                    <!-- Sidebar  -->
+                    <nav id="sidebar">
+                        <div class="sidebar-header">
+                            <h3>Bootstrap Sidebar</h3>
+                        </div>
+                        <!-- <div class="list-group" id="list-tab" role="tablist"> -->
+                        <ul class="list-unstyled components">
+                            <li>
+                                <div class="list-group" id="list-tab" role="tablist">
+                                    <a class="special active" id="list-home-list" data-toggle="list" href="#list-home"
+                                        role="tab" aria-controls="home">Home</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Add content</a>
+                                <ul class="collapse list-unstyled list-group" id="homeSubmenu" role="tablist">
+                                    <li>
+                                        <a class="special" id="list-movie-list" data-toggle="list" href="#list-movie"
+                                            role="tab" aria-controls="movie">Movies</a>
+                                    </li>
+                                    <li>
+                                        <a class="special" id="list-series-list" data-toggle="list" href="#list-series"
+                                            role="tab" aria-controls="series">series</a>
+                                    </li>
+                                </ul>
+                            </li>
+                             <!-- Added Content  -->
+                             <li>
+                                <a href="#addedContentSubmenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Added content</a>
+                                <ul class="collapse list-unstyled list-group" id="addedContentSubmenu" role="tablist">
+                                    <li>
+                                        <a class="special" id="list-added-movie-list" data-toggle="list"
+                                            href="#list-added-movie" role="tab" aria-controls="movie">Movies</a>
+                                    </li>
+                                    <li>
+                                        <a class="special" id="list-added-series-list" data-toggle="list"
+                                            href="#list-added-series" role="tab" aria-controls="series">Series</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                                    class="dropdown-toggle">Rejected content</a>
+                                <ul class="collapse list-unstyled list-group" id="pageSubmenu" role="tablist">
+                                    <li>
+                                        <a class="special" id="list-settings-list" data-toggle="list"
+                                            href="#list-settings" role="tab" aria-controls="settings">Rejected
+                                            content</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- </div> -->
+                    </nav>
+
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <!-- content  to be displayed on the middle of the page-->
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                        aria-labelledby="list-home-list">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div id="section1">
+                                    <h4>section1</h4>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est molestiae error
+                                        ipsam
+                                        asperiores pariatur animi? Optio, dolorem. Pariatur ducimus cupiditate sapiente
+                                        dolor praesentium. Dolorem sequi animi earum, iusto dolor laborum.</p>
+                                </div>
+                                <div id="section2">
+                                    <h4>section2</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia provident,
+                                        repellendus accusantium odit est temporibus laborum hic error nisi earum saepe
+                                        alias
+                                        esse eum optio magnam, totam quidem quisquam corporis!</p>
+                                </div>
+                                <div id="section3">
+                                    <h4>section3</h4>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque adipisci excepturi
+                                        sequi asperiores architecto ex sit ad nisi quibusdam pariatur similique dolorum
+                                        quasi dolores debitis odio et, nam magnam amet?</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="fix">
+                                    <ul>
+                                        <li>
+                                            <a href="#section1">section1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#section2">section2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#section3">section3</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-movie" role="tabpanel" aria-labelledby="list-movie-list">Add
+                        movie
+                        form</div>
+                    <div class="tab-pane fade" id="list-series" role="tabpanel" aria-labelledby="list-series-list">
+                        <div class="series__form">
+                            <!-- <div class="row"> -->
+                            <!-- <div class="row"> -->
+                            <div class="list-group flex-md-row" id="list-series-tab" role="tablist">
+                                <a class="list-group-item list-group-item-action active mx-5 text-center"
+                                    id="list-seriesform-list" data-toggle="list" href="#list-seriesform" role="tab"
+                                    aria-controls="seriesform">Series
+                                    Form</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-seriesinfo-list" data-toggle="list" href="#list-seriesinfo" role="tab"
+                                    aria-controls="next">Add
+                                    Season</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-seasoninfo-list" data-toggle="list" href="#list-seasoninfo" role="tab"
+                                    aria-controls="next">Add
+                                    Season
+                                    Episodes</a>
+                            </div>
+                            <!-- </div> -->
+                            <!-- <div class="row"> -->
+                            <div class="tab-content my-5" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="list-seriesform" role="tabpanel"
+                                    aria-labelledby="list-home-list">
+                                    <div class="series__info ml-5">
+                                        <h4 class="text-center my-5">Series Form</h4>
+                                        <form id="seriesForm">
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3">
+                                                        <label class="mt-2" for="name">Series Name</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" name="series-name" class="form-control"
+                                                            id="series_name" placeholder="Enter series name" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3">
+                                                        <label class="mt-2" for="series__description">Series
+                                                            description</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <textarea class="form-control" name="series-description"
+                                                            id="series__description" rows="3" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3">
+                                                        <label class="mt-2">Languages</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <select id="language" name="language" class="custom-select">
+                                                            <option selected>Languages</option>
+                                                            <option value="Bengali">Bengali</option>
+                                                            <option value="English">English</option>
+                                                            <option value="Hindi">Hindi</option>
+                                                            <option value="Kannada">Kannada</option>
+                                                            <option value="Malayalam">Malayalam</option>
+                                                            <option value="Marathi">Marathi</option>
+                                                            <option value="Tamil">Tamil</option>
+                                                            <option value="Telugu">Telugu</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3">
+                                                        <label class="mt-2">Categories</label>
+                                                    </div>
+                                                    <div class="col-lg-9">
+                                                        <div class="row">
+                                                            <div class="col-lg-8">
+                                                                <select id="series-category" name="series-category"
+                                                                    class="custom-select">
+                                                                    <option selected>Choose Category</option>
+                                                                    <option value="Sports">Sports</option>
+                                                                    <option value="Entertainment">Entertainment</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-4 mx-1 my-3 ws-sports">
+                                                                <select id="sports-subcategory"
+                                                                    name="sports-subcategory" class="custom-select">
+                                                                    <option selected>Subcategory</option>
+                                                                    <option value="Cricket">Cricket</option>
+                                                                    <option value="Football">Football</option>
+                                                                    <option value="Tennis">Tennis</option>
+                                                                    <option value="Martial Arts">Martial Arts</option>
+                                                                    <option value="eSports">eSports</option>
+                                                                    <option value="Hockey">Hockey</option>
+                                                                    <option value="Badminton">Badminton</option>
+                                                                    <option value="Wrestling">Wrestling</option>
+                                                                    <option value="Kabbadi">Kabbadi</option>
+                                                                    <option value="Table Tennis">Table Tennis</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-lg-4 mx-1 my-3 ws-entmnt">
+                                                                <div class="btn-group dropdown">
+                                                                    <button class="btn btn-light-outline" type="button"
+                                                                        id="dropdownMenuButton" data-toggle="dropdown"
+                                                                        aria-haspopup="true" aria-expanded="false">
+                                                                        Subcategory
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Action" value="Action">
+                                                                            <label for="action">Action</label>
+                                                                        </div>
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Adventure" value="Adventure">
+                                                                            <label for="adventure">Adventure</label>
+                                                                        </div>
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Animation" value="Animation">
+                                                                            <label for="animation">Animation</label>
+                                                                        </div>
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Comedy" value="Comedy">
+                                                                            <label for="comedy">Comedy</label>
+                                                                        </div>
+
+
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Crime" value="Crime">
+                                                                            <label for="crime">Crime</label>
+                                                                        </div>
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Drama" value="Drama">
+                                                                            <label for="drama">Drama</label>
+                                                                        </div>
+
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Horror" value="Horror">
+                                                                            <label for="horror">Horror</label>
+                                                                        </div>
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Romance" value="Romance">
+                                                                            <label for="romance">Romance</label>
+                                                                        </div>
+                                                                        <div class="dropdown-item">
+                                                                            <input type="checkbox" id="chkbx"
+                                                                                name="Thriller" value="Thriller">
+                                                                            <label for="thriller">Thriller</label>
+                                                                        </div>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <button type="button" id="savech"
+                                                                            class="btn btn-primary">Save</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-4 mx-1 my-3 ws-txt">
+                                                                <textarea class="form-control"
+                                                                    name="subcategory-choosen" id="subcategory__choosen"
+                                                                    rows="1" disabled aria-required="true"></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3">
+                                                        <label class="mt-2">Upload Thumbnail</label>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input id="file" type='file' class="form-control" name='series-image'
+                                                            accept='.png, .jpg, .jpeg' required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary my-4">Submit</button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="list-seriesinfo" role="tabpanel"
+                                    aria-labelledby="list-seriesinfo-list">
+                                    <div class="series__info">
+                                        <!-- info about series  -->
+                                        <div id="server-series-result">
+
+                                        </div>
+                                        <div class="add__season">
+                                            <p id="series_id" hidden></p>
+                                            <div class="row">
+                                                <div class="col-lg-9" id="apnd">
+                                                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                        data-target="#collapseExample" aria-expanded="false"
+                                                        aria-controls="collapseExample">
+                                                        Add season
+                                                    </button>
+                                                    <div class="collapse" id="collapseExample">
+                                                        <div class="card card-body">
+                                                            <form id="seasonForm">
+                                                                <div class="form-group my-4">
+                                                                    <div class="row pado">
+                                                                        <div class="col-lg-3">
+                                                                            <label class="mt-2">Season No</label>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <input type="text" readonly
+                                                                                name="series-season-no"
+                                                                                class="form-control-plaintext"
+                                                                                id="seasonvalue" value="1">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group my-4">
+                                                                    <div class="row pado">
+                                                                        <div class="col-lg-3">
+                                                                            <label for="series__season__description"
+                                                                                class="mt-2">Season
+                                                                                description</label>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <textarea class="form-control"
+                                                                                name="series-season-description"
+                                                                                id="series__season__description"
+                                                                                rows="3" required></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group my-4">
+                                                                    <div class="row pado">
+                                                                        <div class="col-lg-3">
+                                                                            <label class="mt-2">Upload Thumbnail</label>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <input id="file1" type='file' class="form-control"
+                                                                                name='season-image'
+                                                                                accept='.png, .jpg, .jpeg' required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary my-4">Submit</button>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="fix">
+                                                        <ul id="season-right">
+                                                            <!-- <li>
+                                                            <a href="#section1">section1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#section2">section2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#section3">section3</a>
+                                                        </li> -->
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="list-seasoninfo" role="tabpanel"
+                                    aria-labelledby="list-seasoninfo-list">
+                                    <div class="series__info">
+                                        <div id="server-result">
+                                        </div>
+                                        <div class="row">
+                                            <div id="uploaded_episodes" class="add__season__videos">
+                                                <p id="series_season_id" hidden></p>
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                    data-target="#seasonVideos" aria-expanded="false"
+                                                    aria-controls="seasonVideos">
+                                                    Add season videos
+                                                </button>
+                                                <div class="collapse" id="seasonVideos">
+                                                    <div class="card card-body">
+                                                        <form id="seasonepisodeForm">
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2" for="series__season__episodeno">
+                                                                            Episode No
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <input type="text" readonly
+                                                                        name="series-season-episodeno"
+                                                                        class="form-control-plaintext"
+                                                                        id="series__season__episodeno" value="1">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2"
+                                                                            for="series__season__episodename">Episode
+                                                                            name</label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <input type="text" name="series-season-episodename"
+                                                                            class="form-control"
+                                                                            id="series__season__episodename"
+                                                                            placeholder="Enter video name" required />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2"
+                                                                            for="series__season__episodedescription">Episode
+                                                                            description</label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <textarea class="form-control"
+                                                                            name="series-season-episodedescription"
+                                                                            id="series__season__episodedescription" rows="3"
+                                                                            required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- episode tags  -->
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2"
+                                                                            for="series__season__episodetags">Episode
+                                                                            tags</label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <textarea class="form-control"
+                                                                            name="series-season-episodetags"
+                                                                            id="series__season__episodetags" rows="3"
+                                                                            required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2">Quality</label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <select id="video_quality" name="quality" class="custom-select">
+                                                                            <option selected>Quality</option>
+                                                                            <option value="144">144p</option>
+                                                                            <option value="240">240p</option>
+                                                                            <option value="360">360p</option>
+                                                                            <option value="480">480p</option>
+                                                                            <option value="720">720p</option>
+                                                                            <option value="1080">1080p</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2"
+                                                                            for="series__season__episodedate">Episode
+                                                                            Release Date</label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <input type="date" class="form-control"
+                                                                            name="series-season-episodedate"
+                                                                            id="series__season__episodedate" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3">
+                                                                        <label class="mt-2">Upload Thumbnail</label>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <input id="file2" type='file' class="form-control"
+                                                                            name='episode-image' accept='.png, .jpg, .jpeg'
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- upload video  -->
+                                                            <div class="form-group my-4">
+                                                                <div class="row pado">
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                        <label class="mt-2">Upload Video</label>
+                                                                    </div>
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                                                        <select id="linkorvideo" name="video" class="custom-select">
+                                                                            <option selected>Video</option>
+                                                                            <option value="Link">Link</option>
+                                                                        </select>
+                                                                        <input type='file' id="episode-video" class="form-control my-3" name='episode-video'
+                                                                            accept='.mp4, .wmv, .avi,.mov,.3gp,.flv'>
+                                                                        <input type="url" id="episode-link" class="form-control my-3" name='episode-link' placeholder="link">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary my-4">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="fix">
+                                                    <ul id="episodes-right">
+                                                        <!-- <li>
+                                                        <a href="#section1">section1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#section2">section2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#section3">section3</a>
+                                                        </li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                    <!-- Added movie section  -->
+                    <div class="tab-pane fade" id="list-added-movie" role="tabpanel"
+                        aria-labelledby="list-added-movie-list">
+                        <p>Added movie</p>
+                    </div>
+                    <!-- Added series section  -->
+                    <div class="tab-pane fade" id="list-added-series" role="tabpanel"
+                        aria-labelledby="list-added-series-list">
+                        <div class="series__added__form">
+                            <div class="list-group flex-md-row" id="list-added-series-tab" role="tablist">
+                                <a class="list-group-item list-group-item-action active mx-5 text-center"
+                                    id="list-added-seriesform-list" data-toggle="list" href="#list-added-seriesform"
+                                    role="tab" aria-controls="list-added-seriesform">Added series</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-added-seriesinfo-list" data-toggle="list" href="#list-added-seriesinfo"
+                                    role="tab" aria-controls="list-added-seriesinfo">Added seasons</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-added-seasoninfo-list" data-toggle="list" href="#list-added-seasoninfo"
+                                    role="tab" aria-controls="list-added-seasoninfo">Added Episodes</a>
+                            </div>
+                            <div class="tab-content my-5" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="list-added-seriesform" role="tabpanel"
+                                    aria-labelledby="list-added-seriesform-list">
+                                    <!-- added series  -->
+                                    <div class="adding__series">
+                                        <div class="row">
+                                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                                <div class="container my-5">
+                                                    <h4 class="my-4">Series name</h4>
+                                                    <div class="row">
+                                                        <!-- thumbnail  -->
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <img src="{% static "home/img/imge.png" %}" alt="uploading"
+                                                                class="img-fluid">
+                                                        </div>
+                                                        <!-- content  -->
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <div class="content mx-3">
+                                                                <p class="text-muted">Language,Categories,Subcategories</p>
+                                                                <p class="text-muted">Description</p>
+                                                                <button type="button" class="btn btn-primary">naviagate to seasons</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container my-5">
+                                                    <h4 class="my-4">Series name</h4>
+                                                    <div class="row">
+                                                        <!-- thumbnail  -->
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <img src="{% static "home/img/imge.png" %}" alt="uploading"
+                                                                class="img-fluid">
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <div class="content mx-3">
+                                                                <p class="text-muted">Language,Categories,Subcategories</p>
+                                                                <p class="text-muted">Description</p>
+                                                                <button type="button" class="btn btn-primary">naviagate to seasons</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="fix">
+                                                    <ul id="series-right">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="list-added-seriesinfo" role="tabpanel"
+                                    aria-labelledby="list-added-seriesinfo-list">
+                                    {% include "provider/addseasonform.html" %}
+                                </div>
+                                <div class="tab-pane fade" id="list-added-seasoninfo" role="tabpanel"
+                                    aria-labelledby="list-added-seasoninfo-list">
+                                    {% include "provider/addepisodeform.html" %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+                        Rejected section
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="{% static "js/jquery-3.5.1.js"%}"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+    <script src="{% static "js/provider.js"%}""></script>
+
+    <script>
+
+
+    // submitting new series form using ajax call
+    $("#seriesForm").submit(function (e) {
+        e.preventDefault(); //prevent default action
+
+        // Form Data
+        var series_name = document.getElementById('series_name').value;
+        var series_description = document.getElementById('series__description').value;
+        var language = document.getElementById('language').value;
+        var category = document.getElementById('series-category').value;
+        var subcategory = document.getElementById('subcategory__choosen').value;
+        var thumbnail_image = $('#file')[0].files[0];
+
+        var data = {
+            'series_name': series_name,
+            'series_description': series_description,
+            'language': language,
+            'category': category,
+            'subcategory': subcategory,
+        }
+
+        var formData = new FormData();
+        formData.append('data', JSON.stringify(data));
+        formData.append('file', thumbnail_image, thumbnail_image.name);
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "add_new_series" %}',
+            data: formData,
+            dataType: 'json',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.is_series_exists != '') {
+                    alert(data.is_series_exists);
+                }
+                else if (data.is_language_selected != '') {
+                    alert(data.is_language_selected);
+                }
+                else if (data.is_category_selected != '') {
+                    alert(data.is_category_selected);
+                }
+                else if (data.is_subcategory_selected != '') {
+                    alert(data.is_subcategory_selected);
+                }
+                else if (data.is_thumbnail_too_large != '') {
+                    alert(data.is_thumbnail_too_large);
+                }
+                else if (data.is_thumbnail_mimetype_problem != '') {
+                    alert(data.is_thumbnail_mimetype_problem);
+                }
+                else if (data.is_successful != '') {
+                    document.getElementById('series_id').innerHTML = data.series_id;
+                    alert(data.is_successful);
+                    $('#list-seriesform-list').css('pointer-events', 'none');
+                    $('#list-seriesinfo-list').css('pointer-events', 'all');
+                    $('#list-seriesinfo-list').tab('show');
+                }
+                else {
+                    alert('Some unexpected error has occured. Try again.');
+                }
+            }
+        });
+    });
+
+
+
+    // submitting new season form using ajax call
+    $("#seasonForm").submit(function (e) {
+        e.preventDefault(); //prevent default action
+
+        // Form Data
+        var series_id = document.getElementById('series_id').innerHTML;
+        var season_no = document.getElementById('seasonvalue').value;
+        var season_description = document.getElementById('series__season__description').value;
+        var thumbnail_image = $('#file1')[0].files[0];
+
+        var data = {
+            'series_id': series_id,
+            'season_no': season_no,
+            'season_description': season_description,
+        }
+
+        var formData = new FormData();
+        formData.append('data', JSON.stringify(data));
+        formData.append('file', thumbnail_image, thumbnail_image.name);
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "add_new_season" %}',
+            data: formData,
+            dataType: 'json',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.is_series_exists != '') {
+                    alert(data.is_series_exists);
+                }
+                else if (data.is_season_no_exists != '') {
+                    alert(data.is_season_no_exists);
+                }
+                else if (data.is_thumbnail_too_large != '') {
+                    alert(data.is_thumbnail_too_large);
+                }
+                else if (data.is_thumbnail_mimetype_problem != '') {
+                    alert(data.is_thumbnail_mimetype_problem);
+                }
+                else if (data.is_successful != '') {
+                    var seasoncount = $('#season-right li').length;
+                    seasoncount++;
+                    for(var key in data.all_season_details) {
+                        var htmlgen='<div id="season'+seasoncount+'"><h4>Season'+seasoncount+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="season'+seasoncount+'thumbnail" src="'+data.all_season_details[key][1]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.all_season_details[key][0]+'</p><button onclick="add_season_videos('+series_id+','+key+')" class="btn btn-primary">Add season videos</button></div></div></div>';
+                        $('#apnd').append(htmlgen);
+                    }
+
+                    $('#season-right').append('<li><a href="#season' + seasoncount + '">season' + seasoncount + '</a></li>');
+                    // reset the form
+                    $('#seasonForm').each(function(){
+                        this.reset();
+                    });
+                    $('#collapseExample').collapse('toggle');
+                    $('#seasonvalue').attr("value",seasoncount+1);
+
+                    alert(data.is_successful);
+                }
+                else {
+                    alert('Some unexpected error has occured. Try again.');
+                }
+            }
+        });
+    });
+
+
+    // submitting new season episode form using ajax call
+    $("#seasonepisodeForm").submit(function (e) {
+        e.preventDefault(); //prevent default action
+
+        // Form Data
+        var series_season_id = document.getElementById('series_season_id').innerHTML;
+        var episode_no = document.getElementById('series__season__episodeno').value;
+        var episode_name = document.getElementById('series__season__episodename').value;
+        var episode_description = document.getElementById('series__season__episodedescription').value;
+        var episode_tags = document.getElementById('series__season__episodetags').value;
+        var episode_quality = document.getElementById('video_quality').value;
+        var episode_release_date = document.getElementById('series__season__episodedate').value;
+
+        // Files from episode form
+        var thumbnail_image = $('#file2')[0].files[0];
+        var episode_video = $('#file3')[0].files[0];
+
+        var data = {
+            'series_season_id': series_season_id,
+            'episode_no': episode_no,
+            'episode_name': episode_name,
+            'episode_description': episode_description,
+            'episode_tags': episode_tags,
+            'episode_quality': episode_quality,
+            'episode_release_date': episode_release_date,
+        }
+
+        var formData = new FormData();
+        formData.append('data', JSON.stringify(data));
+        formData.append('file', thumbnail_image, thumbnail_image.name);
+        formData.append('video', episode_video, episode_video.name);
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "add_new_episode" %}',
+            data: formData,
+            dataType: 'json',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.is_series_season_exists != '') {
+                    alert(data.is_series_season_exists);
+                }
+                else if (data.is_episode_no_exists != '') {
+                    alert(data.is_episode_no_exists);
+                }
+                else if (data.is_quality_selected != '') {
+                    alert(data.is_quality_selected);
+                }
+                else if (data.is_release_date_future != '') {
+                    alert(data.is_release_date_future);
+                }
+                else if (data.is_thumbnail_too_large != '') {
+                    alert(data.is_thumbnail_too_large);
+                }
+                else if (data.is_thumbnail_mimetype_problem != '') {
+                    alert(data.is_thumbnail_mimetype_problem);
+                }
+                else if (data.is_video_mimetype_problem != '') {
+                    alert(data.is_video_mimetype_problem);
+                }
+                else if (data.is_successful != '') {
+                    var episodecount = $('#episode-right li').length;
+                    episodecount++;
+                    for(var key in data.season_episode_data) {
+                        var htmlgen='<div id="episode'+episodecount+'"><h4>Episode'+episodecount+'-'+data.season_episode_data[key][1]+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="episode'+episodecount+'thumbnail" src="'+data.season_episode_data[key][3]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.season_episode_data[key][2]+'</p><button onclick="play_video('+data.season_episode_data[key][0]+','+data.season_episode_data[key][4]+')" class="btn btn-primary">Add season videos</button></div></div></div>';
+                        $('#uploaded_episodes').append(htmlgen);
+                    }
+
+                    $('#episode-right').append('<li><a href="#episode' + episodecount + '">episode' + episodecount+ '</a></li>');
+
+                    // reset the form
+                    $('#seasonepisodeForm').each(function(){
+                        this.reset();
+                    });
+                    $('#seasonVideos').collapse('toggle');
+                    $('#series__season__episodeno').attr("value",episodecount+1);
+
+                    alert(data.is_successful);
+                }
+                else {
+                    alert('Some unexpected error has occured. Try again.');
+                }
+            }
+        });
+    });
+
+
+    function add_season_videos(series_id, series_season_id) {
+        document.getElementById('series_season_id').innerHTML = series_season_id;
+
+        var data = {
+            'series_season_id': series_season_id,
+        }
+
+        var formData = new FormData();
+        formData.append('data', JSON.stringify(data));
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "previously_uploaded_episodes" %}',
+            data: formData,
+            dataType: 'json',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.is_series_season_exists != '') {
+                    alert(data.is_series_season_exists);
+                }
+                else if (data.is_successful != '') {
+                    for(var key in data.season_episode_data) {
+                        var htmlgen='<div id="episode'+data.season_episode_data[key][6]+'"><h4>Episode'+data.season_episode_data[key][6]+'-'+data.season_episode_data[key][1]+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="episode'+data.season_episode_data[key][6]+'thumbnail" src="'+data.season_episode_data[key][3]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.season_episode_data[key][2]+'</p><button onclick="play_video('+data.season_episode_data[key][0]+','+data.season_episode_data[key][4]+')" class="btn btn-primary">Add season videos</button></div></div></div>';
+                        $('#uploaded_episodes').append(htmlgen);
+
+                        $('#episode-right').append('<li><a href="#episode' + data.season_episode_data[key][6] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
+                    }
+
+                    // reset the form
+                    $('#seasonepisodeForm').each(function(){
+                        this.reset();
+                    });
+
+                    $('#series__season__episodeno').attr("value",Object.keys(data.season_episode_data).length+1);
+                }
+                else {
+                    alert('Some unexpected error has occured. Try again.');
+                }
+            }
+        });
+
+        // reset the form
+        $('#seasonepisodeForm').each(function(){
+            this.reset();
+        });
+        $('#list-seasoninfo-list').css('pointer-events', 'all');
+        $('#list-seasoninfo-list').tab('show');
+    }
+
+    function play_video(video_id, video_url) {
+        // Add code to launch modal by getting
+    }
+
+
+
+    </script>
+</body>
+
+</html>

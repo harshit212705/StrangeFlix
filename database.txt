@@ -2,22 +2,177 @@ TABLES:
 
 MySQL STRUCTURE :-- 
 
-Admin - admin_id, username, password, email,
+Admin - 
+admin_id,
+username, 
+password, 
+email,
 
-User - user_id, username, password, email, wallet_money
+User - 
+user_id, 
+username, 
+password, 
+email, 
+wallet_money
 
-Provider - provider_id, username, password, email, 
+Provider - 
+provider_id, 
+username, 
+password, 
+email, 
 
-Parent_series_name - parent_id, provider_id, name(movie_name/series_name), description, date_of_creation
+videos = 
+video_id(auto_increment_field), 
+type_of_video(set - free_video, series_video, movie_video)
 
-videos - video_id, name, video_link, category (set - 'fiction', 'drama' , etc),
-description, tags, thumbnail_link, date_of_upload (date time), date_of_release, episode_no, duration_of_video, original_quality(720p, 1080p), season_no, if_verified(by admin), cost_per_video
+series_details - 
+series_id, 
+provider_id, 
+series_name, 
+description, 
+language(set - english, hindi, etc), 
+category(set - 'Sports', 'Education', 'Entertainment'), 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES), 
+date_of_creation, 
+thumbnail_link
 
-free_videos - video_id, name, video_link, category (set - 'fiction', 'drama' , etc), description, tags, thumbnail_link, date_of_upload (date time), date_of_release, episode_no, duration_of_video, original_quality(720p, 1080p), season_no, if_verified(by admin)
+series_sub_categories = 
+series_id, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES)
 
-tags - tag_id, video_id, tag_word
+series_season_info = 
+series_season_id, 
+series_id, 
+season_no, 
+description, 
+thumbnail_link, 
+date_of_creation,
+is_verified(by_admin for a particular season of series)
+### Maybe each season can have categories as well ### But not considering at the moment ###
 
-category - category_id, video_id, category
+series_videos = 
+video_id (from videos table), 
+series_season_id, 
+video_name, 
+video_link, 
+firebase_token,
+category (set - 'fiction', 'drama' , etc),
+description, 
+tags, 
+thumbnail_link, 
+date_of_upload (date time), 
+date_of_release, 
+episode_no, 
+duration_of_video, 
+original_quality(720p, 1080p), 
+if_verified(by admin), 
+cost_per_video
+
+series_videos_sub_categories = 
+video_id, 
+episode_no, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES)
+
+series_videos_tags -
+video_id, 
+episode_no, 
+tag_word
+
+
+movie_details - 
+movie_id, 
+provider_id, 
+movie_name, 
+description, 
+language(set - english, hindi, etc), 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES), 
+date_of_creation, 
+thumbnail_link
+
+
+movie_sub_categories = 
+movie_id, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES)
+
+movie_video_tags - 
+video_id, 
+tag_word
+
+movie_video_sub_categories = 
+video_id, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES)
+
+
+movie_video = 
+movie_id,
+video_name, 
+description, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES),
+thumbnail_link,
+date_of_upload,
+date_of_release,
+video_id (from videos table),
+video_link,
+firebase_token,
+tags,
+duration_of_video,
+original_quality(720p, 1080p), 
+if_verified(by admin), 
+cost_per_video
+
+
+free_series_videos_sub_categories = 
+video_id, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES)
+
+free_series_videos_tags -
+video_id, 
+tag_word
+
+
+free_series_videos - 
+series_season_id
+video_id, 
+video_name, 
+video_link, 
+firebase_token,
+category (set - 'fiction', 'drama' , etc), 
+description, 
+tags, 
+thumbnail_link, 
+date_of_upload (date time), 
+date_of_release, 
+duration_of_video, 
+original_quality(720p, 1080p), 
+if_verified(by admin)
+
+
+free_movie_videos_sub_categories = 
+video_id, 
+sub_category(choicefield using smallpositiveinteger - SUB_CATEGORY_CHOICES)
+
+free_movie_videos_tags -
+video_id, 
+tag_word
+
+
+free_movie_videos - 
+movie_id
+video_id, 
+video_name, 
+video_link,
+firebase_token, 
+category (set - 'fiction', 'drama' , etc), 
+description, 
+tags, 
+thumbnail_link, 
+date_of_upload (date time), 
+date_of_release, 
+duration_of_video, 
+original_quality(720p, 1080p), 
+if_verified(by admin)
+
+
 
 subscription_plans - subscription_plan_id, duration, cost
 
