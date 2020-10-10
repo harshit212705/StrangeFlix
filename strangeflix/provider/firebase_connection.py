@@ -50,9 +50,12 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     # except Exception as e:
     #     print(e)
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        dictMeta = ydl.extract_info(
-            "https://www.youtube.com/watch?v=3D9g4erlOVA", download=True)
-        print(dictMeta)
+        try:
+            dictMeta = ydl.extract_info("https://www.youtube.com/watch?v=3D9g4erlOVA", download=True)
+            print(dictMeta)
+        except Exception as e:
+            print('File protected')
+            print(e)
 
         # for unavailable video or protected video dictmeta = None
         # duration = dictMeta['duration']

@@ -31,19 +31,52 @@
 # print(ext.domain)
 
 
-import youtube_dl
-import os
+# import youtube_dl
+# import os
 
-ydl_opts = {'outtmpl': '/home/harshit/Desktop/webster2020/metavideo', 'ignoreerrors': True}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+# import ffmpeg
+# vid = ffmpeg.probe('/home/harshit/Desktop/webster2020/song.mp4')
+# print(vid)
+
+
+# GOOD CODE
+
+# import moviepy.editor as mp
+# duration =  mp.VideoFileClip('/home/harshit/Desktop/webster2020/meta').duration
+# print(int(duration))
+
+
+# import filetype
+
+# kind = filetype.guess('/home/harshit/Desktop/webster2020/meta')
+# if kind is None:
+#     print('Cannot guess file type!')
+
+# print('File extension: %s' % kind.extension)
+# print('File MIME type: %s' % kind.mime)
+
+# GOOD CODE
+
+# ydl_opts = {'outtmpl': '/home/harshit/Desktop/webster2020/m.txt', 'ignoreerrors': True}
+# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+#     try:
+#         dictMeta = ydl.extract_info("https://hr-testcases-us-east-1.s3.amazonaws.com/22937/input00.txt?AWSAccessKeyId=AKIAR6O7GJNX5DNFO3PV&Expires=1602314535&Signature=bn8GwIgarRB4j1ypmkV4CSa7If0%3D&response-content-type=text%2Fplain", download=True)
+#         print(dictMeta)
+#         # dictMeta['formats'][0]['ext'] - extension
+#     except Exception as e:
+#         print('File protected')
+#         print(e)
+
+
+# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     # try:
     # obj = ydl.download(['https://www.hotstar.com/in/sports/cricket/indian-premier-league/mumbai-indians-vs-rajasthan-royals-m701670/match-clips/bumrahs-420-crushes-rrs-soul/1260043466'])
     # except Exception as e:
     #     print(e)
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        dictMeta = ydl.extract_info(
-            "https://www.youtube.com/watch?v=3D9g4erlOVA", download=True)
-        print(dictMeta)
+    # with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    #     dictMeta = ydl.extract_info(
+    #         "https://www.youtube.com/watch?v=3D9g4erlOVA", download=True)
+    #     print(dictMeta)
 
         # for unavailable video or protected video dictmeta = None
         # duration = dictMeta['duration']
@@ -67,9 +100,9 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 
 
 # import requests 
-# file_url = "https://www.youtube.com/watch?v=3D9g4erlOVE.mp4"
+# file_url = "https://hr-testcases-us-east-1.s3.amazonaws.com/22937/input00.txt?AWSAccessKeyId=AKIAR6O7GJNX5DNFO3PV&Expires=1602314535&Signature=bn8GwIgarRB4j1ypmkV4CSa7If0%3D&response-content-type=text%2Fplain"
 # r = requests.get(file_url, stream = True) 
-# with open("youtube.mp4","wb") as f: 
+# with open("aws.txt","wb") as f: 
 #     for chunk in r.iter_content(chunk_size=1024): 
 
 #          # writing one chunk at a time to pdf file 

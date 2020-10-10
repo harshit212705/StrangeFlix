@@ -341,7 +341,7 @@
                                         <div class="add__season">
                                             <p id="series_id" hidden></p>
                                             <div class="row">
-                                                <div class="col-lg-9" id="apnd">
+                                                <div class="col-lg-9">
                                                     <button class="btn btn-primary" type="button" data-toggle="collapse"
                                                         data-target="#collapseExample" aria-expanded="false"
                                                         aria-controls="collapseExample">
@@ -398,6 +398,8 @@
                                                             </form>
                                                         </div>
                                                     </div>
+                                                    <div id="apnd">
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="fix">
@@ -425,7 +427,7 @@
                                         <div id="server-result">
                                         </div>
                                         <div class="row">
-                                            <div id="uploaded_episodes" class="add__season__videos">
+                                            <div class="add__season__videos">
                                                 <p id="series_season_id" hidden></p>
                                                 <button class="btn btn-primary" type="button" data-toggle="collapse"
                                                     data-target="#seasonVideos" aria-expanded="false"
@@ -548,12 +550,12 @@
                                                                     </div>
                                                                     <div class="col-lg-9 col-md-9 col-sm-9">
                                                                         <select id="linkorvideo" name="video" class="custom-select">
-                                                                            <option selected>Video</option>
+                                                                            <option value="Video" selected>Video</option>
                                                                             <option value="Link">Link</option>
                                                                         </select>
                                                                         <input type='file' id="episode-video" class="form-control my-3" name='episode-video'
                                                                             accept='.mp4, .wmv, .avi,.mov,.3gp,.flv'>
-                                                                        <input type="url" id="episode-link" class="form-control my-3" name='episode-link' placeholder="link">
+                                                                        <input type="url" id="episode-link" class="form-control my-3" name='episode-link' placeholder="link" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -563,6 +565,8 @@
                                                             </div>
                                                         </form>
                                                     </div>
+                                                </div>
+                                                <div id="uploaded_episodes">
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
@@ -751,6 +755,7 @@
                 }
                 else if (data.is_successful != '') {
                     document.getElementById('series_id').innerHTML = data.series_id;
+                    $('#seasonvalue').attr("value",1);
                     alert(data.is_successful);
                     $('#list-seriesform-list').css('pointer-events', 'none');
                     $('#list-seriesinfo-list').css('pointer-events', 'all');
@@ -844,10 +849,12 @@
         var episode_tags = document.getElementById('series__season__episodetags').value;
         var episode_quality = document.getElementById('video_quality').value;
         var episode_release_date = document.getElementById('series__season__episodedate').value;
+        var episode_linkorvideo = document.getElementById('linkorvideo').value;
+        var episode_link = document.getElementById('episode-link').value;
 
         // Files from episode form
         var thumbnail_image = $('#file2')[0].files[0];
-        var episode_video = $('#file3')[0].files[0];
+        var episode_video = $('#episode-video')[0].files[0];
 
         var data = {
             'series_season_id': series_season_id,
@@ -857,12 +864,14 @@
             'episode_tags': episode_tags,
             'episode_quality': episode_quality,
             'episode_release_date': episode_release_date,
+            'episode_linkorvideo': episode_linkorvideo,
+            'episode_link': episode_link,
         }
 
         var formData = new FormData();
         formData.append('data', JSON.stringify(data));
         formData.append('file', thumbnail_image, thumbnail_image.name);
-        formData.append('video', episode_video, episode_video.name);
+        formData.append('video', episode_video);
 
         $.ajax({
             type: 'POST',
@@ -895,14 +904,14 @@
                     alert(data.is_video_mimetype_problem);
                 }
                 else if (data.is_successful != '') {
-                    var episodecount = $('#episode-right li').length;
+                    var episodecount = $('#episodes-right li').length;
                     episodecount++;
                     for(var key in data.season_episode_data) {
-                        var htmlgen='<div id="episode'+episodecount+'"><h4>Episode'+episodecount+'-'+data.season_episode_data[key][1]+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="episode'+episodecount+'thumbnail" src="'+data.season_episode_data[key][3]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.season_episode_data[key][2]+'</p><button onclick="play_video('+data.season_episode_data[key][0]+','+data.season_episode_data[key][4]+')" class="btn btn-primary">Add season videos</button></div></div></div>';
+                        var htmlgen='<div id="episode'+episodecount+'"><h4>Episode'+episodecount+'-'+data.season_episode_data[key][1]+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="episode'+episodecount+'thumbnail" src="'+data.season_episode_data[key][3]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.season_episode_data[key][2]+'</p><button onclick="play_video('+data.season_episode_data[key][0]+','+data.season_episode_data[key][4]+')" class="btn btn-primary">Play video</button></div></div></div>';
                         $('#uploaded_episodes').append(htmlgen);
                     }
 
-                    $('#episode-right').append('<li><a href="#episode' + episodecount + '">episode' + episodecount+ '</a></li>');
+                    $('#episodes-right').append('<li><a href="#episode' + episodecount + '">episode' + episodecount+ '</a></li>');
 
                     // reset the form
                     $('#seasonepisodeForm').each(function(){
@@ -944,11 +953,13 @@
                     alert(data.is_series_season_exists);
                 }
                 else if (data.is_successful != '') {
+                    $('#uploaded_episodes').empty();
+                    $('#episodes-right').empty();
                     for(var key in data.season_episode_data) {
-                        var htmlgen='<div id="episode'+data.season_episode_data[key][6]+'"><h4>Episode'+data.season_episode_data[key][6]+'-'+data.season_episode_data[key][1]+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="episode'+data.season_episode_data[key][6]+'thumbnail" src="'+data.season_episode_data[key][3]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.season_episode_data[key][2]+'</p><button onclick="play_video('+data.season_episode_data[key][0]+','+data.season_episode_data[key][4]+')" class="btn btn-primary">Add season videos</button></div></div></div>';
+                        var htmlgen='<div id="episode'+data.season_episode_data[key][6]+'"><h4>Episode'+data.season_episode_data[key][6]+'-'+data.season_episode_data[key][1]+'</h4><div style="display: inline-block;width: 100%;"><div style="float: left;"><img id="episode'+data.season_episode_data[key][6]+'thumbnail" src="'+data.season_episode_data[key][3]+'" height="250px" width="150px"></div><div style="float: left;margin-left: 50px;"><p>'+data.season_episode_data[key][2]+'</p><button onclick="play_video('+data.season_episode_data[key][0]+',\"'+data.season_episode_data[key][4]+'\")" class="btn btn-primary">Play video</button></div></div></div>';
                         $('#uploaded_episodes').append(htmlgen);
 
-                        $('#episode-right').append('<li><a href="#episode' + data.season_episode_data[key][6] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
+                        $('#episodes-right').append('<li><a href="#episode' + data.season_episode_data[key][6] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
                     }
 
                     // reset the form
