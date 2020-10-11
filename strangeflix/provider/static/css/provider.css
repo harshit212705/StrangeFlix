@@ -6,10 +6,13 @@ body {
 
 p {
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: 300;
     line-height: 1.7em;
+    text-align: justify; 
+    text-justify: inter-word;
 }
+
 
 
 .main__section  .row{
@@ -26,28 +29,6 @@ a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
-}
-
-.navbar {
-    padding: 15px 10px;
-    background: #fff;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
-}
-
-.line {
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
 }
 
 /*  SIDEBAR STYLE */
@@ -150,7 +131,7 @@ ul{
 .series__info,.season__info,.episode__info{
     padding-left:10%;
 }
-#list-seriesinfo-list{
+/* #list-seriesinfo-list{
     pointer-events: none;
 }
 #list-seriesform-list{
@@ -158,7 +139,7 @@ ul{
 } 
 #list-seasoninfo-list{
     pointer-events: none;
-}
+} */
 
 .ws-sports,.ws-entmnt,.ws-txt{
     display:none;
@@ -169,7 +150,7 @@ ul{
 /* episode form  */
 .fa-times{
     color:white;
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 #episode-link{
@@ -180,19 +161,19 @@ ul{
 .adding__series{
    margin:7% 10%;
 }
-@media(max-width:1600px){
+@media(max-width:100em){
     .series__form{
         padding:7% 8%;
     }
     .series__info{
-        padding-left:10%;
+        padding-left:8%;
     }
 }
-@media(max-width:1000px){
+@media(max-width:60em){
     .series__form{
         padding:7% 5%;
     }
     .series__info{
-        padding-left:9%;
+        padding-left:5%;
     }
 }

@@ -17,11 +17,9 @@ var showsports = document.querySelector(".ws-sports");
 var showtxt = document.querySelector(".ws-txt");
 var txtval = document.querySelector("#subcategory__choosen");
 var chkb = document.querySelector("#savech");
-var category;
 selected.addEventListener('change', function (e) {
 	var content = selected.options[selected.selectedIndex].value;
 	if (content == "Sports") {
-		category=content;
 		showent.style.display = "none";
 		showsports.style.display = "block";
 		txtval.value = "";
@@ -34,7 +32,6 @@ selected.addEventListener('change', function (e) {
 				txtval.value = "";
 		});
 	} else if (content == "Entertainment") {
-		category=content;
 		showsports.style.display = "none";
 		txtval.value = "";
 		showtxt.style.display = "block";
@@ -52,13 +49,88 @@ selected.addEventListener('change', function (e) {
 		});
 
 	} else {
-		category="";
 		showent.style.display = "none";
 		showsports.style.display = "none";
 		txtval.value = "";
 		showtxt.style.display = "none";
 	}
 });
+
+
+// // handling tags for add section
+
+// var addTag = document.querySelector("#add-tag");
+// var tagText = document.querySelector("#tag-text");
+// var showTags = document.querySelector("#selected-tags");
+// var selectedTags = document.querySelectorAll("#tag-toggler");
+// addTag.addEventListener('click', function (e) {
+// 	console.log('called')
+// 	var span = document.createElement('span');
+// 	var textValue = tagText.value;
+// 	span.setAttribute("value", textValue);
+// 	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+// 	span.style.border = "2px solid blue";
+// 	span.style.borderRadius = "50%";
+// 	span.innerHTML = textValue + '<a id="tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+// 	showTags.append(span);
+// 	selectedTags = document.querySelectorAll("#tag-toggler");
+// 	selectedTags.forEach(element => {
+// 		element.addEventListener('click', function (e) {
+// 			var obj = element.parentNode;
+// 			obj.remove();
+// 		});
+// 	});
+// });
+
+
+// // handling tags for added section
+
+// var addAddTag = document.querySelector("#add-add-tag");
+// var addTagText = document.querySelector("#add-tag-text");
+// var addShowTags = document.querySelector("#add-selected-tags");
+// var addSelectedTags = document.querySelectorAll("#add-tag-toggler");
+// addAddTag.addEventListener('click', function (e) {
+// 	console.log('hii');
+// 	var span = document.createElement('span');
+// 	var textValue = addTagText.value;
+// 	span.setAttribute("value", textValue);
+// 	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+// 	span.style.border = "2px solid blue";
+// 	span.style.borderRadius = "50%";
+// 	span.innerHTML = textValue + '<a id="add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+// 	addShowTags.append(span);
+// 	addSelectedTags = document.querySelectorAll("#add-tag-toggler");
+// 	addSelectedTags.forEach(element => {
+// 		element.addEventListener('click', function (e) {
+// 			var obj = element.parentNode;
+// 			obj.remove();
+// 		});
+// 	});
+// });
+
+
+
+// linkorvideo 
+var linkorvideo=document.querySelector('#linkorvideo');
+var episodeVideo=document.querySelector('#episode-video');
+var episodeLink=document.querySelector('#episode-link');
+linkorvideo.addEventListener('change',function(e){
+	// console.log('hii');
+	 var cont=linkorvideo.options[linkorvideo.selectedIndex].value;
+	 if(cont!="Link")
+	 {
+		 episodeVideo.style.display="block";
+		 episodeLink.value="";
+		 episodeLink.style.display="none";
+	 }
+	 else
+	 {
+		episodeVideo.style.display="none";
+		episodeLink.style.display="block";
+		episodeVideo.value="";
+	 }
+});
+
 
 // submitting series form using ajax call
 // $("#seriesForm").submit(function (e) {
@@ -125,7 +197,10 @@ $("#list-series-list").on('click', function (e) {
 	$('#episodes-right').empty();
 	$('#season-right').empty();
 	$('#apnd').empty();
-
+	showent.style.display = "none";
+	showsports.style.display = "none";
+	txtval.value = "";
+	showtxt.style.display = "none";
 });
 
 // reset everything on click on series in added-content section
@@ -180,73 +255,3 @@ $('#list-add-seasoninfo-list').on('show.bs.tab', function (e) {
 
 
 
-// handling tags for add section
-
-// var addTag = document.querySelector("#add-tag");
-// var tagText = document.querySelector("#tag-text");
-// var showTags = document.querySelector("#selected-tags");
-// var selectedTags = document.querySelectorAll("#tag-toggler");
-// addTag.addEventListener('click', function (e) {
-// 	console.log('called')
-// 	var span = document.createElement('span');
-// 	var textValue = tagText.value;
-// 	span.setAttribute("value", textValue);
-// 	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-// 	span.style.border = "2px solid blue";
-// 	span.style.borderRadius = "50%";
-// 	span.innerHTML = textValue + '<a id="tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-// 	showTags.append(span);
-// 	selectedTags = document.querySelectorAll("#tag-toggler");
-// 	selectedTags.forEach(element => {
-// 		element.addEventListener('click', function (e) {
-// 			var obj = element.parentNode;
-// 			obj.remove();
-// 		});
-// 	});
-// });
-
-
-// handling tags for added section
-
-// var addAddTag = document.querySelector("#add-add-tag");
-// var addTagText = document.querySelector("#add-tag-text");
-// var addShowTags = document.querySelector("#add-selected-tags");
-// var addSelectedTags = document.querySelectorAll("#add-tag-toggler");
-// addAddTag.addEventListener('click', function (e) {
-// 	console.log('hii');
-// 	var span = document.createElement('span');
-// 	var textValue = addTagText.value;
-// 	span.setAttribute("value", textValue);
-// 	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-// 	span.style.border = "2px solid blue";
-// 	span.style.borderRadius = "50%";
-// 	span.innerHTML = textValue + '<a id="add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-// 	addShowTags.append(span);
-// 	addSelectedTags = document.querySelectorAll("#add-tag-toggler");
-// 	addSelectedTags.forEach(element => {
-// 		element.addEventListener('click', function (e) {
-// 			var obj = element.parentNode;
-// 			obj.remove();
-// 		});
-// 	});
-// });
-
-
-var linkorvideo=document.querySelector('#linkorvideo');
-var episodeVideo=document.querySelector('#episode-video');
-var episodeLink=document.querySelector('#episode-link');
-linkorvideo.addEventListener('change',function(e){
-	 var cont=linkorvideo.options[linkorvideo.selectedIndex].value;
-	 if(cont!="Link")
-	 {
-		 episodeVideo.style.display="block";
-		 episodeLink.value="";
-		 episodeLink.style.display="none";
-	 }
-	 else
-	 {
-		episodeVideo.style.display="none";
-		episodeLink.style.display="block";
-		episodeVideo.value="";
-	 }
-});

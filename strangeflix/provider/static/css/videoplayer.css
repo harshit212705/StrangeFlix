@@ -1,0 +1,236 @@
+.player {
+  margin:3% 15%;
+  position: relative;
+  font-size: 0;
+  overflow: hidden;
+}
+
+
+a{
+  text-decoration: none;
+}
+
+
+/* icon  */
+
+/* video-body  */
+
+.player__video {
+  width: 100% !important;
+  height:auto !important;
+}
+
+/* video-body ends  */
+
+
+/* video-footer  */
+
+
+/* player button  */
+.player__button {
+  background: none;
+  border: 0;
+  line-height: 1;
+  font-size: 1.3rem;
+  color: white;
+  text-align: center;
+  outline: 0;
+  padding: 0;
+  cursor: pointer;
+  max-width: 50px;
+  transition:ease-in-out 0.5s;
+}
+
+/* skip buttons  */
+.backword__button,.forward__button {
+  background: none;
+  border: 0;
+  line-height: 1;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  outline: 0;
+  padding: 0;
+  cursor: pointer;
+  max-width: 70px;
+  transition: ease-in-out 0.5s;
+}
+.backword__button:hover{
+  font-size:1.2rem;
+  position:relative;
+  transform:translateX(-2px);
+}
+.forward__button:hover{
+  font-size:1.2rem;
+  position:relative;
+  transform:translateX(2px);
+}
+.backword__button:hover,.backword__button:focus,.forward__button:hover,.forward__button:focus{
+  border:0;
+  outline:0;
+}
+
+/* volume  */
+.volume__button{
+  background: none;
+  border: 0;
+  line-height: 1;
+  font-size: 1.3rem;
+  color: white;
+  text-align: center;
+  outline: 0;
+  padding: 0;
+  cursor: pointer;
+  max-width: 50px;
+  transition:ease-in-out 0.5s;
+}
+.player__slider{
+  max-width: 6rem;
+  cursor: pointer;
+  visibility: hidden;
+  transition: ease-in-out 0.2s;
+  transition-delay: 0.2s;
+}
+.fa-volume-up,.fa-play,.fa-pause,.fa-volume-mute{
+  color:white;
+  font-size:1rem;
+  transition:ease-in-out 0.3s;
+}
+.fa-volume-up:hover,.fa-volume-mute:hover{
+  font-size:1.2rem;
+}
+.volume__button:hover + .volume__button:focus{
+  border:0;
+  outline:0;
+}
+.player__button:hover .fa-play:hover,.fa-pause:hover{
+  font-size:1.2rem;
+}
+.volume__button:hover + .player__slider{
+  visibility: visible;
+}
+.player__slider:hover{
+  visibility:visible;
+}
+
+.player__controls {
+  padding:2%;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transform: translateY(100%) translateY(-5px);
+  transition: all .3s;
+  transition-delay: 0s;
+  flex-wrap: wrap;
+  background: rgba(19, 18, 18, 0.1);
+}
+
+.player:hover .player__controls {
+  transform: translateY(0);
+}
+
+
+
+.player__controls>* {
+  flex: 1;
+}
+
+.progress {
+  margin-bottom:2%;
+  flex:10;
+  position: relative;
+  display: flex;
+  flex-basis: 100%;
+  height: 0px;
+  transition: height 0.3s;
+  transition-delay: 0s;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.player:hover .progress {
+  height: 8px;
+}
+.progress__filled {
+  width: 50%;
+  background: #00B3FFCC;
+  flex: 0;
+  flex-basis: 0%;
+} 
+/* fullscreen */
+.fullscreen{
+  display:flex;
+  justify-content: flex-end;
+}
+
+.fs__button,.pip__button,.setting__button,.theatre__button{
+  background: none;
+  border: 0;
+  line-height: 1;
+  font-size: 1.1rem;
+  color: white;
+  text-align: center;
+  outline: 0;
+  padding: 0;
+  cursor: pointer;
+  max-width: 50px;
+  transition:ease-in-out 0.5s;
+}
+.fs__button:hover{
+  font-size:1.2rem;
+}
+.pip__button:hover{
+  font-size: 1.2rem;
+}
+.theatre__button:hover{
+  font-size:1.2rem;
+}
+.fa-mobile-alt{
+  transform: rotate(90deg);
+}
+
+
+.fs__button:hover,.fs__button:focus,.volume__button:hover,.volume__button:focus
+,.player__button:hover,.player__button:focus,.pip__button:hover,.pip__button:focus,
+.setting__button:hover,.setting__button:focus,.theatre__button:hover,.theatre__button:focus{
+  border:0;
+  outline:0;
+}
+
+
+/* video-footer ends  */
+
+
+/* setting-dropdown  */
+.playback,.qual{
+  display:none;
+}
+
+.dropdown-menu{
+  background-color: #29303b;
+  top:-4rem !important;
+}
+.dropdown-item{
+  color:white;
+}
+.dropdown-item:hover{
+  background-color: #505763;
+  color:white;
+}
+
+
+.arrow {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+}
+
+.modal-dialog{
+  min-height: 700px !important;
+  min-width: 1000px !important;
+}
