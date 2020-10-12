@@ -6,7 +6,7 @@ from subscribe.models import Subscriptions
 from datetime import datetime
 from django.utils import timezone
 
-
+# function to render the mainpage or homepage
 class HomeView(View):
     def get(self, request):
         registration_form = CustomUserCreationForm()

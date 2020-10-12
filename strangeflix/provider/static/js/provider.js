@@ -6,8 +6,8 @@ v.forEach(element => {
 });
 
 
-// custom-select 
 
+// custom-select
 // series-category
 var selected = document.querySelector('#series-category');
 var entsel = document.querySelectorAll("#chkbx");
@@ -162,18 +162,24 @@ $('#list-seriesinfo-list').on('click', function (e) {
 })
 
 // once moved to add season remove pointer-events for add section
-$('#list-add-seriesinfo-list').on('click', function (e) {
-    $('#list-add-seasoninfo-list').css('pointer-events', 'none');
+$('#list-added-seriesinfo-list').on('click', function (e) {
+    $('#list-added-seasoninfo-list').css('pointer-events', 'none');
+})
+
+// once moved to add season remove pointer-events for add section
+$('#list-added-seriesform-list').on('click', function (e) {
+	$('#list-added-seriesinfo-list').css('pointer-events', 'none');
+    $('#list-added-seasoninfo-list').css('pointer-events', 'none');
 })
 
 // initial season form-setups for added section
-$('#list-add-seriesinfo-list').on('show.bs.tab', function (e) {
+$('#list-added-seriesinfo-list').on('show.bs.tab', function (e) {
     var addCountEle = $('#add-season-right li').length;
     $('#add-seasonvalue').attr("value", addCountEle + 1);
 });
 
 // initial episode form-setups for added section
-$('#list-add-seasoninfo-list').on('show.bs.tab', function (e) {
+$('#list-added-seasoninfo-list').on('show.bs.tab', function (e) {
     var addCountEle = $('#add-episode-right li').length;
     $('#add__series__season__episodeno').attr("value", addCountEle + 1);
 });
@@ -248,5 +254,24 @@ linkorvideo.addEventListener('change',function(e){
 		episodeVideo.style.display="none";
 		episodeLink.style.display="block";
 		episodeVideo.value="";
+	 }
+});
+
+var add__linkorvideo=document.querySelector('#add__linkorvideo');
+var add__episodeVideo=document.querySelector('#add__episode-video');
+var add__episodeLink=document.querySelector('#add__episode-link');
+add__linkorvideo.addEventListener('change',function(e){
+	 var cont=add__linkorvideo.options[add__linkorvideo.selectedIndex].value;
+	 if(cont!="Link")
+	 {
+		 add__episodeVideo.style.display="block";
+		 add__episodeLink.value="";
+		 add__episodeLink.style.display="none";
+	 }
+	 else
+	 {
+		add__episodeVideo.style.display="none";
+		add__episodeLink.style.display="block";
+		add__episodeVideo.value="";
 	 }
 });

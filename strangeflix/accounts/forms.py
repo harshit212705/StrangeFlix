@@ -1,8 +1,9 @@
+# importing django modules
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
-
+# User registration form
 class CustomUserCreationForm(UserCreationForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
@@ -30,6 +31,7 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
+# form for forget password feature
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser

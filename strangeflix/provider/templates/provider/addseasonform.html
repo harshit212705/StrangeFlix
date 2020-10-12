@@ -10,6 +10,7 @@
     </div>
     <!-- add new season  -->
     <div class="add__season">
+            <p id="add_series_id" hidden></p>
         <div class="row">
             <div class="col-lg-9 col-md-9 col-sm-9" id="add-apnd">
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addCollapseExample"
@@ -19,7 +20,7 @@
                 <div class="collapse" id="addCollapseExample">
                     <div class="card card-body">
                         <!-- add season form  -->
-                        <form id="add-seasonForm" method="post" action="">
+                        <form id="add-seasonForm">
                             <!-- season no  -->
                             <div class="form-group my-4">
                                 <div class="row pado">
@@ -52,7 +53,7 @@
                                         <label class="mt-2">Upload Thumbnail</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-9">
-                                        <input type='file' class="form-control" name='season-image'
+                                        <input id="add_file1" type='file' class="form-control" name='season-image'
                                             accept='.png, .jpg, .jpeg' required>
                                     </div>
                                 </div>
@@ -64,12 +65,13 @@
                         </form>
                     </div>
                 </div>
+                <div id="previously-uploaded-seasons">
+                </div>
             </div>
             <!-- right navigation  -->
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="fix">
                     <ul id="add-season-right">
-                        
                     </ul>
                 </div>
             </div>

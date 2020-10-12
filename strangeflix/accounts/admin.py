@@ -1,9 +1,10 @@
+# importing django modules
 from django.contrib import admin
 from .models import CustomUser, UserDetails
 from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
-
+# customizing appearance of custom user model
 class CustomUserModelAdmin(UserAdmin):
 
     form = CustomUserChangeForm
@@ -28,5 +29,6 @@ class CustomUserModelAdmin(UserAdmin):
         }),
     )
 
+# registering models to admin panel
 admin.site.register(CustomUser, CustomUserModelAdmin)
 admin.site.register(UserDetails)

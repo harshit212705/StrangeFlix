@@ -241,7 +241,7 @@ def add_new_season(request):
                         obj = new_season
 
                         # returning the above added season details to ajax request
-                        all_season_data.update({str(obj.pk): (obj.description, obj.thumbnail_image.url, VERIFICATION_REVERSE[obj.verification_status])})
+                        all_season_data.update({str(obj.pk): (obj.description, obj.thumbnail_image.url, str(VERIFICATION_REVERSE[obj.verification_status]).title())})
                         context['all_season_details'] = all_season_data
                     else:
                         context['is_thumbnail_mimetype_problem'] = 'Thumbnail Image Not in Correct Format'
@@ -323,9 +323,8 @@ def add_new_episode(request):
                         # checking whether user has provided the video or link to the video
                         if episode_linkorvideo == 'Video':
                             mime = check_in_memory_mime(request.FILES['video'])
-
                             # checking mime type of the uploaded video
-                            if mime == 'video/mp4' or mime == 'video/mkv' or mime == 'video/flv' or mime == 'video/x-matroska' or mime == 'video/webm' or mime == 'video/ogg':
+                            if mime == 'video/mp4' or mime == 'video/x-flv' or mime == 'video/mkv' or mime == 'video/flv' or mime == 'video/x-matroska' or mime == 'video/webm' or mime == 'video/ogg':
                                 video_file_name = request.FILES['video'].name.split('.')
 
                                 # checking if video not in correct format
@@ -354,15 +353,18 @@ def add_new_episode(request):
                                     os.remove(video_filepath)
 
                                     # saving new episode details
-                                    new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'])
+                                    new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
 
                                     # returning successful response to ajax request
                                     context['is_successful'] = 'New season episode added successfully!!'
                                     season_episode_data = {}
                                     obj = new_season_episode
 
+                                    if len(episode_tags) == 1 and episode_tags[0] == '':
+                                        episode_tags = []
+
                                     # returning the above added episode details to ajax request
-                                    season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, VERIFICATION_REVERSE[obj.verification_status])})
+                                    season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), episode_tags)})
                                     context['season_episode_data'] = season_episode_data
                             else:
                                 context['is_video_mimetype_problem'] = 'Episode video Not in Correct Format'
@@ -402,7 +404,7 @@ def add_new_episode(request):
                             mime = kind.mime
 
                             # checking mimetype of downloaded file
-                            if mime != 'video/mp4' and mime != 'video/mkv' and mime != 'video/flv' and mime != 'video/x-matroska' and mime != 'video/webm' and mime != 'video/ogg':
+                            if mime != 'video/mp4' and mime != 'video/mkv' and mime != 'video/x-flv' and mime != 'video/flv' and mime != 'video/x-matroska' and mime != 'video/webm' and mime != 'video/ogg':
                                 context['is_video_mimetype_problem'] = 'Episode video Not in Correct Format'
                                 return JsonResponse(context)
 
@@ -424,15 +426,18 @@ def add_new_episode(request):
                             os.remove(video_filepath)
 
                             # saving new episode details
-                            new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'])
+                            new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
 
                             # returning successful response to ajax request
                             context['is_successful'] = 'New season episode added successfully!!'
                             season_episode_data = {}
                             obj = new_season_episode
 
+                            if len(episode_tags) == 1 and episode_tags[0] == '':
+                                episode_tags = []
+
                             # sending the above added new episode details to ajax request
-                            season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, VERIFICATION_REVERSE[obj.verification_status])})
+                            season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), episode_tags)})
                             context['season_episode_data'] = season_episode_data
                     else:
                         context['is_thumbnail_mimetype_problem'] = 'Thumbnail Image Not in Correct Format'
@@ -444,7 +449,7 @@ def add_new_episode(request):
 
 
 # saving new episode details to database
-def save_video_file_details_to_database(series_season, episode_name, unique_video_name, download_token, episode_description, episode_release_date, episode_no, video_duration, video_quality, video_extension, thumbnail_image):
+def save_video_file_details_to_database(series_season, episode_name, unique_video_name, download_token, episode_description, episode_release_date, episode_no, video_duration, video_quality, video_extension, thumbnail_image, episode_tags):
 
     # creating a video instance
     video = Videos.objects.create(
@@ -472,6 +477,16 @@ def save_video_file_details_to_database(series_season, episode_name, unique_vide
     new_season_episode.save()
     new_season_episode.thumbnail_image=thumbnail_image
     new_season_episode.save()
+
+    # adding series video related tag data to the database
+    for i in range(len(episode_tags)):
+        if episode_tags[i] != '':
+            series_video_tag = SeriesVideosTags.objects.create(
+                video_id=video,
+                episode_no=episode_no,
+                tag_word=episode_tags[i],
+            )
+            series_video_tag.save()
 
     return new_season_episode
 
@@ -529,6 +544,20 @@ def previously_uploaded_episodes(request):
             context['is_series_season_exists'] = 'This season or series do not exists'
         else:
 
+            # fetching episodes details for the season
+            all_video_id = SeriesVideos.objects.filter(series_season_id=series_season).values('video_id')
+            all_tags_data = SeriesVideosTags.objects.filter(video_id__in=all_video_id).order_by('episode_no')
+
+            # print(all_video_id)
+            # fetching all tags for the episodes that are to be included
+            tags_data = {}
+            for obj in all_video_id:
+                tags_data.update({obj['video_id']: []})
+
+            for tag in all_tags_data:
+                tags_data[tag.video_id.video_id].append(tag.tag_word)
+
+
             # fetching episodes ordered by their episode number
             episode_details = SeriesVideos.objects.filter(
                 series_season_id=series_season_id,
@@ -541,10 +570,90 @@ def previously_uploaded_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, VERIFICATION_REVERSE[obj.verification_status])})
+                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['season_episode_data'] = season_episode_data
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# returning previously uploaded series info to ajax request
+@csrf_exempt
+@login_required(login_url='home_page')
+def previously_uploaded_series(request):
+    if request.method == 'POST' and request.user.user_type == 'P':
+
+        # response object to return as response to ajax request
+        context = {
+            'is_any_series_exists': '',
+            'is_successful': '',
+            'all_series_data': '',
+        }
+
+        # checking if any series exists for that provider
+        all_series = SeriesDetails.objects.filter(provider_id=request.user).order_by('-date_of_creation')
+        if all_series is None:
+            context['is_any_series_exists'] = 'You have not uploaded any series yet. Upload new series in Add content section.'
+        else:
+            # fetching series details for the provider with last series added at top
+            all_series_id = SeriesDetails.objects.filter(provider_id=request.user).values('series_id')
+            all_subcategory_data = SeriesSubCategories.objects.filter(series_id__in=all_series_id).order_by('-series_id__series_id')
+
+            # fetching all subcategories for the series that are to be included
+            subcategory_data ={}
+            for obj in all_series_id:
+                subcategory_data.update({obj['series_id']: []})
+
+            for sub_cat in all_subcategory_data:
+                subcategory_data[sub_cat.series_id.series_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
+
+            # sending series details to ajax request
+            all_series_data = {}
+            for obj in all_series:
+                all_series_data.update({str(obj.pk): (obj.series_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), str(CATEGORY_REVERSE[obj.category]).title(), obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
+
+            # returning success response to ajax request
+            context['all_series_data'] = all_series_data
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# returning previously uploaded series seasons info to ajax request
+@csrf_exempt
+@login_required(login_url='home_page')
+def previously_uploaded_seasons(request):
+    if request.method == 'POST' and request.user.user_type == 'P':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        series_id = json_data['series_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_any_series_season_exists': '',
+            'is_successful': '',
+            'all_series_season_data': '',
+        }
+
+        # checking if any season exists for that series
+        all_series_seasons = SeriesSeasonDetails.objects.filter(series_id__series_id=series_id).order_by('season_no')
+        if all_series_seasons is None:
+            context['is_any_series_season_exists'] = 'You have not added any season for this series yet. Add new season now.'
+        else:
+            # sending series season details to ajax request
+            all_series_season_data = {}
+            for obj in all_series_seasons:
+                all_series_season_data.update({str(obj.pk): (obj.season_no, obj.description, obj.date_of_creation, obj.thumbnail_image.url, str(VERIFICATION_REVERSE[obj.verification_status]).title())})
+
+            # returning success response to ajax request
+            context['all_series_season_data'] = all_series_season_data
             context['is_successful'] = 'Result Found!!'
         return JsonResponse(context)
     else:

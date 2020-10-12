@@ -1,10 +1,11 @@
+# importing django modules
 from django.contrib import admin
 from .models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
                     SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
                     FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo
 
 
-# Register your models here.
+# registering models to admin panel
 admin.site.register(Videos)
 admin.site.register(SeriesDetails)
 admin.site.register(SeriesSubCategories)

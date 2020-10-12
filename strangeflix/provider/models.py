@@ -80,26 +80,31 @@ LANGUAGES_TYPES = (
     (8, 'telugu')
 )
 
+# function returning save location for series thumbnail image
 def series_thumbnail_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / series_<id>/<filename>
     return 'series_{0}/{1}'.format(instance.series_id, filename)
 
 
+# function returning save location for series season thumbnail image
 def series_season_thumbnail_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / series_<id>/<filename>
     return 'series_season_{0}/{1}'.format(instance.series_season_id, filename)
 
 
+# function returning save location for movie thumbnail image
 def movie_thumbnail_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / series_<id>/<filename>
     return 'movie_{0}/{1}'.format(instance.movie_id, filename)
 
 
+# function returning save location for video or episode thumbnail image
 def video_thumbnail_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / series_<id>/<filename>
     return 'video_{0}/{1}'.format(instance.video_id, filename)
 
 
+# model for storing reference to video file and the type of video
 class Videos(models.Model):
 
     VIDEO_TYPES = (
@@ -118,7 +123,7 @@ class Videos(models.Model):
         verbose_name_plural = "Videos"
 
 
-
+# model for storing series details
 class SeriesDetails(models.Model):
 
     CATEGORY_TYPES = (
@@ -148,7 +153,7 @@ class SeriesDetails(models.Model):
         verbose_name_plural = "Series Details"
 
 
-
+# model for storing series sub categories
 class SeriesSubCategories(models.Model):
 
     series_id = models.ForeignKey(SeriesDetails, on_delete=models.PROTECT)
@@ -159,7 +164,7 @@ class SeriesSubCategories(models.Model):
         verbose_name_plural = "Series Sub Categories"
 
 
-
+# model for storing series season details
 class SeriesSeasonDetails(models.Model):
 
     series_season_id = models.AutoField(primary_key=True)
@@ -180,7 +185,7 @@ class SeriesSeasonDetails(models.Model):
         verbose_name_plural = "Series Season Details"
 
 
-
+# model for storing series videos
 class SeriesVideos(models.Model):
 
     series_season_id = models.ForeignKey(SeriesSeasonDetails, on_delete=models.PROTECT)
@@ -230,7 +235,7 @@ class SeriesVideos(models.Model):
 #         verbose_name_plural = "Series Videos Sub Categories"
 
 
-
+# model for storing series video tags
 class SeriesVideosTags(models.Model):
 
     video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
@@ -243,7 +248,7 @@ class SeriesVideosTags(models.Model):
         verbose_name_plural = "Series Videos Tags"
 
 
-
+# model for storing movie details
 class MovieDetails(models.Model):
 
     movie_id = models.AutoField(primary_key=True)
@@ -265,7 +270,7 @@ class MovieDetails(models.Model):
 
 
 
-
+# model for storing movie sub categories
 class MovieSubCategories(models.Model):
 
     movie_id = models.ForeignKey(MovieDetails, on_delete=models.PROTECT)
@@ -276,7 +281,7 @@ class MovieSubCategories(models.Model):
         verbose_name_plural = "Movie Sub Categories"
 
 
-
+# model for storing movie video tags
 class MovieVideoTags(models.Model):
 
     video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
@@ -298,7 +303,7 @@ class MovieVideoTags(models.Model):
 #         verbose_name_plural = "Movie Video Sub Categories"
 
 
-
+# model for storing movie video
 class MovieVideo(models.Model):
 
     movie_id = models.ForeignKey(MovieDetails, on_delete=models.PROTECT)
@@ -344,7 +349,7 @@ class MovieVideo(models.Model):
 #         verbose_name_plural = "Free Series Videos Sub Categories"
 
 
-
+# model for storing series free video tags
 class FreeSeriesVideosTags(models.Model):
 
     video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
@@ -355,7 +360,7 @@ class FreeSeriesVideosTags(models.Model):
         verbose_name_plural = "Free Series Videos Tags"
 
 
-
+# model for storing series free video
 class FreeSeriesVideos(models.Model):
 
     series_season_id = models.ForeignKey(SeriesSeasonDetails, on_delete=models.PROTECT)
@@ -399,7 +404,7 @@ class FreeSeriesVideos(models.Model):
 #         verbose_name_plural = "Free Movie Video Sub Categories"
 
 
-
+# model for storing movie free video tags
 class FreeMovieVideoTags(models.Model):
 
     video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
@@ -410,7 +415,7 @@ class FreeMovieVideoTags(models.Model):
         verbose_name_plural = "Free Movie Video Tags"
 
 
-
+# model for storing movie free video
 class FreeMovieVideo(models.Model):
 
     movie_id = models.ForeignKey(MovieDetails, on_delete=models.PROTECT)

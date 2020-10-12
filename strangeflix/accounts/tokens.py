@@ -1,8 +1,11 @@
+# importing django modules
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 import six
 """
     Six is a python library that makes the difference between the python versions smooth.
 """
+
+# function to generate token for email verification link
 class TokenGenerator(PasswordResetTokenGenerator):
     """
         Here we will generate a unique token to be sent as part of URL.
