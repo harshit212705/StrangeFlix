@@ -17,11 +17,9 @@ var showsports = document.querySelector(".ws-sports");
 var showtxt = document.querySelector(".ws-txt");
 var txtval = document.querySelector("#subcategory__choosen");
 var chkb = document.querySelector("#savech");
-var category;
 selected.addEventListener('change', function (e) {
 	var content = selected.options[selected.selectedIndex].value;
 	if (content == "Sports") {
-		category=content;
 		showent.style.display = "none";
 		showsports.style.display = "block";
 		txtval.value = "";
@@ -34,7 +32,6 @@ selected.addEventListener('change', function (e) {
 				txtval.value = "";
 		});
 	} else if (content == "Entertainment") {
-		category=content;
 		showsports.style.display = "none";
 		txtval.value = "";
 		showtxt.style.display = "block";
@@ -52,13 +49,14 @@ selected.addEventListener('change', function (e) {
 		});
 
 	} else {
-		category="";
 		showent.style.display = "none";
 		showsports.style.display = "none";
 		txtval.value = "";
 		showtxt.style.display = "none";
 	}
 });
+
+
 
 // submitting series form using ajax call
 // $("#seriesForm").submit(function (e) {
@@ -125,7 +123,10 @@ $("#list-series-list").on('click', function (e) {
 	$('#episodes-right').empty();
 	$('#season-right').empty();
 	$('#apnd').empty();
-
+	showent.style.display = "none";
+	showsports.style.display = "none";
+	txtval.value = "";
+	showtxt.style.display = "none";
 });
 
 // reset everything on click on series in added-content section

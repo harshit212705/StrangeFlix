@@ -105,8 +105,8 @@ ul{
     list-style-type: none;
 }
 .fix{
+    margin:6% 2%;
     position: fixed;
-    margin:7% 5%;
     border-left: 1px solid #676767;
 }
 #section1,#section2,#section3{
@@ -131,21 +131,6 @@ ul{
 .series__info,.season__info,.episode__info{
     padding-left:10%;
 }
-/* #list-seriesinfo-list{
-    pointer-events: none;
-}
-#list-seriesform-list{
-    pointer-events: all;
-} 
-#list-seasoninfo-list{
-    pointer-events: none;
-} */
-
-.ws-sports,.ws-entmnt,.ws-txt{
-    display:none;
-}
-
-
 
 /* episode form  */
 .fa-times{
