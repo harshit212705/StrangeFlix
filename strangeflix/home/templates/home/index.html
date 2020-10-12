@@ -1,5 +1,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,24 +35,26 @@
 
                     <!-- search bar  -->
                     <input type="text" class="form-control mr-sm-2" placeholder="Search">
-                    <button type="submit" class="btn btn-outline-light">Search</button>
+                    <button type="submit" class="btn btn-dark">Search</button>
 
                     {% if user.is_authenticated %}
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">{{ user.username }}</button>
-                            <div class="dropdown-content">
-                                <a href="#">Profile</a>
-                                <a href="{% url "subscription_plans" %}">Subscribe</a>
-                                <a href="{% url "wallet_details" %}">Wallet</a>
-                                <a href="#">Create Room</a>
-                                <a href="#">Join Room</a>
-                                <a href="{% url "account_logout" %}">Logout</a>
+                    <li class="mr-4">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{% url "subscription_plans" %}">Subscribe</a>
+                                <a class="dropdown-item" href="{% url "wallet_details" %}">Wallet</a>
+                                <a class="dropdown-item" href="#">Create Room</a>
+                                <a class="dropdown-item" href="#">Join Room</a>
+                                <a class="dropdown-item" href="{% url "account_logout" %}">Logout</a>
                             </div>
-                        </div>
+                          </div>
                     </li>
                     {% else %}
-                    <li>
+                    <li class="mr-4">
                         <!-- login  -->
                         <a href="#" class="nav-item nav-link ml-2" data-toggle="modal"
                             data-target="#loginModal">Login</a>
@@ -74,16 +77,18 @@
                         <div class="form-title text-center">
                             <h4>Login</h4>
                         </div>
-                        <div class="d-flex flex-column text-center">
+                        <div class="d-flex flex-column mx-5">
                             <form method="POST" action="/accounts/login/">
                                 {% csrf_token %}
-                                <div class="form-group">
-                                    {{ login_form.username|as_crispy_field }}
+                                <div class="form-group my-4">
+                                    {{ login_form.username|add_class:"form-control"|as_crispy_field }}
                                 </div>
-                                <div class="form-group">
-                                    {{ login_form.password|as_crispy_field }}
+                                <div class="form-group my-4">
+                                    {{ login_form.password|add_class:"form-control"|as_crispy_field }}
                                 </div>
-                                <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
+                                <div class="text-center my-4">
+                                    <button type="submit" class="btn btn-info btn-round">Login</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -109,22 +114,24 @@
                         <div class="form-title text-center">
                             <h4>Register</h4>
                         </div>
-                        <div class="d-flex flex-column text-center">
+                        <div class="d-flex flex-column mx-5">
                             <form method="POST" action="/accounts/register/">
                                 {% csrf_token %}
-                                <div class="form-group">
-                                    {{ registration_form.username|as_crispy_field }}
+                                <div class="form-group my-4">
+                                    {{ registration_form.username|add_class:"form-control"|as_crispy_field }}
                                 </div>
-                                <div class="form-group">
-                                    {{ registration_form.email|as_crispy_field }}
+                                <div class="form-group my-4">
+                                    {{ registration_form.email|add_class:"form-control"|as_crispy_field }}
                                 </div>
-                                <div class="form-group">
-                                    {{ registration_form.password1|as_crispy_field }}
+                                <div class="form-group my-4">
+                                    {{ registration_form.password1|add_class:"form-control"|as_crispy_field }}
                                 </div>
-                                <div class="form-group">
-                                    {{ registration_form.password2|as_crispy_field }}
+                                <div class="form-group my-4">
+                                    {{ registration_form.password2|add_class:"form-control"|as_crispy_field }}
                                 </div>
-                                <button type="submit" class="btn btn-info btn-block btn-round">Register</button>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info btn-round">Register</button>
+                                </div>
                             </form>
                         </div>
                     </div>

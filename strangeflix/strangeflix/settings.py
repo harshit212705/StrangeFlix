@@ -44,8 +44,10 @@ INSTALLED_APPS = [
 
     # 3rd Party installs
     'crispy_forms',
+    'widget_tweaks',
 
     # Apps defined by us
+    'Admin.apps.AdminConfig',
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'subscribe.apps.SubscribeConfig',

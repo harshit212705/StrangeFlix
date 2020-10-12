@@ -27,5 +27,6 @@ urlpatterns = [
     path('subscribe/', include('subscribe.urls')),
     path('transaction/', include('transaction.urls')),
     path('provider/', include('provider.urls')),
+    path('Admin/',include('Admin.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,
                                                                                            document_root=settings.MEDIA_ROOT)
