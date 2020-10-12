@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+# importing django modules
 from pathlib import Path
 from decouple import config, Csv
 import os
@@ -132,16 +132,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# login and logout redirection url
 LOGIN_REDIRECT_URL = 'home_page'
 LOGOUT_REDIRECT_URL = 'home_page'
+
+# setting user auth model
 AUTH_USER_MODEL = config('AUTH_USER_MODEL')
 
+# setting static url and directory
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
+# setting path for media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

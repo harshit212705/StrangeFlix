@@ -1,7 +1,8 @@
+# importing django models
 from django.db import models
 from accounts.models import CustomUser as User
 
-
+# model for storing available subscription plans
 class SubscriptionPlan(models.Model):
 
     sub_plan_id = models.AutoField(primary_key=True)
@@ -14,9 +15,10 @@ class SubscriptionPlan(models.Model):
         verbose_name_plural = "Subscription Plan"
 
 
-
+# importing transactionDetails model from transaction/models
 from transaction.models import TransactionDetails as Transaction
 
+# modlel for storing information about the subscription plans taken by the users
 class Subscriptions(models.Model):
 
     subscription_id = models.AutoField(primary_key=True)
@@ -32,7 +34,9 @@ class Subscriptions(models.Model):
     class Meta:
         verbose_name_plural = "Subscriptions"
 
-
+# model for storing the transaction id in case the subscription amount is paid by both card and wallet 
+# so it generates to transaction ids
+# one is stored in subscription model and additional one is stored in this model
 class SubscriptionAdditionalTransaction(models.Model):
 
     subscription_id = models.ForeignKey(Subscriptions, on_delete=models.PROTECT)

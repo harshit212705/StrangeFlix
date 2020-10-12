@@ -1,8 +1,9 @@
+# importing django modules
 from django.db import models
 from accounts.models import CustomUser as User
 from subscribe.models import SubscriptionPlan
 
-
+# model for storing transaction details
 class TransactionDetails(models.Model):
 
     PAYMENT_TYPES = (
@@ -40,7 +41,7 @@ class TransactionDetails(models.Model):
         verbose_name_plural = "Transaction Details"
 
 
-
+# model for storing transaction token details
 class TransactionToken(models.Model):
 
     PAYMENT_STATUS_TYPES = (
@@ -63,6 +64,7 @@ class TransactionToken(models.Model):
         verbose_name_plural = 'Transaction Tokens'
 
 
+# model for storing transaction details made for adding money to wallet
 class AddMoneyTransactionDetails(models.Model):
 
     PAYMENT_STATUS_TYPES = (

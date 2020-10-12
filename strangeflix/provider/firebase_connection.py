@@ -1,25 +1,25 @@
 ######################################################3
-from django.conf import settings
-import pyrebase
+# from django.conf import settings
+# import pyrebase
 
-config = {
-    "apiKey": settings.FIREBASE_API_KEY,
-    "authDomain": settings.FIREBASE_AUTH_DOMAIN,
-    "databaseURL": settings.FIREBASE_DATABASE_URL,
-    "projectId": settings.FIREBASE_PROJECT_ID,
-    "storageBucket": settings.FIREBASE_STORAGE_BUCKET,
-    "messagingSenderId": settings.FIREBASE_MESSAGING_SENDER_ID,
-    "appId": settings.FIREBASE_APP_ID,
-    "measurementId": settings.FIREBASE_MEASUREMENT_ID
-}
+# config = {
+#     "apiKey": settings.FIREBASE_API_KEY,
+#     "authDomain": settings.FIREBASE_AUTH_DOMAIN,
+#     "databaseURL": settings.FIREBASE_DATABASE_URL,
+#     "projectId": settings.FIREBASE_PROJECT_ID,
+#     "storageBucket": settings.FIREBASE_STORAGE_BUCKET,
+#     "messagingSenderId": settings.FIREBASE_MESSAGING_SENDER_ID,
+#     "appId": settings.FIREBASE_APP_ID,
+#     "measurementId": settings.FIREBASE_MEASUREMENT_ID
+# }
 
-firebase = pyrebase.initialize_app(config)
-storage = firebase.storage()
+# firebase = pyrebase.initialize_app(config)
+# storage = firebase.storage()
 
-path_on_cloud = "videos/bell_bottom_teaser.mp4"
-path_local = "/home/harshit/Desktop/webster2020/youtube_video.mp4"
-obj = storage.child(path_on_cloud).put(path_local)
-print(obj)
+# path_on_cloud = "videos/bell_bottom_teaser.mp4"
+# path_local = "/home/harshit/Desktop/webster2020/youtube_video.mp4"
+# obj = storage.child(path_on_cloud).put(path_local)
+# print(obj)
 #############FINAL CODE FOR FIREBASE UPLOADS####################
 
 
@@ -40,22 +40,22 @@ print(obj)
 # print(ext.domain)
 
 
-import youtube_dl
-import os
+# import youtube_dl
+# import os
 
-ydl_opts = {'outtmpl': '/home/harshit/Desktop/webster2020/metavideo', 'ignoreerrors': True}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+# ydl_opts = {'outtmpl': '/home/harshit/Desktop/webster2020/metavideo', 'ignoreerrors': True}
+# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     # try:
     # obj = ydl.download(['https://www.hotstar.com/in/sports/cricket/indian-premier-league/mumbai-indians-vs-rajasthan-royals-m701670/match-clips/bumrahs-420-crushes-rrs-soul/1260043466'])
     # except Exception as e:
     #     print(e)
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        try:
-            dictMeta = ydl.extract_info("https://www.youtube.com/watch?v=3D9g4erlOVA", download=True)
-            print(dictMeta)
-        except Exception as e:
-            print('File protected')
-            print(e)
+    # with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    #     try:
+    #         dictMeta = ydl.extract_info("https://www.youtube.com/watch?v=3D9g4erlOVA", download=True)
+    #         print(dictMeta)
+    #     except Exception as e:
+    #         print('File protected')
+    #         print(e)
 
         # for unavailable video or protected video dictmeta = None
         # duration = dictMeta['duration']

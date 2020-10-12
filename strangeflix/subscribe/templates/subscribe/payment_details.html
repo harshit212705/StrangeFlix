@@ -21,6 +21,7 @@
     <div class="subscription-plans">
         <div class="text-center my-5">
             <div style="margin-left:475px;text-align: center;height:400px;width: 400px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
+                <!-- payment details for subscription plan -->
                 <h4 class="text-center my-5" style="padding-top:30px;">Payment Details</h4>
                 <form method='post' action="{% url "make_payment" plan_id=plan_id %}">
                     <div style="display: inline-block;width: 100%;">
@@ -47,18 +48,20 @@
 
     <script>
 
-    $(window).bind("pageshow", function(event) {
-        if (event.originalEvent.persisted) {
-            console.log("reloading")
-            window.location.reload();
-        }
-    });
+    // $(window).bind("pageshow", function(event) {
+    //     if (event.originalEvent.persisted) {
+    //         console.log("reloading")
+    //         window.location.reload();
+    //     }
+    // });
 
 
+    // sending ajax request to use the wallet balance for paying for subscription
     var amount = "{{plan_cost}}";
     var user_id = "{{user_id}}"
     var plan_id = "{{plan_id}}"
     $('input[name=checkbox]').change(function(){
+        // if user wants to use his wallet balance
         if($(this).is(':checked')) {
 
             $.ajax({
@@ -77,12 +80,14 @@
                             alert("This subscription plan doesn't exists.");
                         }
                         else {
+                            // updating the remaining amount to be paid by user after using his wallet balance
                             document.getElementById('pay_btn').innerHTML = "Pay " + data.remaining_amount;
                         }
                     }
                 }
             });
         } else {
+            // user does not want to use his wallet balance
             document.getElementById('pay_btn').innerHTML = "Pay " + amount;
         }
     });

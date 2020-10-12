@@ -2,12 +2,13 @@
 <!-- need to add video-link option  -->
 <div class="episode__info">
     <div id="add-server-result">
-        <p>info from server</p>
+        <p></p>
     </div>
 
     <!-- add season videos  -->
     <div class="add__season__videos">
         <div class="row">
+            <p id="add_series_season_id" hidden></p>
             <div class="col-lg-9" id="add-epiapnd">
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-seasonVideos"
                     aria-expanded="false" aria-controls="seasonVideos">
@@ -16,7 +17,7 @@
                 <div class="collapse" id="add-seasonVideos">
                     <div class="card card-body">
                         <!-- adding episode form  -->
-                        <form id="add-episodeForm" method="post" action="">
+                        <form id="add-episodeForm">
                             <!-- episode no  -->
                             <div class="form-group my-4">
                                 <div class="row pado">
@@ -58,28 +59,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- episode tags  -->
-                            <div class="form-group my-4">
+                             <!-- episode tags  -->
+                             <div class="form-group my-4">
                                 <div class="row pado">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <label class="mt-2">Episode
+                                    <div class="col-lg-3">
+                                        <label class="mt-2"
+                                            for="add__series__season__episodetags">Episode
                                             tags</label>
                                     </div>
-                                    <div class="col-lg-9 col-md-9 col-sm-9">
-                                        <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <input type="text" id="add-tag-text" class="form-control" placeholder="enter tag" />
-                                            </div>
-                                            <div class="col-lg-1 col-md-1 col-sm-1">
-
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2">
-                                                <button type="button" class="btn btn-sm btn-primary" id="add-add-tag">Add tag</button>
-                                            </div>
-                                        </div>
-                                        <div id="add-selected-tags" class="my-3">
-                                            
-                                        </div>
+                                    <div class="col-lg-6">
+                                        <textarea class="form-control"
+                                            name="add_series-season-episodetags"
+                                            id="add__series__season__episodetags" rows="3"
+                                            ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -90,8 +82,11 @@
                                         <label class="mt-2">Quality</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-9">
-                                        <select name="quality" class="custom-select">
+                                        <select id="add__video_quality" name="quality" class="custom-select">
                                             <option selected>Quality</option>
+                                            <option value="144">144p</option>
+                                            <option value="240">240p</option>
+                                            <option value="360">360p</option>
                                             <option value="480">480p</option>
                                             <option value="720">720p</option>
                                             <option value="1080">1080p</option>
@@ -119,7 +114,7 @@
                                         <label class="mt-2">Upload Thumbnail</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-9">
-                                        <input type='file' class="form-control" name='episode-image'
+                                        <input id="add__file2" type='file' class="form-control" name='episode-image'
                                             accept='.png, .jpg, .jpeg' required>
                                     </div>
                                 </div>
@@ -131,8 +126,13 @@
                                         <label class="mt-2">Upload Video</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-9">
-                                        <input type='file' class="form-control" name='episode-video'
-                                            accept='.mp4, .wmv, .avi,.mov,.3gp,.flv' required>
+                                        <select id="add__linkorvideo" name="video" class="custom-select">
+                                            <option value="Video" selected>Video</option>
+                                            <option value="Link">Link</option>
+                                        </select>
+                                        <input type='file' id="add__episode-video" class="form-control my-3" name='episode-video'
+                                            accept='.mp4, .wmv, .avi,.mov,.3gp,.flv'>
+                                        <input type="url" style="display: none;" id="add__episode-link" class="form-control my-3" name='episode-link' placeholder="link">
                                     </div>
                                 </div>
                             </div>
@@ -141,6 +141,8 @@
                             </div>
                         </form>
                     </div>
+                </div>
+                <div id="previously-uploaded-episodes">
                 </div>
             </div>
             <!-- right navigation  -->
