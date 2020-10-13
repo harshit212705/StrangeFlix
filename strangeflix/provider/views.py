@@ -533,6 +533,7 @@ def previously_uploaded_episodes(request):
 
         # response object to return as response to ajax request
         context = {
+            'is_series_belongs_to_provider': '',
             'is_series_season_exists': '',
             'is_successful': '',
             'season_episode_data': '',
@@ -543,6 +544,17 @@ def previously_uploaded_episodes(request):
         if series_season is None:
             context['is_series_season_exists'] = 'This season or series do not exists'
         else:
+
+            # checking if series actually belongs to provider or not
+            if request.user.user_type == 'P':
+                # print(series_season.series_id)
+                series_details = SeriesDetails.objects.filter(
+                    provider_id=request.user,
+                    series_id=series_season.series_id.series_id
+                ).first()
+                if series_details is None:
+                    context['is_series_belongs_to_provider'] = 'This series does not belongs to you.'
+                    return JsonResponse(context)
 
             # fetching episodes details for the season
             all_video_id = SeriesVideos.objects.filter(series_season_id=series_season).values('video_id')
@@ -604,7 +616,7 @@ def previously_uploaded_series(request):
             all_subcategory_data = SeriesSubCategories.objects.filter(series_id__in=all_series_id).order_by('-series_id__series_id')
 
             # fetching all subcategories for the series that are to be included
-            subcategory_data ={}
+            subcategory_data = {}
             for obj in all_series_id:
                 subcategory_data.update({obj['series_id']: []})
 
@@ -637,10 +649,21 @@ def previously_uploaded_seasons(request):
 
         # response object to return as response to ajax request
         context = {
+            'is_series_belongs_to_provider': '',
             'is_any_series_season_exists': '',
             'is_successful': '',
             'all_series_season_data': '',
         }
+
+        # checking if series actually belongs to provider or not
+        if request.user.user_type == 'P':
+            series_details = SeriesDetails.objects.filter(
+                provider_id=request.user,
+                series_id=series_id
+            ).first()
+            if series_details is None:
+                context['is_series_belongs_to_provider'] = 'This series does not belongs to you.'
+                return JsonResponse(context)
 
         # checking if any season exists for that series
         all_series_seasons = SeriesSeasonDetails.objects.filter(series_id__series_id=series_id).order_by('season_no')

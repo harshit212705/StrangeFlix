@@ -21,7 +21,7 @@ from .forms import AddMoneyForm
 # function to get wallet details
 @login_required(login_url='home_page')
 def wallet_details(request):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.user.user_type == 'U':
 
         # add money form
         add_money_form = AddMoneyForm()
@@ -70,7 +70,7 @@ def insta(email, name, phone, redirect_url, amount):
 # function to handle add money to wallet request made by the user
 @login_required(login_url='home_page')
 def add_money(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.user_type == 'U':
         if request.method == 'POST':
             amount = request.POST.get('amount', 0)
 

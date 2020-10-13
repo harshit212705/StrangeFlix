@@ -19,7 +19,7 @@ from transaction.models import TransactionDetails, TransactionToken
 # function to render all the available subscription plans to user
 @login_required(login_url='home_page')
 def subscription_plans(request):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.user.user_type == 'U':
         subscription_plans = SubscriptionPlan.objects.all()
         context = {}
         count = 1
@@ -36,7 +36,7 @@ def subscription_plans(request):
 # function to be called when user wishes to purchase a subcsription plan
 @login_required(login_url='home_page')
 def subscribe_plan(request,plan_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.user_type == 'U':
         if request.method == 'GET':
             # fetching the plan details
             plan = SubscriptionPlan.objects.filter(pk=plan_id).first()
@@ -121,7 +121,7 @@ def initiate_refund(payment_id):
 @csrf_exempt
 @login_required(login_url='home_page')
 def make_payment(request, plan_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.user_type == 'U':
         if request.method == 'POST':
             # checking if user wants to use his wallet balance or not
             is_checked = request.POST.get('checkbox', None)

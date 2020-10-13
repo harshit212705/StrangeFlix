@@ -1065,6 +1065,9 @@
                 if (data.is_series_season_exists != '') {
                     alert(data.is_series_season_exists);
                 }
+                else if (data.is_series_belongs_to_provider != '') {
+                    alert(data.is_series_belongs_to_provider);
+                }
                 else if (data.is_successful != '') {
                     // emptying the already uploaded episodes section and right navigation section
                     $('#uploaded_episodes').empty();
@@ -1218,7 +1221,10 @@
             contentType: false,
             success: function (data) {
                 // checking and handling error conditions
-                if (data.is_any_series_season_exists != '') {
+                if (data.is_series_belongs_to_provider != '') {
+                    alert(data.is_series_belongs_to_provider);
+                }
+                else if (data.is_any_series_season_exists != '') {
                     // var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
                     // $('#previously-uploaded-seasons').append(htmlgen);
                 }
@@ -1291,6 +1297,9 @@
                 // checking and handling error conditions
                 if (data.is_series_season_exists != '') {
 
+                }
+                else if (data.is_series_belongs_to_provider != '') {
+                    alert(data.is_series_belongs_to_provider)
                 }
                 else if (data.is_successful != '') {
 
@@ -1381,7 +1390,7 @@
                         $('#previously-uploaded-seasons').append(htmlgen);
 
                         // appending the already uploaded seasons to right navigation
-                        $('#add-season-right').append('<li><a href="#season' + seasoncount1 + '">season' + seasoncount+ '</a></li>');
+                        $('#add-season-right').append('<li><a href="#season' + seasoncount + '">season' + seasoncount+ '</a></li>');
                     }
 
                     // reset the form
