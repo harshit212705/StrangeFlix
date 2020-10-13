@@ -1,5 +1,5 @@
 .player {
-  margin:3% 15%;
+  margin:3% 0%;
   position: relative;
   font-size: 0;
   overflow: hidden;
@@ -231,6 +231,6 @@ a{
 }
 
 .modal-dialog{
-  min-height: 700px !important;
-  min-width: 1000px !important;
+  min-height: 20% !important;
+  min-width: 60% !important;
 }
