@@ -2,6 +2,11 @@
 ## Log your changes/modifications here with date and name in specified format.
 ## DO NOT add new events at last. Recent changes should be at the top.
 
+
+### By <b>_Harshit Garg_</b> on <b>_October 13, 2020_</b>
+* Series verification from admin panel added.
+
+
 ### By <b>_Harshit Garg_</b> on <b>_October 12, 2020_</b>
 * Added content section in provider dashboard
 * Fixed bugs in add content section.

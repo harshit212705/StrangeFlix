@@ -123,6 +123,19 @@ class Videos(models.Model):
         verbose_name_plural = "Videos"
 
 
+
+# model for storing series video tags
+class VideoRejectionComment(models.Model):
+
+    video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
+
+    comment = models.TextField()
+
+    class Meta:
+        verbose_name_plural = "Video Rejection Comment"
+
+
+
 # model for storing series details
 class SeriesDetails(models.Model):
 

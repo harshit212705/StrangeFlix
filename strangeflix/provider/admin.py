@@ -2,7 +2,8 @@
 from django.contrib import admin
 from .models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
                     SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
-                    FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo
+                    FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, \
+                    VideoRejectionComment
 
 
 # registering models to admin panel
@@ -24,3 +25,4 @@ admin.site.register(FreeSeriesVideos)
 # admin.site.register(FreeMovieVideoSubCategories)
 admin.site.register(FreeMovieVideoTags)
 admin.site.register(FreeMovieVideo)
+admin.site.register(VideoRejectionComment)
