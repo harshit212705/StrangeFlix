@@ -118,6 +118,10 @@ $("#list-series-list").on('click', function (e) {
 	$('#seasonepisodeForm').each(function () {
 		this.reset();
 	});
+	// reset free content form
+	$('#freecontentForm').each(function () {
+		this.reset();
+	});
 
 	$('#uploaded_episodes').empty();
 	$('#episodes-right').empty();
@@ -146,15 +150,15 @@ $("#list-added-series-list").on('click', function (e) {
 
 	// change the ids of the forms or div tag in added section
 	//reset seasonForm
-	$('#seasonForm').each(function () {
+	$('#add-seasonForm').each(function () {
 		this.reset();
 	});
 	// reset seriesForm
-	$('#seriesForm').each(function () {
+	$('#add-seriesForm').each(function () {
 		this.reset();
 	});
 	//reset episodeForm
-	$('#seasonepisodeForm').each(function () {
+	$('#add-episodeForm').each(function () {
 		this.reset();
 	});
 

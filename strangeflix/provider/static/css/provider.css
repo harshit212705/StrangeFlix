@@ -154,6 +154,9 @@ ul{
 }
 
 
+.do-not-show{
+    display:none;
+}
 
 /* episode form  */
 .fa-times{

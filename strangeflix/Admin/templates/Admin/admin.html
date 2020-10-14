@@ -2,13 +2,22 @@
 {% include "templates/headheader.html" %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<<<<<<< Updated upstream
+<link rel="stylesheet" href="{% static "/css/admin.css" %}">
+<link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+
+||||||| merged common ancestors
 <link rel="stylesheet" href="{% static "css/admin.css" %}">
+=======
+<link rel="stylesheet" href="{% static "/css/admin.css" %}">
+<link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+>>>>>>> Stashed changes
 </head>
 
 <body>
     <div class="main__section">
         <div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-2">
+            <div class="col-lg-2">
                 <div class="wrapper ">
                     <!-- Sidebar  -->
                     <nav id="sidebar">
@@ -49,7 +58,7 @@
                                     </li>
                                     <li>
                                         <a class="special" id="list-added-series-list" data-toggle="list"
-                                            href="#list-added-series" role="tab" aria-controls="series">Series</a>
+                                            href="#list-added-series" role="tab" onclick="get_added_series()" aria-controls="series">Series</a>
                                     </li>
                                 </ul>
                             </li>
@@ -68,13 +77,13 @@
                     </nav>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="col-lg-8 col-md-8 media-full">
                 <!-- content  to be displayed on the middle of the page-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                         aria-labelledby="list-home-list">
                         <div class="row">
-                            <div class="col-lg-7 col-md-7 col-sm-7">
+                            <div class="col-lg-7 col-md-7 col-sm-7 media-home">
                                 <div id="section1">
                                     <h4>section1</h4>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est molestiae error
@@ -188,7 +197,7 @@
                                                 </div>
                                                 <!-- right navigation  -->
 
-                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="col-lg-3 col-md-3">
                                                     <div class="fix">
                                                         <ul id="season-right">
                                                             <!-- <li>
@@ -289,7 +298,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="episodes-right">
                                                         <!-- <li>
@@ -336,7 +345,7 @@
                                     <!-- added series  -->
                                     <div class="adding__series">
                                         <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                            <div id="verified-get-series" class="col-lg-9 col-md-9 col-sm-9">
                                                 <div class="container my-5">
                                                     <h4 class="my-4">Series name</h4>
                                                     <div class="row">
@@ -377,7 +386,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="verified-series-right">
 
@@ -392,12 +401,20 @@
                                     <!-- verified seasons  -->
                                     <div class="series__info my-5">
                                         <div class="row">
+<<<<<<< Updated upstream
+                                            <p id="added_series_id" hidden></p>
+                                            <div class="col-lg-9 col-md-9">
+||||||| merged common ancestors
                                             <div class="col-lg-9 col-md-9 col-sm-9">
+=======
+                                            <p id="added_series_id" hidden></p>
+                                            <div class="col-lg-9 col-md-9 col-sm-9">
+>>>>>>> Stashed changes
                                                 <div id="verified-get-seasons">
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="verified-seasons-right">
 
@@ -417,7 +434,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="verified-episodes-right">
 
@@ -457,12 +474,14 @@
     <script src="{% static "/js/videoplayer.js" %}"></script>
 
     <script>
-        // get all the series initially
+        // get all the pending series
         function get_series(){
-            var data={
-            }
-            var formData=new FormData();
-            formData.append('data', JSON.stringify(data));
+
+            $('#get-series').empty();
+            $('#series-right').empty();
+
+            var formData = new FormData();
+
             $.ajax({
                 type: 'POST',
                 url: '{% url "get_series" %}',
@@ -472,91 +491,442 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_any_pending_series_exists != '') {
+                        var htmlgen='<div><p>'+data.is_any_pending_series_exists+'</p></div>';
+                        $('#get-series').append(htmlgen);
+                    }
                     if (data.is_successful != '') {
-                        for(var ind in data.series){
-                            var sub_data=data.series[ind];
-                            ind++;
-                            var series_data=sub_data[ind];
-                            var sub="";
-                            for(index in series_data[8]){
-                                sub+=","+series_data[8][index];
+
+                        // appending the already uploaded series
+                        for(var key in data.pending_series_data) {
+                            var htmlgen='<div id="series'+data.pending_series_data[key][0]+'" class="container my-5"><h4 class="my-4">'+data.pending_series_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.pending_series_data[key][5]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.pending_series_data[key][3]+' | ';
+
+                            for (var i = 0; i < data.pending_series_data[key][6].length; i++) {
+                                htmlgen += data.pending_series_data[key][6][i] + ' | ';
                             }
-                            var htmlgen='<div class="container my-5" id="series'+series_data[0]+'"><h4 class="my-4">'+series_data[2]+'</h4><div class="row"><div class="col-lg-8 col-md-8 col-sm-8"><img id="series'+series_data[0]+'thumbnail" src="'+series_data[7]+'" class="img-fluid"></div><div class="col-lg-4 col-md-4 col-sm-4"><div class="mx-2"><p>'+series_data[5]+','+series_data[4]+sub+'</p><p>'+series_data[3]+'</p><button onclick="move_to_season('+series_data[0]+','+series_data[1]+')" class="btn btn-primary btn-sm">seasons</button></div></div></div></div>';
+
+                            htmlgen += '</p><p class="text-muted">'+data.pending_series_data[key][2]+'</p><p class="text-muted">'+data.pending_series_data[key][1]+'</p><p class="text-muted">Provider - '+data.pending_series_data[key][7]+'</p><button type="button" class="btn btn-primary" onclick="go_to_seasons('+key+')">Go to seasons</button></div></div></div></div>';
                             $('#get-series').append(htmlgen);
-                            $('#series-right').append('<li><a href="#series' + series_data[0] + '">' + series_data[2] + '</a></li>');
+
+                            // appending already uploaded series to right navigation
+                            $('#series-right').append('<li><a href="#series' + data.pending_series_data[key][0] + '">' + data.pending_series_data[key][0]+ ' - '+data.pending_series_data[key][7]+'</a></li>');
                         }
-                    } else {
+                    }
+                    else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
         }
-        // ajax call for getting seasons for a particular series
-        function move_to_season( /*series_id*/ ) {
-            $('#list-seriesinfo-list').css('pointer-events', 'all');
-            $('#list-seriesinfo-list').tab('show');
-            // var data = {
-            //     'series_id': series_id,
-            // }
-            // var formData = new FormData();
-            // formData.append('data', JSON.stringify(data));
-            // $.ajax({
-            //     type: 'POST',
-            //     url: '',
-            //     data: formData,
-            //     dataType: 'json',
-            //     enctype: 'multipart/form-data',
-            //     processData: false,
-            //     contentType: false,
-            //     success: function (data) {
-            //         if (data.is_series_exists != '') {
-            //             alert(data.is_series_exists);
-            //         } else if (data.is_successful != '') {
 
 
-            //             // allow to open seasons tab
-            //             $('#list-seriesinfo-list').css('pointer-events', 'all');
-            //         } else {
-            //             alert('Some unexpected error has occured. Try again.');
-            //         }
-            //     }
-            // });
+        // function to view seasons in added content section
+        function go_to_seasons(series_id) {
+
+            document.getElementById('series_id').innerHTML = series_id;
+            // emptying the already uploaded seasons section and right navigation section
+            $('#apnd').empty();
+            $('#season-right').empty();
+
+            // javascript data object
+            var data = {
+                'series_id': series_id,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "pending_uploaded_seasons" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_any_series_season_exists != '') {
+                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        $('#apnd').append(htmlgen);
+                    }
+                    else if (data.is_successful != '') {
+                        // appending the already uploaded seasons
+                        for(var key in data.all_series_season_data) {
+                            var htmlgen='<div id="season'+data.all_series_season_data[key][0]+'" class="container my-5"><h4 class="my-4">Season '+data.all_series_season_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.all_series_season_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.all_series_season_data[key][1]+'</p><p class="text-muted">Status - '+data.all_series_season_data[key][4]+'</p><button type="button" class="btn btn-primary" onclick="go_to_episodes('+key+')">Go to episodes</button></div></div></div></div>';
+                            $('#apnd').append(htmlgen);
+
+                            // appending the already uploaded seasons to right navigation
+                            $('#season-right').append('<li><a href="#season' + data.all_series_season_data[key][0] + '">season' + data.all_series_season_data[key][0]+ '</a></li>');
+
+                        }
+
+                        // restricting pointer events for other tabs
+                        $('#list-seriesform-list').css('pointer-events', 'all');
+                        $('#list-seriesinfo-list').css('pointer-events', 'all');
+                        $('#list-seasoninfo-list').css('pointer-events', 'none');
+                        $('#list-seriesinfo-list').tab('show');
+
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
         }
 
 
-        // ajax call for getting seasons for a particular series
-        function move_to_episode( /*series_id,series_season_id*/ ) {
-            $('#list-seasoninfo-list').css('pointer-events', 'all');
-            $('#list-seasoninfo-list').tab('show');
-            // var data = {
-            //     'series_id': series_id,
-            //     'series_season_id':series_season_id,
-            // }
-            // var formData = new FormData();
-            // formData.append('data', JSON.stringify(data));
-            // $.ajax({
-            //     type: 'POST',
-            //     url: '',
-            //     data: formData,
-            //     dataType: 'json',
-            //     enctype: 'multipart/form-data',
-            //     processData: false,
-            //     contentType: false,
-            //     success: function (data) {
-            //         if (data.is_series_season_exists != '') {
-            //             alert(data.is_series_exists);
-            //         } else if (data.is_successful != '') {
+        // function when admin wants to see the uploaded episodes in pending content section
+        function go_to_episodes(series_season_id) {
 
+            // emptying the already uploaded episodes section and right navigation section
+            $('#uploaded_episodes').empty();
+            $('#episodes-right').empty();
 
-            //             // allow to open episodes tab
-            //             $('#list-seasoninfo-list').css('pointer-events', 'all');
-            //             $('#list-seasoninfo-list').tab('show');
-            //         } else {
-            //             alert('Some unexpected error has occured. Try again.');
-            //         }
-            //     }
-            // });
+            // javascript data object
+            var data = {
+                'series_season_id': series_season_id,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "pending_uploaded_episodes" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_series_season_exists != '') {
+                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        $('#uploaded_episodes').append(htmlgen);
+                    }
+                    else if (data.is_successful != '') {
+
+                        // appending the already uploaded episodes
+                        for(var key in data.season_episode_data) {
+                            var specialol=`'${data.season_episode_data[key][4]}'`;
+                            var htmlgen='<div id="episode'+data.season_episode_data[key][6]+'" class="container my-5"><h4 class="my-4">Episode '+data.season_episode_data[key][6]+'-'+data.season_episode_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="episode'+data.season_episode_data[key][6]+'thumbnail" src="'+data.season_episode_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.season_episode_data[key][2]+'</p><p class="text-muted">';
+
+                            for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
+                                htmlgen += data.season_episode_data[key][9][i] + ' | ';
+                            }
+
+                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.season_episode_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div><div class="row"><div class="verify-section my-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#verify-sect" aria-expanded="false" aria-controls="verify-sect">Verify</button><div class="collapse" id="verify-sect"><div class="card card-body"><div class="form-group"><label for="cost-per-video">Cost Per Video</label><input type="number" class="form-control" name="cost-per-video" id="cost-per-video'+data.season_episode_data[key][0]+'" value=0 min="0" placeholder="Cost per video"></div><button type="button" onclick="verify_video('+data.season_episode_data[key][0]+')" class="btn btn-primary btn-sm">submit</button></div></div></div><div class="reject-section my-5 mx-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect" aria-expanded="false" aria-controls="reject-sect">Reject</button><div class="collapse" id="reject-sect"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment'+data.season_episode_data[key][0]+'" rows="3"></textarea></div><button type="button" onclick="reject_video('+data.season_episode_data[key][0]+')" class="btn btn-primary btn-sm">submit</button></div></div></div></div></div>';
+
+                            $('#uploaded_episodes').append(htmlgen);
+
+                            // appending the already uploaded episodes to right navigation
+                            $('#episodes-right').append('<li id="li_episode'+data.season_episode_data[key][6]+'"><a href="#episode' + data.season_episode_data[key][6] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
+                        }
+
+                        // restricting pointer events for other tabs
+                        $('#list-seasoninfo-list').css('pointer-events', 'all');
+                        $('#list-seasoninfo-list').tab('show');
+
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
         }
+
+
+        // function when admin wants to verify a video
+        function verify_video(video_id) {
+
+            // fetching form data
+            var id = 'cost-per-video' + video_id;
+            var cost_per_video = document.getElementById(id).value;
+
+            // javascript data object
+            var data = {
+                'video_id': video_id,
+                'cost_per_video': cost_per_video,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "verify_video" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    }
+                    else if (data.is_video_already_evaluated != '') {
+                        alert(data.is_video_already_evaluated);
+                    }
+                    else if (data.is_cost_provided != '') {
+                        alert(data.is_cost_provided);
+                    }
+                    else if (data.is_successful != '') {
+                        alert(data.is_successful)
+
+                        var id_to_be_removed = '#episode' + data.episode_no;
+                        $(id_to_be_removed).remove();
+
+                        var li_id_to_be_removed = '#li_episode' + data.episode_no;
+                        $(li_id_to_be_removed).remove();
+
+                        // restricting pointer events for other tabs
+                        $('#list-seasoninfo-list').css('pointer-events', 'all');
+                        $('#list-seasoninfo-list').tab('show');
+
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        // function when admin wants to reject a video
+        function reject_video(video_id) {
+
+            // fetching form data
+            var id = 'comment' + video_id;
+            var comment = document.getElementById(id).value;
+
+            // javascript data object
+            var data = {
+                'video_id': video_id,
+                'comment': comment,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "reject_video" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    }
+                    else if (data.is_video_already_evaluated != '') {
+                        alert(data.is_video_already_evaluated);
+                    }
+                    else if (data.is_comment_provided != '') {
+                        alert(data.is_comment_provided);
+                    }
+                    else if (data.is_successful != '') {
+
+                        alert(data.is_successful)
+
+                        var id_to_be_removed = '#episode' + data.episode_no;
+                        $(id_to_be_removed).remove();
+
+                        var li_id_to_be_removed = '#li_episode' + data.episode_no;
+                        $(li_id_to_be_removed).remove();
+
+                        // restricting pointer events for other tabs
+                        $('#list-seasoninfo-list').css('pointer-events', 'all');
+                        $('#list-seasoninfo-list').tab('show');
+
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+
+        // get all the pending series
+        function get_added_series(){
+
+            $('#verified-get-series').empty();
+            $('#verified-series-right').empty();
+
+            var formData = new FormData();
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "added_series" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_any_verified_series_exists != '') {
+                        var htmlgen='<div><p>'+data.is_any_verified_series_exists+'</p></div>';
+                        $('#verified-get-series').append(htmlgen);
+                    }
+                    if (data.is_successful != '') {
+                        // appending the already uploaded series
+                        for(var key in data.verified_series_data) {
+                            var htmlgen='<div id="series'+data.verified_series_data[key][0]+'" class="container my-5"><h4 class="my-4">'+data.verified_series_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.verified_series_data[key][5]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.verified_series_data[key][3]+' | ';
+
+                            for (var i = 0; i < data.verified_series_data[key][6].length; i++) {
+                                htmlgen += data.verified_series_data[key][6][i] + ' | ';
+                            }
+
+                            htmlgen += '</p><p class="text-muted">'+data.verified_series_data[key][2]+'</p><p class="text-muted">'+data.verified_series_data[key][1]+'</p><p class="text-muted">Provider - '+data.verified_series_data[key][7]+'</p><button type="button" class="btn btn-primary" onclick="go_to_added_seasons('+key+')">Go to seasons</button></div></div></div></div>';
+
+                            $('#verified-get-series').append(htmlgen);
+
+                            // appending already uploaded series to right navigation
+                            $('#verified-series-right').append('<li><a href="#series' + data.verified_series_data[key][0] + '">' + data.verified_series_data[key][0]+ ' - '+data.verified_series_data[key][7]+'</a></li>');
+                        }
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+
+        // function to view seasons in added content section
+        function go_to_added_seasons(series_id) {
+
+            document.getElementById('added_series_id').innerHTML = series_id;
+            // emptying the already uploaded seasons section and right navigation section
+            $('#verified-get-seasons').empty();
+            $('#verified-seasons-right').empty();
+
+            // javascript data object
+            var data = {
+                'series_id': series_id,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "added_seasons" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_any_series_season_exists != '') {
+                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        $('#verified-get-seasons').append(htmlgen);
+                    }
+                    else if (data.is_successful != '') {
+                        // appending the already uploaded seasons
+                        for(var key in data.all_series_season_data) {
+                            var htmlgen='<div id="season'+data.all_series_season_data[key][0]+'" class="container my-5"><h4 class="my-4">Season '+data.all_series_season_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.all_series_season_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.all_series_season_data[key][1]+'</p><p class="text-muted">Status - '+data.all_series_season_data[key][4]+'</p><button type="button" class="btn btn-primary" onclick="go_to_added_episodes('+key+')">Go to episodes</button></div></div></div></div>';
+
+                            $('#verified-get-seasons').append(htmlgen);
+
+                            // appending the already uploaded seasons to right navigation
+                            $('#verified-seasons-right').append('<li><a href="#season' + data.all_series_season_data[key][0] + '">season' + data.all_series_season_data[key][0]+ '</a></li>');
+
+                        }
+
+                        // restricting pointer events for other tabs
+                        $('#list-added-seriesform-list').css('pointer-events', 'all');
+                        $('#list-added-seriesinfo-list').css('pointer-events', 'all');
+                        $('#list-added-seasoninfo-list').css('pointer-events', 'none');
+                        $('#list-added-seriesinfo-list').tab('show');
+
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+
+        // function when admin wants to see the uploaded episodes in pending content section
+        function go_to_added_episodes(series_season_id) {
+
+            // emptying the already uploaded episodes section and right navigation section
+            $('#verified-get-episodes').empty();
+            $('#verified-episodes-right').empty();
+
+            // javascript data object
+            var data = {
+                'series_season_id': series_season_id,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "added_episodes" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_series_season_exists != '') {
+                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        $('#verified-get-episodes').append(htmlgen);
+                    }
+                    else if (data.is_successful != '') {
+
+                        // appending the already uploaded episodes
+                        for(var key in data.season_episode_data) {
+                            var specialol=`'${data.season_episode_data[key][4]}'`;
+                            var htmlgen='<div id="episode'+data.season_episode_data[key][6]+'" class="container my-5"><h4 class="my-4">Episode '+data.season_episode_data[key][6]+'-'+data.season_episode_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="episode'+data.season_episode_data[key][6]+'thumbnail" src="'+data.season_episode_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.season_episode_data[key][2]+'</p><p class="text-muted">';
+
+                            for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
+                                htmlgen += data.season_episode_data[key][9][i] + ' | ';
+                            }
+
+                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.season_episode_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+
+                            $('#verified-get-episodes').append(htmlgen);
+
+                            // appending the already uploaded episodes to right navigation
+                            $('#verified-episodes-right').append('<li id="li_episode'+data.season_episode_data[key][6]+'"><a href="#episode' + data.season_episode_data[key][6] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
+                        }
+
+                        // restricting pointer events for other tabs
+                        $('#list-added-seasoninfo-list').css('pointer-events', 'all');
+                        $('#list-added-seasoninfo-list').tab('show');
+
+                    }
+                    else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
 
         function play_video(video_id, video_url) {
             // Add code to launch modal by getting
@@ -573,17 +943,23 @@
         $('#list-seriesform-list').on('show.bs.tab', function (e) {
             $('#list-seriesinfo-list').css('pointer-events', 'none');
             $('#list-seasoninfo-list').css('pointer-events', 'none');
+            get_series();
         })
         $('#list-added-seriesform-list').on('show.bs.tab', function (e) {
             $('#list-added-seriesinfo-list').css('pointer-events', 'none');
             $('#list-added-seasoninfo-list').css('pointer-events', 'none');
+            get_added_series();
         })
         // restrict on moving from season directly to other episode
         $('#list-seriesinfo-list').on('show.bs.tab', function (e) {
             $('#list-seasoninfo-list').css('pointer-events', 'none');
+            var series_id = document.getElementById('series_id').innerHTML;
+            go_to_seasons(series_id);
         })
         $('#list-added-seriesinfo-list').on('show.bs.tab', function (e) {
             $('#list-added-seasoninfo-list').css('pointer-events', 'none');
+            var series_id = document.getElementById('added_series_id').innerHTML;
+            go_to_added_seasons(series_id);
         })
     </script>
 </body>
