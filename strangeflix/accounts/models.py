@@ -11,9 +11,9 @@ class CustomUser(AbstractUser):
     USER_TYPES = (
 
         # TYPES OF USERS
-        ('A', 'Admin'),
-        ('P', 'Provider'),
         ('U', 'User'),
+        ('P', 'Provider'),
+        ('A', 'Admin'),
     )
 
     email = models.EmailField(
@@ -22,7 +22,7 @@ class CustomUser(AbstractUser):
         unique=True,
     )
 
-    user_type = models.CharField(max_length=1, choices=USER_TYPES, default=USER_TYPES[2][1])
+    user_type = models.CharField(max_length=1, choices=USER_TYPES, default='U')
 
 
 # model for storing user specific details

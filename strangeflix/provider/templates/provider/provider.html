@@ -764,6 +764,16 @@
     </script>
     <script src="{% static "/js/provider.js" %}"></script>
     <script src="{% static "/js/videoplayer.js" %}"></script>
+
+    <!-- to truncate the extra hash in url -->
+    <script type="text/javascript">
+        if (window.location.hash === "#_=_"){
+            history.replaceState
+                ? history.replaceState(null, null, window.location.href.split("#")[0])
+                : window.location.hash = "";
+        }
+    </script>
+
     <script>
 
 
