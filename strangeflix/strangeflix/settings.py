@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 3rd Party installs
     'crispy_forms',
     'widget_tweaks',
+    'channels',
 
     # Apps defined by us
     'Admin.apps.AdminConfig',
@@ -53,14 +54,11 @@ INSTALLED_APPS = [
     'subscribe.apps.SubscribeConfig',
     'transaction.apps.TransactionConfig',
     'provider.apps.ProviderConfig',
+    'room.apps.RoomConfig',
 
     # social accounts additional apps
     'social_django', # add this
-    # 'django.contrib.sites',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.facebook',
+
 ]
 
 MIDDLEWARE = [
@@ -123,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+# authentications backends for social account login to resolve the redirect url
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.linkedin.LinkedinOAuth2',
     'social_core.backends.instagram.InstagramOAuth2',
@@ -132,12 +130,15 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+
+# redirecton urls for login with social accounts
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'social_redirect_url'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'home_page'
 
 
+# Facebook auth api configurations
 SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')            # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')      # App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']                      # add this
@@ -152,46 +153,10 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
 ]
 
 
+# Google auth api configurations
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
-
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '208401433427-bnp642t84ltcl9pbfplm2oh5qd95cned.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dv1fZgBXbaCFFNN-xL7q0FYa'
-
-
-# # settings for setting up facebook login
-# AUTHENTICATION_BACKENDS = (
-#     'allauth.account.auth_backends.AuthenticationBackend',
-#     'django.contrib.auth.backends.ModelBackend',
-# )
-
-# SOCIALACCOUNT_PROVIDERS = \
-#     {'facebook':
-#        {'METHOD': 'oauth2',
-#         'SCOPE': ['email','public_profile', 'user_friends'],
-#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-#         'FIELDS': [
-#             'id',
-#             'email',
-#             'name',
-#             'first_name',
-#             'last_name',
-#             'verified',
-#             'locale',
-#             'timezone',
-#             'link',
-#             'gender',
-#             'updated_time'],
-#         'EXCHANGE_TOKEN': True,
-#         'LOCALE_FUNC': lambda request: 'kr_KR',
-#         'VERIFIED_EMAIL': False,
-#         'VERSION': 'v2.4'}}
-
-
-# #little options for your page's signup.
-# ACCOUNT_EMAIL_REQUIRED=True
-# ACCOUNT_USERNAME_REQURIED=True
-# SITE_ID = 2
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -259,3 +224,6 @@ FIREBASE_STORAGE_BUCKET=config('FIREBASE_STORAGE_BUCKET')
 FIREBASE_MESSAGING_SENDER_ID=config('FIREBASE_MESSAGING_SENDER_ID')
 FIREBASE_APP_ID=config('FIREBASE_APP_ID')
 FIREBASE_MEASUREMENT_ID=config('FIREBASE_MEASUREMENT_ID')
+
+
+ASGI_APPLICATION = "strangeflix.routing.application"
