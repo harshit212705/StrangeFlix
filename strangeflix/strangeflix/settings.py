@@ -53,6 +53,14 @@ INSTALLED_APPS = [
     'subscribe.apps.SubscribeConfig',
     'transaction.apps.TransactionConfig',
     'provider.apps.ProviderConfig',
+
+    # social accounts additional apps
+    'social_django', # add this
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +124,75 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'social_redirect_url'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'home_page'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')            # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')      # App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']                      # add this
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {                            # add this
+  'fields': 'id, name, email, picture.type(large), link'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
+
+
+
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '208401433427-bnp642t84ltcl9pbfplm2oh5qd95cned.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dv1fZgBXbaCFFNN-xL7q0FYa'
+
+
+# # settings for setting up facebook login
+# AUTHENTICATION_BACKENDS = (
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+
+# SOCIALACCOUNT_PROVIDERS = \
+#     {'facebook':
+#        {'METHOD': 'oauth2',
+#         'SCOPE': ['email','public_profile', 'user_friends'],
+#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+#         'FIELDS': [
+#             'id',
+#             'email',
+#             'name',
+#             'first_name',
+#             'last_name',
+#             'verified',
+#             'locale',
+#             'timezone',
+#             'link',
+#             'gender',
+#             'updated_time'],
+#         'EXCHANGE_TOKEN': True,
+#         'LOCALE_FUNC': lambda request: 'kr_KR',
+#         'VERIFIED_EMAIL': False,
+#         'VERSION': 'v2.4'}}
+
+
+# #little options for your page's signup.
+# ACCOUNT_EMAIL_REQUIRED=True
+# ACCOUNT_USERNAME_REQURIED=True
+# SITE_ID = 2
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -135,8 +212,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # login and logout redirection url
-LOGIN_REDIRECT_URL = 'home_page'
-LOGOUT_REDIRECT_URL = 'home_page'
+# LOGIN_REDIRECT_URL = 'home_page'
+# LOGOUT_REDIRECT_URL = 'home_page'
 
 # setting user auth model
 AUTH_USER_MODEL = config('AUTH_USER_MODEL')

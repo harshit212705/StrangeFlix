@@ -1,13 +1,16 @@
 # django modules
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import logout, login, views
 from django.contrib.auth import authenticate
 from subscribe.models import SubscriptionPlan
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm
+import json
 
 # importing models
 from .models import CustomUser as User
@@ -150,6 +153,12 @@ def activate(request, uidb64, token):
         login(request, user)
 
         if user.is_authenticated:
+            # redirecting according to account type
+            if user.user_type == 'A':
+                return redirect('admin_dashboard')
+            elif user.user_type == 'P':
+                return redirect('provider_dashboard')
+
             # Asking user for subscribing to some plan
             subscription_plans = SubscriptionPlan.objects.all()
             context = {}
@@ -163,8 +172,66 @@ def activate(request, uidb64, token):
             # rendering the response
             return render(request, 'subscribe/templates/subscribe/subscribe.html', {'context': context})
 
-            return redirect("home_page") # Need to be changed
+            # return redirect("home_page") # Need to be changed
         else:
             return HttpResponse("Some Error Occured During Login.User Profile was not Created")
     else:
         return HttpResponse("ACTIVATION LINK IS INVALID")
+
+
+@csrf_exempt
+def custom_login(request):
+
+    # extracting form data coming from ajax request
+    json_data = json.loads(request.POST.get('data'))
+    username = json_data['username']
+    password = json_data['password']
+
+
+    # response to be returned
+    context = {
+        'is_username_exists': '',
+        'is_password_matches': '',
+        'is_successful': '',
+        'redirect_url': '',
+    }
+
+    user = authenticate(username=username, password=password)
+
+    if user is None:
+        is_username_exists = User.objects.filter(username=username).first()
+        if is_username_exists:
+            context['is_password_matches'] = 'Invalid credentials!!'
+        else:
+            context['is_username_exists'] = 'User does not exists!!'
+    else:
+        login(request, user)
+        context['is_successful'] = 'User logged in successfully!!'
+
+        # redirecting according to account type
+        if user.user_type == 'A':
+            context['redirect_url'] = 'admin/dashboard'
+        elif user.user_type == 'P':
+            context['redirect_url'] = 'provider/dashboard'
+        elif user.user_type == 'U':
+            context['redirect_url'] = ''
+
+    return JsonResponse(context)
+
+
+def social_redirect_url(request):
+    user = User.objects.filter(username=request.user.username).first()
+    user.user_type = 'U'
+    user.save()
+    user_details_exists = UserDetails.objects.filter(user=request.user).first()
+    if user_details_exists is None:
+        user_details = UserDetails.objects.create(user=request.user, wallet_money=0)
+        user_details.save()
+
+    # redirecting according to account type
+    if request.user.user_type == 'A':
+        return redirect('admin_dashboard')
+    elif request.user.user_type == 'P':
+        return redirect('provider_dashboard')
+    elif request.user.user_type == 'U':
+        return redirect('home_page')
