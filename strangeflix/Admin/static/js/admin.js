@@ -26,13 +26,6 @@ $("#list-added-series-list").on('click', function (e) {
 });
 
 
-$('#reject-sect').on('show.bs.collapse',function(e){
-    console.log('hii');
-    $('#verify-sect').collapse('hide');
-})
 
-$('#verify-sect').on('show.bs.collapse',function(e){
-    $('#reject-sect').collapse('hide');
-})
 
 
