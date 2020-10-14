@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 3rd Party installs
     'crispy_forms',
     'widget_tweaks',
+    'channels',
 
     # Apps defined by us
     'Admin.apps.AdminConfig',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'subscribe.apps.SubscribeConfig',
     'transaction.apps.TransactionConfig',
     'provider.apps.ProviderConfig',
+    'room.apps.RoomConfig',
 ]
 
 MIDDLEWARE = [
@@ -182,3 +184,6 @@ FIREBASE_STORAGE_BUCKET=config('FIREBASE_STORAGE_BUCKET')
 FIREBASE_MESSAGING_SENDER_ID=config('FIREBASE_MESSAGING_SENDER_ID')
 FIREBASE_APP_ID=config('FIREBASE_APP_ID')
 FIREBASE_MEASUREMENT_ID=config('FIREBASE_MEASUREMENT_ID')
+
+
+ASGI_APPLICATION = "strangeflix.routing.application"
