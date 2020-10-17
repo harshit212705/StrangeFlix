@@ -39,14 +39,12 @@ progress.addEventListener('mouseup', () => mousedown = false);
 
 function togglePlay() {
     if (video.paused || video.ended) {
-        var pl=video.play();
-        if(pl!=undefined){
-            pl.then(_ => {
-                
-             })
-             .catch(error => {
-                video.pause();
-             });
+        var pl = video.play();
+        if (pl != undefined) {
+            pl.then(_ => {})
+                .catch(error => {
+                    video.pause();
+                });
         }
     } else {
         video.pause();
@@ -122,10 +120,39 @@ voloff.addEventListener('click', function (e) {
     }
 });
 
-// handle progress
+// handle progress and timer on time update event
+
 function handleProgress() {
     const percent = (video.currentTime / video.duration) * 100;
     progressBar.style.flexBasis = `${percent}%`;
+    var current = document.getElementById("current");
+    var timeDuration = document.getElementById("duration");
+    // curr mins spend
+    var currmins = Math.floor(video.currentTime / 60);
+
+    // curr secs spend
+    var currsecs = Math.floor(video.currentTime - currmins * 60);
+
+    // total mins 
+    var durmins = video.currentTime==0?0:Math.floor(video.duration / 60);
+
+    //total secs
+    var dursecs = video.currentTime==0?0:Math.floor(video.duration - durmins * 60);
+
+    if (currsecs < 10) {
+        currsecs = "0" + currsecs;
+    }
+    if (dursecs < 10) {
+        dursecs = "0" + dursecs;
+    }
+    if (currmins < 10) {
+        currmins = "0" + currmins;
+    }
+    if (durmins < 10) {
+        durmins = "0" + durmins;
+    }
+    current.innerHTML = currmins + ":" + currsecs + " / ";
+    timeDuration.innerHTML = durmins + ":" + dursecs;
 }
 video.addEventListener('timeupdate', handleProgress);
 
@@ -201,7 +228,7 @@ playback.addEventListener('click', function (e) {
     });
     plbk.forEach(element => {
         element.addEventListener('click', function () {
-            video.playbackRate=element.innerHTML;
+            video.playbackRate = element.innerHTML;
             qual.forEach(element => {
                 element.style.display = "none";
             });

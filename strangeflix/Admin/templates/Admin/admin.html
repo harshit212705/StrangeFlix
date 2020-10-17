@@ -2,13 +2,26 @@
 {% include "templates/headheader.html" %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<<<<<<< HEAD
 <link rel="stylesheet" href="{% static "/css/admin.css" %}">
+=======
+<<<<<<< Updated upstream
+<link rel="stylesheet" href="{% static "/css/admin.css" %}">
+<link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+
+||||||| merged common ancestors
+<link rel="stylesheet" href="{% static "css/admin.css" %}">
+=======
+<link rel="stylesheet" href="{% static "/css/admin.css" %}">
+<link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+>>>>>>> Stashed changes
+>>>>>>> 6a2133e32297c579ba41b50029d187d4276e14e8
 </head>
 
 <body>
     <div class="main__section">
         <div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-2">
+            <div class="col-lg-2">
                 <div class="wrapper ">
                     <!-- Sidebar  -->
                     <nav id="sidebar">
@@ -68,13 +81,13 @@
                     </nav>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="col-lg-8 col-md-8 media-full">
                 <!-- content  to be displayed on the middle of the page-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                         aria-labelledby="list-home-list">
                         <div class="row">
-                            <div class="col-lg-7 col-md-7 col-sm-7">
+                            <div class="col-lg-7 col-md-7 col-sm-7 media-home">
                                 <div id="section1">
                                     <h4>section1</h4>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est molestiae error
@@ -188,7 +201,7 @@
                                                 </div>
                                                 <!-- right navigation  -->
 
-                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="col-lg-3 col-md-3">
                                                     <div class="fix">
                                                         <ul id="season-right">
                                                             <!-- <li>
@@ -289,7 +302,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="episodes-right">
                                                         <!-- <li>
@@ -377,7 +390,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="verified-series-right">
 
@@ -392,13 +405,24 @@
                                     <!-- verified seasons  -->
                                     <div class="series__info my-5">
                                         <div class="row">
+<<<<<<< HEAD
+                                            <p id="added_series_id" hidden></p>
+=======
+<<<<<<< Updated upstream
+                                            <p id="added_series_id" hidden></p>
+                                            <div class="col-lg-9 col-md-9">
+||||||| merged common ancestors
+>>>>>>> 6a2133e32297c579ba41b50029d187d4276e14e8
+                                            <div class="col-lg-9 col-md-9 col-sm-9">
+=======
                                             <p id="added_series_id" hidden></p>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
+>>>>>>> Stashed changes
                                                 <div id="verified-get-seasons">
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="verified-seasons-right">
 
@@ -418,7 +442,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <div class="fix">
                                                     <ul id="verified-episodes-right">
 
@@ -456,6 +480,15 @@
     {% include "templates/footfooter.html" %}
     <script src="{% static "/js/admin.js" %}"></script>
     <script src="{% static "/js/videoplayer.js" %}"></script>
+
+    <!-- to truncate the extra hash in url -->
+    <script type="text/javascript">
+        if (window.location.hash === "#_=_"){
+            history.replaceState
+                ? history.replaceState(null, null, window.location.href.split("#")[0])
+                : window.location.hash = "";
+        }
+    </script>
 
     <script>
         // get all the pending series
@@ -544,7 +577,6 @@
 
                             // appending the already uploaded seasons to right navigation
                             $('#season-right').append('<li><a href="#season' + data.all_series_season_data[key][0] + '">season' + data.all_series_season_data[key][0]+ '</a></li>');
-
                         }
 
                         // restricting pointer events for other tabs
@@ -589,7 +621,7 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_series_season_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        var htmlgen='<div><p>'+data.is_series_season_exists+'</p></div>';
                         $('#uploaded_episodes').append(htmlgen);
                     }
                     else if (data.is_successful != '') {
@@ -741,8 +773,7 @@
         }
 
 
-
-        // get all the pending series
+        // get all the added or verified series
         function get_added_series(){
 
             $('#verified-get-series').empty();
@@ -849,7 +880,7 @@
 
 
 
-        // function when admin wants to see the uploaded episodes in pending content section
+        // function when admin wants to see the uploaded episodes in added content section
         function go_to_added_episodes(series_season_id) {
 
             // emptying the already uploaded episodes section and right navigation section
@@ -911,7 +942,6 @@
         }
 
 
-
         function play_video(video_id, video_url) {
             // Add code to launch modal by getting
             $('#insert-video').attr('src', video_url);
@@ -919,27 +949,33 @@
             $('.progress__filled').css('flex', '0');
             $('#video-in-modal').modal('show');
         }
+
+
         // once modal is closed remove the video
         $('#video-in-modal').on('hide.bs.modal', function (e) {
             document.getElementById('video').pause();
         })
+
         // restrict on moving from series directly to other two part
         $('#list-seriesform-list').on('show.bs.tab', function (e) {
             $('#list-seriesinfo-list').css('pointer-events', 'none');
             $('#list-seasoninfo-list').css('pointer-events', 'none');
             get_series();
         })
+
         $('#list-added-seriesform-list').on('show.bs.tab', function (e) {
             $('#list-added-seriesinfo-list').css('pointer-events', 'none');
             $('#list-added-seasoninfo-list').css('pointer-events', 'none');
             get_added_series();
         })
+
         // restrict on moving from season directly to other episode
         $('#list-seriesinfo-list').on('show.bs.tab', function (e) {
             $('#list-seasoninfo-list').css('pointer-events', 'none');
             var series_id = document.getElementById('series_id').innerHTML;
             go_to_seasons(series_id);
         })
+
         $('#list-added-seriesinfo-list').on('show.bs.tab', function (e) {
             $('#list-added-seasoninfo-list').css('pointer-events', 'none');
             var series_id = document.getElementById('added_series_id').innerHTML;

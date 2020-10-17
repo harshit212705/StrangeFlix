@@ -10,6 +10,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
+    # url(r'^accounts/',include('allauth.urls')),
+    path('social-auth/', include('social_django.urls', namespace="social")),
     path('accounts/', include('accounts.urls')),
     path('subscribe/', include('subscribe.urls')),
     path('transaction/', include('transaction.urls')),

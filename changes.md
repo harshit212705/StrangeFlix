@@ -3,6 +3,11 @@
 ## DO NOT add new events at last. Recent changes should be at the top.
 
 
+### By <b>_Harshit Garg_</b> on <b>_October 14, 2020_</b>
+* Custom Login added.
+* Login with facebook and google added.
+
+
 ### By <b>_Harshit Garg_</b> on <b>_October 13, 2020_</b>
 * Series verification from admin panel added.
 

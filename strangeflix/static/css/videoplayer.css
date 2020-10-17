@@ -1,5 +1,5 @@
 .player {
-  margin:3% 15%;
+  margin:3% 3%;
   position: relative;
   font-size: 0;
   overflow: hidden;
@@ -46,13 +46,26 @@ a{
   background: none;
   border: 0;
   line-height: 1;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: white;
   text-align: center;
   outline: 0;
   padding: 0;
   cursor: pointer;
-  max-width: 70px;
+  max-width: 50px;
+  transition: ease-in-out 0.5s;
+}
+.timer__button{
+  background: none;
+  border: 0;
+  line-height: 1;
+  font-size: 0.95rem;
+  color: white;
+  text-align: center;
+  outline: 0;
+  padding: 0;
+  cursor: pointer;
+  max-width: 7rem;
   transition: ease-in-out 0.5s;
 }
 .backword__button:hover{
@@ -85,9 +98,9 @@ a{
   transition:ease-in-out 0.5s;
 }
 .player__slider{
-  max-width: 6rem;
-  cursor: pointer;
-  visibility: hidden;
+  max-width: 5rem;
+  cursor:pointer;
+  display: none;
   transition: ease-in-out 0.2s;
   transition-delay: 0.2s;
 }
@@ -107,10 +120,10 @@ a{
   font-size:1.2rem;
 }
 .volume__button:hover + .player__slider{
-  visibility: visible;
+  display:block;
 }
 .player__slider:hover{
-  visibility:visible;
+  display:block;
 }
 
 .player__controls {
@@ -231,6 +244,13 @@ a{
 }
 
 .modal-dialog{
-  min-height: 700px !important;
-  min-width: 1000px !important;
+  min-height: 20% !important;
+  min-width: 60% !important;
+}
+
+
+@media(max-size:45em){
+  .player__controls{
+    font-size:0.6rem;
+  }
 }
