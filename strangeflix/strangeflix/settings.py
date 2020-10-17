@@ -185,5 +185,13 @@ FIREBASE_MESSAGING_SENDER_ID=config('FIREBASE_MESSAGING_SENDER_ID')
 FIREBASE_APP_ID=config('FIREBASE_APP_ID')
 FIREBASE_MEASUREMENT_ID=config('FIREBASE_MEASUREMENT_ID')
 
-
+#channels configurations
 ASGI_APPLICATION = "strangeflix.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
