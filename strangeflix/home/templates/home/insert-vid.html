@@ -1,0 +1,296 @@
+<!-- video running section  -->
+<div class="runner-section container-fluid">
+    <div class="row">
+        <!-- video-player  -->
+        <div class="col-xl-9 col-lg-8 col-md-7 player-wrapper">
+            <!-- if paid  -->
+            <div class="player" id="video-player">
+
+                <!-- video-head  -->
+                <div class="video-head">
+                    <div class="text-white">
+                        <h3 class="font-weight-bold">heading</h4>
+                    </div>
+                </div>
+                <!-- video-body  -->
+                <div class="video-body">
+                    <video class="player__video viewer" id="video" preload="metadata">
+                        <source
+                            src="https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2F835aee21-d65a-4dea-b64a-d4d0a8950fc8.mp4?alt=media&token=fbbac811-8e9e-4e4a-b235-62e83681eeea"
+                            id="insert-vid"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <!-- video-footer  -->
+                <div class="video-footer">
+                    <div class="player__controls" id="plact">
+                        <!-- progress-bar  -->
+                        <div class="progress">
+                            <div class="progress__filled"></div>
+                        </div>
+
+
+                        <!-- play/pause  -->
+                        <button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="play-icon"
+                                class="fas fa-play"></i></button>
+
+                        <!-- skip 10s backword -->
+                        <button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«
+                            10s</button>
+
+                        <!-- skip 10s forward -->
+                        <button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s
+                            »</button>
+
+                        <!-- volume  -->
+                        <button class="volume__button" data-toggle="tooltip" title="mute" id="volume"><i
+                                id="vol-ico" class="fas fa-volume-up"></i></button>
+                        <input type="range" name="volume" id="vol-ran" class="player__slider" min="0" max="1"
+                            step="0.05" value="1">
+
+                        <!-- video timer  -->
+                        <button id="progressTime" class="timer__button">
+                            <span id="current">00:00 / </span>
+                            <span id="duration">00:00</span>
+                        </button>
+                        <!-- playbackrate  -->
+                        <!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> -->
+
+                        <div class="fullscreen">
+                            <!-- setting  -->
+                            <!-- <button id="setting" class="setting__button" data-toggle="tooltip" title="setting"><span
+                                    class="px-4"><i id="setting-ico" class="fas fa-cog"></i></span></button> -->
+                                    
+                            <button type="button" class="prev-button mr-3">
+                                <i class="fas fa-step-backward"></i>
+                            </button>
+                            <button type="button" class="next-button">
+                                <i class="fas fa-step-forward"></i>
+                            </button>
+                            <div class="btn-group dropup">
+                                <button id="setting" class="setting__button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><span class="px-4"><i
+                                            id="setting-ico" class="fas fa-cog"></i></span></button>
+                                <div class="dropdown-menu plbcrt">
+                                    <a href="#" class="dropdown-item playbacki dis">Playback speed</a>
+                                    <a href="#" class="dropdown-item quali dis">Video Quality</a>
+                                    <a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a>
+                                    <a href="#" class="dropdown-item playback">0.25</a>
+                                    <a href="#" class="dropdown-item playback">0.5</a>
+                                    <a href="#" class="dropdown-item playback">1</a>
+                                    <a href="#" class="dropdown-item playback">1.25</a>
+                                    <a href="#" class="dropdown-item playback">1.5</a>
+                                    <a href="#" class="dropdown-item playback">1.75</a>
+                                    <a href="#" class="dropdown-item playback">2</a>
+                                    <a href="#" class="dropdown-item qual">Auto</a>
+                                    <a href="#" class="dropdown-item qual">480p</a>
+                                    <a href="#" class="dropdown-item qual">720p</a>
+                                    <a href="#" class="dropdown-item qual">1080p</a>
+                                </div>
+                            </div>
+                            <!-- picture-in-picture  -->
+                            <button id="pip" class="pip__button" data-toggle="tooltip"
+                                title="picture-in-picture"><span class="px-4"><i id="pip-ico"
+                                        class="fas fa-window-maximize"></i></span></button>
+                            <!-- theatre view  -->
+                            <button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span
+                                    class="px-4"><i id="th-ico" class="fas fa-arrows-alt-v"></i></span></button>
+                            <!-- fullscreen  -->
+                            <button id="fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span
+                                    class="px-4"><i id="fs-ico" class="fas fa-expand"></i></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- else this  -->
+            <!-- pay cost per video  -->
+            <!-- <div class="text-center text-muted text-white">
+                pay $(number) to watch this video 
+                <button class="btn btn-primary btn-sm" type="button">Pay</button>
+            </div> -->
+
+        </div>
+
+        <!-- sidebar content  -->
+        <div class="col-xl-3 col-lg-4 col-md-5 playlist-container">
+            <div class="card">
+                <div class="card-header ser-hd bg-white">
+                    <span>Heading of the series tags</span>
+                </div>
+                <div class="card-body vid-cont">
+                    <ul id="pl-vid">
+                        <li>
+                            <!-- insert the link of the video  -->
+                            <a href="#">
+                                <div class="container py-2">
+                                    <div class="row media">
+                                        <!-- video-thumbnail  -->
+                                        <div class="col-xl-5 col-lg-6 col-md-6">
+                                            <img src="/img/img1.png" alt="" class="img-fluid">
+                                        </div>
+                                        <!-- video-desccription  -->
+                                        <div class="col-xl-7 col-lg-6 col-md-6">
+                                            <div class="media-body px-1">
+                                                <span class="font-weight-bold">
+                                                    S1 E1 - date
+                                                </span>
+                                                <div class="d-cent text-justify">
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                    Distinctio
+                                                    doloribus explicabo enim quae tenetur omnis, optio dolorem et.
+                                                    Eaque
+                                                    similique obcaecati laborum blanditiis officiis veniam maxime
+                                                    veritatis alias inventore voluptates!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="whole-sect">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-9 col-lg-6 col-md-7">
+                <!-- description flag section  -->
+                <div class="container-fluid descript-sect">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-8">
+                            <div class="vid-desc text-left pb-3">
+                                <div class="vid-hd py-1">
+                                    Series name || Season name || Episode name || SNo.ENo || Date
+                                </div>
+                                <div class="vid-cat py-1">
+                                    Categories || Language || Subcategories || tags
+                                </div>
+                                <div class="vid-des py-1">
+                                    Description of videos
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-4 pb-3">
+                            <div class="flg-sect d-flex flex-row-reverse align-items-end">
+                                <button type="button" class="add-to-fav mx-3" data-toggle="tooltip"
+                                    data-placement="bottom" title="Add to favourites">
+                                    <i class="fas fa-plus"></i>
+                                    <p class="add-to-fav-title text-muted py-2">Favourites</p>
+                                </button>
+                                <button type="button" class="vid-flag mx-3" data-toggle="modal"
+                                    data-target="#flagCenter">
+                                    <i class="fas fa-flag"></i>
+                                    <p class="add-to-flag text-muted py-2">Flag</p>
+                                </button>
+                                <button type="button" class="vid-dislike mx-3" data-toggle="tooltip"
+                                    data-placement="bottom" title="Dislike">
+                                    <i class="fas fa-thumbs-down"></i>
+                                    <p class="add-to-dislike text-muted py-2">Dislike</p>
+                                </button>
+                                <button type="button" class="vid-like mx-3" data-toggle="tooltip"
+                                    data-placement="bottom" title="Like">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <p class="add-to-like text-muted py-2">Like</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="card c-visible-t-mode">
+                    <div class="card-header bg-white">
+                        <span>Heading of the series tags</span>
+                    </div>
+                    <div class="card-body vid-conti">
+                        <ul id="pl-vid">
+                            <li class="py-2">
+                                <div class="container">
+                                    <div class="row media">
+                                        <!-- video-thumbnail  -->
+                                        <div class="col-xl-5 col-lg-6 col-md-6">
+                                            <img src="/img/img1.png" alt="" class="img-fluid">
+                                        </div>
+                                        <!-- video-desccription  -->
+                                        <div class="col-xl-7 col-lg-6 col-md-6">
+                                            <div class="media-body px-1">
+                                                <span class="font-weight-bold">
+                                                    S1 E1 - date
+                                                </span>
+                                                <div class="d-cent text-justify">
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                    Distinctio doloribus explicabo enim quae tenetur omnis, optio
+                                                    dolorem et. Eaque similique obcaecati laborum blanditiis
+                                                    officiis veniam maxime veritatis alias inventore voluptates!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card comment mx-2 my-5">
+                    <div class="card-header bg-white">
+                        <h4>comments</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul id="vid-comments">
+                            <li>
+                                <div class="row media">
+                                    <!-- video-thumbnail  -->
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                        <img src="/img/img1.png" alt="" class="img-fluid">
+                                    </div>
+                                    <!-- video-desccription  -->
+                                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                                        <div class="media-body px-1">
+                                            <span class="font-weight-bold">
+                                                S1 E1 - date
+                                            </span>
+                                            <div class="d-cent text-justify">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                Distinctio doloribus explicabo enim quae tenetur omnis, optio
+                                                dolorem et. Eaque similique obcaecati laborum blanditiis
+                                                officiis veniam maxime veritatis alias inventore voluptates!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- recommended videos and series  -->
+
+</div>
+
+
+<!-- flag modal  -->
+<div class="modal fade" id="flagCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="flag-title">Flag Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
