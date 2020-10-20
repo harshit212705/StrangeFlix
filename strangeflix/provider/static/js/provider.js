@@ -1,3 +1,4 @@
+// special class for left navigation bar items
 var v = document.querySelectorAll(".special");
 v.forEach(element => {
 	element.addEventListener('click', function () {
@@ -7,8 +8,7 @@ v.forEach(element => {
 
 
 
-// custom-select
-// series-category
+// choosing category and subcategory in NEW SERIES FORM in ADD CONTENT SECTION
 var selected = document.querySelector('#series-category');
 var entsel = document.querySelectorAll("#chkbx");
 var sprtslct = document.querySelector("#sports-subcategory");
@@ -57,178 +57,117 @@ selected.addEventListener('change', function (e) {
 });
 
 
+function set_navigation_bars_display(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12) {
 
-// submitting series form using ajax call
-// $("#seriesForm").submit(function (e) {
-// 	e.preventDefault(); //prevent default action 
-// 	var post_url = $(this).attr("action"); //get form action url
-// 	var form_data = $(this).serialize(); //Encode form elements for submission
-// 	$('#list-seriesform-list').css('pointer-events', 'none');
-// 	$('#list-seriesinfo-list').css('pointer-events', 'all');
-// 	$('#list-seriesinfo-list').tab('show');
-// 	// $.post( post_url, form_data, function( response ) {
-// 	// //   $("#server-results").html( response ); // data from server
-// 	// });
-// });
+	// IN ADD CONTENT SERIES SECTION
+	$('#season-right').css('display', d1);
+	$('#episodes-right').css('display', d2);
+	$('#content-right').css('display', d3);
 
-// submitting season form using ajax call
-// $('#seasonForm').submit(function (e) {
-// 	e.preventDefault();
-// 	var post_url = $(this).attr("action");
-// 	var form_data = $(this).serialize();  
-//  $('#list-seasoninfo-list').css('pointer-events', 'all');
-//  $('#list-seasoninfo-list').tab('show');
-// 	console.log(form_data);
-// 	// $.post( post_url, form_data, function( response ) {
-// 	// //   $("#server-results").html( response ); // data from server(recieved dat should have parent id="season+{{seasonno}}" and have a button which will take it to next page)
-// 	// });
+	// IN ADDED CONTENT SERIES SECTION
+	$('#series-right').css('display', d4);
+	$('#add-season-right').css('display', d5);
+	$('#add-episodes-right').css('display', d6);
+	$('#add-content-right').css('display', d7);
 
-// 	// if successfully posted then
-// 	var seasoncount = $('#season-right li').length;
-// 	seasoncount++;
-// 	var htmlgen='<div id="season'+seasoncount+'"><h4>Season'+seasoncount+'</h4></div>';
-// 	$('#season-right').append('<li><a href="#season' + seasoncount + '">season' + seasoncount + '</a></li>');
-// 	$('#apnd').append(htmlgen);
-// 	// reset the form
-// 	$('#seasonForm').each(function(){
-// 		this.reset();
-// 	});
-// 	$('#collapseExample').collapse('toggle');
-// 	$('#seasonvalue').attr("value",seasoncount+1);
-// });
+	// IN ADD CONTENT MOVIES SECTION
+	$('#movie-video-right').css('display', d8);
+	$('#movie-free-content-right').css('display', d9);
+
+	// IN ADDED CONTENT MOVIES SECTION
+	$('#add-movie-right').css('display', d10);
+	$('#add-movie-video-right').css('display', d11);
+	$('#add-movie-free-content-right').css('display', d12);
+
+}
 
 
-// reset everything on click on series in add-content section
-
+// reset everything on clicking on SERIES in ADD CONTENT SECTION IN LEFT NAVIGATION BAR
 $("#list-series-list").on('click', function (e) {
+
+	// restricting pointer events for other tabs
 	$('#list-seriesform-list').css('pointer-events', 'all');
 	$('#list-seriesinfo-list').css('pointer-events', 'none');
 	$('#list-seasoninfo-list').css('pointer-events', 'none');
 	$('#list-seriesform-list').tab('show');
 
-	//reset seasonForm
-	$('#seasonForm').each(function () {
-		this.reset();
-	});
 	// reset seriesForm
 	$('#seriesForm').each(function () {
 		this.reset();
 	});
+
+	//reset seasonForm
+	$('#seasonForm').each(function () {
+		this.reset();
+	});
+
 	//reset episodeForm
 	$('#seasonepisodeForm').each(function () {
 		this.reset();
 	});
+
 	// reset free content form
 	$('#freecontentForm').each(function () {
 		this.reset();
 	});
 
+	// Emptying previous series details content
+	$('#apnd').empty();		 				// For already uploaded seasons
+	$('#uploaded-free-contents').empty();
 	$('#uploaded_episodes').empty();
-	$('#episodes-right').empty();
-	$('#season-right').empty();
-	$('#apnd').empty();
+
+	// setting default empty value for category and subcategory
 	showent.style.display = "none";
 	showsports.style.display = "none";
 	txtval.value = "";
 	showtxt.style.display = "none";
 
-	$('#season-right').css('display', 'none');
-	$('#content-right').css('display', 'none');
-	$('#episode-right').css('display', 'none');
-	$('#series-right').css('display', 'none');
-	$('#add-season-right').css('display', 'none');
-	$('#add-episode-right').css('display', 'none');
-	$('#add-content-right').css('display', 'none');
-});
-
-// reset everything on click on series in added-content section
-$("#list-added-series-list").on('click', function (e) {
-	$('#list-added-seriesform-list').css('pointer-events', 'all');
-	$('#list-added-seriesinfo-list').css('pointer-events', 'none');
-	$('#list-added-seasoninfo-list').css('pointer-events', 'none');
-	$('#list-added-seriesform-list').tab('show');
-
-	// change the ids of the forms or div tag in added section
-	//reset seasonForm
-	$('#add-seasonForm').each(function () {
-		this.reset();
-	});
-	// reset seriesForm
-	$('#add-seriesForm').each(function () {
-		this.reset();
-	});
-	//reset episodeForm
-	$('#add-episodeForm').each(function () {
-		this.reset();
-	});
-
-	$('#uploaded_episodes').empty();
-	$('#episodes-right').empty();
-	$('#season-right').empty();
-	$('#apnd').empty();
-	$('#season-right').css('display', 'none');
-	$('#episode-right').css('display', 'none');
-	$('#content-right').css('display', 'none');
-	$('#series-right').css('display', 'block');
-	$('#add-season-right').css('display', 'none');
-	$('#add-episode-right').css('display', 'none');
-	$('#add-content-right').css('display', 'none');
+	set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
 });
 
 
-// once moved to add season remove pointer-events for add section
+
+// once moved to ADD SEASON SECTION IN ADD CONTENT remove pointer events to ADD EPISODES SECTION
 $('#list-seriesinfo-list').on('click', function (e) {
 	$('#list-seasoninfo-list').css('pointer-events', 'none');
-	$('#season-right').css('display', 'block');
-	$('#content-right').css('display', 'none');
-	$('#episode-right').css('display', 'none');
-	$('#series-right').css('display', 'none');
-	$('#add-season-right').css('display', 'none');
-	$('#add-episode-right').css('display', 'none');
-	$('#add-content-right').css('display', 'none');
-})
 
-// once moved to add season remove pointer-events for add section
+	set_navigation_bars_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+
+});
+
+// once moved to ADD SEASON SECTION IN ADDED CONTENT remove pointer events to ADD EPISODES SECTION
 $('#list-added-seriesinfo-list').on('click', function (e) {
 	$('#list-added-seasoninfo-list').css('pointer-events', 'none');
-	$('#season-right').css('display', 'none');
-	$('#content-right').css('display', 'none');
-	$('#episode-right').css('display', 'none');
-	$('#series-right').css('display', 'none');
-	$('#add-season-right').css('display', 'block');
-	$('#add-episode-right').css('display', 'none');
-	$('#add-content-right').css('display', 'none');
-})
 
-// once moved to add season remove pointer-events for add section
+	set_navigation_bars_display('none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+
+});
+
+// once moved to UPLOADED SERIES SECTION IN ADDED CONTENT remove pointer events to ADD SEASON and ADD EPISODES SECTION
 $('#list-added-seriesform-list').on('click', function (e) {
 	$('#list-added-seriesinfo-list').css('pointer-events', 'none');
 	$('#list-added-seasoninfo-list').css('pointer-events', 'none');
-	$('#season-right').css('display', 'none');
-	$('#content-right').css('display', 'none');
-	$('#episode-right').css('display', 'none');
-	$('#series-right').css('display', 'block');
-	$('#add-season-right').css('display', 'none');
-	$('#add-episode-right').css('display', 'none');
-	$('#add-content-right').css('display', 'none');
-})
 
-// initial season form-setups for added section
+	set_navigation_bars_display('none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+
+});
+
+
+// initial ADD SEASON FORM setup in SERIES IN ADDED SECTION
 $('#list-added-seriesinfo-list').on('show.bs.tab', function (e) {
 	var addCountEle = $('#add-season-right li').length;
 	$('#add-seasonvalue').attr("value", addCountEle + 1);
 });
 
-// initial episode form-setups for added section
+
+// initial ADD EPISODE FORM setup in SERIES IN ADDED SECTION
 $('#list-added-seasoninfo-list').on('show.bs.tab', function (e) {
-	var addCountEle = $('#add-episode-right li').length;
+	var addCountEle = $('#add-episodes-right li').length;
 	$('#add__series__season__episodeno').attr("value", addCountEle + 1);
 });
 
 
-
-// handling tags for episode add section
-
+// handling ADD TAG in ADD EPISODES SECTION of SERIES IN ADD CONTENT SECTION
 var addTag = document.querySelector("#add-tag");
 var tagText = document.querySelector("#tag-text");
 var showTags = document.querySelector("#selected-tags");
@@ -252,20 +191,20 @@ addTag.addEventListener('click', function (e) {
 });
 
 
-// handling tags for content add section
 
+// handling ADD TAG in ADD FREE CONTENT SECTION of SERIES IN ADD CONTENT SECTION
 var caddTag = document.querySelector("#c-add-tag");
 var ctagText = document.querySelector("#c-tag-text");
 var cshowTags = document.querySelector("#c-selected-tags");
 var cselectedTags = document.querySelectorAll("#c-tag-toggler");
 caddTag.addEventListener('click', function (e) {
 	var span = document.createElement('span');
-	var textValue = tagText.value;
+	var textValue = ctagText.value;
 	span.setAttribute("value", textValue);
 	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
 	span.style.border = "2px solid blue";
 	span.style.borderRadius = "50%";
-	span.innerHTML = textValue + '<a id="tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+	span.innerHTML = textValue + '<a id="c-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
 	cshowTags.append(span);
 	cselectedTags = document.querySelectorAll("#c-tag-toggler");
 	cselectedTags.forEach(element => {
@@ -276,8 +215,9 @@ caddTag.addEventListener('click', function (e) {
 	});
 });
 
-// handling tags for content added section
 
+
+// handling ADD TAG in ADD EPISODE SECTION of SERIES IN ADDED CONTENT SECTION
 var addAddTag = document.querySelector("#add-add-tag");
 var addTagText = document.querySelector("#add-tag-text");
 var addShowTags = document.querySelector("#add-selected-tags");
@@ -300,15 +240,16 @@ addAddTag.addEventListener('click', function (e) {
 	});
 });
 
-// handling tags for episode added section
 
+
+// handling ADD TAG in ADD FREE CONTENT SECTION of SERIES IN ADDED CONTENT SECTION
 var eaddAddTag = document.querySelector("#e-add-add-tag");
 var eaddTagText = document.querySelector("#e-add-tag-text");
 var eaddShowTags = document.querySelector("#e-add-selected-tags");
 var eaddSelectedTags = document.querySelectorAll("#e-add-tag-toggler");
 eaddAddTag.addEventListener('click', function (e) {
 	var span = document.createElement('span');
-	var textValue = addTagText.value;
+	var textValue = eaddTagText.value;
 	span.setAttribute("value", textValue);
 	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
 	span.style.border = "2px solid blue";
@@ -325,6 +266,7 @@ eaddAddTag.addEventListener('click', function (e) {
 });
 
 
+// handling selection between video or link in ADD EPISODE SECTION of SERIES IN ADD CONTENT SECTION
 var linkorvideo = document.querySelector('#linkorvideo');
 var episodeVideo = document.querySelector('#episode-video');
 var episodeLink = document.querySelector('#episode-link');
@@ -341,6 +283,28 @@ linkorvideo.addEventListener('change', function (e) {
 	}
 });
 
+
+
+// handling selection between video or link in ADD FREE CONTENT SECTION of SERIES IN ADD CONTENT SECTION
+var free_cont_linkorvideo = document.querySelector('#contentlinkorvideo');
+var free_cont_episodeVideo = document.querySelector('#content-video');
+var free_cont_episodeLink = document.querySelector('#content-link');
+free_cont_linkorvideo.addEventListener('change', function (e) {
+	var cont = free_cont_linkorvideo.options[free_cont_linkorvideo.selectedIndex].value;
+	if (cont != "Link") {
+		free_cont_episodeVideo.style.display = "block";
+		free_cont_episodeLink.value = "";
+		free_cont_episodeLink.style.display = "none";
+	} else {
+		free_cont_episodeVideo.style.display = "none";
+		free_cont_episodeLink.style.display = "block";
+		free_cont_episodeVideo.value = "";
+	}
+});
+
+
+
+// handling selection between video or link in ADD EPISODE SECTION of SERIES IN ADDED CONTENT SECTION
 var add__linkorvideo = document.querySelector('#add__linkorvideo');
 var add__episodeVideo = document.querySelector('#add__episode-video');
 var add__episodeLink = document.querySelector('#add__episode-link');
@@ -356,3 +320,43 @@ add__linkorvideo.addEventListener('change', function (e) {
 		add__episodeVideo.value = "";
 	}
 });
+
+
+// handling selection between video or link in ADD FREE CONTENT SECTION of SERIES IN ADDED CONTENT SECTION
+var free_cont_add__linkorvideo = document.querySelector('#add__contentlinkorvideo');
+var free_cont_add__episodeVideo = document.querySelector('#add__content-video');
+var free_cont_add__episodeLink = document.querySelector('#add__content-link');
+free_cont_add__linkorvideo.addEventListener('change', function (e) {
+	var cont = free_cont_add__linkorvideo.options[free_cont_add__linkorvideo.selectedIndex].value;
+	if (cont != "Link") {
+		free_cont_add__episodeVideo.style.display = "block";
+		free_cont_add__episodeLink.value = "";
+		free_cont_add__episodeLink.style.display = "none";
+	} else {
+		free_cont_add__episodeVideo.style.display = "none";
+		free_cont_add__episodeLink.style.display = "block";
+		free_cont_add__episodeVideo.value = "";
+	}
+});
+
+
+
+// // once moved back to added movies tab in added content section then restricting its direct movement to next tab
+// $('#list-added-movieform-list').on('click', function (e) {
+// 	$('#list-added-movieinfo-list').css('pointer-events', 'none');
+// 	$('#add-movie-right').css('display', 'block');
+// 	$('#season-right').css('display', 'none');
+// 	$('#content-right').css('display', 'none');
+// 	$('#episodes-right').css('display', 'none');
+// 	$('#series-right').css('display', 'none');
+// 	$('#add-season-right').css('display', 'none');
+// 	$('#add-episodes-right').css('display', 'none');
+// 	$('#add-content-right').css('display', 'none');
+// });
+
+
+
+
+
+
+

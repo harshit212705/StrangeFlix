@@ -13,4 +13,8 @@ urlpatterns = [
     url('added_series/', admin_views.added_series, name = "added_series"),
     url('added_seasons/', admin_views.added_seasons, name = "added_seasons"),
     url('added_episodes/', admin_views.added_episodes, name = "added_episodes"),
+    url('get_movies/',admin_views.get_movies,name="get_movies"),
+    url('pending_movie_videos/',admin_views.pending_movie_videos,name="pending_movie_videos"),
+    url('added_movies/', admin_views.added_movies, name = "added_movies"),
+    url('added_movie_videos/', admin_views.added_movie_videos, name = "added_movie_videos"),
 ]

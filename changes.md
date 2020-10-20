@@ -3,6 +3,17 @@
 ## DO NOT add new events at last. Recent changes should be at the top.
 
 
+### By <b>_Harshit Garg_</b> on <b>_October 20, 2020_</b>
+* Added movies and free content verification from admin panel.
+* Admin panel showing the already added content.
+
+
+### By <b>_Harshit Garg_</b> on <b>_October 18, 2020_</b>
+* Restructed provider.html, provider.js, movies.js files.
+* Added movies and series upload from provider end.
+* Provider panel completed and in working condition.
+
+
 ### By <b>_Harshit Garg_</b> on <b>_October 14, 2020_</b>
 * Custom Login added.
 * Login with facebook and google added.

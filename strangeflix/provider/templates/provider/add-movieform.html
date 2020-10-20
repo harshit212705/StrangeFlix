@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade ad-m-list" id="list-moviesinfo" role="tabpanel" aria-labelledby="list-movieinfo-list">
+        <div class="tab-pane fade ad-m-list" id="list-added-movieinfo" role="tabpanel" aria-labelledby="list-added-movieinfo-list">
             <div class="episode__info">
                 <div id="movie-server-result">
                 </div>
@@ -27,21 +27,21 @@
                     <!-- add season videos  -->
 
                     <div class="add__season__videos">
-                        <p id="movie_id" hidden></p>
+                        <p id="add_movie_id" hidden></p>
 
                         <button class="btn btn-primary" type="button" data-toggle="collapse"
-                            data-target="#movie-free-content" aria-expanded="false" aria-controls="movie-free-content">
+                            data-target="#movie-add-free-content" aria-expanded="false" aria-controls="movie-add-free-content">
                             Add Free Content
                         </button>
-                        <div class="collapse" id="movie-free-content">
+                        <div class="collapse" id="movie-add-free-content">
                             <div class="card card-body">
                                 <!-- add season videos -->
                                 <!-- adding free content form  -->
 
-                                <form id="moviefreecontentForm">
+                                <form id="add-moviefreecontentForm">
                                     <!-- free content no  -->
 
-                                    <div class="form-group my-4">
+                                    <!-- <div class="form-group my-4">
                                         <div class="row pado">
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <label class="mt-2" for="movie__contentno">
@@ -53,7 +53,7 @@
                                                     class="form-control-plaintext" id="movie__contentno" value="1">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- free content name  -->
 
                                     <div class="form-group my-4">
@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <input type="text" name="movie-contentname" class="form-control"
-                                                    id="movie__contentname" placeholder="Enter video name" required />
+                                                    id="add_movie__contentname" placeholder="Enter video name" required />
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <textarea class="form-control" name="movie-contentdescription"
-                                                    id="movie__contentdescription" rows="3" required></textarea>
+                                                    id="add_movie__contentdescription" rows="3" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <div class="row">
                                                     <div class="col-lg-9 col-md-9 col-sm-9">
-                                                        <input type="text" id="cm-tag-text" class="form-control"
+                                                        <input type="text" id="cm-add-tag-text" class="form-control"
                                                             placeholder="enter tag" />
                                                     </div>
                                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -100,10 +100,10 @@
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                                         <button type="button" class="btn btn-sm btn-primary"
-                                                            id="cm-add-tag">Add tag</button>
+                                                            id="cm-add-add-tag">Add tag</button>
                                                     </div>
                                                 </div>
-                                                <div id="cm-selected-tags" class="my-3">
+                                                <div id="cm-add-selected-tags" class="my-3">
 
                                                 </div>
                                             </div>
@@ -128,7 +128,7 @@
                                                 <label class="mt-2">Quality</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <select id="content_movie_quality" name="content-quality"
+                                                <select id="add-content_movie_quality" name="content-quality"
                                                     class="custom-select">
                                                     <option selected>Quality</option>
                                                     <option value="144">144p</option>
@@ -151,7 +151,7 @@
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <input type="date" class="form-control" name="movie-contentdate"
-                                                    id="movie__contentdate" required>
+                                                    id="add_movie__contentdate" required>
                                             </div>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@
                                                 <label class="mt-2">Upload Thumbnail</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <input id="movie_file4" type='file' class="form-control"
+                                                <input id="movie_add_file4" type='file' class="form-control"
                                                     name='content-image' accept='.png, .jpg, .jpeg' required>
                                             </div>
                                         </div>
@@ -175,31 +175,35 @@
                                                 <label class="mt-2">Upload Video</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <select id="moviecontentlinkorvideo" name="content-video"
+                                                <select id="movieaddcontentlinkorvideo" name="content-video"
                                                     class="custom-select">
                                                     <option value="Video" selected>Video
                                                     </option>
                                                     <option value="Link">Link</option>
                                                 </select>
-                                                <input type='file' id="movie-content-video" class="form-control my-3"
+                                                <input type='file' id="movie-add-content-video" class="form-control my-3"
                                                     name='content-video' accept='.mp4, .wmv, .avi,.mov,.3gp,.flv'>
-                                                <input type="url" style="display: none;" id="movie-content-link"
+                                                <input type="url" style="display: none;" id="movie-add-content-link"
                                                     class="form-control my-3" name='content-link' placeholder="link">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" id="movie-content-submit"
+                                        <button type="submit" id="movie-add-content-submit"
                                             class="btn btn-primary my-4">Submit</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div class="movie-one-time">
+                        <button id="btn_add_add_movie_video" class="btn btn-primary mx-5" type="button" data-toggle="collapse"
+                            data-target="#movie-add-video-form" aria-expanded="false" aria-controls="movie-add-video-form">
+                            Add movie video
+                        </button>
+                        <div class="movie-one-time collapse" id="movie-add-video-form">
                             <div class="card card-body">
                                 <!-- adding movie form  -->
 
-                                <form id="movievideoForm">
+                                <form id="add-movievideoForm">
                                     <!-- movie name  -->
 
                                     <div class="form-group my-4">
@@ -210,7 +214,7 @@
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <input type="text" name="movie-videoname" class="form-control"
-                                                    id="movie__videoname" placeholder="Enter video name" required />
+                                                    id="add_movie__videoname" placeholder="Enter video name" required />
                                             </div>
                                         </div>
                                     </div>
@@ -224,7 +228,7 @@
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <textarea class="form-control" name="movie__videodescription"
-                                                    id="movie__videodescription" rows="3" required></textarea>
+                                                    id="add_movie__videodescription" rows="3" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -238,7 +242,7 @@
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <div class="row">
                                                     <div class="col-lg-9 col-md-9 col-sm-9">
-                                                        <input type="text" id="m-tag-text" class="form-control"
+                                                        <input type="text" id="m-add-tag-text" class="form-control"
                                                             placeholder="enter tag" />
                                                     </div>
                                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -246,10 +250,10 @@
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                                         <button type="button" class="btn btn-sm btn-primary"
-                                                            id="m-add-tag">Add tag</button>
+                                                            id="m-add-add-tag">Add tag</button>
                                                     </div>
                                                 </div>
-                                                <div id="m-selected-tags" class="my-3">
+                                                <div id="m-add-selected-tags" class="my-3">
 
                                                 </div>
                                             </div>
@@ -274,7 +278,7 @@
                                                 <label class="mt-2">Quality</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <select id="m-video_quality" name="quality" class="custom-select">
+                                                <select id="m-add-video_quality" name="quality" class="custom-select">
                                                     <option selected>Quality</option>
                                                     <option value="144">144p</option>
                                                     <option value="240">240p</option>
@@ -296,7 +300,7 @@
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
                                                 <input type="date" class="form-control" name="movie-videodate"
-                                                    id="movie__videodate" required>
+                                                    id="add_movie__videodate" required>
                                             </div>
                                         </div>
                                     </div>
@@ -308,7 +312,7 @@
                                                 <label class="mt-2">Upload Thumbnail</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <input id="movie-file2" type='file' class="form-control"
+                                                <input id="movie-add-file2" type='file' class="form-control"
                                                     name='episode-image' accept='.png, .jpg, .jpeg' required>
                                             </div>
                                         </div>
@@ -320,14 +324,14 @@
                                                 <label class="mt-2">Upload Video</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <select id="m-linkorvideo" name="video" class="custom-select">
+                                                <select id="m-add-linkorvideo" name="video" class="custom-select">
                                                     <option value="Video" selected>Video
                                                     </option>
                                                     <option value="Link">Link</option>
                                                 </select>
-                                                <input type='file' id="movie-video" class="form-control my-3"
+                                                <input type='file' id="movie-add-video" class="form-control my-3"
                                                     name='movie-video' accept='.mp4, .wmv, .avi,.mov,.3gp,.flv'>
-                                                <input type="url" style="display: none;" id="movie-link"
+                                                <input type="url" style="display: none;" id="movie-add-link"
                                                     class="form-control my-3" name='movie-link' placeholder="link">
                                             </div>
                                         </div>
@@ -335,17 +339,17 @@
                                     <!-- right navigation  -->
 
                                     <div class="text-center">
-                                        <button type="submit" id="movie-submit"
+                                        <button type="submit" id="movie-add-video-submit"
                                             class="btn btn-primary my-4">Submit</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div id="m-uploaded-free-contents">
+                        <div id="m-add-uploaded-free-contents">
 
                         </div>
                         <!-- added episodes section -->
-                        <div id="uploaded_movie">
+                        <div id="add-uploaded_movie">
 
                         </div>
                     </div>

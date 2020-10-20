@@ -5,27 +5,68 @@ $('.special').each(function(){
     })
 })
 
-// initial restrictions
-$("#list-series-list").on('click', function (e) {
+// setting right navigation bars display options
+function set_navigation_bars(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14) {
+
+    // IN PENDING CONTENT SERIES SECTION
+    $('#series-right').css('display', d1);
+    $('#season-right').css('display', d2);
+    $('#content-right').css('display', d3);
+	$('#episodes-right').css('display', d4);
+
+	// IN VERIFIED CONTENT SERIES SECTION
+	$('#verified-series-right').css('display', d5);
+    $('#verified-season-right').css('display', d6);
+    $('#verified-content-right').css('display', d7);
+	$('#verified-episodes-right').css('display', d8);
+
+	// IN PENDING CONTENT MOVIES SECTION
+	$('#movies-right').css('display', d9);
+    $('#movies-content-right').css('display', d10);
+    $('#movies-video-right').css('display', d11);
+
+	// IN VERIFIED CONTENT MOVIES SECTION
+	$('#verified-movies-right').css('display', d12);
+    $('#verified-movies-content-right').css('display', d13);
+    $('#verified-movies-video-right').css('display', d14);
+
+}
+
+
+$('#list-series-list').on('click', function (e) {
     $('#list-seriesform-list').css('pointer-events', 'all');
     $('#list-seriesinfo-list').css('pointer-events', 'none');
     $('#list-seasoninfo-list').css('pointer-events', 'none');
     $('#list-seriesform-list').tab('show');
 
-	$('#uploaded_episodes').empty();
-	$('#episodes-right').empty();
-	$('#season-right').empty();
-	$('#apnd').empty();
+    get_series();
+
 });
-// reset everything on click on series in added-content section
-$("#list-added-series-list").on('click', function (e) {
+
+$('#list-movie-list').on('click', function (e) {
+    $('#list-movieform-list').css('pointer-events', 'all');
+    $('#list-movieinfo-list').css('pointer-events', 'none');
+    $('#list-movieform-list').tab('show');
+
+    get_movies();
+
+});
+
+$('#list-added-series-list').on('click', function (e) {
     $('#list-added-seriesform-list').css('pointer-events', 'all');
     $('#list-added-seriesinfo-list').css('pointer-events', 'none');
     $('#list-added-seasoninfo-list').css('pointer-events', 'none');
     $('#list-added-seriesform-list').tab('show');
+
+    get_added_series();
+
 });
 
+$('#list-added-movie-list').on('click', function (e) {
+    $('#list-added-movieform-list').css('pointer-events', 'all');
+    $('#list-added-movieinfo-list').css('pointer-events', 'none');
+    $('#list-added-movieform-list').tab('show');
 
+    get_added_movies();
 
-
-
+});
