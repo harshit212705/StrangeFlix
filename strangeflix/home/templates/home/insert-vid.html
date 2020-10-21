@@ -17,8 +17,7 @@
                     <video class="player__video viewer" id="video" preload="metadata">
                         <source
                             src="https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2F835aee21-d65a-4dea-b64a-d4d0a8950fc8.mp4?alt=media&token=fbbac811-8e9e-4e4a-b235-62e83681eeea"
-                            id="insert-vid"
-                            type="video/mp4">
+                            id="insert-vid" type="video/mp4">
                     </video>
                 </div>
                 <!-- video-footer  -->
@@ -43,8 +42,8 @@
                             »</button>
 
                         <!-- volume  -->
-                        <button class="volume__button" data-toggle="tooltip" title="mute" id="volume"><i
-                                id="vol-ico" class="fas fa-volume-up"></i></button>
+                        <button class="volume__button" data-toggle="tooltip" title="mute" id="volume"><i id="vol-ico"
+                                class="fas fa-volume-up"></i></button>
                         <input type="range" name="volume" id="vol-ran" class="player__slider" min="0" max="1"
                             step="0.05" value="1">
 
@@ -60,7 +59,7 @@
                             <!-- setting  -->
                             <!-- <button id="setting" class="setting__button" data-toggle="tooltip" title="setting"><span
                                     class="px-4"><i id="setting-ico" class="fas fa-cog"></i></span></button> -->
-                                    
+
                             <button type="button" class="prev-button mr-3">
                                 <i class="fas fa-step-backward"></i>
                             </button>
@@ -68,9 +67,9 @@
                                 <i class="fas fa-step-forward"></i>
                             </button>
                             <div class="btn-group dropup">
-                                <button id="setting" class="setting__button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"><span class="px-4"><i
-                                            id="setting-ico" class="fas fa-cog"></i></span></button>
+                                <button id="setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"><span class="px-4"><i id="setting-ico"
+                                            class="fas fa-cog"></i></span></button>
                                 <div class="dropdown-menu plbcrt">
                                     <a href="#" class="dropdown-item playbacki dis">Playback speed</a>
                                     <a href="#" class="dropdown-item quali dis">Video Quality</a>
@@ -89,9 +88,8 @@
                                 </div>
                             </div>
                             <!-- picture-in-picture  -->
-                            <button id="pip" class="pip__button" data-toggle="tooltip"
-                                title="picture-in-picture"><span class="px-4"><i id="pip-ico"
-                                        class="fas fa-window-maximize"></i></span></button>
+                            <button id="pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span
+                                    class="px-4"><i id="pip-ico" class="fas fa-window-maximize"></i></span></button>
                             <!-- theatre view  -->
                             <button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span
                                     class="px-4"><i id="th-ico" class="fas fa-arrows-alt-v"></i></span></button>
@@ -114,11 +112,40 @@
         <!-- sidebar content  -->
         <div class="col-xl-3 col-lg-4 col-md-5 playlist-container">
             <div class="card">
-                <div class="card-header ser-hd bg-white">
+                <div class="card-header ser-hd">
                     <span>Heading of the series tags</span>
                 </div>
                 <div class="card-body vid-cont">
                     <ul id="pl-vid">
+                        <li>
+                            <!-- insert the link of the video  -->
+                            <a href="#">
+                                <div class="container py-2">
+                                    <div class="row media">
+                                        <!-- video-thumbnail  -->
+                                        <div class="col-xl-5 col-lg-6 col-md-6">
+                                            <img src="/img/img1.png" alt="" class="img-fluid">
+                                        </div>
+                                        <!-- video-desccription  -->
+                                        <div class="col-xl-7 col-lg-6 col-md-6">
+                                            <div class="media-body px-1">
+                                                <span class="font-weight-bold">
+                                                    S1 E1 - date
+                                                </span>
+                                                <div class="d-cent text-justify">
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                    Distinctio
+                                                    doloribus explicabo enim quae tenetur omnis, optio dolorem et.
+                                                    Eaque
+                                                    similique obcaecati laborum blanditiis officiis veniam maxime
+                                                    veritatis alias inventore voluptates!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                         <li>
                             <!-- insert the link of the video  -->
                             <a href="#">
@@ -159,7 +186,7 @@
         <div class="row">
             <div class="col-xl-9 col-lg-6 col-md-7">
                 <!-- description flag section  -->
-                <div class="container-fluid descript-sect">
+                <div class="container-fluid descript-sect my-4">
                     <div class="row">
                         <div class="col-xl-8 col-lg-8 col-md-8">
                             <div class="vid-desc text-left pb-3">
@@ -178,30 +205,28 @@
                             <div class="flg-sect d-flex flex-row-reverse align-items-end">
                                 <button type="button" class="add-to-fav mx-3" data-toggle="tooltip"
                                     data-placement="bottom" title="Add to favourites">
-                                    <i class="fas fa-plus"></i>
-                                    <p class="add-to-fav-title text-muted py-2">Favourites</p>
+                                    <span class="ico-cont bg-danger text-center py-2 px-2">
+                                        <span class="py-3">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                    </span>
+                                    <p class="add-to-fav-title py-3">Favourites</p>
                                 </button>
                                 <button type="button" class="vid-flag mx-3" data-toggle="modal"
                                     data-target="#flagCenter">
-                                    <i class="fas fa-flag"></i>
-                                    <p class="add-to-flag text-muted py-2">Flag</p>
-                                </button>
-                                <button type="button" class="vid-dislike mx-3" data-toggle="tooltip"
-                                    data-placement="bottom" title="Dislike">
-                                    <i class="fas fa-thumbs-down"></i>
-                                    <p class="add-to-dislike text-muted py-2">Dislike</p>
-                                </button>
-                                <button type="button" class="vid-like mx-3" data-toggle="tooltip"
-                                    data-placement="bottom" title="Like">
-                                    <i class="fas fa-thumbs-up"></i>
-                                    <p class="add-to-like text-muted py-2">Like</p>
+                                    <span class="ico-cont bg-danger text-center py-2 px-2">
+                                        <span class="py-3">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                    </span>
+                                    <p class="add-to-flag py-3">Flag</p>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-5">
+            <div class="col-xl-3 col-lg-6 col-md-5">
                 <div class="card c-visible-t-mode">
                     <div class="card-header bg-white">
                         <span>Heading of the series tags</span>
@@ -236,15 +261,15 @@
                     </div>
                 </div>
                 <div class="card comment mx-2 my-5">
-                    <div class="card-header bg-white">
+                    <div class="card-header">
                         <h4>comments</h4>
                     </div>
                     <div class="card-body">
                         <ul id="vid-comments">
                             <li>
                                 <div class="row media">
-                                    <!-- video-thumbnail  -->
                                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                        <!-- user-profile  -->
                                         <img src="/img/img1.png" alt="" class="img-fluid">
                                     </div>
                                     <!-- video-desccription  -->
@@ -259,6 +284,13 @@
                                                 dolorem et. Eaque similique obcaecati laborum blanditiis
                                                 officiis veniam maxime veritatis alias inventore voluptates!
                                             </div>
+                                            <button type="button" class="flg-comm-button px-2" data-toggle="modal"
+                                            data-target="#flagCommentCenter">
+                                                    <i class="fas fa-flag"></i>
+                                            </button>
+                                            <button type="button" class="show-mr-button">
+                                                   show
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +310,7 @@
 <!-- flag modal  -->
 <div class="modal fade" id="flagCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content bg-dark">
             <div class="modal-header">
                 <h5 class="modal-title" id="flag-title">Flag Comment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -289,7 +321,26 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger btn-sm" id="flag-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- flag comment modal  -->
+<div class="modal fade" id="flagCommentCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="flag-comment-title">Flag Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" id="flag-submit">Submit</button>
             </div>
         </div>
     </div>
