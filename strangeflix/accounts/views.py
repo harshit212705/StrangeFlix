@@ -118,6 +118,7 @@ def user_registration(request):
                         response = f'A Confirmation email has been sent to {email}.' \
                                    f' Please visit the confirmation link to complete the registration and activate your account.'
                     else:
+                        user.delete()
                         response = 'Mail can\'t be send now. Possible Cause - Connection Issue. Try again later sometime.'
                     return HttpResponse(response)
             else:
@@ -220,9 +221,9 @@ def custom_login(request):
 
 
 def social_redirect_url(request):
-    user = User.objects.filter(username=request.user.username).first()
-    user.user_type = 'U'
-    user.save()
+    # user = User.objects.filter(username=request.user.username).first()
+    # user.user_type = 'U'
+    # user.save()
     user_details_exists = UserDetails.objects.filter(user=request.user).first()
     if user_details_exists is None:
         user_details = UserDetails.objects.create(user=request.user, wallet_money=0)
