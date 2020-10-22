@@ -122,6 +122,9 @@ class Videos(models.Model):
     class Meta:
         verbose_name_plural = "Videos"
 
+    def __str__(self):
+        return str('Video_id--') + str(self.video_id) + str(' || Video_type--') + str(self.video_type)
+
 
 
 # model for storing series video tags
@@ -133,6 +136,9 @@ class VideoRejectionComment(models.Model):
 
     class Meta:
         verbose_name_plural = "Video Rejection Comment"
+
+    def __str__(self):
+        return str('Video_id--') + str(self.video_id.video_id) + str(' || comment--') + str(self.comment)
 
 
 
@@ -165,6 +171,9 @@ class SeriesDetails(models.Model):
     class Meta:
         verbose_name_plural = "Series Details"
 
+    def __str__(self):
+        return str('Series_id--') + str(self.series_id) + str(' || Series--') + str(self.series_name) + str(' || Provider--') + str(self.provider_id.username)
+
 
 # model for storing series sub categories
 class SeriesSubCategories(models.Model):
@@ -175,6 +184,9 @@ class SeriesSubCategories(models.Model):
 
     class Meta:
         verbose_name_plural = "Series Sub Categories"
+
+    def __str__(self):
+        return str('Series_id--') + str(self.series_id.series_id) + str(' || Series--') + str(self.series_id.series_name) + str(' || Subcategory--') + str(SUB_CATEGORY_TYPES[self.sub_category-1][1])
 
 
 # model for storing series season details
@@ -196,6 +208,9 @@ class SeriesSeasonDetails(models.Model):
 
     class Meta:
         verbose_name_plural = "Series Season Details"
+
+    def __str__(self):
+        return str('Series--') + str(self.series_id.series_name) + str(' || Series_season_id--') + str(self.series_season_id) + str(' || Season_no--') + str(self.season_no) + str(' || Status--') + str(self.verification_status)
 
 
 # model for storing series videos
@@ -234,6 +249,9 @@ class SeriesVideos(models.Model):
     class Meta:
         verbose_name_plural = "Series Videos"
 
+    def __str__(self):
+        return str('Series_id--') + str(self.series_season_id.series_id.series_id) + str(' || Series--') + str(self.series_season_id.series_id.series_name) + str(' || Season_no--') + str(self.series_season_id.season_no) + str(' || Episode_no--') + str(self.episode_no) + str(' || video_id--') + str(self.video_id.video_id) + str(' || Video_name--') + str(self.video_name) + str(' || Status--') + str(self.verification_status)
+
 
 
 # class SeriesVideosSubCategories(models.Model):
@@ -260,6 +278,9 @@ class SeriesVideosTags(models.Model):
     class Meta:
         verbose_name_plural = "Series Videos Tags"
 
+    def __str__(self):
+        return str('video_id--') + str(self.video_id.video_id) + str(' || Episode_no--') + str(self.episode_no) + str(' || tag--') + str(self.tag_word)
+
 
 # model for storing movie details
 class MovieDetails(models.Model):
@@ -281,6 +302,9 @@ class MovieDetails(models.Model):
     class Meta:
         verbose_name_plural = "Movie Details"
 
+    def __str__(self):
+        return str('Movie_id--') + str(self.movie_id) + str(' || Movie--') + str(self.movie_name) + str(' || Provider--') + str(self.provider_id.username)
+
 
 
 # model for storing movie sub categories
@@ -293,6 +317,9 @@ class MovieSubCategories(models.Model):
     class Meta:
         verbose_name_plural = "Movie Sub Categories"
 
+    def __str__(self):
+        return str('Movie_id--') + str(self.movie_id.movie_id) + str(' || Movie--') + str(self.movie_id.movie_name) + str(' || Subcategory--') + str(SUB_CATEGORY_TYPES[self.sub_category-1][1])
+
 
 # model for storing movie video tags
 class MovieVideoTags(models.Model):
@@ -303,6 +330,9 @@ class MovieVideoTags(models.Model):
 
     class Meta:
         verbose_name_plural = "Movie Video Tags"
+
+    def __str__(self):
+        return str('video_id--') + str(self.video_id.video_id) + str(' || tag--')  + str(self.tag_word)
 
 
 
@@ -350,6 +380,9 @@ class MovieVideo(models.Model):
     class Meta:
         verbose_name_plural = "Movie Video"
 
+    def __str__(self):
+        return str('Movie_id--') + str(self.movie_id.movie_id) + str(' || Movie--') + str(self.movie_id.movie_name) + str(' || video_id--') + str(self.video_id.video_id) + str(' || Video_name--') + str(self.video_name) + str(' || Status--') + str(self.verification_status)
+
 
 
 # class FreeSeriesVideosSubCategories(models.Model):
@@ -371,6 +404,9 @@ class FreeSeriesVideosTags(models.Model):
 
     class Meta:
         verbose_name_plural = "Free Series Videos Tags"
+
+    def __str__(self):
+        return str('video_id--') + str(self.video_id.video_id) + str(' || tag--') + str(self.tag_word)
 
 
 # model for storing series free video
@@ -405,6 +441,9 @@ class FreeSeriesVideos(models.Model):
     class Meta:
         verbose_name_plural = "Free Series Videos"
 
+    def __str__(self):
+        return str('Series_id--') + str(self.series_season_id.series_id.series_id) + str(' || Series--') + str(self.series_season_id.series_id.series_name) + str(' || Season_no--') + str(self.series_season_id.season_no) + str(' || video_id--') + str(self.video_id.video_id) + str(' || Video_name--') + str(self.video_name) + str(' || Status--') + str(self.verification_status)
+
 
 
 # class FreeMovieVideoSubCategories(models.Model):
@@ -426,6 +465,9 @@ class FreeMovieVideoTags(models.Model):
 
     class Meta:
         verbose_name_plural = "Free Movie Video Tags"
+
+    def __str__(self):
+        return str('video_id--') + str(self.video_id.video_id) + str(' || tag--') + str(self.tag_word)
 
 
 # model for storing movie free video
@@ -459,3 +501,86 @@ class FreeMovieVideo(models.Model):
 
     class Meta:
         verbose_name_plural = "Free Movie Video"
+
+    def __str__(self):
+        return str('Movie_id--') + str(self.movie_id.movie_id) + str(' || Movie--') + str(self.movie_id.movie_name) + str(' || video_id--') + str(self.video_id.video_id) + str(' || Video_name--') + str(self.video_name) + str(' || Status--') + str(self.verification_status)
+
+
+
+# model for storing series rating given by user
+class SeriesRating(models.Model):
+
+    series_id = models.ForeignKey(SeriesDetails, on_delete=models.PROTECT)
+
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    rating = models.PositiveSmallIntegerField()
+
+    class Meta:
+        verbose_name_plural = "Series Rating"
+
+    def __str__(self):
+        return str('Series_id--') + str(self.series_id.series_id) + str(' || Series--') + str(self.series_id.series_name) + str(' || User--') + str(self.user_id.username) + str(' || rating--') + str(self.rating)
+
+
+
+# model for storing movie rating given by user
+class MovieRating(models.Model):
+
+    movie_id = models.ForeignKey(MovieDetails, on_delete=models.PROTECT)
+
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    rating = models.PositiveSmallIntegerField()
+
+    class Meta:
+        verbose_name_plural = "Movie Rating"
+
+    def __str__(self):
+        return str('Movie_id--') + str(self.movie_id.movie_id) + str(' || Movie--') + str(self.movie_id.movie_name) + str(' || User--') + str(self.user_id.username) + str(' || rating--') + str(self.rating)
+
+
+# model for storing user History
+class History(models.Model):
+
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
+
+    video_watched = models.PositiveSmallIntegerField()
+
+    timestamp = models.DateTimeField()
+
+    class Meta:
+        verbose_name_plural = "History"
+
+    def __str__(self):
+        return str('User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || watch_time--') + str(self.video_watched)
+
+
+# model for storing user History
+class VideoComment(models.Model):
+
+    COMMENT_TYPES = (
+        # TYPES OF COMMENTS
+        (1, 'positive'),
+        (2, 'negative'),
+    )
+
+    comment_id = models.AutoField(primary_key=True)
+
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
+
+    comment = models.TextField()
+
+    comment_type = models.PositiveSmallIntegerField(choices=COMMENT_TYPES, default=1)
+
+    timestamp = models.DateTimeField()
+
+    class Meta:
+        verbose_name_plural = "Video Comment"
+
+    def __str__(self):
+        return str('User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || comment--') + str(self.comment) + str(' || comment_type--') + str(self.comment_type)

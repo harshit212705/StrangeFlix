@@ -141,7 +141,7 @@ def add_new_series(request):
             mime = check_in_memory_mime(request.FILES['file'])
 
             # checking the mime type of the uploaded thumbnail image
-            if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+            if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                 # adding new series details to the database
                 new_series = SeriesDetails.objects.create(
@@ -220,7 +220,7 @@ def add_new_season(request):
                     mime = check_in_memory_mime(request.FILES['file'])
 
                     # checking the mime type of upoaded thumbnail image
-                    if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+                    if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                         # saving new season details to database
                         new_season = SeriesSeasonDetails.objects.create(
@@ -318,7 +318,7 @@ def add_new_episode(request):
                     mime = check_in_memory_mime(request.FILES['file'])
 
                     # checking the mime type of thumbnail image
-                    if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+                    if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                         # checking whether user has provided the video or link to the video
                         if episode_linkorvideo == 'Video':
@@ -499,7 +499,7 @@ def add_new_series_content(request):
                 mime = check_in_memory_mime(request.FILES['file'])
 
                 # checking the mime type of thumbnail image
-                if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+                if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                     # checking whether user has provided the video or link to the video
                     if episode_linkorvideo == 'Video':
@@ -982,9 +982,8 @@ def add_new_movie(request):
 
         else:
             mime = check_in_memory_mime(request.FILES['file'])
-
             # checking the mime type of the uploaded thumbnail image
-            if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+            if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                 # adding new movie details to the database
                 new_movie = MovieDetails.objects.create(
@@ -1077,7 +1076,7 @@ def add_movie_video(request):
                     mime = check_in_memory_mime(request.FILES['file'])
 
                     # checking the mime type of thumbnail image
-                    if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+                    if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                         # checking whether user has provided the video or link to the video
                         if movie_videolinkorvideo == 'Video':
@@ -1440,7 +1439,7 @@ def add_movie_free_content(request):
                 mime = check_in_memory_mime(request.FILES['file'])
 
                 # checking the mime type of thumbnail image
-                if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png':
+                if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
 
                     # checking whether user has provided the video or link to the video
                     if movie_videolinkorvideo == 'Video':
