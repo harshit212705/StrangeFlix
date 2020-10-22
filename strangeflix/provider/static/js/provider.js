@@ -112,7 +112,7 @@ $("#list-series-list").on('click', function (e) {
 	});
 
 	// Emptying previous series details content
-	$('#apnd').empty();		 				// For already uploaded seasons
+	$('#apnd').empty(); // For already uploaded seasons
 	$('#uploaded-free-contents').empty();
 	$('#uploaded_episodes').empty();
 
@@ -218,52 +218,59 @@ caddTag.addEventListener('click', function (e) {
 
 
 // handling ADD TAG in ADD EPISODE SECTION of SERIES IN ADDED CONTENT SECTION
-var addAddTag = document.querySelector("#add-add-tag");
-var addTagText = document.querySelector("#add-tag-text");
-var addShowTags = document.querySelector("#add-selected-tags");
-var addSelectedTags = document.querySelectorAll("#add-tag-toggler");
-addAddTag.addEventListener('click', function (e) {
-	var span = document.createElement('span');
-	var textValue = addTagText.value;
-	span.setAttribute("value", textValue);
-	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-	span.style.border = "2px solid blue";
-	span.style.borderRadius = "50%";
-	span.innerHTML = textValue + '<a id="add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-	addShowTags.append(span);
-	addSelectedTags = document.querySelectorAll("#add-tag-toggler");
-	addSelectedTags.forEach(element => {
-		element.addEventListener('click', function (e) {
-			var obj = element.parentNode;
-			obj.remove();
+function add_tag_in_added(){
+	var addAddTag = document.querySelector("#add-add-tag");
+	var addTagText = document.querySelector("#add-tag-text");
+	var addShowTags = document.querySelector("#add-selected-tags");
+	var addSelectedTags = document.querySelectorAll("#add-tag-toggler");
+	addAddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = addTagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		addShowTags.append(span);
+		addSelectedTags = document.querySelectorAll("#add-tag-toggler");
+		addSelectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
 		});
 	});
-});
+}
 
+add_tag_in_added();
 
 
 // handling ADD TAG in ADD FREE CONTENT SECTION of SERIES IN ADDED CONTENT SECTION
-var eaddAddTag = document.querySelector("#e-add-add-tag");
-var eaddTagText = document.querySelector("#e-add-tag-text");
-var eaddShowTags = document.querySelector("#e-add-selected-tags");
-var eaddSelectedTags = document.querySelectorAll("#e-add-tag-toggler");
-eaddAddTag.addEventListener('click', function (e) {
-	var span = document.createElement('span');
-	var textValue = eaddTagText.value;
-	span.setAttribute("value", textValue);
-	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-	span.style.border = "2px solid blue";
-	span.style.borderRadius = "50%";
-	span.innerHTML = textValue + '<a id="e-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-	eaddShowTags.append(span);
-	eaddSelectedTags = document.querySelectorAll("#e-add-tag-toggler");
-	eaddSelectedTags.forEach(element => {
-		element.addEventListener('click', function (e) {
-			var obj = element.parentNode;
-			obj.remove();
+function add_tag_c_added(){
+	var eaddAddTag = document.querySelector("#e-add-add-tag");
+	var eaddTagText = document.querySelector("#e-add-tag-text");
+	var eaddShowTags = document.querySelector("#e-add-selected-tags");
+	var eaddSelectedTags = document.querySelectorAll("#e-add-tag-toggler");
+	eaddAddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = eaddTagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="e-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		eaddShowTags.append(span);
+		eaddSelectedTags = document.querySelectorAll("#e-add-tag-toggler");
+		eaddSelectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
 		});
 	});
-});
+}
+
+add_tag_c_added();
 
 
 // handling selection between video or link in ADD EPISODE SECTION of SERIES IN ADD CONTENT SECTION
@@ -355,8 +362,29 @@ free_cont_add__linkorvideo.addEventListener('change', function (e) {
 // });
 
 
+// call it when created a new episodeform
 
-
-
-
-
+function callit() {
+	var addTag = document.querySelector("#add-tag");
+	var tagText = document.querySelector("#tag-text");
+	var showTags = document.querySelector("#selected-tags");
+	var selectedTags = document.querySelectorAll("#tag-toggler");
+	addTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = tagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue +
+			'<a id="tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		showTags.append(span);
+		selectedTags = document.querySelectorAll("#tag-toggler");
+		selectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
+		});
+	});
+}
