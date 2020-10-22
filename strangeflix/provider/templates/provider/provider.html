@@ -130,7 +130,7 @@
                     <!-- add movie -->
                     <div class="tab-pane fade" id="list-movie" role="tabpanel" aria-labelledby="list-movie-list">
                         {% include "provider/movieform.html" %}
-                        </div>
+                    </div>
                     <!-- add series -->
                     <div class="tab-pane fade" id="list-series" role="tabpanel" aria-labelledby="list-series-list">
                         <div class="series__form">
@@ -469,7 +469,7 @@
                                                                 <div class="row pado">
                                                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                                                         <label class="mt-2"
-                                                                            for="series__season__contentname">Content 
+                                                                            for="series__season__contentname">Content
                                                                             name</label>
                                                                     </div>
                                                                     <div class="col-lg-9 col-md-9 col-sm-9">
@@ -912,8 +912,8 @@
                     <ul id="add-movie-right">
 
                     </ul>
-                     <!-- added-movie-free-content-right  -->
-                     <ul id="add-movie-free-content-right">
+                    <!-- added-movie-free-content-right  -->
+                    <ul id="add-movie-free-content-right">
 
                     </ul>
                     <!-- added-movie-video-right  -->
@@ -925,11 +925,10 @@
         </div>
     </div>
     <!-- playing videos in modal  -->
-    <!-- Modal -->
 
     <div class="modal fade" id="video-in-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered vid-pl-modal" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -938,6 +937,23 @@
                 </div>
                 <div class="modal-body">
                     {% include "templates/videoplayer.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit episodes in modal  -->
+
+    <div class="modal fade" id="edit-in-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-center">Edit content</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="edit-content-modal">
                 </div>
             </div>
         </div>
@@ -961,15 +977,14 @@
 
     <!-- to truncate the extra hash in url -->
     <script type="text/javascript">
-        if (window.location.hash === "#_=_"){
-            history.replaceState
-                ? history.replaceState(null, null, window.location.href.split("#")[0])
-                : window.location.hash = "";
+        if (window.location.hash === "#_=_") {
+            history.replaceState ?
+                history.replaceState(null, null, window.location.href.split("#")[0]) :
+                window.location.hash = "";
         }
     </script>
 
     <script>
-
         // JAVASCRIPT CODE FOR ADD CONTENT-->SERIES SECTION START
 
         // submitting new series form using ajax call
@@ -1040,7 +1055,8 @@
                         // Emptying right navigation bar that is to be used in this section
                         $('#season-right').empty();
 
-                    	set_navigation_bars_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+                        set_navigation_bars_display('block', 'none', 'none', 'none', 'none', 'none',
+                            'none', 'none', 'none', 'none', 'none', 'none');
 
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -1243,11 +1259,14 @@
                             $('#uploaded_episodes').append(htmlgen);
 
                             // appending current episode to right navigation bar
-                            $('#episodes-right').append('<li><a href="#episode' + data.season_episode_data[key][0] + '">episode' + episodecount + '</a></li>');
+                            $('#episodes-right').append('<li><a href="#episode' + data
+                                .season_episode_data[key][0] + '">episode' + episodecount +
+                                '</a></li>');
 
                         }
 
                         // reset the form
+                        $('#selected-tags').empty();
                         $('#seasonepisodeForm').each(function () {
                             this.reset();
                         });
@@ -1347,7 +1366,8 @@
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
                             var htmlgen = '<div id="content' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + contentcount + '-' + data.season_episode_data[key][1] +
+                                '" class="container my-5"><h4 class="my-4">Content ' +
+                                contentcount + '-' + data.season_episode_data[key][1] +
                                 '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
                                 data.season_episode_data[key][0] + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
@@ -1367,10 +1387,12 @@
 
                             // appending the already uploaded episodes to right navigation
                             $('#content-right').append('<li><a href="#content' + data
-                                .season_episode_data[key][0] + '">content' + contentcount + '</a></li>');
+                                .season_episode_data[key][0] + '">content' + contentcount +
+                                '</a></li>');
                         }
 
                         // reset the form
+                        $('#c-selected-tags').empty();
                         $('#freecontentForm').each(function () {
                             this.reset();
                         });
@@ -1379,8 +1401,7 @@
                         $('#free-content').collapse('toggle');
 
                         alert(data.is_successful);
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1414,11 +1435,9 @@
                     // checking and handling error conditions
                     if (data.is_series_season_exists != '') {
                         alert(data.is_series_season_exists);
-                    }
-                    else if (data.is_series_belongs_to_provider != '') {
+                    } else if (data.is_series_belongs_to_provider != '') {
                         alert(data.is_series_belongs_to_provider);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
                         // emptying the already uploaded episodes section and right navigation section
                         $('#uploaded_episodes').empty();
                         $('#uploaded-free-contents').empty();
@@ -1464,7 +1483,8 @@
                         for (var key in data.season_content_data) {
                             var specialol = `'${data.season_content_data[key][4]}'`;
                             var htmlgen = '<div id="content' + data.season_content_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + count + '-' + data.season_content_data[key][1] +
+                                '" class="container my-5"><h4 class="my-4">Content ' + count + '-' + data
+                                .season_content_data[key][1] +
                                 '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
                                 data.season_content_data[key][0] + 'thumbnail" src="' + data
                                 .season_content_data[key][3] +
@@ -1493,6 +1513,7 @@
 
 
                         // reset the form
+                        $('#selected-tags').empty();
                         $('#seasonepisodeForm').each(function () {
                             this.reset();
                         });
@@ -1508,7 +1529,8 @@
                         $('#list-seasoninfo-list').css('pointer-events', 'all');
                         $('#list-seasoninfo-list').tab('show');
 
-	                    set_navigation_bars_display('none', 'block', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+                        set_navigation_bars_display('none', 'block', 'block', 'none', 'none', 'none',
+                            'none', 'none', 'none', 'none', 'none', 'none');
 
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -1534,11 +1556,13 @@
             });
 
             //reset episodeForm
+            $('add-selected-tags').empty();
             $('#add-episodeForm').each(function () {
                 this.reset();
             });
 
             // reset free content form
+            $('#e-add-selected-tags').empty();
             $('#add-free-content-form').each(function () {
                 this.reset();
             });
@@ -1553,7 +1577,8 @@
             // Emptying right navigation that is to be used in this section
             $('#series-right').empty();
 
-            set_navigation_bars_display('none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars_display('none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
 
 
             // adding data to javascript form which is to be send over ajax request
@@ -1689,7 +1714,8 @@
                         $('#list-added-seasoninfo-list').css('pointer-events', 'none');
                         $('#list-added-seriesinfo-list').tab('show');
 
-	                    set_navigation_bars_display('none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+                        set_navigation_bars_display('none', 'none', 'none', 'none', 'block', 'none', 'none',
+                            'none', 'none', 'none', 'none', 'none');
 
                         // setting season number value
                         $('#add-seasonvalue').attr("value", Object.keys(data.all_series_season_data)
@@ -1771,12 +1797,22 @@
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
-
                             htmlgen += '<p class="text-muted">Status - ' + data.season_episode_data[
                                     key][8] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                                '</p><button type="button" class="btn btn-primary"' +
+                                'onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';;
+                            // my changes
+                            if (data.season_episode_data[key][8] == 'Rejected') {
+
+                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                                    'onclick="edit(' +
+                                    data.season_episode_data[key][6] + ',' + data.season_episode_data[key][
+                                        0] + ',' + '4' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                            }
+                            //
                             $('#previously-uploaded-episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -1791,7 +1827,8 @@
                         for (var key in data.season_content_data) {
                             var specialol = `'${data.season_content_data[key][4]}'`;
                             var htmlgen = '<div id="content' + data.season_content_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + count + '-' + data.season_content_data[key][1] +
+                                '" class="container my-5"><h4 class="my-4">Content ' + count + '-' + data
+                                .season_content_data[key][1] +
                                 '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
                                 data.season_content_data[key][0] + 'thumbnail" src="' + data
                                 .season_content_data[key][3] +
@@ -1807,7 +1844,14 @@
                                 '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
                                 data.season_content_data[key][0] + ',' + specialol +
                                 ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                            // my changes
+                            if (data.season_content_data[key][8] == 'Rejected') {
 
+                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                                    'onclick="edit(' +
+                                    data.season_content_data[key][0] + ',' + count + ',' + '3' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                            }
                             $('#previously-added-content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -1824,7 +1868,8 @@
                         $('#list-added-seasoninfo-list').css('pointer-events', 'all');
                         $('#list-added-seasoninfo-list').tab('show');
 
-	                    set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'block', 'block', 'none', 'none', 'none', 'none', 'none');
+                        set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'block',
+                            'block', 'none', 'none', 'none', 'none', 'none');
 
                         // setting the episode number value
                         $('#add__series__season__episodeno').attr("value", Object.keys(data
@@ -2044,6 +2089,7 @@
                         }
 
                         // reset the form
+                        $('#add-selected-tags').empty();
                         $('#add-episodeForm').each(function () {
                             this.reset();
                         });
@@ -2142,7 +2188,8 @@
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
                             var htmlgen = '<div id="content' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + contentcount + '-' + data.season_episode_data[key][1] +
+                                '" class="container my-5"><h4 class="my-4">Content ' +
+                                contentcount + '-' + data.season_episode_data[key][1] +
                                 '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
                                 data.season_episode_data[key][0] + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
@@ -2162,10 +2209,12 @@
 
                             // appending the already uploaded episodes to right navigation
                             $('#add-content-right').append('<li><a href="#content' + data
-                                .season_episode_data[key][0] + '">content' + contentcount + '</a></li>');
+                                .season_episode_data[key][0] + '">content' + contentcount +
+                                '</a></li>');
                         }
 
                         // reset the form
+                        $('#e-add-selected-tags').empty();
                         $('#add-free-content-form').each(function () {
                             this.reset();
                         });
@@ -2260,7 +2309,8 @@
                         $('#list-movieinfo-list').css('pointer-events', 'all');
                         $('#list-movieinfo-list').tab('show');
 
-	                    set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'block', 'none', 'none', 'none');
+                        set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none',
+                            'none', 'block', 'block', 'none', 'none', 'none');
 
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -2348,8 +2398,11 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
-                            var htmlgen = '<div id="movie_video'+ data.movie_video_data[key][0] +'" class="container my-5"><h4 class="my-4">Movie Video -' + data.movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="movie_video_thumbnail" src="' + data
+                            var htmlgen = '<div id="movie_video' + data.movie_video_data[key][0] +
+                                '" class="container my-5"><h4 class="my-4">Movie Video -' + data
+                                .movie_video_data[key][1] +
+                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="movie_video_thumbnail" src="' +
+                                data
                                 .movie_video_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
                                 data.movie_video_data[key][2] + '</p><p class="text-muted">';
@@ -2367,7 +2420,8 @@
                             $('#uploaded_movie').append(htmlgen);
 
                             // appending current movie video to right navigation bar
-                            $('#movie-video-right').append('<li><a href="#movie_video'+ data.movie_video_data[key][0] +'">Movie Video</a></li>');
+                            $('#movie-video-right').append('<li><a href="#movie_video' + data
+                                .movie_video_data[key][0] + '">Movie Video</a></li>');
                         }
 
                         // reset the form
@@ -2469,8 +2523,11 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
-                            var htmlgen = '<div id="content'+ data.movie_video_data[key][0] +'" class="container my-5"><h4 class="my-4">Content '+ contentcount +' - ' + data.movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content'+ contentcount +'thumbnail" src="' + data
+                            var htmlgen = '<div id="content' + data.movie_video_data[key][0] +
+                                '" class="container my-5"><h4 class="my-4">Content ' +
+                                contentcount + ' - ' + data.movie_video_data[key][1] +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                contentcount + 'thumbnail" src="' + data
                                 .movie_video_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
                                 data.movie_video_data[key][2] + '</p><p class="text-muted">';
@@ -2488,7 +2545,9 @@
                             $('#m-uploaded-free-contents').append(htmlgen);
 
                             // appending current movie free content to right navigation bar
-                            $('#movie-free-content-right').append('<li><a href="#content'+ data.movie_video_data[key][0] +'">content'+ contentcount +'</a></li>');
+                            $('#movie-free-content-right').append('<li><a href="#content' + data
+                                .movie_video_data[key][0] + '">content' + contentcount +
+                                '</a></li>');
                         }
 
                         // reset the form
@@ -2535,7 +2594,8 @@
             // Emptying right navigation that is to be used in this section
             $('#add-movie-right').empty();
 
-        	set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'none', 'none');
+            set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'block', 'none', 'none');
 
 
             // adding data to javascript form which is to be send over ajax request
@@ -2557,7 +2617,8 @@
                         // appending the already uploaded movie
                         for (var key in data.all_movies_data) {
                             var htmlgen = '<div id="movie' + key +
-                                '" class="container my-5"><h4 class="my-4">' + data.all_movies_data[key][0] +
+                                '" class="container my-5"><h4 class="my-4">' + data.all_movies_data[
+                                    key][0] +
                                 '</h4><div class="row"><div class="col-lg-8 col-md-8"><img src="' +
                                 data.all_movies_data[key][5] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
@@ -2568,11 +2629,13 @@
                             }
                             htmlgen += '</p><p class="text-muted">' + data.all_movies_data[key][2] +
                                 '</p><p class="text-muted">' + data.all_movies_data[key][1] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_movie(' + key + ')">Go to movie</button></div></div></div></div>';
+                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_movie(' +
+                                key + ')">Go to movie</button></div></div></div></div>';
                             $('#previously-uploaded-movie').append(htmlgen);
 
                             // appending already uploaded movie to right navigation
-                            $('#add-movie-right').append('<li><a href="#movie' + key + '">' + data.all_movies_data[key][0] + '</a></li>');
+                            $('#add-movie-right').append('<li><a href="#movie' + key + '">' + data
+                                .all_movies_data[key][0] + '</a></li>');
                         }
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -2606,7 +2669,7 @@
             });
 
             // making add movie video button displayable
-	        $('#btn_add_add_movie_video').css('display', 'block');
+            $('#btn_add_add_movie_video').css('display', 'block');
 
             // javascript data object
             var data = {
@@ -2636,8 +2699,10 @@
                         for (var key in data.movie_content_data) {
                             var specialol = `'${data.movie_content_data[key][4]}'`;
                             var htmlgen = '<div id="movie_video' + data.movie_content_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Movie video - ' + data.movie_content_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_video_thumbnail" src="' + data
+                                '" class="container my-5"><h4 class="my-4">Movie video - ' + data
+                                .movie_content_data[key][1] +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_video_thumbnail" src="' +
+                                data
                                 .movie_content_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
                                 data.movie_content_data[key][2] + '</p><p class="text-muted">';
@@ -2650,6 +2715,16 @@
                                 '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
                                 data.movie_content_data[key][0] + ',' + specialol +
                                 ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+
+                            //my changes
+                            if (data.movie_content_data[key][8] == 'Rejected') {
+
+                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                                    'onclick="edit(' +
+                                    data.movie_content_data[key][0] + ',' + '1' + ',' + '2' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                            }
+
                             $('#add-uploaded_movie').append(htmlgen);
 
                             // appending the already uploaded movie video to right navigation
@@ -2663,8 +2738,10 @@
                         for (var key in data.movie_free_data) {
                             var specialol = `'${data.movie_free_data[key][4]}'`;
                             var htmlgen = '<div id="content' + data.movie_free_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content '+ count +' - ' + data.movie_free_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content'+ data.movie_free_data[key][0] +'thumbnail" src="' + data
+                                '" class="container my-5"><h4 class="my-4">Content ' + count + ' - ' + data
+                                .movie_free_data[key][1] +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                data.movie_free_data[key][0] + 'thumbnail" src="' + data
                                 .movie_free_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
                                 data.movie_free_data[key][2] + '</p><p class="text-muted">';
@@ -2677,11 +2754,18 @@
                                 '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
                                 data.movie_free_data[key][0] + ',' + specialol +
                                 ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                            //my changes
+                            if (data.movie_free_data[key][8] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                                    'onclick="edit(' +
+                                    data.movie_free_data[key][0] + ',' + count + ',' + '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                            }
                             $('#m-add-uploaded-free-contents').append(htmlgen);
 
                             // appending the already uploaded movie video to right navigation
                             $('#add-movie-free-content-right').append('<li><a href="#content' + data
-                                .movie_free_data[key][0] + '">content'+ count +'</a></li>');
+                                .movie_free_data[key][0] + '">content' + count + '</a></li>');
 
                             count++;
 
@@ -2697,7 +2781,8 @@
                         $('#list-added-movieinfo-list').css('pointer-events', 'all');
                         $('#list-added-movieinfo-list').tab('show');
 
-	                    set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'block');
+                        set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none',
+                            'none', 'none', 'none', 'block', 'block');
 
 
                     } else {
@@ -2786,8 +2871,11 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
-                            var htmlgen = '<div id="movie_video'+ data.movie_video_data[key][0] +'" class="container my-5"><h4 class="my-4">Movie Video -' + data.movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="movie_video_thumbnail" src="' + data
+                            var htmlgen = '<div id="movie_video' + data.movie_video_data[key][0] +
+                                '" class="container my-5"><h4 class="my-4">Movie Video -' + data
+                                .movie_video_data[key][1] +
+                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="movie_video_thumbnail" src="' +
+                                data
                                 .movie_video_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
                                 data.movie_video_data[key][2] + '</p><p class="text-muted">';
@@ -2805,7 +2893,8 @@
                             $('#add-uploaded_movie').append(htmlgen);
 
                             // appending current movie video to right navigation bar
-                            $('#add-movie-video-right').append('<li><a href="#movie_video'+ data.movie_video_data[key][0] +'">Movie Video</a></li>');
+                            $('#add-movie-video-right').append('<li><a href="#movie_video' + data
+                                .movie_video_data[key][0] + '">Movie Video</a></li>');
                         }
 
                         // reset the form
@@ -2906,8 +2995,11 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
-                            var htmlgen = '<div id="content'+ data.movie_video_data[key][0] +'" class="container my-5"><h4 class="my-4">Content '+ contentcount +' - ' + data.movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content'+ contentcount +'thumbnail" src="' + data
+                            var htmlgen = '<div id="content' + data.movie_video_data[key][0] +
+                                '" class="container my-5"><h4 class="my-4">Content ' +
+                                contentcount + ' - ' + data.movie_video_data[key][1] +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                contentcount + 'thumbnail" src="' + data
                                 .movie_video_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
                                 data.movie_video_data[key][2] + '</p><p class="text-muted">';
@@ -2925,7 +3017,9 @@
                             $('#m-add-uploaded-free-contents').append(htmlgen);
 
                             // appending current movie free content to right navigation bar
-                            $('#add-movie-free-content-right').append('<li><a href="#content'+ data.movie_video_data[key][0] +'">content'+ contentcount +'</a></li>');
+                            $('#add-movie-free-content-right').append('<li><a href="#content' + data
+                                .movie_video_data[key][0] + '">content' + contentcount +
+                                '</a></li>');
                         }
 
                         // reset the form
@@ -2943,9 +3037,79 @@
                 }
             });
         });
-
-
+        //my changes
+        // function to handle play video
+        function edit(globalId, localId, formtype) {
+            // Add code to launch modal
+            if (formtype == '1') {
+                //add-moviefreecontentForm
+                $('#edit-content-modal').html('<form id="edit-add-moviefreecontentForm"></form>');
+                $('#edit-add-moviefreecontentForm').html($('#add-moviefreecontentForm').html());
+                $('#add-moviefreecontentForm').html('');
+                // var val = $('#add__series__season__episodeno').attr('value');
+                $('#edit-content-modal').append('<p hidden value="1" id="' + localId + '"></p>');
+                // $('#add__series__season__episodeno').attr('value', localId);
+                add_m_c_in_add()
+            } else if (formtype == '2') {
+                //add-movievideoForm
+                $('#edit-content-modal').html('<form id="edit-add-movievideoForm"></form>');
+                $('#edit-add-movievideoForm').html($('#add-movievideoForm').html());
+                $('#add-movievideoForm').html('');
+                // var val = $('#add__series__season__episodeno').attr('value');
+                $('#edit-content-modal').append('<p hidden value="2" id="' + localId + '"></p>');
+                // $('#add__series__season__episodeno').attr('value', localId);
+                add_m_in_add();
+            } else if (formtype == '3') {
+                // add-free-content-form
+                $('#edit-content-modal').html('<form id="edit-add-free-content-form"></form>');
+                $('#edit-add-free-content-form').html($('#add-free-content-form').html());
+                $('#add-free-content-form').html('');
+                // var val=$('#add__series__season__episodeno').attr('value');
+                $('#edit-content-modal').append('<p hidden value="3" id="' + localId + '"></p>');
+                // $('#add__series__season__episodeno').attr('value',data);
+                add_tag_c_added();
+            } else {
+                // add-episodeForm
+                $('#edit-content-modal').html('<form id="edit-add-episodeForm"></form>');
+                $('#edit-add-episodeForm').html($('#add-episodeForm').html());
+                $('#add-episodeForm').html('');
+                var val = $('#add__series__season__episodeno').attr('value');
+                $('#edit-content-modal').append('<p hidden value="4" id="' + val + '"></p>');
+                $('#add__series__season__episodeno').attr('value', localId);
+                add_tag_in_added();
+            }
+            $('#edit-in-modal').modal('show');
+        }
+        // once modal is closed remove the video
+        $('#edit-in-modal').on('hide.bs.modal', function (e) {
+            var formtype = $('#edit-content-modal p').attr('value');
+            var prevval = $('#edit-content-modal p').attr('id');
+            console.log(formtype);
+            if (formtype == '1') {
+                //add-moviefreecontentForm
+                $('#add-moviefreecontentForm').html($('#edit-add-moviefreecontentForm').html());
+                add_m_c_in_add()
+            } else if (formtype == '2') {
+                // add-movievideoForm
+                $('#add-movievideoForm').html($('#edit-add-movievideoForm').html());
+                add_m_in_add();
+            } else if (formtype == '3') {
+                // add-free-content-form
+                $('#add-free-content-form').html($('#add-free-content-form').html());
+                add_tag_in_added();
+            } else {
+                // add-episodeForm
+                $('#add__series__season__episodeno').attr('value', prevval);
+                $('#add-episodeForm').html($('#edit-add-episodeForm').html());
+                add_tag_in_added();
+            }
+            $('#edit-content-modal').html('');
+        })
     </script>
 </body>
 
 </html>
+
+
+
+<!-- steps 1.addedformcontent and addedformepisode -->

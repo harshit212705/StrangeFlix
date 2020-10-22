@@ -3,15 +3,15 @@ var mentsel = document.querySelectorAll("#chkbxo");
 var mtxtval = document.querySelector("#movie__subcategory__choosen");
 var mchkb = document.querySelector("#savecho");
 mchkb.addEventListener('click', function (e) {
-    mtxtval.value = "";
-    mentsel.forEach(element => {
-        if (element.checked) {
-            mtxtval.value += element.value + ",";
-        }
-    });
-    if (mtxtval.value.length > 0) {
-        mtxtval.value = mtxtval.value.substring(0, mtxtval.value.length - 1);
-    }
+	mtxtval.value = "";
+	mentsel.forEach(element => {
+		if (element.checked) {
+			mtxtval.value += element.value + ",";
+		}
+	});
+	if (mtxtval.value.length > 0) {
+		mtxtval.value = mtxtval.value.substring(0, mtxtval.value.length - 1);
+	}
 });
 
 
@@ -19,8 +19,8 @@ mchkb.addEventListener('click', function (e) {
 // reset everything on clicking on MOVIES in ADD CONTENT SECTION IN LEFT NAVIGATION BAR
 $("#list-movie-list").on('click', function (e) {
 
-    // restricting pointer events for other tabs
-    $('#list-movieform-list').css('pointer-events', 'all');
+	// restricting pointer events for other tabs
+	$('#list-movieform-list').css('pointer-events', 'all');
 	$('#list-movieinfo-list').css('pointer-events', 'none');
 	$('#list-movieform-list').tab('show');
 
@@ -41,12 +41,12 @@ $("#list-movie-list").on('click', function (e) {
 
 	// Emptying previous movies details content
 	$('#m-uploaded-free-contents').empty();
-    $('#uploaded_movie').empty();
+	$('#uploaded_movie').empty();
 
-    // $('.a-m-list').css('display','block');
+	// $('.a-m-list').css('display','block');
 
-    // setting default empty value for category and subcategory
-    txtval.value = "";
+	// setting default empty value for category and subcategory
+	txtval.value = "";
 
 	set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
 
@@ -55,19 +55,19 @@ $("#list-movie-list").on('click', function (e) {
 
 // once moved to UPLOADED MOVIES SECTION IN ADDED CONTENT in MOVIES remove pointer events to ADD MOVIE CONTENT SECTION
 $("#list-added-movieform-list").on('click', function (e) {
-    $('#list-added-movieform-list').css('pointer-events', 'all');
-    $('#list-added-movieinfo-list').css('pointer-events', 'none');
-    $('#list-added-movieform-list').tab('show');
+	$('#list-added-movieform-list').css('pointer-events', 'all');
+	$('#list-added-movieinfo-list').css('pointer-events', 'none');
+	$('#list-added-movieform-list').tab('show');
 
-    //reset free movie content form
-    $('#add-moviefreecontentForm').each(function () {
-        this.reset();
-    });
+	//reset free movie content form
+	$('#add-moviefreecontentForm').each(function () {
+		this.reset();
+	});
 
-    // reset movie video form
-    $('#add-movievideoForm').each(function () {
-        this.reset();
-    });
+	// reset movie video form
+	$('#add-movievideoForm').each(function () {
+		this.reset();
+	});
 
 	set_navigation_bars_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'none', 'none');
 });
@@ -100,52 +100,60 @@ maddTag.addEventListener('click', function (e) {
 
 
 // handling ADD TAG in ADD FREE CONTENT SECTION of MOVIES IN ADD CONTENT SECTION
-var cmaddTag = document.querySelector("#cm-add-tag");
-var cmtagText = document.querySelector("#cm-tag-text");
-var cmshowTags = document.querySelector("#cm-selected-tags");
-var cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
-cmaddTag.addEventListener('click', function (e) {
-	var span = document.createElement('span');
-	var textValue = cmtagText.value;
-	span.setAttribute("value", textValue);
-	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-	span.style.border = "2px solid blue";
-	span.style.borderRadius = "50%";
-	span.innerHTML = textValue + '<a id="cm-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-	cmshowTags.append(span);
-	cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
-	cmselectedTags.forEach(element => {
-		element.addEventListener('click', function (e) {
-			var obj = element.parentNode;
-			obj.remove();
+function add_m_c_in_add(){
+	var cmaddTag = document.querySelector("#cm-add-tag");
+	var cmtagText = document.querySelector("#cm-tag-text");
+	var cmshowTags = document.querySelector("#cm-selected-tags");
+	var cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
+	cmaddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = cmtagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="cm-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		cmshowTags.append(span);
+		cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
+		cmselectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
 		});
 	});
-});
+}
+
+add_m_c_in_add();
 
 
 
 // handling ADD TAG in ADD EPISODE SECTION of MOVIES IN ADDED CONTENT SECTION
-var maddaddTag = document.querySelector("#m-add-add-tag");
-var maddtagText = document.querySelector("#m-add-tag-text");
-var maddshowTags = document.querySelector("#m-add-selected-tags");
-var maddselectedTags = document.querySelectorAll("#m-add-tag-toggler");
-maddaddTag.addEventListener('click', function (e) {
-	var span = document.createElement('span');
-	var textValue = maddtagText.value;
-	span.setAttribute("value", textValue);
-	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-	span.style.border = "2px solid blue";
-	span.style.borderRadius = "50%";
-	span.innerHTML = textValue + '<a id="m-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-	maddshowTags.append(span);
-	maddselectedTags = document.querySelectorAll("#m-add-tag-toggler");
-	maddselectedTags.forEach(element => {
-		element.addEventListener('click', function (e) {
-			var obj = element.parentNode;
-			obj.remove();
+function add_m_in_add() {
+	var maddaddTag = document.querySelector("#m-add-add-tag");
+	var maddtagText = document.querySelector("#m-add-tag-text");
+	var maddshowTags = document.querySelector("#m-add-selected-tags");
+	var maddselectedTags = document.querySelectorAll("#m-add-tag-toggler");
+	maddaddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = maddtagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="m-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		maddshowTags.append(span);
+		maddselectedTags = document.querySelectorAll("#m-add-tag-toggler");
+		maddselectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
 		});
 	});
-});
+}
+
+add_m_in_add();
 
 
 

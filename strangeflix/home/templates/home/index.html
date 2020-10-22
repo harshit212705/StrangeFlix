@@ -38,80 +38,80 @@
                     <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
                     <li class="nav-item">
                         <!-- <a class="nav-link" href="#"> -->
-                            <div class="dropdown py-2 px-2">
-                                <button class="rem-button" id="dropdownMenu2"  aria-haspopup="true" aria-expanded="false">
-                                  Sports
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                  <div class="dropdown-item">
-                                    <a href="#">Cricket</a>   
-                                  </div>
-                                  <div class="dropdown-item">
+                        <div class="dropdown py-2 px-2 specia-drop">
+                            <button class="rem-button" id="dropdownMenu2" aria-haspopup="true" aria-expanded="false">
+                                Sports
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <div class="dropdown-item">
+                                    <a href="#">Cricket</a>
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Football</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Tennis</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Martial Arts</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">eSports</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Hockey</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Badminton</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Wrestling</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Kabbadi</a>
-                                  </div>
-                                  <div class="dropdown-item">
+                                </div>
+                                <div class="dropdown-item">
                                     <a href="#">Table Tennis</a>
-                                  </div>
                                 </div>
                             </div>
+                        </div>
                         <!-- </a> -->
                     </li>
                     <li class="nav-item">
-                            <div class="dropdown py-2 px-2">
-                                <button class="rem-button" id="dropdownMenu3"  aria-haspopup="true" aria-expanded="false">
-                                  Entertainment
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
-                                     <div class="dropdown-item">
-                                        <a href="#">Action</a> 
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Adventure</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Animation</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Comedy</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Crime</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Drama</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Horror</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Romance</a>
-                                      </div>
-                                      <div class="dropdown-item">
-                                        <a href="#">Thriller</a>
-                                      </div>
+                        <div class="dropdown py-2 px-2 specia-drop">
+                            <button class="rem-button" id="dropdownMenu3" aria-haspopup="true" aria-expanded="false">
+                                Entertainment
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                <div class="dropdown-item">
+                                    <a href="#">Action</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Adventure</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Animation</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Comedy</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Crime</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Drama</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Horror</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Romance</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Thriller</a>
                                 </div>
                             </div>
+                        </div>
                     </li>
                 </ul>
                 <div class="navbar-nav ml-auto">
@@ -120,19 +120,19 @@
                     <input type="text" id="sear" class="form-control mr-sm-2" placeholder="search by name">
                     <div class="btn-group">
                         <button type="submit" class="btn btn-dark">Search</button>
-                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                            aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu">
-                          <button id="sear-by-nam" class="dropdown-item btn-secondary">Search by name</a>
-                          <button id="sear-by-tag" class="dropdown-item btn-secondary">Search by tags</a>
+                            <button id="sear-by-nam" class="dropdown-item btn-secondary">Search by name</a>
+                                <button id="sear-by-tag" class="dropdown-item btn-secondary">Search by tags</a>
                         </div>
                     </div>
 
                     {% if user.is_authenticated %}
                     <li class="mx-4">
-                        <div class="btn-group">
-                            <button class="rem-button py-2 px-2" aria-haspopup="true"
-                                aria-expanded="false">
+                        <div class="btn-group specia-drop">
+                            <button class="rem-button py-2 px-2" aria-haspopup="true" aria-expanded="false">
                                 {{ user.username }}
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -276,7 +276,44 @@
         </div>
 
     </div>
-    {% include "home/recommen.html" %}
+
+    {% include "home/movies-desc.html" %}
+    <!-- rating modal  -->
+    <div class="modal fade" id="rateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rate-title">Rating</h5>
+                    <button type="button" id="reset-rating" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-3 mx-3">
+                    <div class="rating-taker">
+                        <span class="px-3">your rating</span>
+                        <span class="px-1 rating-val" value="1">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 rating-val" value="2">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 rating-val" value="3">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 rating-val" value="4">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 rating-val" value="5">
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" id="rate-submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -293,6 +330,7 @@
     </script>
     <script src="{% static "/js/homes.js" %}"></script>
     <script src="{% static "/js/index.js" %}"></script>
+    <script src="{% static "/js/videoplayer.js" %}"></script>
 
 
     <!-- to truncate the extra hash in url -->

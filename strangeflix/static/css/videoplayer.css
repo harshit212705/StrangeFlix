@@ -243,7 +243,7 @@ a{
   transform: rotate(-45deg);
 }
 
-.modal-dialog{
+.vid-pl-modal{
   min-height: 20% !important;
   min-width: 60% !important;
 }
