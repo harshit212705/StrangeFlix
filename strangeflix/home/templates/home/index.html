@@ -157,7 +157,7 @@
         </nav>
         <!-- login modal  -->
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+            aria-hidden="true" style="color: black;">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
@@ -228,7 +228,7 @@
 
         <!-- signup modal  -->
         <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+            aria-hidden="true" style="color: black;">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
@@ -276,40 +276,106 @@
         </div>
 
     </div>
+    <div id="video_with_comments">
 
-    {% include "home/movies-desc.html" %}
-    <!-- rating modal  -->
-    <div class="modal fade" id="rateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title" aria-hidden="true">
+    </div>
+    <div id="selected_series">
+        <p id="selected_series_id" hidden></p>
+        <p id="selected_series_season_id" hidden></p>
+        <div id="selected_season_description">
+
+        </div>
+        <div id="selected_season_freecontent">
+
+        </div>
+        <div id="selected_season_episodes">
+
+        </div>
+        <div id="selected_series_description">
+
+        </div>
+        <div id="selected_series_season">
+
+        </div>
+    </div>
+    <div id="selected_movie">
+        <p id="selected_movie_id" hidden></p>
+        <div id="selected_movie_description">
+
+        </div>
+        <div id="selected_movie_freecontent">
+
+        </div>
+    </div>
+    {% include "home/recommen.html" %}
+    <!-- movie rating modal  -->
+    <div class="modal fade" id="movierateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="rate-title">Rating</h5>
-                    <button type="button" id="reset-rating" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="movierate-title" style="color: white;">Rate</h5>
+                    <button type="button" id="moviereset-rating" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body my-3 mx-3">
                     <div class="rating-taker">
-                        <span class="px-3">your rating</span>
-                        <span class="px-1 rating-val" value="1">
+                        <span class="px-3" style="color: white;">Rating</span>
+                        <span class="px-1 movierating-val" value="1">
                             <i class="fas fa-star"></i>
                         </span>
-                        <span class="px-1 rating-val" value="2">
+                        <span class="px-1 movierating-val" value="2">
                             <i class="fas fa-star"></i>
                         </span>
-                        <span class="px-1 rating-val" value="3">
+                        <span class="px-1 movierating-val" value="3">
                             <i class="fas fa-star"></i>
                         </span>
-                        <span class="px-1 rating-val" value="4">
+                        <span class="px-1 movierating-val" value="4">
                             <i class="fas fa-star"></i>
                         </span>
-                        <span class="px-1 rating-val" value="5">
+                        <span class="px-1 movierating-val" value="5">
                             <i class="fas fa-star"></i>
                         </span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm" id="rate-submit">Submit</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="movierate-submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- series rating modal  -->
+    <div class="modal fade" id="seriesrateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seriesrate-title" style="color: white;">Rate</h5>
+                    <button type="button" id="seriesreset-rating" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-3 mx-3">
+                    <div class="rating-taker">
+                        <span class="px-3" style="color: white;">Rating</span>
+                        <span class="px-1 seriesrating-val" value="1">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 seriesrating-val" value="2">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 seriesrating-val" value="3">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 seriesrating-val" value="4">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="px-1 seriesrating-val" value="5">
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" id="seriesrate-submit">Submit</button>
                 </div>
             </div>
         </div>
@@ -330,7 +396,7 @@
     </script>
     <script src="{% static "/js/homes.js" %}"></script>
     <script src="{% static "/js/index.js" %}"></script>
-    <script src="{% static "/js/videoplayer.js" %}"></script>
+    <!-- <script src="{% static "/js/videoplayer.js" %}"></script> -->
 
 
     <!-- to truncate the extra hash in url -->
@@ -380,6 +446,531 @@
                 }
             });
         }
+
+
+        function open_movie(movie_id) {
+            // javascript data object
+            var data = {
+                'movie_id': movie_id
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_movie_details" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_movie_exists != '') {
+                        alert(data.is_movie_exists);
+                    } else if (data.is_successful != '') {
+                        $("#selected_movie_description").empty();
+                        $("#selected_movie_freecontent").empty();
+
+                        set_content_display('none', 'none', 'none', 'none', 'none', 'none', 'block', 'block');
+
+                        document.getElementById('selected_movie_id').innerHTML = movie_id;
+
+                        for (var key in data.movie_content_data) {
+                            var htmlgen = '<div id="movie_'+ movie_id +'" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">'+ data.movie_content_data[key][1] +'</h4><div class="class-muted"><p class="text-muted">';
+
+                            for (var i = 0; i < data.movie_content_data[key][9].length; i++) {
+                                htmlgen += data.movie_content_data[key][9][i] + ' | ';
+                            }
+
+                            htmlgen += '</p><p class="text-muted">';
+
+                            for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
+                                htmlgen += data.movie_content_data[key][8][i] + ' | ';
+                            }
+
+                            htmlgen += '</p><p class="text-muted">'+ data.movie_content_data[key][10] +'</p></div><div class="ser-describ">'+ data.movie_content_data[key][2] +'</div></div></div><button type="button" onclick="play_movie('+ data.movie_content_data[key][0] +')" class="vid-dislike mx-4 mr-auto" title="play"><span class="ico-cont bg-danger text-center py-1 px-2"><span class="py-3"><i class="fas fa-play"></i></span></span><p class="add-to-rate py-3">Play</p></button><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#movierateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="'+ data.movie_content_data[key][3] +'"alt="image4"></div></div></div></div>';
+                            var freecontent = '<div class="show-up"><div id="movie_content_'+ movie_id +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="movie_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+
+                            var count = 0;
+                            for (var val in data.movie_free_data) {
+                                count++;
+                                if (count != 1 && (count-1)%6 == 0) {
+                                    freecontent += '<div class="carousel-item"><div class="row">';
+                                }
+                                freecontent += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">'+ data.movie_free_data[val][1] +'</div><div class="img-seci"><a href="#" onclick="play_free_movie('+ data.movie_free_data[val][0] +')"><img class="img-fluid ser-img" src="'+ data.movie_free_data[val][3] +'" alt="image4"></a></div></div></div></div>';
+
+                                if (count%6 == 0) {
+                                    freecontent += '</div></div>';
+                                }
+                            }
+                            if (Object.keys(data.movie_free_data).length%6 != 0) {
+                                freecontent += '</div></div>';
+                            }
+                            freecontent += '</div><a class="carousel-control-prev bg-danger" href="#movie_freecontent-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#movie_freecontent-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+
+                        }
+
+                        $("#selected_movie_description").append(htmlgen);
+                        $("#selected_movie_freecontent").append(freecontent);
+                        if ($('#movie_freecontent-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+                            $('#movie_freecontent-controls').children('#movie_freecontent-controls .carousel-control-prev').hide();
+                        }
+                        if ($('#movie_freecontent-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+                            $('#movie_freecontent-controls').children('#movie_freecontent-controls .carousel-control-next').hide();
+                        }
+
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        function open_series(series_id) {
+            // javascript data object
+            var data = {
+                'series_id': series_id
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_series_details" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_series_exists != '') {
+                        alert(data.is_series_exists);
+                    } else if (data.is_successful != '') {
+                        $("#selected_series_description").empty();
+                        $("#selected_series_season").empty();
+
+                        set_content_display('none', 'none', 'none', 'none', 'block', 'block', 'none', 'none');
+
+                        document.getElementById('selected_series_id').innerHTML = series_id;
+                        for (var key in data.series_content_data) {
+                            var htmlgen = '<div id="series_'+ key +'" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">'+ data.series_content_data[key][0] +'</h4><div class="class-muted"><p class="text-muted">'+ data.series_content_data[key][3] + ' | ';
+
+                            for (var i = 0; i < data.series_content_data[key][5].length; i++) {
+                                htmlgen += data.series_content_data[key][5][i] + ' | ';
+                            }
+
+                            htmlgen += '</p></div><div class="ser-describ">'+ data.series_content_data[key][1] +'</div></div></div><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#seriesrateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="'+ data.series_content_data[key][4] +'"alt="image4"></div></div></div></div>';
+                            var seasons = '<div class="show-up"><div id="series_season_'+ key +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Seasons<i class="arrow right mx-1"></i></h4><div id="series_season-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+                            var count = 0;
+                            for (var val in data.series_season_data) {
+                                count++;
+                                if (count != 1 && (count-1)%6 == 0) {
+                                    seasons += '<div class="carousel-item"><div class="row">';
+                                }
+                                seasons += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Season '+ data.series_season_data[val][1] +'</div><div class="img-seci"><a href="#" onclick="open_season('+ val +')"><img class="img-fluid ser-img" src="'+ data.series_season_data[val][5] +'" alt="image4"></a></div></div></div></div>';
+
+                                if (count%6 == 0) {
+                                    seasons += '</div></div>';
+                                }
+                            }
+                            if (Object.keys(data.series_season_data).length%6 != 0) {
+                                seasons += '</div></div>';
+                            }
+                            seasons += '</div><a class="carousel-control-prev bg-danger" href="#series_season-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+
+                        }
+                        $("#selected_series_description").append(htmlgen);
+                        $("#selected_series_season").append(seasons);
+
+                        if ($('#series_season-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+                            $('#series_season-controls').children('#series_season-controls .carousel-control-prev').hide();
+                        }
+                        if ($('#series_season-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+                            $('#series_season-controls').children('#series_season-controls .carousel-control-next').hide();
+                        }
+
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        function open_season(series_season_id) {
+            // javascript data object
+            var data = {
+                'series_season_id': series_season_id
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_season_details" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_season_exists != '') {
+                        alert(data.is_season_exists);
+                    } else if (data.is_successful != '') {
+                        $("#selected_season_description").empty();
+                        $("#selected_season_freecontent").empty();
+                        $("#selected_season_episodes").empty();
+
+                        document.getElementById('selected_series_season_id').innerHTML = series_season_id;
+
+                        for (var key in data.season_content_data) {
+                            var htmlgen = '<div id="series_season_'+ key +'" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">Season '+ data.season_content_data[key][0] +'</h4><div class="class-muted"><p class="text-muted">'+ data.season_content_data[key][3] + ' | ';
+
+                            for (var i = 0; i < data.season_content_data[key][5].length; i++) {
+                                htmlgen += data.season_content_data[key][5][i] + ' | ';
+                            }
+
+                            htmlgen += '</p></div><div class="ser-describ">'+ data.season_content_data[key][1] +'</div></div></div></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="'+ data.season_content_data[key][4] +'"alt="image4"></div></div></div></div>';
+
+                            var freecontent = '<div class="show-up"><div id="series_season_content_'+ key +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="series_season_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+
+                            var count = 0;
+                            for (var val in data.season_free_data) {
+                                count++;
+                                if (count != 1 && (count-1)%6 == 0) {
+                                    freecontent += '<div class="carousel-item"><div class="row">';
+                                }
+                                freecontent += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">'+ data.season_free_data[val][1] +'</div><div class="img-seci"><a href="#" onclick="play_free_episode('+ data.season_free_data[val][0] +')"><img class="img-fluid ser-img" src="'+ data.season_free_data[val][3] +'" alt="image4"></a></div></div></div></div>';
+
+                                if (count%6 == 0) {
+                                    freecontent += '</div></div>';
+                                }
+                            }
+                            if (Object.keys(data.season_free_data).length%6 != 0) {
+                                freecontent += '</div></div>';
+                            }
+                            freecontent += '</div><a class="carousel-control-prev bg-danger" href="#series_season_freecontent-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_freecontent-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+
+                            var episodes = '<div class="show-up"><div id="series_episode_'+ key +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Episodes<i class="arrow right mx-1"></i></h4><div id="series_season_episodes-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+
+                            count = 0;
+                            for (var val in data.season_episodes) {
+                                count++;
+                                if (count != 1 && (count-1)%6 == 0) {
+                                    episodes += '<div class="carousel-item"><div class="row">';
+                                }
+                                episodes += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Episode '+ val +' - '+ data.season_episodes[val][1] +'</div><div class="img-seci"><a href="#" onclick="play_episode('+ data.season_episodes[val][0] +')"><img class="img-fluid ser-img" src="'+ data.season_episodes[val][3] +'" alt="image4"></a></div></div></div></div>';
+
+                                if (count%6 == 0) {
+                                    episodes += '</div></div>';
+                                }
+                            }
+                            if (Object.keys(data.season_episodes).length%6 != 0) {
+                                episodes += '</div></div>';
+                            }
+                            episodes += '</div><a class="carousel-control-prev bg-danger" href="#series_season_episodes-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_episodes-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+
+                        }
+
+                        $("#selected_season_description").append(htmlgen);
+                        $("#selected_season_freecontent").append(freecontent);
+                        $("#selected_season_episodes").append(episodes);
+
+                        set_content_display('none', 'block', 'block', 'block', 'none', 'block', 'none', 'none');
+
+                        if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+                            $('#series_season_freecontent-controls').children('#series_season_freecontent-controls .carousel-control-prev').hide();
+                        }
+                        if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+                            $('#series_season_freecontent-controls').children('#series_season_freecontent-controls .carousel-control-next').hide();
+                        }
+
+                        if ($('#series_season_episodes-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+                            $('#series_season_episodes-controls').children('#series_season_episodes-controls .carousel-control-prev').hide();
+                        }
+                        if ($('#series_season_episodes-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+                            $('#series_season_episodes-controls').children('#series_season_episodes-controls .carousel-control-next').hide();
+                        }
+
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        function play_movie(video_id) {
+
+            var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div><!-- else this  --><!-- pay cost per video  --><div class="text-center text-muted text-white">pay $(number) to watch this video <button class="btn btn-primary btn-sm" type="button">Pay</button></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5"><div style="background-color: white;color: black;" class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"><li><div class="row media"><div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"><!-- user-profile  --><img src="/img/img1.png" alt="" class="img-fluid"></div><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><span class="font-weight-bold">S1 E1 - date</span><div class="d-cent text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit.Distinctio doloribus explicabo enim quae tenetur omnis, optiodolorem et. Eaque similique obcaecati laborum blanditiis officiis veniam maxime veritatis alias inventore voluptates!</div><button type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter"><i class="fas fa-flag"></i></button><button type="button" class="show-mr-button">show</button></div></div></div></li></ul></div></div></div></div></div>';
+
+            $("#video_with_comments").empty();
+            $("#video_with_comments").append(playerhtml);
+            initialize_movie_player();
+
+            set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
+
+            var video = document.querySelector('#movie-video');
+            var video_url = window.location.origin + '/video/' + video_id;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                    // Show playing UI.
+                })
+                .catch(error => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+            }
+            $('#movie-insert-vid').attr('src', video_url);
+            $('.progress__filled').css('flex', '0');
+
+            // javascript data object
+            // var data = {
+            //     'movie_id': movie_id,
+            //     'start_time':  video.currentTime,
+            // }
+
+            // // adding data to javascript form which is to be send over ajax request
+            // var formData = new FormData();
+            // formData.append('data', JSON.stringify(data));
+
+            // $.ajax({
+            //     type: 'POST',
+            //     url: '',
+            //     data: formData,
+            //     dataType: 'json',
+            //     enctype: 'multipart/form-data',
+            //     processData: false,
+            //     contentType: false,
+            //     success: function (data) {
+            //         // checking and handling error conditions
+            //         if (data.is_movie_exists != '') {
+            //             alert(data.is_movie_exists);
+            //         } else if (data.is_user_subscribed != '') {
+            //             alert(data.is_user_subscribed);
+            //         } else if (data.is_successful != '') {
+            //             console.log('called');
+            //             var byteCharacters = atob(data.stream);
+            //             var byteNumbers = new Array(byteCharacters.length);
+            //             for (let i = 0; i < byteCharacters.length; i++) {
+            //                 byteNumbers[i] = byteCharacters.charCodeAt(i);
+            //             }
+
+                        // // Show loading animation.
+                        // var playPromise = video.play();
+
+                        // if (playPromise !== undefined) {
+                        //     playPromise.then(_ => {
+                        //         // Automatic playback started!
+                        //         // Show playing UI.
+                        //     })
+                        //     .catch(error => {
+                        //         // Auto-play was prevented
+                        //         // Show paused UI.
+                        //     });
+                        // }
+            //             movie_total_duration = data.movie_duration
+            //             var blobArray = [];
+            //             blobArray.push(new Blob([new Uint8Array(byteNumbers)],{'type':'video/mp4'}));
+            //             var currentTime = video.currentTime;
+            //             var blob = new Blob(blobArray,{'type':'video/mp4'});
+            //             video.src = window.URL.createObjectURL(blob);
+            //             video.currentTime = currentTime;
+            //             movie_previous_time_watched = 0;     // if using history add history time
+            //             movie_maxtime_fetched = Math.min(currentTime + 10, movie_total_duration);
+            //             $('.progress__filled').css('flex', '0');
+            //             video.play();
+
+            //         } else {
+            //             alert('Some unexpected error has occured. Try again.');
+            //         }
+            //     }
+            // });
+        }
+
+
+        function play_episode(video_id) {
+
+            var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div><!-- else this  --><!-- pay cost per video  --><div class="text-center text-muted text-white">pay $(number) to watch this video <button class="btn btn-primary btn-sm" type="button">Pay</button></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5"><div style="background-color: white;color: black;" class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"><li><div class="row media"><div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"><!-- user-profile  --><img src="/img/img1.png" alt="" class="img-fluid"></div><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><span class="font-weight-bold">S1 E1 - date</span><div class="d-cent text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit.Distinctio doloribus explicabo enim quae tenetur omnis, optiodolorem et. Eaque similique obcaecati laborum blanditiis officiis veniam maxime veritatis alias inventore voluptates!</div><button type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter"><i class="fas fa-flag"></i></button><button type="button" class="show-mr-button">show</button></div></div></div></li></ul></div></div></div></div></div>';
+
+            $("#video_with_comments").empty();
+            $("#video_with_comments").append(playerhtml);
+            initialize_movie_player();
+
+            set_content_display('block', 'none', 'block', 'block', 'none', 'block', 'none', 'none');
+
+            var video = document.querySelector('#movie-video');
+            var video_url = window.location.origin + '/video/' + video_id;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                    // Show playing UI.
+                })
+                .catch(error => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+            }
+            $('#movie-insert-vid').attr('src', video_url);
+            $('.progress__filled').css('flex', '0');
+
+        }
+
+
+        function play_free_movie(video_id) {
+
+            var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div><!-- else this  --><!-- pay cost per video  --><div class="text-center text-muted text-white">pay $(number) to watch this video <button class="btn btn-primary btn-sm" type="button">Pay</button></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5"><div style="background-color: white;color: black;" class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"><li><div class="row media"><div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"><!-- user-profile  --><img src="/img/img1.png" alt="" class="img-fluid"></div><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><span class="font-weight-bold">S1 E1 - date</span><div class="d-cent text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit.Distinctio doloribus explicabo enim quae tenetur omnis, optiodolorem et. Eaque similique obcaecati laborum blanditiis officiis veniam maxime veritatis alias inventore voluptates!</div><button type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter"><i class="fas fa-flag"></i></button><button type="button" class="show-mr-button">show</button></div></div></div></li></ul></div></div></div></div></div>';
+
+            $("#video_with_comments").empty();
+            $("#video_with_comments").append(playerhtml);
+            initialize_movie_player();
+
+            set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
+
+            var video = document.querySelector('#movie-video');
+            var video_url = window.location.origin + '/video/' + video_id;
+            // console.log(video_url);
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                    // Show playing UI.
+                })
+                .catch(error => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+            }
+            $('#movie-insert-vid').attr('src', video_url);
+            $('.progress__filled').css('flex', '0');
+        }
+
+
+        function play_free_episode(video_id) {
+
+            var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div><!-- else this  --><!-- pay cost per video  --><div class="text-center text-muted text-white">pay $(number) to watch this video <button class="btn btn-primary btn-sm" type="button">Pay</button></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5"><div style="background-color: white;color: black;" class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"><li><div class="row media"><div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"><!-- user-profile  --><img src="/img/img1.png" alt="" class="img-fluid"></div><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><span class="font-weight-bold">S1 E1 - date</span><div class="d-cent text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit.Distinctio doloribus explicabo enim quae tenetur omnis, optiodolorem et. Eaque similique obcaecati laborum blanditiis officiis veniam maxime veritatis alias inventore voluptates!</div><button type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter"><i class="fas fa-flag"></i></button><button type="button" class="show-mr-button">show</button></div></div></div></li></ul></div></div></div></div></div>';
+
+            // $('#selected_movie_description').empty();
+            // $('#selected_movie_description').css('display', 'block');
+            $("#video_with_comments").empty();
+            $("#video_with_comments").append(playerhtml);
+            initialize_movie_player();
+
+            // $('#video_with_comments').css('display', 'block');
+
+            set_content_display('block', 'none', 'block', 'block', 'none', 'block', 'none', 'none');
+
+            var video = document.querySelector('#movie-video');
+            var video_url = window.location.origin + '/video/' + video_id;
+            // console.log(video_url);
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                    // Show playing UI.
+                })
+                .catch(error => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                });
+            }
+            $('#movie-insert-vid').attr('src', video_url);
+            $('.progress__filled').css('flex', '0');
+
+        }
+
+
+        //got the rating ajax call to save it in the database
+        $('#movierate-submit').on('click', function (e) {
+            var movie_id = document.getElementById('selected_movie_id').innerHTML;
+
+             // javascript data object
+             var data = {
+                'movie_id': movie_id,
+                'movie_rating':  movierating,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "rate_movie" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_movie_exists != '') {
+                        alert(data.is_movie_exists);
+                    } else if (data.is_user_logged_in != '') {
+                        alert(data.is_user_logged_in);
+                    } else if (data.is_successful != '') {
+                        $('#movierateCenter').modal('hide');
+                        alert(data.is_successful);
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+
+        })
+
+         //got the rating ajax call to save it in the database
+        $('#seriesrate-submit').on('click', function (e) {
+            var series_id = document.getElementById('selected_series_id').innerHTML;
+
+             // javascript data object
+             var data = {
+                'series_id': series_id,
+                'series_rating':  seriesrating,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "rate_series" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_series_exists != '') {
+                        alert(data.is_series_exists);
+                    } else if (data.is_user_logged_in != '') {
+                        alert(data.is_user_logged_in);
+                    } else if (data.is_successful != '') {
+                        $('#seriesrateCenter').modal('hide');
+                        alert(data.is_successful);
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        })
+
+
     </script>
 </body>
 

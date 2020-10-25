@@ -3,6 +3,10 @@
 ## DO NOT add new events at last. Recent changes should be at the top.
 
 
+### By <b>_Harshit Garg_</b> on <b>_October 26, 2020_</b>
+* Playing video through backend.
+* user dashboard with movies and series flow added.
+
 ### By <b>_Harshit Garg_</b> on <b>_October 22, 2020_</b>
 * Recommendation system added.
 * Popular and recent movies and series section added.

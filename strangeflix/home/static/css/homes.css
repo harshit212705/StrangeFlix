@@ -12,8 +12,8 @@
   margin:0% 0% !important;
 }
 body{
-  /* background-color: #272B2C; */
-  /* color:#eeeeee; */
+  background-color: #272B2C; 
+  color:#eeeeee; 
 }
 .col-gl-1,
 .col-lg-2,
@@ -111,7 +111,6 @@ p {
   opacity:1
 }
 .show-up{
-  transform: translateY(-70%);
   opacity:1;
 }
 .lin-grade{

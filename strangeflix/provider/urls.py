@@ -20,4 +20,5 @@ urlpatterns = [
     url('previously_uploaded_movie_content/', provider_views.previously_uploaded_movie_content, name = "previously_uploaded_movie_content"),
     url('add_new_series_content/', provider_views.add_new_series_content, name = "add_new_series_content"),
     url('add_movie_free_content/', provider_views.add_movie_free_content, name = "add_movie_free_content"),
+    # url('stream_video/', provider_views.stream_video, name = "stream_video"),
 ]

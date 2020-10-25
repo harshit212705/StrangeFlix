@@ -200,14 +200,6 @@ pip.addEventListener("click", async function (event) {
 });
 
 
-// theatre mode
-
-var theatre = document.querySelector(".theatre__button");
-theatre.addEventListener('click', function (e) {
-    var vp = document.querySelector("#video-player");
-});
-
-
 // setting dropdown
 var playback = document.querySelector(".playbacki");
 var quality = document.querySelector(".quali");
