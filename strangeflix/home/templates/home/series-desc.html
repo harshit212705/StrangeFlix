@@ -1,0 +1,45 @@
+<!-- series-description section  -->
+
+{% load static%}
+<div class="series-view-section container-fluid">
+    <div class="row lin-grade">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <!-- if not subscribed  -->
+            <div class="info-sect mx-4">
+                <div class="access-lock bg-danger text-center">
+                    <div class="py-1">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+                <div class="series-naam py-4">
+                    <h4 class="font-weight-bold">Series name</h4>
+                    <div class="class-muted">
+                        Categories | subcategories | Seasons | Date
+                    </div>
+                    <div class="ser-describ">
+                        Description
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="vid-dislike mx-4 mr-auto" title="Dislike" data-toggle="modal"
+                data-target="#rateCenter">
+                <span class="ico-cont bg-danger text-center py-1 px-1">
+                    <span class="py-3">
+                        <i class="fas fa-star"></i>
+                    </span>
+                </span>
+                <p class="add-to-rate py-3">Rate</p>
+            </button>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="ser-tp-tmb">
+                <img class="img-fluid ser-tmb-img"
+                    src="https://resources.sonyliv.com/image/fetch/w_1349,c_fill,fl_lossy,f_auto,q_auto,e_contrast:30,e_brightness:10/https://origin-staticv2.sonyliv.com/detail_cover_bg/TMKOC_3000_coverbg.png"
+                    alt="image4">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="show-up">
+    {% include "home/season.html" %}
+</div>

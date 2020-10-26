@@ -23,6 +23,15 @@ import json
 import uuid
 from django.conf import settings
 
+#  imports required for Email Sending:-
+from django.core.mail import EmailMessage, BadHeaderError
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from accounts.tokens import account_activation_token
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from accounts.views import send_email
 
 
 # renders the admin dashboard page on get request from admin account
@@ -375,6 +384,48 @@ def get_movies(request):
         return render(request, 'templates/404.html')
 
 
+def video_status_email(video_type, provider_username, provider_email, video_name, season_no, series_name, movie_name, status):
+
+    # Sending email process starts
+    if video_type == 'series_episode':
+        mail_subject = 'Series episode video status'
+    elif video_type == 'series_content':
+        mail_subject = 'Series content video status'
+    elif video_type == 'movies_episode':
+        mail_subject = 'Movie episode video status'
+    elif video_type == 'movies_content':
+        mail_subject = 'Movie content video status'
+    else:
+        return
+
+    email_context = {
+        'provider': provider_username,
+        'message': ''
+    }
+
+    if video_type == 'series_episode':
+        email_context['message'] = 'Episode ' + video_name + ' for season ' + str(season_no) + ' in series ' + series_name + ' is ' + status
+    elif video_type == 'series_content':
+        email_context['message'] = 'Content ' + video_name + ' for season ' + str(season_no) + ' in series ' + series_name + ' is ' + status
+    elif video_type == 'movies_episode':
+        email_context['message'] = 'Movie video ' + video_name + ' in movie ' + movie_name + ' is ' + status
+    elif video_type == 'movies_content':
+        email_context['message'] = 'Movie content ' + video_name + ' in movie ' + movie_name + ' is ' + status
+
+    # message to be displayed to user is render from a html template
+    html_message = render_to_string("Admin/video_status_template.html",
+                                    context=email_context)
+    to_email_list = [provider_email]
+    # calling the send email function to send verification email and checking if mail is sent successfully
+    if send_email(subject=mail_subject,
+                html_message=html_message,
+                to_email=to_email_list):  # to_email must be a tuple of list
+
+        response = f'A video Confirmation email has been sent to {provider_email}.'
+    else:
+        response = 'Mail can\'t be send now. Possible Cause - Connection Issue.'
+
+
 
 # function to verify video uploaded by the provider
 @csrf_exempt
@@ -387,7 +438,7 @@ def verify_video(request):
         video_id = json_data['video_id']
         video_type = json_data['type']
         cost_per_video = json_data['cost_per_video']
-        # print(cost_per_video)
+
         # response object to return as response to ajax request
         context = {
             'is_video_exists': '',
@@ -426,6 +477,19 @@ def verify_video(request):
                 if video_type == 'series_episode' or video_type == 'movies_episode':
                     video_details.cost_of_video = cost_per_video
                 video_details.save()
+
+
+                # checking if provider has his email registered with our website then send him confirmation of his uploaded video verification
+                if video_type == 'series_episode' or video_type == 'series_content':
+                    provider_username = video_details.series_season_id.series_id.provider_id.username
+                    provider_email = video_details.series_season_id.series_id.provider_id.email
+                    if provider_email != '':
+                        video_status_email(video_type, provider_username, provider_email, video_details.video_name, video_details.series_season_id.season_no, video_details.series_season_id.series_id.series_name, '', 'verified')
+                elif video_type == 'movie_episode' or video_type == 'movie_content':
+                    provider_username = video_details.movie_id.provider_id.username
+                    provider_email = video_details.movie_id.provider_id.email
+                    if provider_email != '':
+                        video_status_email(video_type, provider_username, provider_email, video_details.video_name, '', '', video_details.movie_id.movie_name, 'verified')
 
 
                 # checking if all the episodes of current season are verified then make season status as verified
@@ -515,11 +579,31 @@ def reject_video(request):
                 video_details.save()
 
                 video_obj = Videos.objects.filter(video_id=video_id).first()
-                video_comment = VideoRejectionComment.objects.create(
-                    video_id=video_obj,
-                    comment=comment
-                )
-                video_comment.save()
+                comment_exists = VideoRejectionComment.objects.filter(video_id=video_obj).first()
+                if comment_exists:
+                    comment_exists.comment = comment
+                    comment_exists.save()
+                else:
+                    video_comment = VideoRejectionComment.objects.create(
+                        video_id=video_obj,
+                        comment=comment
+                    )
+                    video_comment.save()
+
+
+                # checking if provider has his email registered with our website then send him confirmation of his uploaded video verification
+                if video_type == 'series_episode' or video_type == 'series_content':
+                    provider_username = video_details.series_season_id.series_id.provider_id.username
+                    provider_email = video_details.series_season_id.series_id.provider_id.email
+                    if provider_email != '':
+                        video_status_email(video_type, provider_username, provider_email, video_details.video_name, video_details.series_season_id.season_no, video_details.series_season_id.series_id.series_name, '', 'rejected')
+                elif video_type == 'movie_episode' or video_type == 'movie_content':
+                    provider_username = video_details.movie_id.provider_id.username
+                    provider_email = video_details.movie_id.provider_id.email
+                    if provider_email != '':
+                        video_status_email(video_type, provider_username, provider_email, video_details.video_name, '', '', video_details.movie_id.movie_name, 'rejected')
+
+
 
                 # checking if all the episodes of current season are verified then make season status as verified
                 if video_type == 'series_episode' or video_type == 'series_content':

@@ -1515,14 +1515,14 @@
 
 
         // restrict on moving from series directly to other two part
-        $('#list-seriesform-list').on('show.bs.tab', function (e) {
+        $('#list-seriesform-list').on('click', function (e) {
             $('#list-seriesinfo-list').css('pointer-events', 'none');
             $('#list-seasoninfo-list').css('pointer-events', 'none');
             get_series();
         })
 
 
-        $('#list-added-seriesform-list').on('show.bs.tab', function (e) {
+        $('#list-added-seriesform-list').on('click', function (e) {
             $('#list-added-seriesinfo-list').css('pointer-events', 'none');
             $('#list-added-seasoninfo-list').css('pointer-events', 'none');
             get_added_series();
@@ -1530,26 +1530,26 @@
 
 
         // restrict on moving from season directly to other episode
-        $('#list-seriesinfo-list').on('show.bs.tab', function (e) {
+        $('#list-seriesinfo-list').on('click', function (e) {
             $('#list-seasoninfo-list').css('pointer-events', 'none');
             var series_id = document.getElementById('series_id').innerHTML;
             go_to_seasons(series_id);
         })
 
 
-        $('#list-added-seriesinfo-list').on('show.bs.tab', function (e) {
+        $('#list-added-seriesinfo-list').on('click', function (e) {
             $('#list-added-seasoninfo-list').css('pointer-events', 'none');
             var series_id = document.getElementById('added_series_id').innerHTML;
             go_to_added_seasons(series_id);
         })
 
         // restrict on moving from series directly to other two part
-        $('#list-movieform-list').on('show.bs.tab', function (e) {
+        $('#list-movieform-list').on('click', function (e) {
             $('#list-movieinfo-list').css('pointer-events', 'none');
             get_movies();
         })
 
-        $('#list-added-movieform-list').on('show.bs.tab', function (e) {
+        $('#list-added-movieform-list').on('click', function (e) {
             $('#list-added-movieinfo-list').css('pointer-events', 'none');
 
             get_added_movies();

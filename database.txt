@@ -182,20 +182,28 @@ transaction - transaction_id, user_id, timestamp, type(wallet/card), amount, sta
 
 transaction_token - transaction_id, token
 
+
+
+SeriesRating - series_id, user_id, rating
+
+MovieRating - series_id, user_id, rating
+
+History - user_id, video_id, video_watched, timestamp
+
+Comment - comment_id, video_id, user_id, comment, timestamp
+
+
+
+
 pay_per_view - id, video_id, user_id, end_date time, transaction_id
 
 flag_video - video_id, user_id, flag(inappropriate, etc), timestamp
 
 Like - like_id, video_id, user_id, timestamp
 
-Comment - comment_id, video_id, user_id, comment_message, timestamp
-
-Rating - parent_series_name_id, user_id, rating, timestamp
-
 flag_comment - comment_id, user_id, flag(inappropriate, etc), timestamp
 
 favourites - user_id, video_id, added_timestamp
 
-history - user_id, video_id, last_seen_time, timestamp
 
  
