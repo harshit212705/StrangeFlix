@@ -100,31 +100,29 @@ maddTag.addEventListener('click', function (e) {
 
 
 // handling ADD TAG in ADD FREE CONTENT SECTION of MOVIES IN ADD CONTENT SECTION
-function add_m_c_in_add(){
-	var cmaddTag = document.querySelector("#cm-add-tag");
-	var cmtagText = document.querySelector("#cm-tag-text");
-	var cmshowTags = document.querySelector("#cm-selected-tags");
-	var cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
-	cmaddTag.addEventListener('click', function (e) {
-		var span = document.createElement('span');
-		var textValue = cmtagText.value;
-		span.setAttribute("value", textValue);
-		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-		span.style.border = "2px solid blue";
-		span.style.borderRadius = "50%";
-		span.innerHTML = textValue + '<a id="cm-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-		cmshowTags.append(span);
-		cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
-		cmselectedTags.forEach(element => {
-			element.addEventListener('click', function (e) {
-				var obj = element.parentNode;
-				obj.remove();
-			});
+
+var cmaddTag = document.querySelector("#cm-add-tag");
+var cmtagText = document.querySelector("#cm-tag-text");
+var cmshowTags = document.querySelector("#cm-selected-tags");
+var cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
+cmaddTag.addEventListener('click', function (e) {
+	var span = document.createElement('span');
+	var textValue = cmtagText.value;
+	span.setAttribute("value", textValue);
+	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+	span.style.border = "2px solid blue";
+	span.style.borderRadius = "50%";
+	span.innerHTML = textValue + '<a id="cm-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+	cmshowTags.append(span);
+	cmselectedTags = document.querySelectorAll("#cm-tag-toggler");
+	cmselectedTags.forEach(element => {
+		element.addEventListener('click', function (e) {
+			var obj = element.parentNode;
+			obj.remove();
 		});
 	});
-}
+});
 
-add_m_c_in_add();
 
 
 
@@ -158,27 +156,31 @@ add_m_in_add();
 
 
 // handling ADD TAG in ADD FREE CONTENT SECTION of MOVIES IN ADDED CONTENT SECTION
-var cmaddaddTag = document.querySelector("#cm-add-add-tag");
-var cmaddtagText = document.querySelector("#cm-add-tag-text");
-var cmaddshowTags = document.querySelector("#cm-add-selected-tags");
-var cmaddselectedTags = document.querySelectorAll("#cm-add-tag-toggler");
-cmaddaddTag.addEventListener('click', function (e) {
-	var span = document.createElement('span');
-	var textValue = cmaddtagText.value;
-	span.setAttribute("value", textValue);
-	span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
-	span.style.border = "2px solid blue";
-	span.style.borderRadius = "50%";
-	span.innerHTML = textValue + '<a id="cm-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
-	cmaddshowTags.append(span);
-	cmaddselectedTags = document.querySelectorAll("#cm-add-tag-toggler");
-	cmaddselectedTags.forEach(element => {
-		element.addEventListener('click', function (e) {
-			var obj = element.parentNode;
-			obj.remove();
+function add_m_c_in_add() {
+	var cmaddaddTag = document.querySelector("#cm-add-add-tag");
+	var cmaddtagText = document.querySelector("#cm-add-tag-text");
+	var cmaddshowTags = document.querySelector("#cm-add-selected-tags");
+	var cmaddselectedTags = document.querySelectorAll("#cm-add-tag-toggler");
+	cmaddaddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = cmaddtagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="cm-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		cmaddshowTags.append(span);
+		cmaddselectedTags = document.querySelectorAll("#cm-add-tag-toggler");
+		cmaddselectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
 		});
 	});
-});
+};
+add_m_c_in_add();
+
 
 
 // handling selection between video or link in ADD EPISODE SECTION of MOVIES IN ADD CONTENT SECTION
