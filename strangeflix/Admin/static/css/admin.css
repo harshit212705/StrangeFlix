@@ -10,7 +10,7 @@ p {
     line-height: 1.7em;
     text-align: justify;
     text-justify: inter-word;
-    margin:0 0 !important;
+    margin: 0 0 !important;
 }
 
 
@@ -38,6 +38,7 @@ a:focus {
     transition: all 0.3s;
 }
 
+
 /*  SIDEBAR STYLE */
 
 .wrapper {
@@ -45,7 +46,7 @@ a:focus {
     width: 100%;
     align-items: stretch;
     position: fixed;
-    height:100%;
+    height: 100%;
 }
 
 #sidebar {
@@ -55,27 +56,23 @@ a:focus {
     transition: all 0.3s;
 }
 
-#sidebar.active {
-    margin-left: -250px;
-}
-
 #sidebar .sidebar-header {
-    padding: 20px;
+    padding: 1.2em;
     background: #6d7fcc;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 1.2em 0;
     border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {
     color: #fff;
-    padding: 10px;
+    padding: 0.64em;
 }
 
 #sidebar ul li a {
-    padding: 10px;
+    padding: 0.65em;
     font-size: 1.1em;
     display: block;
 }
@@ -99,12 +96,12 @@ a[data-toggle="collapse"] {
     display: block;
     position: absolute;
     top: 50%;
-    right: 20px;
+    right: 1.2em;
 }
 
 ul ul a {
     font-size: 0.9em !important;
-    padding-left: 30px !important;
+    padding-left: 2em !important;
     background: #6d7fcc;
 }
 
@@ -113,7 +110,6 @@ ul {
 }
 
 .fix {
-    order: 2;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     font-size: 1rem;
@@ -122,6 +118,14 @@ ul {
     top: 4rem;
     height: 40em;
     overflow-y: auto;
+}
+
+.fix ul {
+    border-left: 1px solid #eee;
+}
+
+.fix ul a {
+    color: #77757a;
 }
 
 #section1,
@@ -143,13 +147,24 @@ ul {
 
 .series__form,
 .series__added__form {
-    padding: 7% 13%;
+    padding: 7% 10%;
 }
 
-.series__info,
+.media-season {
+    min-width: 100%;
+}
+
+.episode__info,
+.adding__movie,
 .season__info,
-.episode__info {
-    padding-left: 10%;
+.series__info {
+    padding-left: 6%;
+}
+
+
+
+.do-not-show {
+    display: none;
 }
 
 /* episode form  */
@@ -162,64 +177,126 @@ ul {
     display: none;
 }
 
-/* added series  */
-.adding__series {
-    margin: 7% 10%;
+/* 100% width  */
+.add__season__videos,
+#add-epiapnd,
+#add-apnd {
+    width: 100%;
 }
 
-@media(max-width:80em) {
-    .media-full {
-        position: relative;
-        left: 10%;
-    }
 
-    .media-home {
-        padding-left: 7%;
-        width: 100%;
+/* added series  */
+.adding__series {
+    margin-left: 10%;
+}
+
+.modal-dialog {
+    min-width: 40% !important;
+}
+
+.middle-section {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+}
+
+/* arrows  */
+.arro {
+    border: solid #6c757d;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 6px;
+}
+
+.right {
+    transform: rotate(-45deg);
+}
+
+.cont-user-type {
+    padding: 7% 3%;
+}
+
+@media(max-width:1500px) {
+
+    .series__added__form {
+        padding: 7% 7%;
+    }
+}
+
+@media(max-width:1400px) {
+    .middle-section {
+        -webkit-line-clamp: 5;
+    }
+}
+
+@media(max-width:1300px) {
+    .middle-section {
+        -webkit-line-clamp: 4;
     }
 
     #sidebar {
         min-width: 12em;
     }
 
-    .padding-adder {
-        padding-left: 30%;
-    }
-
-
     .series__form,
     .series__added__form {
-        padding: 7% 11% 7% 0%;
+        padding: 7% 0%;
     }
-
-    .fix {
-        margin-left: 7%;
-    }
-
-    .series__info,
-    .season__info,
-    .episode__info {
-        padding-left: 9%;
+    .episode__info{
+        padding-left:0%;
     }
 }
 
-@media(max-width:62em) {
-    .media-full {
-        position: relative;
-        left: 20%;
+@media(max-width:1050px) {
+    .middle-section {
+        -webkit-line-clamp: 3;
     }
 
-    .series__form,
-    .series__added__form {
-        padding: 7% 7%;
+    #sidebar {
+        min-width: 10em;
     }
 }
 
-@media(max-width:50em) {
+@media(max-width:950px) {
+
+    .series__added__form {
+        padding: 7% 0%;
+    }
+}
+
+@media(max-width:900px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .col-sm-1,
+    .col-md-1,
+    .col-lg-1 {
+        flex: 0 0 8.333333%;
+        max-width: 8.333333%;
+    }
+
+    .add__season__videos {
+        padding: 0% 6%;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    .series__info {
+        padding: 0% 12%;
+    }
 
     .col-lg-2,
     .col-sm-2,
-    .col-md-2 {
+    .col-md-2,
+    .col-md-8 {
         width: 100% !important;
     }
 
@@ -239,5 +316,149 @@ ul {
 
     .fix {
         display: none;
+    }
+
+    .fade-on-small {
+        display: none;
+    }
+
+    .series__form .list-group,
+    .series__added__form .list-group {
+        flex-direction: row;
+    }
+
+    .col-md-8,
+    .col-lg-2 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .episode__info,
+    .season__info,
+    .series__info {
+        padding-left: 0%;
+    }
+
+    .middle-section {
+        -webkit-line-clamp: 4;
+    }
+
+    .arro {
+        padding: 4px;
+    }
+}
+
+@media (max-width: 795px) {
+
+    .series__info {
+        padding-left: 8%;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
+    p,
+    span {
+        font-size: 0.9rem;
+    }
+
+    .col-sm-6,
+    .col-md-6,
+    .col-lg-6 {
+        width: 50%;
+    }
+
+    .middle-section {
+        -webkit-line-clamp: 2;
+    }
+
+    .middle-section {
+        -webkit-line-clamp: 3;
+    }
+
+    .col-sm-3,
+    .col-md-3,
+    .col-lg-3 {
+        width: 25%;
+    }
+
+    .col-lg-6,
+    .col-md-6,
+    .col-sm-6 {
+        width: 50%;
+    }
+
+    .col-lg-9,
+    .col-md-9,
+    .col-sm-9 {
+        width: 75%;
+    }
+}
+
+@media (max-width: 500px) {
+    body>* {
+        font-size: 0.8rem !important;
+    }
+
+
+    h3,
+    h4 {
+        font-size: 1rem;
+    }
+
+    p,
+    span,
+    .form-control {
+        font-size: 0.8rem !important;
+    }
+
+    .btn {
+        font-size: 0.8rem !important;
+    }
+
+    .adding__series {
+        margin: 0% 0%;
+    }
+}
+
+@media(max-width:400px) {
+    .content {
+        min-height: 100px;
+        margin: 3% 0% !important;
+        padding: 0% 0%;
+    }
+
+    .list-group-item-action {
+        margin: 0% 2% !important;
+        padding: 3% 3% !important;
+    }
+
+    .col-lg-6,
+    .col-md-6,
+    .col-sm-6,
+    .col-lg-2,
+    .col-md-2,
+    .col-sm-2,
+    .col-lg-1,
+    .col-md-1,
+    .col-sm-1,
+    .col-sm-4,
+    .col-lg-4,
+    .col-md-4,
+    .col-lg-8,
+    .col-sm-8,
+    .col-md-8,
+    .col-lg-9,
+    .col-md-9,
+    .col-sm-9,
+    .col-lg-3,
+    .col-md-3,
+    .col-sm-3 {
+        width: 100%;
+    }
+
+    .arro {
+        padding: 4px;
     }
 }

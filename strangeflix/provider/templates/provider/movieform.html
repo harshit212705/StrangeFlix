@@ -19,10 +19,10 @@
 
                     <div class="form-group my-4">
                         <div class="row pado">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label class="mt-2" for="movie_name">Movie Name</label>
                             </div>
-                            <div class="col-lg-6 col-md-9 col-sm-9">
+                            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-9">
                                 <input type="text" name="movie-name" class="form-control" id="movie_name"
                                     placeholder="Enter movie name" required />
                             </div>
@@ -32,11 +32,11 @@
 
                     <div class="form-group my-4">
                         <div class="row pado">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label class="mt-2" for="movie__description">Movie
                                     description</label>
                             </div>
-                            <div class="col-lg-6 col-md-9 col-sm-9">
+                            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-9">
                                 <textarea class="form-control" name="movie-description" id="movie__description" rows="3"
                                     required></textarea>
                             </div>
@@ -46,10 +46,10 @@
 
                     <div class="form-group my-4">
                         <div class="row pado">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label class="mt-2">Languages</label>
                             </div>
-                            <div class="col-lg-6 col-md-9 col-sm-9">
+                            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-9">
                                 <select id="movie__language" name="language" class="custom-select">
                                     <option selected>Languages</option>
                                     <option value="Bengali">Bengali</option>
@@ -68,16 +68,16 @@
 
                     <div class="form-group my-4">
                         <div class="row pado">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label class="mt-2">Categories</label>
                             </div>
-                            <div class="col-lg-9 col-md-9 col-sm-9">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                 <div class="row">
                                     <input type="text" readonly name="movie-categories" class="form-control-plaintext"
                                         id="movie__category" value="Entertainment">
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 mx-1 my-3">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="btn-group dropdown">
                                             <button class="btn btn-light-outline" type="button" id="dropdownMen"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -131,7 +131,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 col-md-4 col-sm-4 mx-1 my-3">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
                                         <textarea class="form-control" name="subcategory-choosen"
                                             id="movie__subcategory__choosen" rows="1" disabled
                                             aria-required="true"></textarea>
@@ -145,10 +145,10 @@
 
                     <div class="form-group my-4">
                         <div class="row pado">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                                 <label class="mt-2">Upload Thumbnail</label>
                             </div>
-                            <div class="col-lg-6 col-md-9 col-sm-9">
+                            <div class="col-xl-6 col-lg-6 col-md-9 col-sm-9">
                                 <input id="movie__file" type='file' class="form-control" name='movie-image'
                                     accept='.png, .jpg, .jpeg' required>
                             </div>
@@ -169,11 +169,13 @@
 
                     <div class="add__season__videos">
                         <p id="movie_id" hidden></p>
-
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#movie-free-content"
+                        
+                        <div class="spec-form">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#movie-free-content"
                             aria-expanded="false" aria-controls="movie-free-content">
                             Add Free Content
                         </button>
+                        </div>
                         <div class="collapse" id="movie-free-content">
                             <div class="card card-body">
                                 <!-- add season videos -->
@@ -239,11 +241,8 @@
                                                         <input type="text" id="cm-tag-text" class="form-control"
                                                             placeholder="enter tag" />
                                                     </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <button type="button" class="btn btn-sm btn-primary mx-3"
                                                             id="cm-add-tag">Add tag</button>
                                                     </div>
                                                 </div>
@@ -339,10 +338,12 @@
                                 </form>
                             </div>
                         </div>
-                        <button id="btn_add_movie_video" class="btn btn-primary mx-5" type="button" data-toggle="collapse" data-target="#movie-video-form"
+                        <div class="spec-form my-2">
+                            <button id="btn_add_movie_video" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#movie-video-form"
                             aria-expanded="false" aria-controls="movie-video-form">
                             Add movie video
                         </button>
+                        </div>
                         <div class="movie-one-time collapse" id="movie-video-form">
                             <div class="card card-body">
                                 <!-- adding movie form  -->
@@ -391,15 +392,12 @@
                                                         <input type="text" id="m-tag-text" class="form-control"
                                                             placeholder="enter tag" />
                                                     </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <button type="button" class="btn btn-sm btn-primary mx-3"
                                                             id="m-add-tag">Add tag</button>
                                                     </div>
                                                 </div>
-                                                <div id="m-selected-tags" class="my-3">
+                                                <div id="m-selected-tags" class="row my-3">
 
                                                 </div>
                                             </div>
@@ -491,9 +489,11 @@
                                 </form>
                             </div>
                         </div>
+                        <!-- added free contents  -->
                         <div id="m-uploaded-free-contents">
 
                         </div>
+                        <hr>
                         <!-- added episodes section -->
                         <div id="uploaded_movie">
 

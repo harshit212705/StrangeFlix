@@ -4,6 +4,7 @@ from provider.models import Videos, SeriesDetails, SeriesSubCategories, SeriesSe
                     FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, \
                     VideoRejectionComment
 
+from accounts.models import CustomUser
 # importing dictionaries from provider/views.py
 from provider.views import SUBCATEGORY_REVERSE, VERIFICATION_REVERSE, LANGUAGE_REVERSE, CATEGORY_REVERSE, VIDEO_EXTENSION_REVERSE
 
@@ -42,6 +43,115 @@ def admin_dashboard(request):
     else:
         return render(request, 'templates/404.html')
 
+
+# get all the users 
+@csrf_exempt
+@login_required(login_url='home_page')
+def search_users(request):
+    if request.method == 'POST' and request.user.user_type == 'A':
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        search_txt = json_data['search_text']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_any_user_exists': '',
+            'is_successful': '',
+            'users': '',
+        }
+
+        # fetching all the users matching the search text
+        users = CustomUser.objects.filter(username__contains=search_txt).exclude(username=request.user.username)
+        print(users)
+        if users is None:
+            context['is_any_user_exists'] = 'There are no users matched!!'
+        else:
+            # fetching users which are not admin
+            users = CustomUser.objects.filter(username__contains=search_txt).exclude(username=request.user.username).order_by('username')[0:50]
+
+
+            # sending users details to ajax request
+            user_details = {}
+            for obj in users:
+                user_details.update({str(obj.pk): (obj.id, obj.username, obj.email, obj.user_type)});
+
+            # returning success response to ajax request
+            context['users'] = user_details
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+# change user-type
+@csrf_exempt
+@login_required(login_url='home_page')
+def change_user_type(request):
+    if request.method == 'POST' and request.user.user_type == 'A':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        user_id = json_data['user_id']
+        # response object to return as response to ajax request
+        context = {
+            'is_user_exists': '',
+            'is_successful': '',
+            'user_details': '',
+        }
+
+        # fetching all the registered users
+        users = CustomUser.objects.filter(id=user_id).first()
+
+        if users is None:
+            context['is_user_exists'] = 'There are no users with given id!!'
+        else:
+            # sending users details to ajax request
+            user_details = {}
+            user_details.update({str(users.pk): (users.id, users.username, users.email, users.user_type)});
+
+            # returning success response to ajax request
+            context['user_details'] = user_details
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+# update user-type
+@csrf_exempt
+@login_required(login_url='home_page')
+def update_user_type(request):
+    if request.method == 'POST' and request.user.user_type == 'A':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        user_id = json_data['user_id']
+        user_type = json_data['user_type']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_user_exists': '',
+            'is_successful': '',
+            'user_details': '',
+        }
+
+        # fetching all the registered users
+        users = CustomUser.objects.filter(id=user_id).first()
+
+        if users is None:
+            context['is_user_exists'] = 'There are no users with given id!!'
+        else:
+            # sending users details to ajax request
+            user_details = {}
+            
+            users.user_type = user_type
+
+            users.save()
+
+            # returning success response to ajax request
+            context['user_details'] = user_details
+            context['is_successful'] = 'updated.'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
 
 # get all the pending series
 @csrf_exempt
@@ -143,7 +253,7 @@ def pending_uploaded_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['season_episode_data'] = season_episode_data
@@ -178,7 +288,7 @@ def pending_uploaded_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['season_content_data'] = season_content_data
@@ -291,7 +401,7 @@ def pending_movie_videos(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                movie_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['movie_episode_data'] = movie_episode_data
@@ -326,7 +436,7 @@ def pending_movie_videos(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['movie_content_data'] = movie_content_data
@@ -732,7 +842,7 @@ def added_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['season_episode_data'] = season_episode_data
@@ -767,7 +877,7 @@ def added_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release,  obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"),  obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['season_content_data'] = season_content_data
@@ -925,7 +1035,7 @@ def added_movie_videos(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                movie_video_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_video_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['movie_video_data'] = movie_video_data
@@ -960,7 +1070,7 @@ def added_movie_videos(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release,  obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"),  obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['movie_content_data'] = movie_content_data

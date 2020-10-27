@@ -17,4 +17,7 @@ urlpatterns = [
     url('pending_movie_videos/',admin_views.pending_movie_videos,name="pending_movie_videos"),
     url('added_movies/', admin_views.added_movies, name = "added_movies"),
     url('added_movie_videos/', admin_views.added_movie_videos, name = "added_movie_videos"),
+    url('search_users/', admin_views.search_users, name = "search_users"),
+    url('change_user_type/', admin_views.change_user_type, name = "change_user_type"),
+    url('update_user_type/', admin_views.update_user_type, name = "update_user_type"),
 ]
