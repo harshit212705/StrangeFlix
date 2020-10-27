@@ -1,7 +1,7 @@
 from django.db import models
 from accounts.models import CustomUser as User
 # Create your models here.
-
+#Model to handle room
 class RoomControl(models.Model):
 
     room_id = models.AutoField(primary_key=True)
@@ -19,13 +19,5 @@ class RoomControl(models.Model):
     class Meta:
         verbose_name_plural = "Room Controls"
 
-class UserRoomDetails(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-    pending_request = models.ManyToManyField(User,related_name='pending_room_request')
-
-    user_rooms = models.ManyToManyField(RoomControl) 
-
-    class Meta:
-        verbose_name_plural = "User Room Details"
 

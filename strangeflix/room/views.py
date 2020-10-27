@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .models import RoomControl,UserRoomDetails
+from .models import RoomControl
 from accounts.models import CustomUser as User
 
 
@@ -13,11 +13,22 @@ from django.core import serializers
 def index(request):
     return render(request, 'room/index.html')
 
-
-def room(request, room_name):
-    return render(request, 'room/members.html', {
-        'room_name': room_name
-    })
+@login_required
+def room(request, room_id):
+    room_detail = RoomControl.objects.filter( room_id = room_id).first()
+    if room_detail != None:
+        if room_detail.host_user == request.user:
+            return render(request, 'room/host.html', {
+                'room_id': room_id
+            })
+        elif request.user in room_detail.members.all():
+            return render(request, 'room/members.html', {
+                'room_id': room_id
+            })
+        else:
+            return render(request, 'templates/404.html')
+    else:
+        return render(request, 'templates/404.html')
 
 @csrf_exempt
 @login_required(login_url='home_page')

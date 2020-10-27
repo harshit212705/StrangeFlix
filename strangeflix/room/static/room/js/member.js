@@ -1,41 +1,119 @@
-const roomName = JSON.parse(document.getElementById('room-name').textContent);
-
+//fetch room id
+const room_id = JSON.parse(document.getElementById('room-id').textContent);
+        //connect to respective room socket
         const chatSocket = new WebSocket(
             'ws://'
             + window.location.host
             + '/ws/room/'
-            + roomName
+            + room_id
             + '/'
         );
-        
+        //Checks applied on room connection
+        chatSocket.onopen = function(e){
+             setVideoState();
+        }
+        var hostTimeout;
+        var notJoined = true;
+        function setVideoState()
+        {
+            const message = "Join Request";
+            chatSocket.send(JSON.stringify({
+                'type' : 'join',
+                'message': message
+            }));
+            $("#overlay").show();
+            hostTimeout = setTimeout(function (){
+                alert("Host has not joined the room");
+                window.location.assign("/room");
+            },5000);
+
+        }
+        var users = []
+        //Update online user list
+        function fillUsers()
+        {
+            document.querySelector('#user-log').innerHTML = '';
+            users.forEach(element => {
+                document.querySelector('#user-log').innerHTML += element+'<br>';
+            });
+        }
+        //Receive message from Websocket
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             if(data.type === 'chat_message')
             {
-                // document.querySelector('#chat-log').innerHTML += ('Message : '+data.message + '<br>');
+                document.querySelector('#chat-log').innerHTML += (data.user+' : '+data.message + '<br>');
             }
             if(data.type === 'play')
             {
-                document.querySelector('#chat-log').innerHTML += ('Message : '+data.message + '<br>');
+                document.querySelector('#chat-log').innerHTML += (data.user+' : '+data.message + '<br>');
                 togglePlay();
             }
             if(data.type === 'skip')
             {
-                document.querySelector('#chat-log').innerHTML += ('Message : '+data.message + '<br>');
+                document.querySelector('#chat-log').innerHTML += (data.user+' : '+data.message + '<br>');
                 skip(data.skipAmount);
             }
             if(data.type === 'upd')
             {
-                document.querySelector('#chat-log').innerHTML += ('Message : '+data.message + '<br>');
+                document.querySelector('#chat-log').innerHTML += (data.user+' : '+data.message + '<br>');
                 upd(data.updTime);
+            }
+            if(data.type === 'hostupd')
+            {
+                console.log(data.message);
+                video.innerHTML = data.videoStatus;
+                users = data.users;
+                fillUsers();
+                upd(data.currentTimeStatus)
+                if (data.pausedStatus) {
+                    video.pause();
+                }
+                else{
+                    var pl = video.play();
+                    if (pl != undefined) {
+                        pl.then(_ => {})
+                            .catch(error => {
+                                video.pause();
+                            });
+                    }
+                }
+                if(notJoined)
+                {
+                    $("#overlay").hide();
+                    clearTimeout(hostTimeout);
+                    notJoined = false;
+                }
+            }
+            if(data.type === 'add_user')
+            {
+                
+                if(!users.find((s)=> s===data.user))
+                {
+                    users.push(data.user)
+                }
+                fillUsers()
+            }
+            if(data.type === 'remove_user')
+            {
+                if(user.sfind((s)=> s===data.user))
+                {
+                    const index = user.indexOf(data.user);
+                    if (index > -1) {
+                    users.splice(index, 1);
+                    }
+                }
+                fillUsers()
             }
 
         };
 
+        //On when Socket is closed
         chatSocket.onclose = function(e) {
             console.error('Chat socket closed unexpectedly');
         };
 
+        //Send chat message to the socket
         document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
@@ -86,7 +164,7 @@ video.volume = 0;
 function updHelper(e)
 {
     const updTime = (e.offsetX / progress.offsetWidth) * video.duration;
-    const message = "Play Pause";
+    const message = "Time Updata";
     chatSocket.send(JSON.stringify({
         'type' : 'upd',
         'message': message,
@@ -264,27 +342,6 @@ fulls.addEventListener("click", async function (event) {
     }
 });
 
-// picutre-in-picture 
-
-var pip = document.getElementById("pip");
-pip.addEventListener("click", async function (event) {
-    pip.disabled = true;
-    try {
-        if (video !== document.pictureInPictureElement) {
-            await video.requestPictureInPicture();
-            pip.disabled = false;
-        }
-        // If already playing exit mide
-        else {
-            await document.exitPictureInPicture();
-            pip.disabled = false;
-        }
-    } catch (error) {
-        console.log(error);
-    } finally {
-        pip.disabled = false; // enable toggle at last
-    }
-});
 
 
 // theatre mode
@@ -295,64 +352,7 @@ theatre.addEventListener('click', function (e) {
 });
 
 
-// setting dropdown
-var playback = document.querySelector(".playbacki");
-var quality = document.querySelector(".quali");
-var dis = document.querySelectorAll(".dis");
-var plbk = document.querySelectorAll(".playback");
-var qual = document.querySelectorAll(".qual");
-var seli = document.querySelector(".dropdown-menu");
-playback.addEventListener('click', function (e) {
-    e.stopPropagation();
-    dis.forEach(element => {
-        element.style.display = "none";
-    });
-    qual.forEach(element => {
-        element.style.display = "none";
-    });
-    plbk.forEach(element => {
-        element.style.display = "block";
-    });
-    plbk.forEach(element => {
-        element.addEventListener('click', function () {
-            video.playbackRate = element.innerHTML;
-            qual.forEach(element => {
-                element.style.display = "none";
-            });
-            plbk.forEach(element => {
-                element.style.display = "none";
-            });
-            dis.forEach(element => {
-                element.style.display = "block";
-            });
-        });
-    });
-});
-quality.addEventListener('click', function (e) {
-    e.stopPropagation();
-    qual.forEach(element => {
-        element.style.display = "block";
-    });
-    plbk.forEach(element => {
-        element.style.display = "none";
-    });
-    dis.forEach(element => {
-        element.style.display = "none";
-    });
-    qual.forEach(element => {
-        element.addEventListener('click', function () {
-            qual.forEach(element => {
-                element.style.display = "none";
-            });
-            plbk.forEach(element => {
-                element.style.display = "none";
-            });
-            dis.forEach(element => {
-                element.style.display = "block";
-            });
-        });
-    });
-})
+
 
 
 
