@@ -192,18 +192,20 @@ History - user_id, video_id, video_watched, timestamp
 
 Comment - comment_id, video_id, user_id, comment, timestamp
 
+flag_comment - comment_id, user_id, flag(inappropriate, etc)
+
+flag_video - video_id, user_id, flag(inappropriate, etc)
+
+favourites - video_id, users(many-to-many)
+
 
 
 
 pay_per_view - id, video_id, user_id, end_date time, transaction_id
 
-flag_video - video_id, user_id, flag(inappropriate, etc), timestamp
-
+// not required
 Like - like_id, video_id, user_id, timestamp
 
-flag_comment - comment_id, user_id, flag(inappropriate, etc), timestamp
-
-favourites - user_id, video_id, added_timestamp
 
 
  

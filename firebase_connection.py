@@ -933,6 +933,7 @@ def stream_video(request, video_obj):
             last_byte = size - 1
         length = last_byte - first_byte + 1
         content_type = 'video/mp4'
+        # <generator object response_iter at 0x7f23487eb6d0>
         resp = StreamingHttpResponse(response_iter(firebase_video_url, first_byte), status=206, content_type=content_type)
         # resp = StreamingHttpResponse(file_iterator(path, offset=first_byte, length=length), status=206, content_type=content_type)
         resp['Content-Length'] = str(length)
@@ -983,3 +984,134 @@ def fetch_video(request, video_id):
                 return render(request, 'templates/404.html')
     else:
         return render(request, 'templates/404.html')
+
+
+
+# @csrf_exempt
+# def stream_movie(request):
+#     if request.method == 'POST' and request.user.user_type == 'U':
+
+#         # extracting form data coming from ajax request
+#         json_data = json.loads(request.POST['data'])
+#         movie_id = json_data['movie_id']
+#         movie_start_time = json_data['start_time']
+
+#         print(movie_start_time)
+
+#         # response object to return as response to ajax request
+#         context = {
+#             'is_movie_exists': '',
+#             'is_user_subscribed': '',
+#             'is_successful': '',
+#             'stream': '',
+#             'movie_duration': '',
+#         }
+
+#         # checking if movie exists
+#         movie_details = MovieDetails.objects.filter(movie_id=movie_id).first()
+#         if movie_details is None:
+#             context['is_movie_exists'] = 'This movie do not exists'
+#         else:
+#             # checking logged in user subscription plan details
+#             subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+#             if subscribe:
+#                 # fetching movie video details for the movie
+#                 movie_video_details = MovieVideo.objects.filter(movie_id=movie_details).first()
+                # # getting firebase url for uploaded video file
+                # path_on_cloud = 'videos/' + movie_video_details.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[movie_video_details.extension]
+                # firebase_video_url = storage.child(path_on_cloud).get_url(movie_video_details.firebase_token)
+
+#                 start_time = movie_start_time
+#                 end_time = start_time + 10
+#                 if end_time > movie_video_details.duration_of_video:
+#                     end_time = movie_video_details.duration_of_video
+
+                # extension = str(firebase_video_url).split('?')[0][-3:]
+                # unique_video_name = str(uuid.uuid4())
+                # video_fragment_save_path = VIDEO_BASE_FILEPATH + '/' + unique_video_name + '.' + extension
+
+#                 ffmpeg_extract_subclip("https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2Fab783e7c-1bfb-4992-89e3-fa1fcd708936.mp4?alt=media&token=69b4c009-4bf3-4ef7-ad68-faafc91fcd4c", start_time, end_time, targetname=video_fragment_save_path)
+
+#                 with open(video_fragment_save_path, "rb") as videoFile:
+#                     text = base64.b64encode(videoFile.read()).decode('utf-8')
+#                     # print(text)
+#                 context['stream'] = text
+#                 context['movie_duration'] = movie_video_details.duration_of_video
+#                 os.remove(video_fragment_save_path)
+#                 context['is_successful'] = 'Packet fetched successfully'
+#             else:
+#                 context['is_user_subscribed'] = 'You are not subscribed to watch this movie. Go buy a subscription plan.'
+#         return JsonResponse(context)
+#     else:
+#         return render(request, 'templates/404.html')
+
+
+
+# play movie frontend code
+// javascript data object
+            // var data = {
+            //     'movie_id': movie_id,
+            //     'start_time':  video.currentTime,
+            // }
+
+            // // adding data to javascript form which is to be send over ajax request
+            // var formData = new FormData();
+            // formData.append('data', JSON.stringify(data));
+
+            // $.ajax({
+            //     type: 'POST',
+            //     url: '',
+            //     data: formData,
+            //     dataType: 'json',
+            //     enctype: 'multipart/form-data',
+            //     processData: false,
+            //     contentType: false,
+            //     success: function (data) {
+            //         // checking and handling error conditions
+            //         if (data.is_movie_exists != '') {
+            //             alert(data.is_movie_exists);
+            //         } else if (data.is_user_subscribed != '') {
+            //             alert(data.is_user_subscribed);
+            //         } else if (data.is_successful != '') {
+            //             console.log('called');
+            //             var byteCharacters = atob(data.stream);
+            //             var byteNumbers = new Array(byteCharacters.length);
+            //             for (let i = 0; i < byteCharacters.length; i++) {
+            //                 byteNumbers[i] = byteCharacters.charCodeAt(i);
+            //             }
+
+                        // // Show loading animation.
+                        // var playPromise = video.play();
+
+                        // if (playPromise !== undefined) {
+                        //     playPromise.then(_ => {
+                        //         // Automatic playback started!
+                        //         // Show playing UI.
+                        //     })
+                        //     .catch(error => {
+                        //         // Auto-play was prevented
+                        //         // Show paused UI.
+                        //     });
+                        // }
+            //             movie_total_duration = data.movie_duration
+            //             var blobArray = [];
+            //             blobArray.push(new Blob([new Uint8Array(byteNumbers)],{'type':'video/mp4'}));
+            //             var currentTime = video.currentTime;
+            //             var blob = new Blob(blobArray,{'type':'video/mp4'});
+            //             video.src = window.URL.createObjectURL(blob);
+            //             video.currentTime = currentTime;
+            //             movie_previous_time_watched = 0;     // if using history add history time
+            //             movie_maxtime_fetched = Math.min(currentTime + 10, movie_total_duration);
+            //             $('.progress__filled').css('flex', '0');
+            //             video.play();
+
+            //         } else {
+            //             alert('Some unexpected error has occured. Try again.');
+            //         }
+            //     }
+            // });
+
+    
+        // HTML CODE FOR VIDEO PLAYER
+
+        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div><!-- else this  --><!-- pay cost per video  --><div class="text-center text-muted text-white">pay $(number) to watch this video <button class="btn btn-primary btn-sm" type="button">Pay</button></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5"><div style="background-color: white;color: black;" class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"><li><div class="row media"><div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"><!-- user-profile  --><img src="/img/img1.png" alt="" class="img-fluid"></div><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><span class="font-weight-bold">S1 E1 - date</span><div class="d-cent text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit.Distinctio doloribus explicabo enim quae tenetur omnis, optiodolorem et. Eaque similique obcaecati laborum blanditiis officiis veniam maxime veritatis alias inventore voluptates!</div><button type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter"><i class="fas fa-flag"></i></button><button type="button" class="show-mr-button">show</button></div></div></div></li></ul></div></div></div></div></div>';
