@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+    <script src="{% static "/js/jquery-3.5.1.js" %}"></script>
+</head>
+<body>
+    <b>Room Title: {{ context.title }}</b>
+    <br>
+    <b>Room Id: {{ context.room_id }}</b>
+    <br>
+    <b>Description : {{ context.description }} </b>
+
+    <form id="AddUserForm">
+        <label for="username">Username:</label>
+        <input type="text" name="add-username" id="add-username">
+        <button type="submit" id='add-user-submit'> Add User </button>
+    </form>
+    <a href="/room/join/{{ context.room_id }}" target="_blank">Join room</a>
+    <b>Pending Users</b>
+    <div id='pending_request'></div>
+
+
+    <b>Members</b>
+    <div id='members_list'></div>
+
+    <script>
+        getMembers();
+        function getMembers()
+        {
+            var pendingRequest = document.getElementById('pending_request');
+            var membersList = document.getElementById('members_list');
+            pendingRequest.innerHTML = '';
+            membersList.innerHTML = '';
+             // Extracting Form Data
+             var room_id = {{ context.room_id }};
+
+            // javascript data object
+            var data = {
+                'room_id': room_id,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_room_members" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    data.pending_user.forEach(element => {
+                        pendingRequest.innerHTML += element+'<br>'
+                    });
+                    data.members.forEach(element => {
+                        membersList.innerHTML += element+'<br>'
+                    });
+
+                }
+            });
+        }
+
+
+        $("#AddUserForm").submit(function (e) {
+            e.preventDefault(); //prevent default action
+
+            // Extracting Form Data
+            var username = document.getElementById('add-username').value;
+            var room_id = {{ context.room_id }};
+            // javascript data object
+            var data = {
+                'username': username,
+                'room_id':room_id,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+            $('#add-user-submit').attr('disabled', true);
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "send_room_request" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#add-user-submit').attr('disabled', false);
+                    alert(data.message);
+                    getMembers();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+    <script src="{% static "/js/jquery-3.5.1.js" %}"></script>
+</head>
+<body>
+    <b>Room Title: {{ context.title }}</b>
+    <br>
+    <b>Room Id: {{ context.room_id }}</b>
+    <br>
+    <b>Description : {{ context.description }} </b>
+    <br>
+    <b>Host: {{ context.host }}</b>
+    <br>
+    <b>Members</b>
+    <a href="/room/join/{{ context.room_id }}" target="_blank">Join room</a>
+    <div id='members_list'></div>
+        {% for member in context.members %}
+            {{ member }} <br>
+        {% endfor %}
+    
+</body>
+</html>

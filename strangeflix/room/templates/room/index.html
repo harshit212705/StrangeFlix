@@ -1,15 +1,38 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>Chat Rooms</title>
+    <script src="{% static "/js/jquery-3.5.1.js" %}"></script>
 </head>
 <body>
-    What chat room would you like to enter?<br>
+    <!-- What chat room would you like to enter?<br>
     <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <input id="room-name-submit" type="button" value="Enter"> -->
+    <div>
+        <form id="RoomCreationForm">
+            <label for="title">Room Title:</label>
+            <input type="text" name="room-title" id="room-title">
+            <label for='description'>Description: </label>
+            <textarea rows="6" cols="30" id="room-description"></textarea>
+            <button type="submit" id='room-submit'> Create Room </button>
+        </form>
+        <b>Administered Rooms</b>
+        <div id="user-room">
+            
+        </div>
 
-    <script>
+        <b>My Rooms</b>
+        <div id="my-rooms"></div>
+
+        <b>Room Request</b>
+        <div id = "room-request"></div>
+
+
+        <!-- <input ty> -->
+    </div>
+    <!-- <script>
         document.querySelector('#room-name-input').focus();
         document.querySelector('#room-name-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
@@ -21,6 +44,150 @@
             var roomName = document.querySelector('#room-name-input').value;
             window.location.pathname = '/room/' + roomName + '/';
         };
+    </script> -->
+    <script>
+        getHostRooms();
+        getMyRooms();
+        function getHostRooms()
+        {
+            var userRoom = document.getElementById('user-room');
+            userRoom.innerHTML = '';
+            $.ajax({
+                    type: 'POST',
+                    url: '{% url "get_host_rooms" %}',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        // data = JSON.parse(data)
+                        for(var i=0;i<data.data.length;++i)
+                        {
+                            var room = data.data[i];
+                            userRoom.innerHTML+='<div> Title:<a href="host_room_details/'+room.room_id+'"> '+room.title+'</a>           Room id:  '+room.room_id+'       Description:  ' +room.description+'  </div>';
+                        }
+                    }
+                });
+        }
+
+        
+        function getMyRooms()
+        {
+            var myRoom = document.getElementById('my-rooms');
+            var roomRequest = document.getElementById('room-request');
+            myRoom.innerHTML = '';
+            roomRequest.innerHTML = '';
+            $.ajax({
+                    type: 'POST',
+                    url: '{% url "get_my_rooms" %}',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        // data = JSON.parse(data)
+                        console.log(data);
+                        data.my_rooms_data.forEach(room => {
+                            myRoom.innerHTML+= '<div> Title:<a href="member_room_details/'+room.room_id+'"> '+room.title+'</a>           Room id:  '+room.room_id+'       Description:  ' +room.description+'       Host:'+room.host+' </div>';
+                        });
+                        data.room_request_data.forEach(room => {
+                            roomRequest.innerHTML+= '<div>Title: '+room.title+'       Room id:  '+room.room_id+'       Description:  ' +room.description+'       Host:'+room.host+'  <button onclick = "acceptRoom('+room.room_id+')">Accept</button> <button onclick = "rejectRoom('+room.room_id+')">Reject</button></div>';
+                        });
+                    }
+                });
+        }
+
+
+
+
+
+        function acceptRoom(room_id)
+        {
+            // javascript data object
+            var data = {
+                'room_id':room_id
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "accept_room" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    alert(data.message);
+                    getMyRooms();
+                }
+            });
+        }
+
+
+
+        function rejectRoom(room_id)
+        {
+            // javascript data object
+            var data = {
+                'room_id':room_id
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "reject_room" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    alert(data.message);
+                    getMyRooms();
+                }
+            });
+        }
+
+
+
+
+
+
+        $("#RoomCreationForm").submit(function (e) {
+            e.preventDefault(); //prevent default action
+
+            // Extracting Form Data
+            var title = document.getElementById('room-title').value;
+            var description = document.getElementById('room-description').value;
+
+            // javascript data object
+            var data = {
+                'title': title,
+                'description':description,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+            $('#room-submit').attr('disabled', true);
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "add_new_room" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#room-submit').attr('disabled', false);
+                    getHostRooms()
+                }
+            });
+        });
     </script>
 </body>
 </html>
