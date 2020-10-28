@@ -142,7 +142,7 @@ def add_new_series(request):
 
             # checking the mime type of the uploaded thumbnail image
             if mime == 'image/jpg' or mime == 'image/jpeg' or mime == 'image/png' or mime == 'image/webp':
-
+    
                 # adding new series details to the database
                 new_series = SeriesDetails.objects.create(
                     provider_id=request.user,
@@ -804,7 +804,7 @@ def previously_uploaded_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             context['season_episode_data'] = season_episode_data
 
@@ -834,7 +834,7 @@ def previously_uploaded_episodes(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['season_content_data'] = season_content_data
@@ -1349,7 +1349,7 @@ def previously_uploaded_movie_content(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['movie_content_data'] = movie_content_data
@@ -1378,7 +1378,7 @@ def previously_uploaded_movie_content(request):
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
 
-                movie_free_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_free_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
 
             # returning success response to ajax request
             context['movie_free_data'] = movie_free_data

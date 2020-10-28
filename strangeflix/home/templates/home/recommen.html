@@ -1,6 +1,6 @@
 {% load static %}
 <div class="movie-section">
-    <div class="container-fluid my-5">
+    <div class="container-fluid my-5" style="display: none;">
         <h4 class="font-weight-bold mx-5">Search Results</h4>
         <div id="search_results" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
             <div class="carousel-inner">
@@ -88,7 +88,7 @@
                                             {{ value.0 }}
                                         </div>
                                         <div class="img-seci">
-                                            <a href="#">
+                                            <a href="#" onclick="open_series('{{ key }}')">
                                                 <img class="img-fluid ser-img"
                                                     src="{{ value.5 }}"
                                                     alt="image4">
@@ -137,7 +137,7 @@
                                             {{ value.0 }}
                                         </div>
                                         <div class="img-seci">
-                                            <a href="#">
+                                            <a href="#" onclick="open_movie('{{ key }}')">
                                                 <img class="img-fluid ser-img"
                                                     src="{{ value.5 }}"
                                                     alt="image4">
@@ -186,7 +186,7 @@
                                             {{ value.0 }}
                                         </div>
                                         <div class="img-seci">
-                                            <a href="#">
+                                            <a href="#" onclick="open_series('{{ key }}')">
                                                 <img class="img-fluid ser-img"
                                                     src="{{ value.5 }}"
                                                     alt="image4">
@@ -235,7 +235,7 @@
                                             {{ value.0 }}
                                         </div>
                                         <div class="img-seci">
-                                            <a href="#">
+                                            <a href="#" onclick="open_movie('{{ key }}')">
                                                 <img class="img-fluid ser-img"
                                                     src="{{ value.5 }}"
                                                     alt="image4">
@@ -284,7 +284,7 @@
                                             {{ value.0 }}
                                         </div>
                                         <div class="img-seci">
-                                            <a href="#">
+                                            <a href="#" onclick="open_series('{{ key }}')">
                                                 <img class="img-fluid ser-img"
                                                     src="{{ value.5 }}"
                                                     alt="image4">
@@ -333,7 +333,7 @@
                                             {{ value.0 }}
                                         </div>
                                         <div class="img-seci">
-                                            <a href="#">
+                                            <a href="#" onclick="open_movie('{{ key }}')">
                                                 <img class="img-fluid ser-img"
                                                     src="{{ value.5 }}"
                                                     alt="image4">

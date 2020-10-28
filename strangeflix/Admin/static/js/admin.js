@@ -32,6 +32,14 @@ function set_navigation_bars(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, 
 
 }
 
+// get user once clicked on list-users-left
+$('#list-users-list').on('click',function(e){
+    $('#list-usertable-list').tab('show');
+    $('#list-changeuser-list').css('pointer-events', 'none');
+    $('#insert-users').empty();
+    set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
+ })
 
 $('#list-series-list').on('click', function (e) {
     $('#list-seriesform-list').css('pointer-events', 'all');

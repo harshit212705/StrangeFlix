@@ -3,7 +3,8 @@ from django.contrib import admin
 from .models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
                     SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
                     FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, \
-                    VideoRejectionComment, SeriesRating, MovieRating, History, VideoComment
+                    VideoRejectionComment, SeriesRating, MovieRating, History, VideoComment, \
+                    ReportComment, ReportVideo, Favourites
 
 
 # registering models to admin panel
@@ -30,3 +31,6 @@ admin.site.register(SeriesRating)
 admin.site.register(MovieRating)
 admin.site.register(History)
 admin.site.register(VideoComment)
+admin.site.register(ReportComment)
+admin.site.register(ReportVideo)
+admin.site.register(Favourites)

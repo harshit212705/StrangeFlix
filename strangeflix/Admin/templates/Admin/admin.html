@@ -10,7 +10,7 @@
 <body>
     <div class="main__section">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                 <div class="wrapper ">
                     <!-- Sidebar  -->
                     <nav id="sidebar">
@@ -23,6 +23,13 @@
                                 <div class="list-group" id="list-tab" role="tablist">
                                     <a class="special active" id="list-home-list" data-toggle="list" href="#list-home"
                                         role="tab" aria-controls="home">Home</a>
+                                </div>
+                            </li>
+                            <!-- users  -->
+                            <li>
+                                <div class="list-group" id="list-tab" role="tablist">
+                                    <a class="special" id="list-users-list" data-toggle="list" href="#list-users"
+                                        role="tab" aria-controls="users">Users</a>
                                 </div>
                             </li>
                             <!-- pending content  -->
@@ -56,119 +63,143 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                                    class="dropdown-toggle">Rejected content</a>
-                                <ul class="collapse list-unstyled list-group" id="pageSubmenu" role="tablist">
-                                    <li>
-                                        <a class="special" id="list-settings-list" data-toggle="list"
-                                            href="#list-settings" role="tab" aria-controls="settings">Rejected
-                                            content</a>
-                                    </li>
-                                </ul>
+                                <a href="{% url "account_logout" %}">Logout</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8 media-full">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-10  media-full">
                 <!-- content  to be displayed on the middle of the page-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                         aria-labelledby="list-home-list">
-                        <div class="row">
-                            <div class="col-lg-7 col-md-7 col-sm-7 media-home">
-                                <div id="section1">
-                                    <h4>section1</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est molestiae error
-                                        ipsam
-                                        asperiores pariatur animi? Optio, dolorem. Pariatur ducimus cupiditate sapiente
-                                        dolor praesentium. Dolorem sequi animi earum, iusto dolor laborum.</p>
-                                </div>
-                                <div id="section2">
-                                    <h4>section2</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia provident,
-                                        repellendus accusantium odit est temporibus laborum hic error nisi earum saepe
-                                        alias
-                                        esse eum optio magnam, totam quidem quisquam corporis!</p>
-                                </div>
-                                <div id="section3">
-                                    <h4>section3</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque adipisci excepturi
-                                        sequi asperiores architecto ex sit ad nisi quibusdam pariatur similique dolorum
-                                        quasi dolores debitis odio et, nam magnam amet?</p>
-                                </div>
+                     
+                    </div>
+                    <div class="tab-pane fade show" id="list-users" role="tabpanel" aria-labelledby="list-users-list">
+                        <div class="series__added__form">
+                            <div class="list-group flex-md-row" id="list-user-tab" role="tablist">
+                                <a class="list-group-item list-group-item-action active mx-5 text-center"
+                                    id="list-usertable-list" data-toggle="list" href="#list-usertable" role="tab"
+                                    aria-controls="list-usertable">users</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-changeuser-list" data-toggle="list" href="#list-changeuser" role="tab"
+                                    aria-controls="list-changeuser">Change usertype</a>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2">
-                                <div class="fix">
-                                    <ul>
-                                        <li>
-                                            <a href="#section1">section1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#section2">section2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#section3">section3</a>
-                                        </li>
-                                    </ul>
+                            <div class="tab-content my-5" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="list-usertable" role="tabpanel"
+                                    aria-labelledby="list-usertable-list">
+                                    <div class="container my-5">
+                                        <div class="row">
+                                            <form class="form-inline my-3">
+                                                <input class="form-control mr-sm-2" id="sear-tx" type="search"
+                                                    placeholder="Search" aria-label="Search">
+                                                <button class="btn btn-outline-primary my-2 my-sm-0"
+                                                    type="button">Search</button>
+                                            </form>
+                                        </div>
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">USERNAME</th>
+                                                        <th scope="col">EMAIL ADDRESS</th>
+                                                        <th scope="col">USER TYPE</th>
+                                                        <th scope="col">Change User Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="insert-users">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade ad-m-list" id="list-changeuser" role="tabpanel"
+                                    aria-labelledby="list-changeuser-list">
+                                    <div class="episode__info">
+                                        <p id="user_id" hidden></p>
+                                        <form id="change-userform">
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label class="mt-2">User Id</label>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <input type="text" readonly name="user-id"
+                                                            class="form-control-plaintext" id="user-id" value="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group my-4">
+                                                <div class="row pado">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label class="mt-2">User type</label>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <select id="user-category" name="series-category"
+                                                            class="custom-select">
+                                                            <option value="U" selected>User</option>
+                                                            <option value="P">Provider</option>
+                                                            <option value="A">Admin</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="padding-adder">
+                                                <button type="submit" id="user-change-submit"
+                                                    class="btn btn-primary my-4">Submit</button>
+                                            </div>
+                                        </form>
+                                        <div id="chnge-user">
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="tab-pane fade" id="list-movie" role="tabpanel" aria-labelledby="list-movie-list">
                         <div class="series__added__form">
                             <div class="list-group flex-md-row" id="list-movie-tab" role="tablist">
-                                <a class="list-group-item list-group-item-action active mx-5 text-center" id="list-movieform-list"
-                                    data-toggle="list" href="#list-movieform" role="tab" aria-controls="list-movieform">Movies</a>
-                                <a class="list-group-item list-group-item-action mx-5 text-center" id="list-movieinfo-list"
-                                    data-toggle="list" href="#list-movieinfo" role="tab" aria-controls="list-movieinfo">Videos</a>
+                                <a class="list-group-item list-group-item-action active mx-5 text-center"
+                                    id="list-movieform-list" data-toggle="list" href="#list-movieform" role="tab"
+                                    aria-controls="list-movieform">Movies</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-movieinfo-list" data-toggle="list" href="#list-movieinfo" role="tab"
+                                    aria-controls="list-movieinfo">Videos</a>
                             </div>
                             <div class="tab-content my-5" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="list-movieform" role="tabpanel"
                                     aria-labelledby="list-movieform-list">
                                     <div class="series__info my-5">
                                         <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <div id="get-movies">
 
-                                                </div>
+                                            <div id="get-movies">
+
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="fix">
-                                                    <ul id="movies-right">
-
-                                                    </ul>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade ad-m-list" id="list-movieinfo" role="tabpanel" aria-labelledby="list-movieinfo-list">
+                                <div class="tab-pane fade ad-m-list" id="list-movieinfo" role="tabpanel"
+                                    aria-labelledby="list-movieinfo-list">
                                     <div class="episode__info">
                                         <div class="row">
                                             <!-- add season videos  -->
 
-                                            <div class="col-lg-9 col-md-9 col-sm-9 add__season__videos">
-                                                <p id="movie_season_id" hidden></p>
-                                                <!-- contents -->
-                                                <div id="movie_uploaded_content">
-                                                    <!-- container here  -->
-                                                </div>
-                                                <!-- episodes  -->
-                                                <div id="movie_uploaded_episodes">
-                                                    <!-- container here  -->
-                                                </div>
+                                            <p id="movie_season_id" hidden></p>
+                                            <!-- contents -->
+                                            <div id="movie_uploaded_content">
+                                                <!-- container here  -->
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3">
-                                                <div class="fix">
-                                                    <ul id="m-content-right">
+                                            <hr>
+                                            <!-- episodes  -->
+                                            <div id="movie_uploaded_episodes">
+                                                <!-- container here  -->
+                                            </div>
 
-                                                    </ul>
-                                                    <ul id="m-episodes-right">
-
-                                                    </ul>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -193,18 +224,11 @@
                                     aria-labelledby="list-home-list">
                                     <div class="series__info my-5">
                                         <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <div id="get-series">
 
-                                                </div>
+                                            <div id="get-series">
+
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="fix">
-                                                    <ul id="series-right">
 
-                                                    </ul>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -218,50 +242,10 @@
                                         <div class="add__season">
                                             <p id="series_id" hidden></p>
                                             <div class="row">
-                                                <div class="col-lg-9 col-md-9 col-sm-9">
-                                                    <div id="apnd">
-                                                        <div class="container my-5">
-                                                            <h4 class="my-4">Series name</h4>
-                                                            <div class="row">
-                                                                <!-- thumbnail  -->
-                                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                    <img src="{% static "images/img.svg" %}"
-                                                                        alt="uploading" class="img-fluid">
-                                                                </div>
-                                                                <!-- content  -->
-                                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                    <div class="content mx-3">
-                                                                        <p class="text-muted">
-                                                                            Language,Categories,Subcategories
-                                                                        </p>
-                                                                        <p class="text-muted">Description</p>
-                                                                        <button type="button"
-                                                                            onclick="move_to_episode(/*series_id,series_season_id*/)"
-                                                                            class="btn btn-primary">naviagate
-                                                                            to seasons</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- right navigation  -->
 
-                                                <!-- <div class="col-lg-3 col-md-3">
-                                                    <div class="fix">
-                                                        <ul id="season-right">
-                                                            <li>
-                                                            <a href="#section1">section1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#section2">section2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#section3">section3</a>
-                                                        </li>
-                                                        </ul>
-                                                    </div>
-                                                </div> -->
+                                                <div id="apnd">
+                                                    
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -274,98 +258,17 @@
                                         <div class="row">
                                             <!-- add season videos  -->
 
-                                            <div class="col-lg-9 col-md-9 col-sm-9 add__season__videos">
+                                            <div class="add__season__videos">
                                                 <p id="series_season_id" hidden></p>
                                                 <div id="uploaded_content">
 
                                                 </div>
+                                                <hr>
                                                 <div id="uploaded_episodes">
-                                                    <div class="container my-5">
-                                                        <h4 class="my-4">Series name</h4>
-                                                        <div class="row">
-                                                            <!-- thumbnail  -->
-                                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <img src="{% static "images/img.svg" %}" alt="uploading"
-                                                                    class="img-fluid">
-                                                            </div>
-                                                            <!-- content  -->
-                                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <div class="content mx-3">
-                                                                    <p class="text-muted">
-                                                                        Language,Categories,Subcategories
-                                                                    </p>
-                                                                    <p class="text-muted">Description</p>
-                                                                    <button type="button"
-                                                                        onclick="play_video(/*video_id,video_url*/)"
-                                                                        class="btn btn-primary btn-sm">Play</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="verify-section my-5">
-                                                                <button type="button" class="btn btn-primary btn-sm"
-                                                                    data-toggle="collapse" data-target="#verify-sect"
-                                                                    aria-expanded="false" aria-controls="verify-sect">
-                                                                    Verify
-                                                                </button>
-                                                                <div class="collapse" id="verify-sect">
-                                                                    <div class="card card-body">
-                                                                        <div class="form-group">
-                                                                            <label for="cost-per-video">Cost Per
-                                                                                Video</label>
-                                                                            <input type="number" class="form-control"
-                                                                                name="cost-per-video"
-                                                                                id="cost-per-video" min="0"
-                                                                                placeholder="Cost per video">
-
-                                                                        </div>
-                                                                        <button type="button" onclick="verify(/**/)"
-                                                                            class="btn btn-primary btn-sm">
-                                                                            submit
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="reject-section my-5 mx-5">
-                                                                <button type="button" class="btn btn-primary btn-sm"
-                                                                    data-toggle="collapse" data-target="#reject-sect"
-                                                                    aria-expanded="false" aria-controls="reject-sect">
-                                                                    Reject
-                                                                </button>
-                                                                <div class="collapse" id="reject-sect">
-                                                                    <div class="card card-body">
-                                                                        <div class="form-group">
-                                                                            <label for="comment">Comment</label>
-                                                                            <textarea class="form-control"
-                                                                                name="comment" id="comment"
-                                                                                rows="3"></textarea>
-                                                                        </div>
-                                                                        <button type="button" onclick="reject(/**/)"
-                                                                            class="btn btn-primary btn-sm">
-                                                                            submit
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3">
-                                                <div class="fix">
-                                                    <ul id="episodes-right">
-                                                        <li>
-                                                        <a href="#section1">section1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#section2">section2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#section3">section3</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div> -->
+
                                         </div>
                                     </div>
                                 </div>
@@ -377,57 +280,42 @@
                         aria-labelledby="list-added-movie-list">
                         <div class="series__added__form">
                             <div class="list-group flex-md-row" id="list-added-movie-tab" role="tablist">
-                                <a class="list-group-item list-group-item-action active mx-5 text-center" id="list-added-movieform-list"
-                                    data-toggle="list" href="#list-added-movieform" role="tab" aria-controls="list-added-movieform">Movies</a>
-                                <a class="list-group-item list-group-item-action mx-5 text-center" id="list-added-movieinfo-list"
-                                    data-toggle="list" href="#list-added-movieinfo" role="tab" aria-controls="list-added-movieinfo">Videos</a>
+                                <a class="list-group-item list-group-item-action active mx-5 text-center"
+                                    id="list-added-movieform-list" data-toggle="list" href="#list-added-movieform"
+                                    role="tab" aria-controls="list-added-movieform">Movies</a>
+                                <a class="list-group-item list-group-item-action mx-5 text-center"
+                                    id="list-added-movieinfo-list" data-toggle="list" href="#list-added-movieinfo"
+                                    role="tab" aria-controls="list-added-movieinfo">Videos</a>
                             </div>
                             <div class="tab-content my-5" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="list-added-movieform" role="tabpanel"
                                     aria-labelledby="list-added-movieform-list">
                                     <div class="series__info my-5">
                                         <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <div id="get-verified-movies">
 
-                                                </div>
+                                            <div id="get-verified-movies">
+
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="fix">
-                                                    <ul id="verified-movies-right">
 
-                                                    </ul>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade ad-m-list" id="list-added-movieinfo" role="tabpanel" aria-labelledby="list-added-movieinfo-list">
+                                <div class="tab-pane fade ad-m-list" id="list-added-movieinfo" role="tabpanel"
+                                    aria-labelledby="list-added-movieinfo-list">
                                     <div class="episode__info">
                                         <div class="row">
                                             <!-- add season videos  -->
-
-                                            <div class="col-lg-9 col-md-9 col-sm-9 add__season__videos">
-                                                <p id="movie_verified_season_id" hidden></p>
-                                                <!-- contents -->
-                                                <div id="movie_verified_uploaded_content">
-                                                    <!-- container here  -->
-                                                </div>
-                                                <!-- episodes  -->
-                                                <div id="movie_verified_uploaded_episodes">
-                                                    <!-- container here  -->
-                                                </div>
+                                            <p id="movie_verified_season_id" hidden></p>
+                                            <!-- contents -->
+                                            <div id="movie_verified_uploaded_content">
+                                                <!-- container here  -->
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3">
-                                                <div class="fix">
-                                                    <ul id="m-v-content-right">
+                                            <hr>
+                                            <!-- episodes  -->
+                                            <div id="movie_verified_uploaded_episodes">
+                                                <!-- container here  -->
+                                            </div>
 
-                                                    </ul>
-                                                    <ul id="m-v-episodes-right">
-
-                                                    </ul>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -455,54 +343,11 @@
                                     <!-- added series  -->
                                     <div class="adding__series">
                                         <div class="row">
-                                            <div id="verified-get-series" class="col-lg-9 col-md-9 col-sm-9">
-                                                <div class="container my-5">
-                                                    <h4 class="my-4">Series name</h4>
-                                                    <div class="row">
-                                                        <!-- thumbnail  -->
-                                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                                            <img src="{% static "home/img/imge.png" %}" alt="uploading"
-                                                                class="img-fluid">
-                                                        </div>
-                                                        <!-- content  -->
-                                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                                            <div class="content mx-3">
-                                                                <p class="text-muted">Language,Categories,Subcategories
-                                                                </p>
-                                                                <p class="text-muted">Description</p>
-                                                                <button type="button" class="btn btn-primary">naviagate
-                                                                    to seasons</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container my-5">
-                                                    <h4 class="my-4">Series name</h4>
-                                                    <div class="row">
-                                                        <!-- thumbnail  -->
-                                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                                            <img src="{% static "home/img/imge.png" %}" alt="uploading"
-                                                                class="img-fluid">
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                                            <div class="content mx-3">
-                                                                <p class="text-muted">Language,Categories,Subcategories
-                                                                </p>
-                                                                <p class="text-muted">Description</p>
-                                                                <button type="button" class="btn btn-primary">naviagate
-                                                                    to seasons</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div id="verified-get-series">
+                                                
+    
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3">
-                                                <div class="fix">
-                                                    <ul id="verified-series-right">
 
-                                                    </ul>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -512,18 +357,12 @@
                                     <div class="series__info my-5">
                                         <div class="row">
                                             <p id="added_series_id" hidden></p>
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <div id="verified-get-seasons">
 
-                                                </div>
+                                            <div id="verified-get-seasons">
+
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3">
-                                                <div class="fix">
-                                                    <ul id="verified-season-right">
 
-                                                    </ul>
-                                                </div>
-                                            </div> -->
+
                                         </div>
                                     </div>
                                 </div>
@@ -532,21 +371,15 @@
                                     <!-- verified episodes -->
                                     <div class="series__info my-5">
                                         <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sm-9">
-                                                <div id="verified-get-content">
 
-                                                </div>
-                                                <div id="verified-get-episodes">
+                                            <div id="verified-get-content">
 
-                                                </div>
                                             </div>
-                                            <!-- <div class="col-lg-3 col-md-3">
-                                                <div class="fix">
-                                                    <ul id="verified-episodes-right">
+                                            <hr>
+                                            <div id="verified-get-episodes">
 
-                                                    </ul>
-                                                </div>
-                                            </div> -->
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -555,7 +388,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-xl-2 col-lg-2 col-md-2 fade-on-small">
                 <nav class="fix">
                     <!-- pending-series-right  -->
                     <ul id="series-right">
@@ -635,23 +468,41 @@
             </div>
         </div>
     </div>
+
+
+    <!-- showing comments in modal  -->
+    <div class="modal fade" id="comments-in-modal" tabindex="-1" role="dialog" aria-labelledby="comm-ent"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="comm-ent">Comments</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
     {% include "templates/footfooter.html" %}
     <script src="{% static "/js/admin.js" %}"></script>
     <script src="{% static "/js/videoplayer.js" %}"></script>
 
     <!-- to truncate the extra hash in url -->
     <script type="text/javascript">
-        if (window.location.hash === "#_=_"){
-            history.replaceState
-                ? history.replaceState(null, null, window.location.href.split("#")[0])
-                : window.location.hash = "";
+        if (window.location.hash === "#_=_") {
+            history.replaceState ?
+                history.replaceState(null, null, window.location.href.split("#")[0]) :
+                window.location.hash = "";
         }
     </script>
 
     <script>
-
         // get all the pending series
-        function get_series(){
+        function get_series() {
 
             // Emptying the main content displaying area
             $('#get-series').empty();
@@ -662,7 +513,8 @@
             // Emptying the right navigation bars that is to be used here
             $('#series-right').empty();
 
-	        set_navigation_bars('block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
 
             var formData = new FormData();
 
@@ -677,27 +529,41 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_any_pending_series_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_pending_series_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_any_pending_series_exists + '</p></div>';
                         $('#get-series').append(htmlgen);
                     }
                     if (data.is_successful != '') {
 
                         // appending the already uploaded series
-                        for(var key in data.pending_series_data) {
-                            var htmlgen='<div id="series'+key+'" class="container my-5"><h4 class="my-4">'+data.pending_series_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.pending_series_data[key][5]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.pending_series_data[key][3]+' | ';
+                        for (var key in data.pending_series_data) {
+                            var htmlgen = '<div id="series' + key +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' +
+                                data.pending_series_data[key]
+                                [0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                data.pending_series_data[key][5] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="font-weight-bold">' +
+                                data.pending_series_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.pending_series_data[key][6].length; i++) {
                                 htmlgen += data.pending_series_data[key][6][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">'+data.pending_series_data[key][2]+'</p><p class="text-muted">'+data.pending_series_data[key][1]+'</p><p class="text-muted">Provider - '+data.pending_series_data[key][7]+'</p><button type="button" class="btn btn-primary" onclick="go_to_seasons('+key+')">Go to seasons</button></div></div></div></div>';
+                            htmlgen += data.pending_series_data[key][2] +
+                                '</p><div class"middle-section"><p>' + data.pending_series_data[key][1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><p class="font-weight-bold text-primary">Provider - ' +
+                                data.pending_series_data[key][7] +
+                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_seasons(' +
+                                key + ')">Go to seasons</button></div></div></div></div></div>';
                             $('#get-series').append(htmlgen);
 
                             // appending already uploaded series to right navigation
-                            $('#series-right').append('<li><a href="#series' + key + '">' + data.pending_series_data[key][0]+ ' - '+data.pending_series_data[key][7]+'</a></li>');
+                            $('#series-right').append('<li><a href="#series' + key + '">' + data
+                                .pending_series_data[key][0] + ' - ' + data.pending_series_data[key][
+                                    7
+                                ] + '</a></li>');
                         }
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -714,7 +580,8 @@
             $('#apnd').empty();
             $('#season-right').empty();
 
-	        set_navigation_bars('none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
 
             // javascript data object
             var data = {
@@ -736,17 +603,26 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_any_series_season_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_any_series_season_exists + '</p></div>';
                         $('#apnd').append(htmlgen);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
                         // appending the already uploaded seasons
-                        for(var key in data.all_series_season_data) {
-                            var htmlgen='<div id="season'+key+'" class="container my-5"><h4 class="my-4">Season '+data.all_series_season_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.all_series_season_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.all_series_season_data[key][1]+'</p><button type="button" class="btn btn-primary" onclick="go_to_episodes('+key+')">Go to episodes</button></div></div></div></div>';
+                        for (var key in data.all_series_season_data) {
+                            var htmlgen = '<div id="season' + key +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Season ' +
+                                data
+                                .all_series_season_data[key][0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                data.all_series_season_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
+                                data.all_series_season_data[key][1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><button type="button" class="btn btn-primary btn-sm" onclick="go_to_episodes(' +
+                                key + ')">Go to episodes</button></div></div></div></div></div>';
                             $('#apnd').append(htmlgen);
 
                             // appending the already uploaded seasons to right navigation
-                            $('#season-right').append('<li><a href="#season' + key + '">season' + data.all_series_season_data[key][0]+ '</a></li>');
+                            $('#season-right').append('<li><a href="#season' + key + '">season' + data
+                                .all_series_season_data[key][0] + '</a></li>');
                         }
 
                         // restricting pointer events for other tabs
@@ -755,8 +631,7 @@
                         $('#list-seasoninfo-list').css('pointer-events', 'none');
                         $('#list-seriesinfo-list').tab('show');
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -773,7 +648,8 @@
             $('#episodes-right').empty();
             $('#content-right').empty();
 
-	        set_navigation_bars('none', 'none', 'block', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('none', 'none', 'block', 'block', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none', 'none');
 
             // javascript data object
             var data = {
@@ -795,45 +671,142 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_series_season_exists != '') {
-                        var htmlgen='<div><p>'+data.is_series_season_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_series_season_exists + '</p></div>';
                         $('#uploaded_episodes').append(htmlgen);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
 
                         // appending the already uploaded episodes
-                        for(var key in data.season_episode_data) {
-                            var specialol=`'${data.season_episode_data[key][4]}'`;
-                            var htmlgen='<div id="episode'+data.season_episode_data[key][0]+'" class="container my-5"><h4 class="my-4">Episode '+data.season_episode_data[key][6]+' - '+data.season_episode_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="episode'+data.season_episode_data[key][0]+'thumbnail" src="'+data.season_episode_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.season_episode_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.season_episode_data) {
+                            var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="episode' + data.season_episode_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Episode ' + data
+                                .season_episode_data[key][6] + ' - ' + data.season_episode_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"'+'onclick="play_video(' +data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' + '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] + '</span></div></div><img id="episode' +
+                                data.season_episode_data[key][0] + 'thumbnail" src="' + data
+                                .season_episode_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.season_episode_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div><div class="row"><div class="verify-section my-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#verify-sect'+ data.season_episode_data[key][0] +'" aria-expanded="false" aria-controls="verify-sect'+ data.season_episode_data[key][0] +'">Verify</button><div class="collapse" id="verify-sect'+ data.season_episode_data[key][0] +'"><div class="card card-body"><div class="form-group"><label for="cost-per-video">Cost Per Video</label><input type="number" class="form-control" name="cost-per-video" id="cost-per-video'+data.season_episode_data[key][0]+'" value=0 min="0" placeholder="Cost per video"></div><button type="button" onclick="verify_video('+data.season_episode_data[key][0]+','+ `'series_episode'` +')" class="btn btn-primary btn-sm">submit</button></div></div></div><div class="reject-section my-5 mx-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect'+ data.season_episode_data[key][0] +'" aria-expanded="false" aria-controls="reject-sect'+ data.season_episode_data[key][0] +'">Reject</button><div class="collapse" id="reject-sect'+ data.season_episode_data[key][0] +'"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment'+data.season_episode_data[key][0]+'" rows="3"></textarea></div><button type="button" onclick="reject_video('+data.season_episode_data[key][0]+','+ `'series_episode'` +')" class="btn btn-primary btn-sm">submit</button></div></div></div></div></div>';
+                            htmlgen +='</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm mx-1" onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')">Play video</button><span class="verify-section mx-1"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#verify-sect' +
+                                data.season_episode_data[key][0] +
+                                '" aria-expanded="false" aria-controls="verify-sect' + data
+                                .season_episode_data[key][0] +
+                                '">Verify</button><div class="collapse" id="verify-sect' + data
+                                .season_episode_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="cost-per-video">Cost Per Video</label><input type="number" class="form-control" name="cost-per-video" id="cost-per-video' +
+                                data.season_episode_data[key][0] +
+                                '" value=0 min="0" placeholder="Cost per video"></div><button type="button" onclick="verify_video(' +
+                                data.season_episode_data[key][0] + ',' + `'series_episode'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div></span><span class="reject-section mx-1"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.season_episode_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .season_episode_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .season_episode_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment' +
+                                data.season_episode_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video(' +
+                                data.season_episode_data[key][0] + ',' + `'series_episode'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div></span></div></div></div></div></div>';
 
                             $('#uploaded_episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#episodes-right').append('<li id="li_episode'+data.season_episode_data[key][0]+'"><a href="#episode' + data.season_episode_data[key][0] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
+                            $('#episodes-right').append('<li id="li_episode' + data.season_episode_data[key]
+                                [0] + '"><a href="#episode' + data.season_episode_data[key][0] +
+                                '">episode' + data.season_episode_data[key][6] + '</a></li>');
                         }
 
 
                         // appending the already uploaded free content
                         var count = 1;
-                        for(var key in data.season_content_data) {
-                            var specialol=`'${data.season_content_data[key][4]}'`;
-                            var htmlgen='<div id="content'+data.season_content_data[key][0]+'" class="container my-5"><h4 class="my-4">Content '+count+' - '+data.season_content_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content'+data.season_content_data[key][0]+'thumbnail" src="'+data.season_content_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.season_content_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.season_content_data) {
+                            var specialol = `'${data.season_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_content_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="content' + data.season_content_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' + count + ' - ' + data
+                                .season_content_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_content_data[key][5] + '</span></div></div><img id="content' +
+                                data.season_content_data[key][0] + 'thumbnail" src="' + data
+                                .season_content_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
+                                
 
                             for (var i = 0; i < data.season_content_data[key][8].length; i++) {
                                 htmlgen += data.season_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.season_content_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div><div class="row"><div class="verify-section my-5"><button type="button" onclick="verify_video('+data.season_content_data[key][0]+','+ `'series_content'` +')" class="btn btn-primary btn-sm">Verify</button></div><div class="reject-section my-5 mx-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect'+ data.season_content_data[key][0] +'" aria-expanded="false" aria-controls="reject-sect'+ data.season_content_data[key][0] +'">Reject</button><div class="collapse" id="reject-sect'+ data.season_content_data[key][0] +'"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment'+data.season_content_data[key][0]+'" rows="3"></textarea></div><button type="button" onclick="reject_video('+data.season_content_data[key][0]+','+ `'series_content'` +')" class="btn btn-primary btn-sm">submit</button></div></div></div></div></div>';
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" onclick="play_video(' +
+                                data.season_content_data[key][0] + ',' + specialol +
+                                ')" class="btn btn-primary btn-sm mx-1">Play video</button><span class="verify-section mx-1"><button type="button" onclick="verify_video(' +
+                                data.season_content_data[key][0] + ',' + `'series_content'` +
+                                ')" class="btn btn-primary btn-sm">Verify</button></span><span class="reject-section mx-1"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.season_content_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .season_content_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .season_content_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment' +
+                                data.season_content_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video(' +
+                                data.season_content_data[key][0] + ',' + `'series_content'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></span></div></div></div></div></div>';
 
                             $('#uploaded_content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#content-right').append('<li id="li_content'+data.season_content_data[key][0]+'"><a href="#content' + data.season_content_data[key][0] + '">content' + count + '</a></li>');
+                            $('#content-right').append('<li id="li_content' + data.season_content_data[key][
+                                    0
+                                ] + '"><a href="#content' + data.season_content_data[key][0] +
+                                '">content' + count + '</a></li>');
 
                             count++;
                         }
@@ -844,8 +817,7 @@
                         $('#list-seasoninfo-list').css('pointer-events', 'all');
                         $('#list-seasoninfo-list').tab('show');
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -854,7 +826,7 @@
 
 
         // get all the pending movies
-        function get_movies(){
+        function get_movies() {
 
             // Emptying the main content displaying area
             $('#get-movies').empty();
@@ -864,7 +836,8 @@
             // Emptying the right navigation bars that is to be used here
             $('#movies-right').empty();
 
-            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'none', 'none',
+                'none', 'none', 'none');
 
             var formData = new FormData();
 
@@ -879,27 +852,38 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_any_pending_movie_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_pending_movie_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_any_pending_movie_exists + '</p></div>';
                         $('#get-movies').append(htmlgen);
                     }
                     if (data.is_successful != '') {
 
                         // appending the already uploaded movies
-                        for(var key in data.pending_movies_data) {
-                            var htmlgen='<div id="movie'+key+'" class="container my-5"><h4 class="my-4">'+data.pending_movies_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.pending_movies_data[key][4]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">';
+                        for (var key in data.pending_movies_data) {
+                            var htmlgen = '<div id="movie' + key +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' + data.pending_movies_data[key]
+                                [0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                data.pending_movies_data[key][4] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="font-weight-bold">';
 
                             for (var i = 0; i < data.pending_movies_data[key][5].length; i++) {
                                 htmlgen += data.pending_movies_data[key][5][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">'+data.pending_movies_data[key][2]+'</p><p class="text-muted">'+data.pending_movies_data[key][1]+'</p><p class="text-muted">Provider - '+data.pending_movies_data[key][6]+'</p><button type="button" class="btn btn-primary" onclick="go_to_movie_videos('+key+')">Go to videos</button></div></div></div></div>';
+                            htmlgen +=  data.pending_movies_data[key][2] +
+                                '</p><div class="middle-section"><p>' + data.pending_movies_data[key][1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><p class="font-weight-bold text-primary">Provider - ' + data.pending_movies_data[key][6] +
+                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_movie_videos(' +
+                                key + ')">Go to videos</button></div></div></div></div></div>';
                             $('#get-movies').append(htmlgen);
 
                             // appending already uploaded series to right navigation
-                            $('#movies-right').append('<li><a href="#movie' + key + '">' + data.pending_movies_data[key][0]+ ' - '+data.pending_movies_data[key][6]+'</a></li>');
+                            $('#movies-right').append('<li><a href="#movie' + key + '">' + data
+                                .pending_movies_data[key][0] + ' - ' + data.pending_movies_data[key][
+                                    6
+                                ] + '</a></li>');
                         }
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -916,7 +900,8 @@
             $('#movies-video-right').empty();
             $('#movies-content-right').empty();
 
-            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'block', 'none', 'none', 'none');
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block',
+                'block', 'none', 'none', 'none');
 
             // javascript data object
             var data = {
@@ -938,45 +923,140 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
-                        var htmlgen='<div><p>'+data.is_movie_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_movie_exists + '</p></div>';
                         $('#movie_uploaded_episodes').append(htmlgen);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
 
                         // appending the already uploaded video
-                        for(var key in data.movie_episode_data) {
-                            var specialol=`'${data.movie_episode_data[key][4]}'`;
-                            var htmlgen='<div id="movie_video'+data.movie_episode_data[key][0]+'" class="container my-5"><h4 class="my-4">Movie Video - '+data.movie_episode_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_video'+data.movie_episode_data[key][0]+'thumbnail" src="'+data.movie_episode_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.movie_episode_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.movie_episode_data) {
+                            var specialol = `'${data.movie_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_episode_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_episode_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="movie_video' + data.movie_episode_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Movie Video - ' + data
+                                .movie_episode_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"'+'onclick="play_video(' +data.movie_episode_data[key][0] + ',' + specialol +
+                                ')"' + '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_episode_data[key][5] + '</span></div></div><img id="movie_video' +
+                                data.movie_episode_data[key][0] + 'thumbnail" src="' + data
+                                .movie_episode_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_episode_data[key][8].length; i++) {
                                 htmlgen += data.movie_episode_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.movie_episode_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div><div class="row"><div class="verify-section my-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#verify-sect'+ data.movie_episode_data[key][0] +'" aria-expanded="false" aria-controls="verify-sect'+ data.movie_episode_data[key][0] +'">Verify</button><div class="collapse" id="verify-sect'+ data.movie_episode_data[key][0] +'"><div class="card card-body"><div class="form-group"><label for="cost-per-video">Cost Per Video</label><input type="number" class="form-control" name="cost-per-video" id="cost-per-video'+data.movie_episode_data[key][0]+'" value=0 min="0" placeholder="Cost per video"></div><button type="button" onclick="verify_video('+data.movie_episode_data[key][0]+','+ `'movies_episode'` +')" class="btn btn-primary btn-sm">submit</button></div></div></div><div class="reject-section my-5 mx-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect'+ data.movie_episode_data[key][0] +'" aria-expanded="false" aria-controls="reject-sect'+ data.movie_episode_data[key][0] +'">Reject</button><div class="collapse" id="reject-sect'+ data.movie_episode_data[key][0] +'"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment'+data.movie_episode_data[key][0]+'" rows="3"></textarea></div><button type="button" onclick="reject_video('+data.movie_episode_data[key][0]+','+ `'movies_episode'` +')" class="btn btn-primary btn-sm">submit</button></div></div></div></div></div>';
+                            htmlgen +='</span></div><div class="middle-section"><p>' + data
+                                .movie_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><button type="button" class="btn btn-primary btn-sm mx-1" onclick="play_video(' +
+                                data.movie_episode_data[key][0] + ',' + specialol +
+                                ')">Play video</button><span class="verify-section mx-1"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#verify-sect' +
+                                data.movie_episode_data[key][0] +
+                                '" aria-expanded="false" aria-controls="verify-sect' + data
+                                .movie_episode_data[key][0] +
+                                '">Verify</button><div class="collapse" id="verify-sect' + data
+                                .movie_episode_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="cost-per-video">Cost Per Video</label><input type="number" class="form-control" name="cost-per-video" id="cost-per-video' +
+                                data.movie_episode_data[key][0] +
+                                '" value=0 min="0" placeholder="Cost per video"></div><button type="button" onclick="verify_video(' +
+                                data.movie_episode_data[key][0] + ',' + `'movies_episode'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div></span><span class="reject-section mx-1"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.movie_episode_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .movie_episode_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .movie_episode_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment' +
+                                data.movie_episode_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video(' +
+                                data.movie_episode_data[key][0] + ',' + `'movies_episode'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div></span></div></div></div></div></div>';
 
                             $('#movie_uploaded_episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#movies-video-right').append('<li id="li_movie_video'+data.movie_episode_data[key][0]+'"><a href="#movie_video' + data.movie_episode_data[key][0] + '">movie video</a></li>');
+                            $('#movies-video-right').append('<li id="li_movie_video' + data
+                                .movie_episode_data[key][0] + '"><a href="#movie_video' + data
+                                .movie_episode_data[key][0] + '">movie video</a></li>');
                         }
 
 
                         // appending the already uploaded free content
                         var count = 1;
-                        for(var key in data.movie_content_data) {
-                            var specialol=`'${data.movie_content_data[key][4]}'`;
-                            var htmlgen='<div id="movie_content'+data.movie_content_data[key][0]+'" class="container my-5"><h4 class="my-4">Content '+count+' - '+data.movie_content_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_content'+data.movie_content_data[key][0]+'thumbnail" src="'+data.movie_content_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.movie_content_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.movie_content_data) {
+                            var specialol = `'${data.movie_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_content_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="movie_content' + data.movie_content_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' + count + ' - ' + data
+                                .movie_content_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_content_data[key][5] + '</span></div></div><img id="movie_content' +
+                                data.movie_content_data[key][0] + 'thumbnail" src="' + data
+                                .movie_content_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
                                 htmlgen += data.movie_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.movie_content_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div><div class="row"><div class="verify-section my-5"><button type="button" onclick="verify_video('+data.movie_content_data[key][0]+','+ `'movies_content'` +')" class="btn btn-primary btn-sm">Verify</button></div><div class="reject-section my-5 mx-5"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect'+ data.movie_content_data[key][0] +'" aria-expanded="false" aria-controls="reject-sect'+ data.movie_content_data[key][0] +'">Reject</button><div class="collapse" id="reject-sect'+ data.movie_content_data[key][0] +'"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment'+data.movie_content_data[key][0]+'" rows="3"></textarea></div><button type="button" onclick="reject_video('+data.movie_content_data[key][0]+','+ `'movies_content'` +')" class="btn btn-primary btn-sm">submit</button></div></div></div></div></div>';
+                            htmlgen +='</span><div class="middle-section"><p>' + data
+                                .movie_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm mx-1" onclick="play_video(' +
+                                data.movie_content_data[key][0] + ',' + specialol +
+                                ')">Play video</button><span class="verify-section mx-1"><button type="button" onclick="verify_video(' +
+                                data.movie_content_data[key][0] + ',' + `'movies_content'` +
+                                ')" class="btn btn-primary btn-sm">Verify</button></span><span class="reject-section mx-1"><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.movie_content_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .movie_content_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .movie_content_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="comment' +
+                                data.movie_content_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video(' +
+                                data.movie_content_data[key][0] + ',' + `'movies_content'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></span></div></div></div></div></div>';
 
                             $('#movie_uploaded_content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#movies-content-right').append('<li id="li_movie_content'+data.movie_content_data[key][0]+'"><a href="#movie_content' + data.movie_content_data[key][0] + '">content' + count + '</a></li>');
+                            $('#movies-content-right').append('<li id="li_movie_content' + data
+                                .movie_content_data[key][0] + '"><a href="#movie_content' + data
+                                .movie_content_data[key][0] + '">content' + count + '</a></li>');
 
                             count++;
                         }
@@ -986,8 +1066,7 @@
                         $('#list-movieinfo-list').css('pointer-events', 'all');
                         $('#list-movieinfo-list').tab('show');
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1028,30 +1107,24 @@
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
                         alert(data.is_video_exists);
-                    }
-                    else if (data.is_video_already_evaluated != '') {
+                    } else if (data.is_video_already_evaluated != '') {
                         alert(data.is_video_already_evaluated);
-                    }
-                    else if (data.is_cost_provided != '') {
+                    } else if (data.is_cost_provided != '') {
                         alert(data.is_cost_provided);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
 
                         var id_to_be_removed = '#';
                         var li_id_to_be_removed = '#li_';
                         if (type == 'series_episode') {
                             id_to_be_removed += 'episode';
                             li_id_to_be_removed += 'episode';
-                        }
-                        else if (type == 'series_content') {
+                        } else if (type == 'series_content') {
                             id_to_be_removed += 'content';
                             li_id_to_be_removed += 'content';
-                        }
-                        else if (type == 'movies_episode') {
+                        } else if (type == 'movies_episode') {
                             id_to_be_removed += 'movie_video';
                             li_id_to_be_removed += 'movie_video';
-                        }
-                        else if (type == 'movies_content') {
+                        } else if (type == 'movies_content') {
                             id_to_be_removed += 'movie_content';
                             li_id_to_be_removed += 'movie_content';
                         }
@@ -1068,8 +1141,7 @@
 
                         alert(data.is_successful);
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1107,30 +1179,24 @@
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
                         alert(data.is_video_exists);
-                    }
-                    else if (data.is_video_already_evaluated != '') {
+                    } else if (data.is_video_already_evaluated != '') {
                         alert(data.is_video_already_evaluated);
-                    }
-                    else if (data.is_comment_provided != '') {
+                    } else if (data.is_comment_provided != '') {
                         alert(data.is_comment_provided);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
 
                         var id_to_be_removed = '#';
                         var li_id_to_be_removed = '#li_';
                         if (type == 'series_episode') {
                             id_to_be_removed += 'episode';
                             li_id_to_be_removed += 'episode';
-                        }
-                        else if (type == 'series_content') {
+                        } else if (type == 'series_content') {
                             id_to_be_removed += 'content';
                             li_id_to_be_removed += 'content';
-                        }
-                        else if (type == 'movies_episode') {
+                        } else if (type == 'movies_episode') {
                             id_to_be_removed += 'movie_video';
                             li_id_to_be_removed += 'movie_video';
-                        }
-                        else if (type == 'movies_content') {
+                        } else if (type == 'movies_content') {
                             id_to_be_removed += 'movie_content';
                             li_id_to_be_removed += 'movie_content';
                         }
@@ -1147,8 +1213,7 @@
 
                         alert(data.is_successful);
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1157,7 +1222,7 @@
 
 
         // get all the added or verified series
-        function get_added_series(){
+        function get_added_series() {
 
             // Emptying the main content displaying area
             $('#verified-get-series').empty();
@@ -1168,7 +1233,8 @@
             // Emptying the right navigation bars that is to be used here
             $('#verified-series-right').empty();
 
-	        set_navigation_bars('none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
 
             var formData = new FormData();
 
@@ -1183,27 +1249,41 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_any_verified_series_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_verified_series_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_any_verified_series_exists + '</p></div>';
                         $('#verified-get-series').append(htmlgen);
                     }
                     if (data.is_successful != '') {
                         // appending the already uploaded series
-                        for(var key in data.verified_series_data) {
-                            var htmlgen='<div id="series'+data.verified_series_data[key][0]+'" class="container my-5"><h4 class="my-4">'+data.verified_series_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.verified_series_data[key][5]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.verified_series_data[key][3]+' | ';
+                        for (var key in data.verified_series_data) {
+                            var htmlgen = '<div id="series' + data.verified_series_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' + data.verified_series_data[
+                                    key][0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                data.verified_series_data[key][5] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="font-weight-bold">' +
+                                data.verified_series_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.verified_series_data[key][6].length; i++) {
                                 htmlgen += data.verified_series_data[key][6][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">'+data.verified_series_data[key][2]+'</p><p class="text-muted">'+data.verified_series_data[key][1]+'</p><p class="text-muted">Provider - '+data.verified_series_data[key][7]+'</p><button type="button" class="btn btn-primary" onclick="go_to_added_seasons('+key+')">Go to seasons</button></div></div></div></div>';
+                            htmlgen +=  data.verified_series_data[key][2] +
+                                '</p><div class"middle-section"><p>' + data.verified_series_data[key][1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><p class="font-weight-bold text-primary">Provider - ' + data.verified_series_data[key][
+                                    7
+                                ] +
+                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_added_seasons(' +
+                                key + ')">Go to seasons</button></div></div></div></div></div>';
 
                             $('#verified-get-series').append(htmlgen);
 
                             // appending already uploaded series to right navigation
-                            $('#verified-series-right').append('<li><a href="#series' + data.verified_series_data[key][0] + '">' + data.verified_series_data[key][0]+ ' - '+data.verified_series_data[key][7]+'</a></li>');
+                            $('#verified-series-right').append('<li><a href="#series' + data
+                                .verified_series_data[key][0] + '">' + data.verified_series_data[key][
+                                    0
+                                ] + ' - ' + data.verified_series_data[key][7] + '</a></li>');
                         }
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1220,7 +1300,8 @@
             $('#verified-get-seasons').empty();
             $('#verified-season-right').empty();
 
-	        set_navigation_bars('none', 'none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'block', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
 
             // javascript data object
             var data = {
@@ -1242,18 +1323,33 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_any_series_season_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_series_season_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_any_series_season_exists + '</p></div>';
                         $('#verified-get-seasons').append(htmlgen);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
                         // appending the already uploaded seasons
-                        for(var key in data.all_series_season_data) {
-                            var htmlgen='<div id="season'+key+'" class="container my-5"><h4 class="my-4">Season '+data.all_series_season_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.all_series_season_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.all_series_season_data[key][1]+'</p><p class="text-muted">Status - '+data.all_series_season_data[key][4]+'</p><button type="button" class="btn btn-primary" onclick="go_to_added_episodes('+key+')">Go to episodes</button></div></div></div></div>';
+                        for (var key in data.all_series_season_data) {
+                            var decide_color = data.all_series_season_data[key][4] == "Pending" ?
+                                "text-info" : (
+                                    data.all_series_season_data[key][4] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            var htmlgen = '<div id="season' + key +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Season ' + data
+                                .all_series_season_data[key][0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                data.all_series_season_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
+                                data.all_series_season_data[key][1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><p class="font-weight-bold '+ decide_color + '">Status - ' + data.all_series_season_data[key][
+                                    4
+                                ] +
+                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_added_episodes(' +
+                                key + ')">Go to episodes</button></div></div></div></div></div>';
 
                             $('#verified-get-seasons').append(htmlgen);
 
                             // appending the already uploaded seasons to right navigation
-                            $('#verified-season-right').append('<li><a href="#season' + key + '">season' + data.all_series_season_data[key][0]+ '</a></li>');
+                            $('#verified-season-right').append('<li><a href="#season' + key + '">season' +
+                                data.all_series_season_data[key][0] + '</a></li>');
 
                         }
 
@@ -1263,8 +1359,7 @@
                         $('#list-added-seasoninfo-list').css('pointer-events', 'none');
                         $('#list-added-seriesinfo-list').tab('show');
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1282,7 +1377,8 @@
             $('#verified-content-right').empty();
             $('#verified-episodes-right').empty();
 
-	        set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'block', 'block', 'none', 'none', 'none', 'none', 'none', 'none');
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'block', 'block', 'none', 'none',
+                'none', 'none', 'none', 'none');
 
             // javascript data object
             var data = {
@@ -1304,44 +1400,116 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_series_season_exists != '') {
-                        var htmlgen='<div><p>'+data.is_series_season_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_series_season_exists + '</p></div>';
                         $('#verified-get-episodes').append(htmlgen);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
                         // appending the already uploaded episodes
-                        for(var key in data.season_episode_data) {
-                            var specialol=`'${data.season_episode_data[key][4]}'`;
-                            var htmlgen='<div id="episode'+data.season_episode_data[key][0]+'" class="container my-5"><h4 class="my-4">Episode '+data.season_episode_data[key][6]+'-'+data.season_episode_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="episode'+data.season_episode_data[key][0]+'thumbnail" src="'+data.season_episode_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.season_episode_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.season_episode_data) {
+                            var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="episode' + data.season_episode_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Episode ' + data
+                                .season_episode_data[key][6] + '-' + data.season_episode_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="episode' +
+                                data.season_episode_data[key][0] + 'thumbnail" src="' + data
+                                .season_episode_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.season_episode_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                            htmlgen +='</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm mx-1" onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')" >Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
+                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" >Comments</button></div></div></div></div></div>';
 
                             $('#verified-get-episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#verified-episodes-right').append('<li id="li_episode'+data.season_episode_data[key][0]+'"><a href="#episode' + data.season_episode_data[key][0] + '">episode' + data.season_episode_data[key][6]+ '</a></li>');
+                            $('#verified-episodes-right').append('<li id="li_episode' + data
+                                .season_episode_data[key][0] + '"><a href="#episode' + data
+                                .season_episode_data[key][0] + '">episode' + data.season_episode_data[
+                                    key][6] + '</a></li>');
                         }
 
 
                         // appending the already uploaded free content of series
                         var count = 1;
-                        for(var key in data.season_content_data) {
-                            var specialol=`'${data.season_content_data[key][4]}'`;
-                            var htmlgen='<div id="content'+data.season_content_data[key][0]+'" class="container my-5"><h4 class="my-4">Content '+ count +' - '+data.season_content_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content'+data.season_content_data[key][0]+'thumbnail" src="'+data.season_content_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.season_content_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.season_content_data) {
+                            var specialol = `'${data.season_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_content_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="content' + data.season_content_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' + count + ' - ' + data
+                                .season_content_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_content_data[key][5] + '</span></div></div><img id="content' +
+                                data.season_content_data[key][0] + 'thumbnail" src="' + data
+                                .season_content_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_content_data[key][8].length; i++) {
                                 htmlgen += data.season_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.season_content_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                            htmlgen +='</span></div><div class="middle-section"><p>' + data
+                                .season_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm" onclick="play_video(' +
+                                data.season_content_data[key][0] + ',' + specialol +
+                                ')">Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
+                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" >Comments</button></div></div></div></div></div>';
 
-                            $('#verified-get-episodes').append(htmlgen);
+                            $('#verified-get-content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#verified-episodes-right').append('<li id="li_content'+data.season_content_data[key][0]+'"><a href="#content' + data.season_content_data[key][0] + '">content' +  count + '</a></li>');
+                            $('#verified-content-right').append('<li id="li_content' + data
+                                .season_content_data[key][0] + '"><a href="#content' + data
+                                .season_content_data[key][0] + '">content' + count + '</a></li>');
 
                             count++;
                         }
@@ -1350,8 +1518,7 @@
                         $('#list-added-seasoninfo-list').css('pointer-events', 'all');
                         $('#list-added-seasoninfo-list').tab('show');
 
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1361,7 +1528,7 @@
 
 
         // get all the added or verified movies
-        function get_added_movies(){
+        function get_added_movies() {
 
             // Emptying the main content displaying area
             $('#get-verified-movies').empty();
@@ -1371,7 +1538,8 @@
             // Emptying the right navigation bars that is to be used here
             $('#verified-movies-right').empty();
 
-            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'none', 'none');
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'block', 'none', 'none');
 
             var formData = new FormData();
 
@@ -1386,26 +1554,39 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_any_verified_movies_exists != '') {
-                        var htmlgen='<div><p>'+data.is_any_verified_movies_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_any_verified_movies_exists + '</p></div>';
                         $('#get-verified-movies').append(htmlgen);
                     }
                     if (data.is_successful != '') {
                         // appending the already uploaded movies
-                        for(var key in data.verified_movies_data) {
-                            var htmlgen='<div id="movie'+key+'" class="container my-5"><h4 class="my-4">'+data.verified_movies_data[key][0]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="'+data.verified_movies_data[key][4]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">';
+                        for (var key in data.verified_movies_data) {
+                            var htmlgen = '<div id="movie' + key +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' + data.verified_movies_data[
+                                    key][0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                data.verified_movies_data[key][4] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="font-weight-bold">';
 
                             for (var i = 0; i < data.verified_movies_data[key][5].length; i++) {
                                 htmlgen += data.verified_movies_data[key][5][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">'+data.verified_movies_data[key][2]+'</p><p class="text-muted">'+data.verified_movies_data[key][1]+'</p><p class="text-muted">Provider - '+data.verified_movies_data[key][6]+'</p><button type="button" class="btn btn-primary" onclick="go_to_added_movie_videos('+key+')">Go to videos</button></div></div></div></div>';
+                            htmlgen +=  data.verified_movies_data[key][2] +
+                                '</p><div class="middle-section"><p>' + data.verified_movies_data[key][1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><p class="font-weight-bold text-primary">Provider - ' + data.verified_movies_data[key][
+                                    6
+                                ] +
+                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_added_movie_videos(' +
+                                key + ')">Go to videos</button></div></div></div></div></div>';
                             $('#get-verified-movies').append(htmlgen);
 
                             // appending already uploaded movies to right navigation
-                            $('#verified-movies-right').append('<li><a href="#movie' + key + '">' + data.verified_movies_data[key][0]+ ' - '+data.verified_movies_data[key][6]+'</a></li>');
+                            $('#verified-movies-right').append('<li><a href="#movie' + key + '">' + data
+                                .verified_movies_data[key][0] + ' - ' + data.verified_movies_data[key][
+                                    6
+                                ] + '</a></li>');
                         }
-                    }
-                    else {
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
@@ -1422,7 +1603,8 @@
             $('#verified-movies-content-right').empty();
             $('#verified-movies-video-right').empty();
 
-            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'block');
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'block', 'block');
 
             // javascript data object
             var data = {
@@ -1444,44 +1626,111 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
-                        var htmlgen='<div><p>'+data.is_movie_exists+'</p></div>';
+                        var htmlgen = '<div><p>' + data.is_movie_exists + '</p></div>';
                         $('#movie_verified_uploaded_episodes').append(htmlgen);
-                    }
-                    else if (data.is_successful != '') {
+                    } else if (data.is_successful != '') {
                         // appending the already uploaded episodes
-                        for(var key in data.movie_video_data) {
-                            var specialol=`'${data.movie_video_data[key][4]}'`;
-                            var htmlgen='<div id="movie_video'+data.movie_video_data[key][0]+'" class="container my-5"><h4 class="my-4">Movie Video - '+data.movie_video_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_video'+data.movie_video_data[key][0]+'thumbnail" src="'+data.movie_video_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.movie_video_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.movie_video_data) {
+                            var specialol = `'${data.movie_video_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="movie_video' + data.movie_video_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Movie Video - ' + data
+                                .movie_video_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"'+'onclick="play_video(' +data.movie_episode_data[key][0] + ',' + specialol +
+                                ')"' + '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_video_data[key][5] + '</span></div></div><img id="movie_video' +
+                                data.movie_video_data[key][0] + 'thumbnail" src="' + data.movie_video_data[
+                                    key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
                                 htmlgen += data.movie_video_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.movie_video_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                            htmlgen +='</span></div><div class="middle-section"><p>' + data
+                                .movie_video_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><button type="button" onclick="play_video(' +
+                                data.movie_video_data[key][0] + ',' + specialol +
+                                ')" class="btn btn-primary btn-sm">Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
+                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" >Comments</button></div></div></div></div></div>';
 
                             $('#movie_verified_uploaded_episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#verified-movies-video-right').append('<li id="li_movie_video'+data.movie_video_data[key][0]+'"><a href="#movie_video' + data.movie_video_data[key][0] + '">movie video</a></li>');
+                            $('#verified-movies-video-right').append('<li id="li_movie_video' + data
+                                .movie_video_data[key][0] + '"><a href="#movie_video' + data
+                                .movie_video_data[key][0] + '">movie video</a></li>');
                         }
 
 
                         // appending the already uploaded free content of series
                         var count = 1;
-                        for(var key in data.movie_content_data) {
-                            var specialol=`'${data.movie_content_data[key][4]}'`;
-                            var htmlgen='<div id="movie_content'+data.movie_content_data[key][0]+'" class="container my-5"><h4 class="my-4">Content '+ count +' - '+data.movie_content_data[key][1]+'</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_content'+data.movie_content_data[key][0]+'thumbnail" src="'+data.movie_content_data[key][3]+'" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">'+data.movie_content_data[key][2]+'</p><p class="text-muted">';
+                        for (var key in data.movie_content_data) {
+                            var specialol = `'${data.movie_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_content_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+                            var htmlgen = '<div id="movie_content' + data.movie_content_data[key][0] +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' + count + ' - ' + data
+                                .movie_content_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_content_data[key][5] + '</span></div></div><img id="movie_content' +
+                                data.movie_content_data[key][0] + 'thumbnail" src="' + data
+                                .movie_content_data[key][3] +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
                                 htmlgen += data.movie_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><button type="button" class="btn btn-primary" onclick="play_video('+data.movie_content_data[key][0]+','+specialol+')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                            htmlgen +='</span><div class="middle-section"><p>' + data
+                                .movie_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" onclick="play_video(' +
+                                data.movie_content_data[key][0] + ',' + specialol +
+                                ')" class="btn btn-primary btn-sm">Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
+                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" >Comments</button></div></div></div></div></div>';
 
                             $('#movie_verified_uploaded_content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
-                            $('#verified-movies-content-right').append('<li id="li_movie_content'+data.movie_content_data[key][0]+'"><a href="#movie_content' + data.movie_content_data[key][0] + '">content' +  count + '</a></li>');
+                            $('#verified-movies-content-right').append('<li id="li_movie_content' + data
+                                .movie_content_data[key][0] + '"><a href="#movie_content' + data
+                                .movie_content_data[key][0] + '">content' + count + '</a></li>');
 
                             count++;
                         }
@@ -1490,14 +1739,155 @@
                         $('#list-added-movieinfo-list').css('pointer-events', 'all');
                         $('#list-added-movieinfo-list').tab('show');
 
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
                     }
-                    else {
+                }
+            });
+        }
+        // get all the pending series
+        function search_users(search_text) {
+
+            // Emptying the main content displaying area
+            $('#insert-users').empty();
+
+
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
+            var data = {
+                'search_text': search_text,
+            }
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+            $.ajax({
+                type: 'POST',
+                url: '{% url "search_users" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_any_user_exists != '') {
+                        var htmlgen = '<div><p>' + data.is_any_user_exists + '</p></div>';
+                        $('#get-series').append(htmlgen);
+                    }
+                    if (data.is_successful != '') {
+
+                        // appending the already uploaded series
+                        for (var key in data.users) {
+                            var htmlgen = '<tr><th scope="row">' + data.users[key][0] + '<td>' + data.users[
+                                    key][1] + '</td><td>' + data.users[key][2] + '</td><td>' + data.users[
+                                    key][3] + '</td><td>' +
+                                '<button class="btn btn-primary btn-sm" onclick="change_user_type(' + data
+                                .users[key][0] + ')">Change user type</button>' + '</td></tr>';
+                            $('#insert-users').append(htmlgen);
+                        }
+                    } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
         }
 
+
+        // function when admin wants to see the uploaded episodes in added content section
+        function change_user_type(userId) {
+
+            $('#user_id').html(userId);
+            // emptying the data present in the 
+            $('#chnge-user').empty();
+
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'block', 'none', 'none',
+                'none', 'none', 'none', 'none');
+
+            // javascript data object
+            var data = {
+                'user_id': userId,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "change_user_type" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_user_exists != '') {
+                        var htmlgen = '<div><p>' + data.is_user_exists + '</p></div>';
+                        $('#verified-get-episodes').append(htmlgen);
+                    } else if (data.is_successful != '') {
+                        for (var key in data.user_details) {
+                            var userType = data.user_details[key][3];
+                            if (userType == 'A')
+                                $('#user-category option[value=A]').prop('selected', 'true');
+                            else if (userType == 'P')
+                                $('#user-category option[value=P]').prop('selected', 'true');
+                            else
+                                $('#user-category option[value=U]').prop('selected', 'true');
+                            $('#user-id').attr('value', data.user_details[key][0]);
+                            $('#chnge-user').append(htmlgen);
+                            $('#list-changeuser-list').css('pointer-events', 'all');
+                            $('#list-changeuser-list').tab('show');
+                        }
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+        // form to change the user type 
+        $('#change-userform').submit(function (e) {
+            e.preventDefault(); //prevent default action
+            var user_id = $('#user-id').attr('value');
+            var user_type = $('#user-category').find('option:selected').attr('value');
+
+            var data = {
+                'user_id': user_id,
+                'user_type': user_type,
+            }
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+            $('#user-change-submit').attr('disabled', 'true');
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "update_user_type" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#user-change-submit').attr('disabled', false);
+                    // checking and handling error conditions
+                    if (data.is_user_exists != '') {
+                        var htmlgen = '<div><p>' + data.is_user_exists + '</p></div>';
+                        $('#verified-get-episodes').append(htmlgen);
+                    } else if (data.is_successful != '') {
+                        for (var key in data.user_details) {
+
+                        }
+                        $('#list-changeuser-list').css('pointer-events', 'none');
+                        $('#insert-users').empty();
+                        $('#sear-tx').val('');
+                        $('#list-usertable-list').tab('show');
+                        alert(data.is_successful);
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        });
 
         function play_video(video_id, video_url) {
             // Add code to launch modal by getting
@@ -1555,6 +1945,20 @@
             get_added_movies();
         })
 
+        // get user once clicked on list-users-left
+        $('#list-usertable-list').on('click', function (e) {
+            set_navigation_bars('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
+                'none', 'none', 'none');
+            $('#list-changeuser-list').css('pointer-events', 'none');
+            $('#insert-users').empty();
+            $('#sear-tx').val('');
+        })
+
+        // search user
+        $('#sear-tx').on('keyup', function (e) {
+            var text = $('#sear-tx').val();
+            search_users(text);
+        })
     </script>
 </body>
 

@@ -6,7 +6,6 @@ from . import views as room_views
 
 
 urlpatterns = [
-    path('', room_views.index, name='index'),
     path('join/<str:room_id>/',room_views.room, name='room'),
     path('add_new_room/', room_views.add_new_room, name = "add_new_room"),
     path('get_host_rooms/',room_views.get_host_rooms, name = "get_host_rooms"),
@@ -16,5 +15,6 @@ urlpatterns = [
     path('send_room_request/',room_views.send_room_request,name = 'send_room_request'),
     path('get_my_rooms/',room_views.get_my_rooms,name = 'get_my_rooms'),
     path('accept_room/',room_views.accept_room,name = 'accept_room'),
-    path('reject_room/',room_views.reject_room,name = 'reject_room')
+    path('reject_room/',room_views.reject_room,name = 'reject_room'),
+    path('', room_views.index, name='index'),
 ]

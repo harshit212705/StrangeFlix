@@ -558,13 +558,14 @@ class History(models.Model):
         return str('User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || watch_time--') + str(self.video_watched)
 
 
-# model for storing user History
+# model for storing video comments on videos
 class VideoComment(models.Model):
 
     COMMENT_TYPES = (
         # TYPES OF COMMENTS
         (1, 'positive'),
         (2, 'negative'),
+        (3, 'neutral'),
     )
 
     comment_id = models.AutoField(primary_key=True)
@@ -584,3 +585,73 @@ class VideoComment(models.Model):
 
     def __str__(self):
         return str('User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || comment--') + str(self.comment) + str(' || comment_type--') + str(self.comment_type)
+
+
+
+# model for storing reports on comments
+class ReportComment(models.Model):
+
+    REPORT_COMMENT_TYPES = (
+        # TYPES OF COMMENT REPORTING
+        (1, 'Unwanted commercial content or spam'),
+        (2, 'Sexually explicit material'),
+        (3, 'Child abuse'),
+        (4, 'Hate speech or graphic violence'),
+        (5, 'Harassment or bullying'),
+    )
+
+    comment_id = models.ForeignKey(VideoComment, on_delete=models.PROTECT)
+
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    flag_val = models.PositiveSmallIntegerField(choices=REPORT_COMMENT_TYPES, default=1)
+
+    class Meta:
+        verbose_name_plural = "Report Comment"
+
+    def __str__(self):
+        return str('User--') + str(self.user_id.username) + str(' || comment_id--') + str(self.comment_id.pk) + str(' || flag_val--') + str(self.flag_val)
+
+
+
+# model for storing reports on videos
+class ReportVideo(models.Model):
+
+    REPORT_VIDEO_TYPES = (
+        # TYPES OF VIDEO REPORTING
+        (1, 'Violent or repulsive content'),
+        (2, 'Hateful or abusive content'),
+        (3, 'Harmful or dangerous act'),
+        (4, 'Sexual content'),
+        (5, 'Child abuse'),
+        (6, 'Promotes terrorism'),
+        (7, 'Spam or misleading'),
+        (8, 'Infringes my rights'),
+        (9, 'Captions issue'),
+    )
+
+    video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
+
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    flag_val = models.PositiveSmallIntegerField(choices=REPORT_VIDEO_TYPES, default=1)
+
+    class Meta:
+        verbose_name_plural = "Report Video"
+
+    def __str__(self):
+        return str('User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || flag_val--') + str(self.flag_val)
+
+
+# model for storing user faviurites
+class Favourites(models.Model):
+
+    video_id = models.ForeignKey(Videos, on_delete=models.PROTECT)
+
+    users = models.ManyToManyField(User, related_name='favourites')
+
+    class Meta:
+        verbose_name_plural = "Favourites"
+
+    def __str__(self):
+        return str('video_id--') + str(self.video_id.video_id)

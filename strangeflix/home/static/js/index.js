@@ -52,6 +52,25 @@ $(window).on('load', function() {
 
 });
 
+
+function set_content_display(d1, d2, d3, d4, d5, d6, d7, d8) {
+
+	$('#video_with_comments').css('display', d1);
+
+	// IN SELECTED SERIES SECTION
+	$('#selected_season_description').css('display', d2);
+	$('#selected_season_freecontent').css('display', d3);
+	$('#selected_season_episodes').css('display', d4);
+    $('#selected_series_description').css('display', d5);
+    $('#selected_series_season').css('display', d6);
+
+	// IN SELECTED MOVIE SECTION
+	$('#selected_movie_description').css('display', d7);
+    $('#selected_movie_freecontent').css('display', d8);
+
+}
+
+
 // carousel
 $('#search_results').on('slid.bs.carousel', '', function () {
     //ajax here to load the series and movies
@@ -129,5 +148,49 @@ $('#popular_movies').on('slid.bs.carousel', '', function () {
         $this.children('#popular_movies .carousel-control-prev').hide();
     } else if ($('#popular_movies .carousel-inner .carousel-item:last').hasClass('active')) {
         $this.children('#popular_movies .carousel-control-next').hide();
+    }
+});
+
+$('#movie_freecontent-controls').on('slid.bs.carousel', '', function () {
+    var $this = $(this);
+    $this.children('#movie_freecontent-controls .carousel-control-prev').show();
+    $this.children('#movie_freecontent-controls .carousel-control-next').show();
+    if ($('#movie_freecontent-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+        $this.children('#movie_freecontent-controls .carousel-control-prev').hide();
+    } else if ($('#movie_freecontent-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+        $this.children('#movie_freecontent-controls .carousel-control-next').hide();
+    }
+});
+
+$('#series_season-controls').on('slid.bs.carousel', '', function () {
+    var $this = $(this);
+    $this.children('#series_season-controls .carousel-control-prev').show();
+    $this.children('#series_season-controls .carousel-control-next').show();
+    if ($('#series_season-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+        $this.children('#series_season-controls .carousel-control-prev').hide();
+    } else if ($('#series_season-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+        $this.children('#series_season-controls .carousel-control-next').hide();
+    }
+});
+
+$('#series_season_freecontent-controls').on('slid.bs.carousel', '', function () {
+    var $this = $(this);
+    $this.children('#series_season_freecontent-controls .carousel-control-prev').show();
+    $this.children('#series_season_freecontent-controls .carousel-control-next').show();
+    if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+        $this.children('#series_season_freecontent-controls .carousel-control-prev').hide();
+    } else if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+        $this.children('#series_season_freecontent-controls .carousel-control-next').hide();
+    }
+});
+
+$('#series_season_episodes-controls').on('slid.bs.carousel', '', function () {
+    var $this = $(this);
+    $this.children('#series_season_episodes-controls .carousel-control-prev').show();
+    $this.children('#series_season_episodes-controls .carousel-control-next').show();
+    if ($('#series_season_episodes-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+        $this.children('#series_season_episodes-controls .carousel-control-prev').hide();
+    } else if ($('#series_season_episodes-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+        $this.children('#series_season_episodes-controls .carousel-control-next').hide();
     }
 });

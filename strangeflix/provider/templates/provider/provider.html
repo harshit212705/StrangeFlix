@@ -24,12 +24,12 @@
 
     <div class="main__section">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                 <div class="wrapper ">
                     <!-- Sidebar  -->
                     <nav id="sidebar">
                         <div class="sidebar-header">
-                            <h3>Provider</h3>
+                            <h3 class="text-capitalize">hi {{ user.username }}</h3>
                         </div>
                         <ul class="list-unstyled components" id="side-collapse">
                             <li>
@@ -68,64 +68,18 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                                    class="dropdown-toggle">Rejected content</a>
-                                <ul class="collapse list-unstyled list-group" id="pageSubmenu" role="tablist">
-                                    <li>
-                                        <a class="special" id="list-settings-list" data-toggle="list"
-                                            href="#list-settings" role="tab" aria-controls="settings">Rejected
-                                            content</a>
-                                    </li>
-                                </ul>
+                                <a href="{% url "account_logout" %}">Logout</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8 media-full">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-10  media-full">
                 <!-- content  to be displayed on the middle of the page-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                         aria-labelledby="list-home-list">
-                        <div class="row">
-                            <div class="col-lg-9 col-md-9 media-home">
-                                <div id="section1">
-                                    <h4>section1</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est molestiae error
-                                        ipsam
-                                        asperiores pariatur animi? Optio, dolorem. Pariatur ducimus cupiditate sapiente
-                                        dolor praesentium. Dolorem sequi animi earum, iusto dolor laborum.</p>
-                                </div>
-                                <div id="section2">
-                                    <h4>section2</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia provident,
-                                        repellendus accusantium odit est temporibus laborum hic error nisi earum saepe
-                                        alias
-                                        esse eum optio magnam, totam quidem quisquam corporis!</p>
-                                </div>
-                                <div id="section3">
-                                    <h4>section3</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque adipisci excepturi
-                                        sequi asperiores architecto ex sit ad nisi quibusdam pariatur similique dolorum
-                                        quasi dolores debitis odio et, nam magnam amet?</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2">
-                                <div class="fix">
-                                    <ul>
-                                        <li>
-                                            <a href="#section1">section1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#section2">section2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#section3">section3</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     <!-- add movie -->
                     <div class="tab-pane fade" id="list-movie" role="tabpanel" aria-labelledby="list-movie-list">
@@ -225,7 +179,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 mx-1 my-3 ws-sports">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 my-2 ws-sports">
                                                                 <select id="sports-subcategory"
                                                                     name="sports-subcategory" class="custom-select">
                                                                     <option selected>Subcategory</option>
@@ -241,7 +195,7 @@
                                                                     <option value="Table Tennis">Table Tennis</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 mx-1 my-3 ws-entmnt">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 my-2 ws-entmnt">
                                                                 <div class="btn-group dropdown">
                                                                     <button class="btn btn-light-outline" type="button"
                                                                         id="dropdownMenuButton" data-toggle="dropdown"
@@ -300,12 +254,12 @@
                                                                         </div>
                                                                         <div class="dropdown-divider"></div>
                                                                         <button type="button" id="savech"
-                                                                            class="btn btn-primary">Save</button>
+                                                                            class="btn btn-primary btn-sm">Save</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 mx-1 my-3 ws-txt">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 my-2 mx-1 ws-txt">
                                                                 <textarea class="form-control"
                                                                     name="subcategory-choosen" id="subcategory__choosen"
                                                                     rows="1" disabled aria-required="true"></textarea>
@@ -620,11 +574,14 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-primary mx-5" type="button"
-                                                    data-toggle="collapse" data-target="#seasonVideos"
-                                                    aria-expanded="false" aria-controls="seasonVideos">
-                                                    Add episodes
-                                                </button>
+                                                <div>
+                                                    <button class="btn btn-primary my-3" type="button"
+                                                        data-toggle="collapse" data-target="#seasonVideos"
+                                                        aria-expanded="false" aria-controls="seasonVideos">
+                                                        Add episodes
+                                                    </button>
+                                                </div>
+
                                                 <div class="collapse" id="seasonVideos">
                                                     <div class="card card-body">
                                                         <!-- add season videos -->
@@ -807,9 +764,11 @@
                                                         </form>
                                                     </div>
                                                 </div>
+                                                <!-- added free content section  -->
                                                 <div id="uploaded-free-contents">
 
                                                 </div>
+                                                <hr>
                                                 <!-- added episodes section -->
                                                 <div id="uploaded_episodes">
                                                 </div>
@@ -870,7 +829,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-xl-2 col-lg-2 col-md-2 fade-on-small">
                 <nav class="fix">
                     <!-- add-season-right  -->
                     <ul id="season-right">
@@ -941,6 +900,16 @@
             </div>
         </div>
     </div>
+    <!-- <div class="modal fade" id="spinner-in-modal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{% static "/images/ajax-loader.gif" %}">
+                </div>
+            </div>
+        </div>
+    </div> -->
 
     <!-- Edit episodes in modal  -->
 
@@ -1119,13 +1088,15 @@
                         // appending the new season to previously created seasons list
                         for (var key in data.all_season_details) {
                             var htmlgen = '<div class="container my-5" id="season' + key +
-                                '"><h4 class="my-4">Season' + seasoncount +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="season' +
+                                '"><h4 class="text-secondary font-weight-bold my-4">Season' +
+                                seasoncount +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="season' +
                                 seasoncount + 'thumbnail" src="' + data.all_season_details[key][1] +
-                                '" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="mx-5"><p>' +
+                                '" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="mx-3"><div class="middle-section"><p>' +
                                 data.all_season_details[key][0] +
-                                '</p><button onclick="add_season_videos(' + series_id + ',' + key +
-                                ')" class="btn btn-primary btn-sm">Add season videos</button></div></div></div></div>';
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button onclick="add_season_videos(' +
+                                series_id + ',' + key +
+                                ')" class="btn btn-primary btn-sm">Add season videos</button></div></div></div></div></div>';
                             $('#apnd').append(htmlgen);
                         }
 
@@ -1235,26 +1206,58 @@
                         // appending the new episode to previously created episodes list
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="episode' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Episode ' + data
-                                .season_episode_data[key][6] + '-' + data.season_episode_data[key][
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Episode ' +
+                                data
+                                .season_episode_data[key][6] + '-' + data.season_episode_data[
+                                    key][
                                     1
-                                ] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="episode' +
+                                ] + '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="episode' +
                                 data.season_episode_data[key][6] + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.season_episode_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.season_episode_data[key][8] == "Pending" ?
+                                "text-info" : (
+                                    data.season_episode_data[key][8] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .season_episode_data[key][8] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
+
 
                             $('#uploaded_episodes').append(htmlgen);
 
@@ -1365,24 +1368,56 @@
                         // appending the new episode to previously created episodes list
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="content' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' +
-                                contentcount + '-' + data.season_episode_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
-                                data.season_episode_data[key][0] + 'thumbnail" src="' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                contentcount + '-' +
+                                data
+                                .season_episode_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="content' +
+                                contentcount + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.season_episode_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][8].length; i++) {
                                 htmlgen += data.season_episode_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.season_episode_data[key][7] == "Pending" ?
+                                "text-info" : (
+                                    data.season_episode_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .season_episode_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
                             $('#uploaded-free-contents').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -1447,27 +1482,57 @@
                         // appending the previously uploaded episodes
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="episode' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Episode ' + data
-                                .season_episode_data[key][6] + '-' + data.season_episode_data[key][
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Episode ' +
+                                data
+                                .season_episode_data[key][6] + '-' + data.season_episode_data[
+                                    key][
                                     1
-                                ] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="episode' +
+                                ] + '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="episode' +
                                 data.season_episode_data[key][6] + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.season_episode_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
-                                .season_episode_data[key]
-                                [8] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                            var decide_color = data.season_episode_data[key][8] == "Pending" ?
+                                "text-info" : (
+                                    data.season_episode_data[key][8] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
+                                .season_episode_data[key][8] +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
 
                             $('#uploaded_episodes').append(htmlgen);
 
@@ -1482,24 +1547,62 @@
                         // appending the already uploaded free content
                         for (var key in data.season_content_data) {
                             var specialol = `'${data.season_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_content_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="content' + data.season_content_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + count + '-' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                count + '-' +
+                                data
                                 .season_content_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_content_data[key][5] + '</span></div></div><img id="content' +
                                 data.season_content_data[key][0] + 'thumbnail" src="' + data
                                 .season_content_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
-                                data.season_content_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_content_data[key][8].length; i++) {
                                 htmlgen += data.season_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '<p class="text-muted">Status - ' + data.season_content_data[
-                                    key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                            var decide_color = data.season_content_data[key][7] == "Pending" ?
+                                "text-info" : (
+                                    data.season_content_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
+                                .season_content_data[key][7] +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_content_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
+                            if (data.season_content_data[key][7] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
+                                    'onclick="edit(' +
+                                    data.season_content_data[key][0] + ',' + count + ',' + '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
+                            }
 
                             $('#uploaded-free-contents').append(htmlgen);
 
@@ -1602,23 +1705,25 @@
                         for (var key in data.all_series_data) {
                             var htmlgen = '<div id="' + data.all_series_data[key][0].split(" ")
                                 .join("") +
-                                '" class="container my-5"><h4 class="my-4">' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' +
+                                data
                                 .all_series_data[
                                     key][0] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
                                 data.all_series_data[key][5] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="font-weight-bold">' +
                                 data.all_series_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.all_series_data[key][6].length; i++) {
                                 htmlgen += data.all_series_data[key][6][i] + ' | ';
                             }
-                            htmlgen += '</p><p class="text-muted">' + data.all_series_data[key][
+                            htmlgen += data.all_series_data[key][
                                     2
                                 ] +
-                                '</p><p class="text-muted">' + data.all_series_data[key][1] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_seasons(' +
-                                key + ')">Go to seasons</button></div></div></div></div>';
+                                '</p><div class="middle-section"><p>' + data.all_series_data[key][
+                                1] +
+                                '</p></div><div class="position-absolute" style="bottom:0"><button type="button" class="btn btn-primary btn-sm" onclick="go_to_seasons(' +
+                                key + ')">Go to seasons</button><div></div></div></div></div>';
                             $('#previously-uploaded-series').append(htmlgen);
 
                             // appending already uploaded series to right navigation
@@ -1687,19 +1792,23 @@
 
                         // appending the already uploaded seasons
                         for (var key in data.all_series_season_data) {
+                            var decide_color = data.all_series_season_data[key][4] == "Pending" ?
+                                "text-info" :
+                                (data.all_series_season_data[key][4] == "Rejected" ? "text-danger" :
+                                    "text-success");
                             var htmlgen = '<div id="season' + key +
-                                '" class="container my-5"><h4 class="my-4">Season ' + data
-                                .all_series_season_data[key][0] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img src="' +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Season ' +
+                                data.all_series_season_data[key][0] +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
                                 data.all_series_season_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
                                 data.all_series_season_data[key][1] +
-                                '</p><p class="text-muted">Status - ' + data.all_series_season_data[
-                                    key][
-                                    4
-                                ] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data.all_series_season_data[
+                                    key]
+                                [4] +
                                 '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_episodes(' +
-                                key + ')">Go to episodes</button></div></div></div></div>';
+                                key + ')">Go to episodes</button></div></div></div></div></div>';
                             $('#previously-uploaded-seasons').append(htmlgen);
 
                             // appending the already uploaded seasons to right navigation
@@ -1783,36 +1892,68 @@
                         // appending the already uploaded episodes
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="episode' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Episode ' + data
-                                .season_episode_data[key][6] + '-' + data.season_episode_data[key][
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Episode ' +
+                                data
+                                .season_episode_data[key][6] + '-' + data.season_episode_data[
+                                    key][
                                     1
-                                ] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="episode' +
+                                ] + '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="episode' +
                                 data.season_episode_data[key][6] + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
-                                data.season_episode_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
-                            htmlgen += '<p class="text-muted">Status - ' + data.season_episode_data[
-                                    key][8] +
-                                '</p><button type="button" class="btn btn-primary"' +
-                                'onclick="play_video(' +
-                                data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';;
-                            // my changes
-                            if (data.season_episode_data[key][8] == 'Rejected') {
 
-                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                            var decide_color = data.season_episode_data[key][8] == "Pending" ?
+                                "text-info" : (
+                                    data.season_episode_data[key][8] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
+                                .season_episode_data[key][8] +
+                                '</p><button type="button" onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
+                            if (data.season_episode_data[key][8] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
                                     'onclick="edit(' +
-                                    data.season_episode_data[key][6] + ',' + data.season_episode_data[key][
-                                        0] + ',' + '4' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                                    data.season_episode_data[key][0] + ',' + data.season_episode_data[key][
+                                        6] + ',' +
+                                    '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
                             }
-                            //
+
                             $('#previously-uploaded-episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -1826,31 +1967,65 @@
                         // appending the already uploaded free content
                         for (var key in data.season_content_data) {
                             var specialol = `'${data.season_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_content_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="content' + data.season_content_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + count + '-' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                count + '-' +
+                                data
                                 .season_content_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
-                                data.season_content_data[key][0] + 'thumbnail" src="' + data
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_content_data[key][5] +
+                                '</span></div></div><img id="content' +
+                                count + 'thumbnail" src="' + data
                                 .season_content_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
-                                data.season_content_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_content_data[key][8].length; i++) {
                                 htmlgen += data.season_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '<p class="text-muted">Status - ' + data.season_content_data[
-                                    key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                            var decide_color = data.season_content_data[key][7] == "Pending" ?
+                                "text-info" : (
+                                    data.season_content_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
+                                .season_content_data[key][7] +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_content_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
-                            // my changes
-                            if (data.season_content_data[key][8] == 'Rejected') {
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
 
-                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                            if (data.season_content_data[key][7] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
                                     'onclick="edit(' +
-                                    data.season_content_data[key][0] + ',' + count + ',' + '3' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                                    data.season_content_data[key][0] + ',' + count + ',' +
+                                    '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
                             }
                             $('#previously-added-content').append(htmlgen);
 
@@ -1937,18 +2112,23 @@
 
                         // appending the new season to previously created seasons list
                         for (var key in data.all_season_details) {
+                            var decide_color = data.all_season_details[key][2] == "Pending" ?
+                                "text-info" :
+                                (data.all_season_details[key][2] == "Rejected" ? "text-danger" :
+                                    "text-success");
                             var htmlgen = '<div id="season' + key +
-                                '" class="container my-5"><h4 class="my-4">Season ' +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Season ' +
                                 seasoncount +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
                                 data.all_season_details[key][1] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
                                 data.all_season_details[key][0] +
-                                '</p><p class="text-muted">Status - ' + data.all_season_details[
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data.all_season_details[
                                     key]
                                 [2] +
                                 '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_episodes(' +
-                                key + ')">Go to episodes</button></div></div></div></div>';
+                                key + ')">Go to episodes</button></div></div></div></div></div>';
                             $('#previously-uploaded-seasons').append(htmlgen);
 
                             // appending the already uploaded seasons to right navigation
@@ -2059,27 +2239,66 @@
                         // appending the new episode to previously created episodes list
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="episode' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Episode ' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Episode ' +
+                                data
                                 .season_episode_data[key][6] + '-' + data.season_episode_data[
                                     key][
                                     1
-                                ] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="episode' +
+                                ] + '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="episode' +
                                 data.season_episode_data[key][6] + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.season_episode_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
                                 htmlgen += data.season_episode_data[key][9][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.season_episode_data[key][8] == "Pending" ?
+                                "text-info" : (
+                                    data.season_episode_data[key][8] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .season_episode_data[key][8] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
+                            if (data.season_episode_data[key][8] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
+                                    'onclick="edit(' +
+                                    data.season_episode_data[key][0] + ',' + episodecount + ',' +
+                                    '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
+                            }
                             $('#previously-uploaded-episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -2187,24 +2406,65 @@
                         // appending the new episode to previously created episodes list
                         for (var key in data.season_episode_data) {
                             var specialol = `'${data.season_episode_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.season_episode_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.season_episode_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="content' + data.season_episode_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' +
-                                contentcount + '-' + data.season_episode_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
-                                data.season_episode_data[key][0] + 'thumbnail" src="' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                contentcount + '-' +
+                                data
+                                .season_episode_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.season_episode_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .season_episode_data[key][5] +
+                                '</span></div></div><img id="content' +
+                                contentcount + 'thumbnail" src="' + data
                                 .season_episode_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.season_episode_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.season_episode_data[key][8].length; i++) {
                                 htmlgen += data.season_episode_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.season_episode_data[key][7] == "Pending" ?
+                                "text-info" : (
+                                    data.season_episode_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .season_episode_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .season_episode_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
+                            if (data.season_episode_data[key][7] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
+                                    'onclick="edit(' +
+                                    data.season_episode_data[key][0] + ',' + contentcount + ',' +
+                                    '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
+                            }
                             $('#previously-added-content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -2232,6 +2492,7 @@
             });
         });
 
+        
 
         // function to handle play video
         function play_video(video_id, video_url) {
@@ -2398,24 +2659,55 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
+                            //my changes
+
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="movie_video' + data.movie_video_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Movie Video -' + data
-                                .movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="movie_video_thumbnail" src="' +
-                                data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Movie video -' +
+                                data.movie_video_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_video_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins + ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_video_data[key][5] +
+                                '</span></div></div><img id="movie_video_thumbnail' +
+                                data.movie_video_data[key][0] + 'thumbnail" src="' + data
                                 .movie_video_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.movie_video_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
                                 htmlgen += data.movie_video_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.movie_video_data[key][7] == "Pending" ?
+                                "text-info" : (data.movie_video_data[key][7] == "Rejected" ?
+                                    "text-danger" : "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .movie_video_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .movie_video_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
+
 
                             $('#uploaded_movie').append(htmlgen);
 
@@ -2425,6 +2717,7 @@
                         }
 
                         // reset the form
+                        $('#m-selected-tags').empty();
                         $('#movievideoForm').each(function () {
                             this.reset();
                         });
@@ -2523,24 +2816,55 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="content' + data.movie_video_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' +
-                                contentcount + ' - ' + data.movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                contentcount + '-' +
+                                data
+                                .movie_video_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_video_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_video_data[key][5] + '</span></div></div><img id="content' +
                                 contentcount + 'thumbnail" src="' + data
                                 .movie_video_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.movie_video_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
                                 htmlgen += data.movie_video_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.movie_video_data[key][7] == "Pending" ?
+                                "text-info" : (
+                                    data.movie_video_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .movie_video_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .movie_video_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
 
                             $('#m-uploaded-free-contents').append(htmlgen);
 
@@ -2551,6 +2875,7 @@
                         }
 
                         // reset the form
+                        $('#cm-selected-tags').empty();
                         $('#moviefreecontentForm').each(function () {
                             this.reset();
                         });
@@ -2617,20 +2942,25 @@
                         // appending the already uploaded movie
                         for (var key in data.all_movies_data) {
                             var htmlgen = '<div id="movie' + key +
-                                '" class="container my-5"><h4 class="my-4">' + data.all_movies_data[
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' +
+                                data.all_movies_data[
                                     key][0] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
                                 data.all_movies_data[key][5] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
+                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">' +
                                 data.all_movies_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.all_movies_data[key][6].length; i++) {
                                 htmlgen += data.all_movies_data[key][6][i] + ' | ';
                             }
-                            htmlgen += '</p><p class="text-muted">' + data.all_movies_data[key][2] +
-                                '</p><p class="text-muted">' + data.all_movies_data[key][1] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_movie(' +
-                                key + ')">Go to movie</button></div></div></div></div>';
+                            htmlgen += '</span><span class="font-weight-bold">' + data
+                                .all_movies_data[key][2] +
+                                '</span></div><div class="middle-section"><p>' + data
+                                .all_movies_data[key][
+                                    1
+                                ] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm" onclick="go_to_movie(' +
+                                key + ')">Go to movie</button></div></div></div></div></div>';
                             $('#previously-uploaded-movie').append(htmlgen);
 
                             // appending already uploaded movie to right navigation
@@ -2653,6 +2983,8 @@
             document.getElementById('add_movie_id').innerHTML = movie_id;
 
             // emptying the already uploaded movie videos section and right navigation section
+            $('m-add-selected-tags').empty();
+            $('cm-add-selected-tags').empty();
             $('#m-add-uploaded-free-contents').empty();
             $('#add-uploaded_movie').empty();
             $('#add-movie-video-right').empty();
@@ -2698,74 +3030,139 @@
                         // appending the already uploaded episodes
                         for (var key in data.movie_content_data) {
                             var specialol = `'${data.movie_content_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_content_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_content_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="movie_video' + data.movie_content_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Movie video - ' + data
-                                .movie_content_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="movie_video_thumbnail" src="' +
-                                data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' +
+                                data.movie_content_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_content_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' + currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_content_data[key][5] +
+                                '</span></div></div><img id="movie_video_thumbnail' +
+                                data.movie_content_data[key][0] + 'thumbnail" src="' + data
                                 .movie_content_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
-                                data.movie_content_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
                                 htmlgen += data.movie_content_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '<p class="text-muted">Status - ' + data.movie_content_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                            var decide_color = data.movie_content_data[key][7] == "Pending" ? "text-info" :
+                                (data.movie_content_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .movie_content_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
+                                .movie_content_data[key][7] +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.movie_content_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
 
                             //my changes
-                            if (data.movie_content_data[key][8] == 'Rejected') {
+                            if (data.movie_content_data[key][7] == 'Rejected') {
 
                                 htmlgen += '<button type="button" class="btn btn-primary"' +
                                     'onclick="edit(' +
                                     data.movie_content_data[key][0] + ',' + '1' + ',' + '2' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
                             }
 
                             $('#add-uploaded_movie').append(htmlgen);
 
                             // appending the already uploaded movie video to right navigation
                             $('#add-movie-video-right').append('<li><a href="#movie_video' + data
-                                .movie_content_data[key][0] + '">Movie Video</a></li>');
+                                .movie_content_data[key][0] + '">' + 'Movie video' +
+                                '</a></li>');
 
                         }
 
                         var count = 1;
                         // appending the already uploaded free movie content
                         for (var key in data.movie_free_data) {
+                            //my changes
                             var specialol = `'${data.movie_free_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_free_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_free_data[key][6] - currmins * 60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
+
                             var htmlgen = '<div id="content' + data.movie_free_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' + count + ' - ' + data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                count + '-' +
+                                data
                                 .movie_free_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_free_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' + currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_free_data[key][5] + '</span></div></div><img id="content' +
                                 data.movie_free_data[key][0] + 'thumbnail" src="' + data
                                 .movie_free_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="text-muted">' +
-                                data.movie_free_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_free_data[key][8].length; i++) {
                                 htmlgen += data.movie_free_data[key][8][i] + ' | ';
                             }
-
-                            htmlgen += '<p class="text-muted">Status - ' + data.movie_free_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                            var decide_color = data.movie_free_data[key][7] == "Pending" ? "text-info" : (
+                                data.movie_free_data[key][7] == "Rejected" ? "text-danger" :
+                                "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .movie_free_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
+                                .movie_free_data[key][7] +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.movie_free_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
-                            //my changes
-                            if (data.movie_free_data[key][8] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
+
+                            if (data.movie_free_data[key][7] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
                                     'onclick="edit(' +
                                     data.movie_free_data[key][0] + ',' + count + ',' + '1' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div>';
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
                             }
                             $('#m-add-uploaded-free-contents').append(htmlgen);
 
                             // appending the already uploaded movie video to right navigation
-                            $('#add-movie-free-content-right').append('<li><a href="#content' + data
-                                .movie_free_data[key][0] + '">content' + count + '</a></li>');
+                            $('#add-movie-free-content-right').append(
+                                '<li><a class="trun-extra" href="#content' + data
+                                .movie_free_data[key][0] + '">content' + count +
+                                '</a></li>');
 
                             count++;
 
@@ -2871,33 +3268,74 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
+                            //my changes
+
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="movie_video' + data.movie_video_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Movie Video -' + data
-                                .movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-8 col-md-8"><img id="movie_video_thumbnail" src="' +
-                                data
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Movie video -' +
+                                data.movie_video_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_video_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins + ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_video_data[key][5] +
+                                '</span></div></div><img id="movie_video_thumbnail' +
+                                data.movie_video_data[key][0] + 'thumbnail" src="' + data
                                 .movie_video_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.movie_video_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
                                 htmlgen += data.movie_video_data[key][8][i] + ' | ';
                             }
 
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.movie_video_data[key][7] == "Pending" ?
+                                "text-info" : (data.movie_video_data[key][7] == "Rejected" ?
+                                    "text-danger" : "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .movie_video_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .movie_video_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
 
+                            if (data.movie_video_data[key][7] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary"' +
+                                    'onclick="edit(' +
+                                    data.movie_video_data[key][0] + ',' + '1' + ',' + '2' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
+                            }
                             $('#add-uploaded_movie').append(htmlgen);
 
                             // appending current movie video to right navigation bar
-                            $('#add-movie-video-right').append('<li><a href="#movie_video' + data
-                                .movie_video_data[key][0] + '">Movie Video</a></li>');
+                            $('#add-movie-video-right').append(
+                                '<li><a class="turn-extra" href="#movie_video' + data
+                                .movie_video_data[key][0] + '">' + 'Movie video' + data
+                                .movie_video_data[key][1] + '</a></li>');
                         }
 
                         // reset the form
+                        $('#m-add-selected-tags').empty();
                         $('#add-movievideoForm').each(function () {
                             this.reset();
                         });
@@ -2995,24 +3433,63 @@
                         // appending the movie video to previously added free content section
                         for (var key in data.movie_video_data) {
                             var specialol = `'${data.movie_video_data[key][4]}'`;
+                            // curr mins spend
+                            var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                            // curr secs spend
+                            var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                60);
+
+                            if (currsecs < 10) {
+                                currsecs = "0" + currsecs;
+                            }
+                            if (currmins < 10) {
+                                currmins = "0" + currmins;
+                            }
                             var htmlgen = '<div id="content' + data.movie_video_data[key][0] +
-                                '" class="container my-5"><h4 class="my-4">Content ' +
-                                contentcount + ' - ' + data.movie_video_data[key][1] +
-                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="content' +
+                                '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                contentcount + '-' +
+                                data
+                                .movie_video_data[key][1] +
+                                '<i class="arro text-secondary right mx-1"></i>' +
+                                '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                'onclick="play_video(' +
+                                data.movie_video_data[key][0] + ',' + specialol +
+                                ')"' +
+                                '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                '<span class="font-weight-bold mx-3" style="color:white">' +
+                                currmins +
+                                ':' + currsecs + '</span>' +
+                                '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                .movie_video_data[key][5] + '</span></div></div><img id="content' +
                                 contentcount + 'thumbnail" src="' + data
                                 .movie_video_data[key][3] +
-                                '" alt="uploading" class="img-fluid"></div><div class="col-lg-4 col-md-4"><div class="content mx-5"><p class="text-muted">' +
-                                data.movie_video_data[key][2] + '</p><p class="text-muted">';
+                                '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
                             for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
                                 htmlgen += data.movie_video_data[key][8][i] + ' | ';
                             }
-
-                            htmlgen += '</p><p class="text-muted">Status - ' + data
+                            var decide_color = data.movie_video_data[key][7] == "Pending" ?
+                                "text-info" : (
+                                    data.movie_video_data[key][7] == "Rejected" ? "text-danger" :
+                                    "text-success");
+                            htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                .movie_video_data[key][2] +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                decide_color + '">Status - ' + data
                                 .movie_video_data[key][7] +
-                                '</p><button type="button" class="btn btn-primary" onclick="play_video(' +
+                                '</p><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+                                ')" class="btn btn-primary btn-sm">Play video</button>';
+
+                            if (data.movie_video_data[key][7] == 'Rejected') {
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
+                                    'onclick="edit(' +
+                                    data.movie_video_data[key][0] + ',' + contentcount + ',' + '1' +
+                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                            } else {
+                                htmlgen += '</div></div></div></div></div>';
+                            }
 
                             $('#m-add-uploaded-free-contents').append(htmlgen);
 
@@ -3023,6 +3500,7 @@
                         }
 
                         // reset the form
+                        $('#cm-add-selected-tags').empty();
                         $('#add-moviefreecontentForm').each(function () {
                             this.reset();
                         });

@@ -16,7 +16,7 @@
     <b>Host: {{ context.host }}</b>
     <br>
     <b>Members</b>
-    <a href="/room/join/{{ context.room_id }}">Join room</a>
+    <a href="/room/join/{{ context.room_id }}" target="_blank">Join room</a>
     <div id='members_list'></div>
         {% for member in context.members %}
             {{ member }} <br>

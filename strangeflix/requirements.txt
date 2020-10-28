@@ -43,6 +43,7 @@ oauth2client==3.0.0
 oauthlib==3.1.0
 pilkit==2.0
 Pillow==7.2.0
+pkg-resources==0.0.0
 proglog==0.1.9
 protobuf==3.13.0
 pyasn1==0.4.8

@@ -41,6 +41,9 @@ def wallet_details(request):
         count = 1
         # returning all the transactions
         for obj in transactions:
+            # print( (obj.transaction_start_time-datetime.now(tz=timezone.utc)).total_seconds())
+            # print(obj.transaction_start_time)
+
             context.update({'transaction_' + str(count): (obj.transaction_id, obj.transaction_start_time, obj.transaction_amount*(-1), obj.status)})
             count += 1
 
@@ -84,7 +87,7 @@ def add_money(request):
             transaction_details = AddMoneyTransactionDetails.objects.create(
                 transaction_id=response['payment_request']['id'],
                 user=request.user,
-                transaction_start_time=datetime.now(),
+                transaction_start_time=datetime.now(tz=timezone.utc),
                 transaction_amount=amount,
                 status=2,
                 payment_id=''

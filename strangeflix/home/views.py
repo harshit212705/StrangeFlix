@@ -1,23 +1,58 @@
 # importing models from provider/models.py
-from provider.models import Videos, SeriesDetails, SeriesSubCategories, MovieDetails, MovieSubCategories
+from provider.models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
+                    SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
+                    FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, MovieRating, \
+                    SeriesRating, VideoComment, VideoRejectionComment, ReportComment, ReportVideo, Favourites
 
-from django.shortcuts import render
+from .models import PayPerViewTransaction
+from accounts.models import UserDetails
+from django.shortcuts import render, redirect
 from django.views.generic import View
 from accounts.forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from subscribe.models import Subscriptions
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
+import os
+import json
+import uuid
+import urllib.request
+import hashlib
+from django.http import HttpResponse, Http404, JsonResponse
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+import base64
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+
+import re
+import os
+import mimetypes
+from wsgiref.util import FileWrapper
+from django.http import StreamingHttpResponse
+import requests
+from django.views.decorators.http import condition
+
+
+# modules to import for classify the comment positivity or negativity
+import nltk.classify.util
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import movie_reviews
+
 
 from .recommendations import recommend_movies, recommend_series, recent_movies_suggestion, \
     recent_series_suggestion, popular_movies_suggestion, popular_series_suggestion
-from provider.views import LANGUAGE_REVERSE, SUBCATEGORY_REVERSE, CATEGORY_REVERSE
+from provider.views import LANGUAGE_REVERSE, SUBCATEGORY_REVERSE, CATEGORY_REVERSE, VERIFICATION_REVERSE, \
+                            VIDEO_EXTENSION_REVERSE, VIDEO_QUALITY_REVERSE, VIDEO_TYPE_REVERSE, \
+                            VIDEO_BASE_FILEPATH, storage
 
 
 
 # function to render the mainpage or homepage
 class HomeView(View):
     def get(self, request):
+
+        # res = stream_video(request)
+        # return res
+
         registration_form = CustomUserCreationForm()
         login_form = AuthenticationForm()
         is_subscribed = False
@@ -203,3 +238,907 @@ class HomeView(View):
         return render(request, 'home/index.html', context)
 
 
+
+# returning movie details info to ajax request
+@csrf_exempt
+def get_movie_details(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        movie_id = json_data['movie_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_movie_exists': '',
+            'is_successful': '',
+            'movie_content_data': '',
+            'movie_free_data': '',
+        }
+
+        # checking if movie exists
+        movie_details = MovieDetails.objects.filter(movie_id=movie_id).first()
+        if movie_details is None:
+            context['is_movie_exists'] = 'This movie do not exists'
+        else:
+            # fetching movie video details for the movie
+            movie_video_id = MovieVideo.objects.filter(
+                movie_id=movie_details,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).values('video_id')
+            all_tags_data = MovieVideoTags.objects.filter(video_id__in=movie_video_id)
+
+            all_subcategory_data = MovieSubCategories.objects.filter(movie_id=movie_id)
+            # print(all_subcategory_data)
+
+            # fetching all subcategories for the movies that is to be included
+            subcategory_data = {}
+            subcategory_data.update({int(movie_id): []})
+
+            for sub_cat in all_subcategory_data:
+                subcategory_data[sub_cat.movie_id.movie_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
+
+            all_comments_data = VideoComment.objects.filter(video_id__in=movie_video_id).order_by('timestamp')
+
+            # fetching all tags for the episodes that are to be included
+            tags_data = {}
+            comments_data = {}
+            for obj in movie_video_id:
+                tags_data.update({obj['video_id']: []})
+                comments_data.update({obj['video_id']: []})
+
+            for tag in all_tags_data:
+                tags_data[tag.video_id.video_id].append(tag.tag_word)
+
+            for comment in all_comments_data:
+                comments_data[comment.video_id.video_id].append([comment.user_id.username, comment.comment, comment.comment_id])
+
+            # fetching movie video details
+            movie_video_details = MovieVideo.objects.filter(
+                movie_id=movie_details,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            )
+
+            movie_content_data = {}
+            movie_language = str(LANGUAGE_REVERSE[movie_details.language]).title()
+            for obj in movie_video_details:
+
+                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, 'Entertainment', obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], subcategory_data[int(movie_id)], movie_language, obj.cost_of_video, comments_data[obj.video_id.video_id])})
+
+            # returning success response to ajax request
+            context['movie_content_data'] = movie_content_data
+
+            # fetching movie free content details for the movie
+            movie_video_id = FreeMovieVideo.objects.filter(
+                movie_id=movie_details,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).values('video_id')
+
+            # fetching tags and comments data
+            all_tags_data = FreeMovieVideoTags.objects.filter(video_id__in=movie_video_id)
+            all_comments_data = VideoComment.objects.filter(video_id__in=movie_video_id).order_by('timestamp')
+
+            # fetching all tags for the free content that are to be included
+            tags_data = {}
+            comments_data = {}
+            for obj in movie_video_id:
+                tags_data.update({obj['video_id']: []})
+                comments_data.update({obj['video_id']: []})
+
+            for tag in all_tags_data:
+                tags_data[tag.video_id.video_id].append(tag.tag_word)
+
+            for comment in all_comments_data:
+                comments_data[comment.video_id.video_id].append([comment.user_id.username, comment.comment, comment.comment_id])
+
+            # fetching movie free content details
+            movie_video_details = FreeMovieVideo.objects.filter(
+                movie_id=movie_details,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).order_by('-date_of_release')
+
+            movie_free_data = {}
+            for obj in movie_video_details:
+
+                movie_free_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, 'Entertainment', obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id],
+                subcategory_data[int(movie_id)], movie_language, 0, comments_data[obj.video_id.video_id])})
+
+            # returning success response to ajax request
+            context['movie_free_data'] = movie_free_data
+
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# returning series details info to ajax request
+@csrf_exempt
+def get_series_details(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        series_id = json_data['series_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_series_exists': '',
+            'is_successful': '',
+            'series_content_data': '',
+            'series_season_data': '',
+        }
+
+        # checking if series exists
+        series_details = SeriesDetails.objects.filter(series_id=series_id)
+        if series_details is None:
+            context['is_series_exists'] = 'This series do not exists'
+        else:
+            # fetching series details for the series
+
+            all_subcategory_data = SeriesSubCategories.objects.filter(series_id=series_id)
+
+            # fetching all subcategories for the series that is to be included
+            subcategory_data = {}
+            subcategory_data.update({int(series_id): []})
+
+            for sub_cat in all_subcategory_data:
+                subcategory_data[sub_cat.series_id.series_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
+
+            series_content_data = {}
+            for obj in series_details:
+                series_language = obj.language
+                series_category = str(CATEGORY_REVERSE[obj.category]).title()
+                series_content_data.update({str(obj.series_id): (obj.series_name, obj.description, obj.language, str(CATEGORY_REVERSE[obj.category]).title(), obj.thumbnail_image.url, subcategory_data[int(series_id)])})
+
+            # returning success response to ajax request
+            context['series_content_data'] = series_content_data
+
+            # fetching series season details for the series
+            series_season_id = SeriesVideos.objects.filter(
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+                series_season_id__series_id=series_id,
+            ).values('series_season_id__series_season_id').distinct().union(
+                FreeSeriesVideos.objects.filter(
+                    verification_status=2,
+                    date_of_release__lte=datetime.now(tz=timezone.utc),
+                    series_season_id__series_id=series_id,
+                ).values('series_season_id__series_season_id').distinct()
+            )
+
+            series_seasons_details = SeriesSeasonDetails.objects.filter(series_season_id__in=series_season_id).order_by('season_no')
+
+            series_season_data = {}
+            for obj in series_seasons_details:
+
+                series_season_data.update({str(obj.series_season_id): (obj.series_id.series_id, obj.season_no, obj.description, series_language, series_category, obj.thumbnail_image.url, subcategory_data[int(series_id)])})
+
+            # returning success response to ajax request
+            context['series_season_data'] = series_season_data
+
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# returning season details info to ajax request
+@csrf_exempt
+def get_season_details(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        series_season_id = json_data['series_season_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_season_exists': '',
+            'is_successful': '',
+            'season_content_data': '',
+            'season_free_data': '',
+            'season_episodes': '',
+        }
+
+        # checking if season exists
+        season_details = SeriesSeasonDetails.objects.filter(series_season_id=series_season_id)
+        if season_details is None:
+            context['is_season_exists'] = 'This season do not exists'
+        else:
+            # fetching season details for the series
+            all_subcategory_data = SeriesSubCategories.objects.filter(series_id=season_details[0].series_id)
+
+            # fetching all subcategories for the series season that is to be included
+            subcategory_data = {}
+            subcategory_data.update({int(season_details[0].series_id.series_id): []})
+
+            for sub_cat in all_subcategory_data:
+                subcategory_data[sub_cat.series_id.series_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
+
+            season_content_data = {}
+            for obj in season_details:
+                series_language = obj.series_id.language
+                series_category = str(CATEGORY_REVERSE[obj.series_id.category]).title()
+                season_content_data.update({str(obj.series_season_id): (obj.season_no, obj.description, series_language, series_category, obj.thumbnail_image.url, subcategory_data[int(season_details[0].series_id.series_id)])})
+
+            # returning success response to ajax request
+            context['season_content_data'] = season_content_data
+
+            # fetching season free content details
+            series_video_id = FreeSeriesVideos.objects.filter(
+                series_season_id=series_season_id,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).values('video_id')
+
+            # fetching tags and comments data
+            all_tags_data = FreeSeriesVideosTags.objects.filter(video_id__in=series_video_id)
+            all_comments_data = VideoComment.objects.filter(video_id__in=series_video_id).order_by('timestamp')
+
+            # fetching all tags for the free content that are to be included
+            tags_data = {}
+            comments_data = {}
+            for obj in series_video_id:
+                tags_data.update({obj['video_id']: []})
+                comments_data.update({obj['video_id']: []})
+
+            for tag in all_tags_data:
+                tags_data[tag.video_id.video_id].append(tag.tag_word)
+
+            for comment in all_comments_data:
+                comments_data[comment.video_id.video_id].append([comment.user_id.username, comment.comment, comment.comment_id])
+
+            # fetching series free content details
+            series_video_details = FreeSeriesVideos.objects.filter(
+                series_season_id=series_season_id,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).order_by('-date_of_release')
+
+            season_free_data = {}
+            series_category = str(CATEGORY_REVERSE[season_details[0].series_id.category]).title()
+            series_language = str(LANGUAGE_REVERSE[season_details[0].series_id.language]).title()
+            for obj in series_video_details:
+
+                season_free_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, subcategory_data[int(season_details[0].series_id.series_id)], obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], 0, series_category, series_language, comments_data[obj.video_id.video_id])})
+
+            # returning success response to ajax request
+            context['season_free_data'] = season_free_data
+
+
+            # fetching season episodes details
+            series_video_id = SeriesVideos.objects.filter(
+                series_season_id=series_season_id,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).values('video_id')
+
+            # fetching tags and comments data
+            all_tags_data = SeriesVideosTags.objects.filter(video_id__in=series_video_id)
+            all_comments_data = VideoComment.objects.filter(video_id__in=series_video_id).order_by('timestamp')
+
+            # fetching all tags for the episodes that are to be included
+            tags_data = {}
+            comments_data = {}
+            is_video_locked = {}
+            for obj in series_video_id:
+                tags_data.update({obj['video_id']: []})
+                comments_data.update({obj['video_id']: []})
+                is_video_locked.update({obj['video_id']: 0})
+
+            # checking logged in user subscription plan details
+            subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+
+            curr_time = datetime.today() - timedelta(days=1)
+            get_pay_per_view_videos = PayPerViewTransaction.objects.filter(
+                user_id=request.user,
+                video_id__in=series_video_id,
+                transaction_start_time__gt=curr_time,
+            ).values('video_id')
+
+            videos_with_pay_per_view = {}
+            for vid in get_pay_per_view_videos:
+                videos_with_pay_per_view.update({vid['video_id']: 1})
+
+            for v_id in is_video_locked.keys():
+                if subscribe or (v_id in videos_with_pay_per_view.keys()):
+                    is_video_locked[v_id] = 1
+                else:
+                    is_video_locked[v_id] = 0
+
+            for tag in all_tags_data:
+                tags_data[tag.video_id.video_id].append(tag.tag_word)
+
+            for comment in all_comments_data:
+                comments_data[comment.video_id.video_id].append([comment.user_id.username, comment.comment, comment.comment_id])
+
+            # fetching series episodes details
+            series_video_details = SeriesVideos.objects.filter(
+                series_season_id=series_season_id,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).order_by('episode_no')
+
+            max_episode_no = SeriesVideos.objects.filter(
+                series_season_id=series_season_id,
+                verification_status=2,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+            ).values('episode_no').order_by('-episode_no')[0]
+            max_episode_no = max_episode_no['episode_no']
+
+
+            season_episodes = {}
+            for obj in series_video_details:
+                # print(is_video_locked[obj.video_id.video_id])
+                season_episodes.update({int(obj.episode_no): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, subcategory_data[int(season_details[0].series_id.series_id)], obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], obj.cost_of_video, series_category, series_language, comments_data[obj.video_id.video_id], is_video_locked[obj.video_id.video_id])})
+
+            for i in range(max_episode_no):
+                if i+1 not in season_episodes.keys():
+                    season_episodes.update({int(i+1): (-1, 'Not Available', 'Not Available', '', subcategory_data[int(season_details[0].series_id.series_id)], '', '', str(VERIFICATION_REVERSE[3]).title(), [], 0, series_category, series_language, [], 0)})
+
+            season_episodes = {k: v for k, v in sorted(season_episodes.items(), key=lambda item: item[0])}
+
+            # returning success response to ajax request
+            context['season_episodes'] = season_episodes
+
+            context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+@csrf_exempt
+def rate_movie(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        movie_id = json_data['movie_id']
+        rating = json_data['movie_rating']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_movie_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if movie exists
+        movie_details = MovieDetails.objects.filter(movie_id=movie_id).first()
+        if movie_details is None:
+            context['is_movie_exists'] = 'This movie do not exists'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                rated = MovieRating.objects.filter(user_id=request.user, movie_id=movie_details).first()
+                if rated:
+                    rated.rating = rating
+                    rated.save()
+                else:
+                    rate = MovieRating.objects.create(
+                        movie_id=movie_details,
+                        user_id=request.user,
+                        rating=rating,
+                    )
+                    rate.save()
+                context['is_successful'] = 'Your rating for the movie is recorded.'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+@csrf_exempt
+def rate_series(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        series_id = json_data['series_id']
+        rating = json_data['series_rating']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_series_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if series exists
+        series_details = SeriesDetails.objects.filter(series_id=series_id).first()
+        if series_details is None:
+            context['is_series_exists'] = 'This series do not exists'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                rated = SeriesRating.objects.filter(user_id=request.user, series_id=series_details).first()
+                if rated:
+                    rated.rating = rating
+                    rated.save()
+                else:
+                    rate = SeriesRating.objects.create(
+                        series_id=series_details,
+                        user_id=request.user,
+                        rating=rating,
+                    )
+                    rate.save()
+                context['is_successful'] = 'Your rating for the series is recorded.'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to handle user comment report request
+@csrf_exempt
+def report_comment(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        comment_id = json_data['comment_id']
+        comment_flag_val = json_data['comment_flag_val']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_comment_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if comment exists
+        comment_details = VideoComment.objects.filter(comment_id=comment_id).first()
+        if comment_details is None:
+            context['is_comment_exists'] = 'There is no such comment.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                comment_flag = ReportComment.objects.filter(user_id=request.user, comment_id=comment_id).first()
+                if comment_flag:
+                    comment_flag.flag_val = comment_flag_val
+                    comment_flag.save()
+                else:
+                    report = ReportComment.objects.create(
+                        comment_id=comment_details,
+                        user_id=request.user,
+                        flag_val=int(comment_flag_val),
+                    )
+                    report.save()
+                context['is_successful'] = 'Comment is reported.'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to handle user video report request
+@csrf_exempt
+def report_video(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+        video_flag_val = json_data['video_flag_val']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                video_flag = ReportVideo.objects.filter(user_id=request.user, video_id=video_id).first()
+                if video_flag:
+                    video_flag.flag_val = video_flag_val
+                    video_flag.save()
+                else:
+                    report = ReportVideo.objects.create(
+                        video_id=video_details,
+                        user_id=request.user,
+                        flag_val=int(video_flag_val),
+                    )
+                    report.save()
+                context['is_successful'] = 'Video is reported.'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to handle ad new comment to video
+@csrf_exempt
+def add_video_comment(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+        comment = json_data['comment']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+            'comment_id': '',
+            'username': '',
+            'comment': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+
+                # using a naive bayes classifier to predict the positivity/negativity of a comment
+                probdist = classifier.prob_classify(extract_features(comment.split()))
+                pred_sentiment = probdist.max()
+                comment_type = 0
+                if pred_sentiment == 'Positive' and round(probdist.prob(pred_sentiment), 2) >= 0.6:
+                    comment_type = 1
+                elif pred_sentiment == 'Negative' and round(probdist.prob(pred_sentiment), 2) >= 0.6:
+                    comment_type = 2
+                else:
+                    comment_type = 3
+
+                new_comment = VideoComment.objects.create(
+                    user_id=request.user,
+                    video_id=video_details,
+                    comment=comment,
+                    comment_type=comment_type,
+                    timestamp=datetime.now(tz=timezone.utc),
+                )
+                new_comment.save()
+                context['is_successful'] = 'Comment added successfully.'
+                context['comment_id'] = new_comment.pk
+                context['username'] = request.user.username
+                context['comment'] = new_comment.comment
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to handle add video to favourite request
+@csrf_exempt
+def add_to_favourite(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                favourite = Favourites.objects.filter(video_id=video_id).first()
+                if favourite is None:
+                    favourite = Favourites.objects.create(
+                        video_id=video_details,
+                    )
+                    favourite.save()
+                favourite.users.add(request.user)
+                context['is_successful'] = 'Video is added to your favourites.'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to get video cost
+@csrf_exempt
+def get_video_cost(video_obj):
+
+    if video_obj.video_type == 1:
+        cost = 0
+    elif video_obj.video_type == 2:
+        cost = SeriesVideos.objects.filter(video_id=video_obj).first().cost_of_video
+    elif video_obj.video_type == 3:
+        cost = MovieVideo.objects.filter(video_id=video_obj).first().cost_of_video
+
+    return cost
+
+
+# function to handle min wallet bal check for paying for pay per view service
+@csrf_exempt
+def get_pay_per_view_video(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'insufficient_balance': '',
+            'is_successful': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                cost = get_video_cost(video_details)
+                user_details = UserDetails.objects.filter(user=request.user).first()
+                wallet_bal = user_details.wallet_money
+                if wallet_bal < cost:
+                    context['insufficient_balance'] = 'You do not have enough money in your wallet. Add money to your wallet first to continue paying for this video.'
+                else:
+                    # generating a unique transaction id for wallet payment
+                    transaction_id = str(request.user.id) + str(datetime.now())
+                    hash_object = hashlib.sha1(transaction_id.encode('utf-8'))
+                    hex_dig = hash_object.hexdigest()
+
+                    transaction = PayPerViewTransaction.objects.create(
+                        transaction_id=hex_dig,
+                        user_id=request.user,
+                        video_id=video_details,
+                        transaction_start_time=datetime.now(tz=timezone.utc),
+                    )
+                    transaction.save()
+
+                    user_details.wallet_money -= cost
+                    user_details.save()
+
+                    context['is_successful'] = 'Paid successful for video!!'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# function to handle min wallet bal check for paying for pay per view service
+@csrf_exempt
+def check_min_wallet_bal(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'insufficient_balance': '',
+            'is_successful': '',
+            'video_cost': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                cost = get_video_cost(video_details)
+                wallet_bal = UserDetails.objects.filter(user=request.user).first().wallet_money
+                if wallet_bal < cost:
+                    context['insufficient_balance'] = 'You do not have enough money in your wallet. Add money to your wallet first to continue paying for this video.'
+                else:
+                    context['is_successful'] = 'Sufficient balance found!!'
+                    context['video_cost'] = cost
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to check whther user has bought a pay per view for current video
+def check_pay_per_view_for_video(user, video_id):
+    curr_time = datetime.today() - timedelta(days=1)
+    is_allowed = PayPerViewTransaction.objects.filter(
+        user_id=user,
+        video_id=video_id,
+        transaction_start_time__gt=curr_time
+    )
+    if is_allowed:
+        return True
+    else:
+        return False
+
+
+
+# function to check whether user is subsscribed or not
+@csrf_exempt
+def check_user_subscription(request):
+    if request.method == 'POST':
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        context = {
+            'is_subscribed': '',
+        }
+
+        if request.user.is_authenticated and request.user.user_type == 'U':
+            # checking logged in user subscription plan details
+            subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+            if subscribe:
+                context['is_subscribed'] = 'true'
+            else:
+                if video_id != '' and video_id != -1:
+                    video_obj = Videos.objects.filter(video_id=video_id).first()
+                    if video_obj and video_obj.video_type == 1:
+                        context['is_subscribed'] = 'true'
+                    else:
+                        is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                        if is_subscribe_for_video:
+                            context['is_subscribed'] = 'true'
+                        else:
+                            context['is_subscribed'] = 'false'
+                else:
+                    context['is_subscribed'] = 'false'
+        else:
+            context['is_subscribed'] = 'false'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# sending chunk by chunk video data to the video tag on request
+def response_iter(url, first_byte, subscription_required, request, video_id):
+    ran = 'bytes=' + str(first_byte) + '-'
+    headers = {'Range': ran}
+    r = requests.get(url, headers=headers, stream=True)
+    for chunk in r.iter_content(chunk_size=8192):
+        if chunk:  # filter out keep-alive new chunks
+            if subscription_required:
+                if request.user.is_authenticated:
+                    # checking logged in user subscription plan details
+                    subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+                    if subscribe:
+                        yield chunk
+                    else:
+                        is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                        if is_subscribe_for_video:
+                            yield chunk
+                        else:
+                            return redirect('subscription_plans')
+                else:
+                    return redirect('home_page')
+            else:
+                yield chunk
+
+
+
+@condition(etag_func=None)
+def stream_video(request, video_obj):
+    if video_obj.video_type == 1:
+        subscription_required = False
+        video_details = FreeSeriesVideos.objects.filter(video_id=video_obj).first()
+        if video_details is None:
+            video_details = FreeMovieVideo.objects.filter(video_id=video_obj).first()
+    elif video_obj.video_type == 2:
+        subscription_required = True
+        video_details = SeriesVideos.objects.filter(video_id=video_obj).first()
+    elif video_obj.video_type == 3:
+        subscription_required = True
+        video_details = MovieVideo.objects.filter(video_id=video_obj).first()
+
+    # getting firebase url for uploaded video file
+    path_on_cloud = 'videos/' + video_details.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[video_details.extension]
+    firebase_video_url = storage.child(path_on_cloud).get_url(video_details.firebase_token)
+
+    range_header = request.META.get('HTTP_RANGE', '').strip()
+    range_re = re.compile(r'bytes\s*=\s*(\d+)\s*-\s*(\d*)', re.I)
+    range_match = range_re.match(range_header)
+
+    base_url = str(firebase_video_url).split('?')[0]
+    video_details = requests.get(base_url).text
+    details_dict = eval(video_details)
+    size = int(details_dict['size'])
+
+    if range_match:
+        first_byte, last_byte = range_match.groups()
+        first_byte = int(first_byte) if first_byte else 0
+        last_byte = int(last_byte) if last_byte else size - 1
+        if last_byte >= size:
+            last_byte = size - 1
+        length = last_byte - first_byte + 1
+        content_type = 'video/mp4'
+
+        chunk_response = response_iter(firebase_video_url, first_byte, subscription_required, request, video_obj)
+        resp = StreamingHttpResponse(chunk_response, status=206, content_type=content_type)
+        resp['Content-Length'] = str(length)
+        resp['Content-Range'] = 'bytes %s-%s/%s' % (first_byte, last_byte, size)
+    else:
+        return render(request, 'templates/404.html')
+    resp['accept-ranges'] = 'bytes'
+    print('response_sent')
+    return resp
+
+
+
+def fetch_video(request, video_id):
+    video_obj = Videos.objects.filter(video_id=video_id).first()
+    if video_obj:
+        if video_obj.video_type == 1:
+            return stream_video(request, video_obj)
+        else:
+            if request.user.is_authenticated:
+                # checking logged in user subscription plan details
+                subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+                if subscribe:
+                    return stream_video(request, video_obj)
+                else:
+                    is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                    if is_subscribe_for_video:
+                        return stream_video(request, video_obj)
+                    else:
+                        return render(request, 'templates/404.html')
+            else:
+                return render(request, 'templates/404.html')
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+def extract_features(word_list):
+    return dict([(word, True) for word in word_list])
+
+
+def train_comment_judging_classifier():
+    # Load positive and negative reviews
+    positive_fileids = movie_reviews.fileids('pos')
+    negative_fileids = movie_reviews.fileids('neg')
+    features_positive = [(extract_features(movie_reviews.words(fileids=[f])),'Positive') for f in positive_fileids]
+    features_negative = [(extract_features(movie_reviews.words(fileids=[f])),'Negative') for f in negative_fileids]
+
+    # Split the data into train and test (80/20)
+    threshold_factor = 0.8
+    threshold_positive = int(threshold_factor * len(features_positive))
+    threshold_negative = int(threshold_factor * len(features_negative))
+    features_train = features_positive[:threshold_positive]+features_negative[:threshold_negative]
+    features_test = features_positive[threshold_positive:]+features_negative[threshold_negative:]
+
+    classifier = NaiveBayesClassifier.train(features_train)
+    return classifier
+
+
+classifier = train_comment_judging_classifier()

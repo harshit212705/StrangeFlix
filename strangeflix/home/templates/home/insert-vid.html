@@ -16,10 +16,11 @@
                 <div class="video-body">
                     <video class="player__video viewer" id="video" preload="metadata">
                         <source
-                            src="https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2F835aee21-d65a-4dea-b64a-d4d0a8950fc8.mp4?alt=media&token=fbbac811-8e9e-4e4a-b235-62e83681eeea"
+                            src=""
                             id="insert-vid" type="video/mp4">
                     </video>
                 </div>
+                <!-- https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2F835aee21-d65a-4dea-b64a-d4d0a8950fc8.mp4?alt=media&token=fbbac811-8e9e-4e4a-b235-62e83681eeea -->
                 <!-- video-footer  -->
                 <div class="video-footer">
                     <div class="player__controls" id="plact">
@@ -275,19 +276,21 @@
                                     <!-- video-desccription  -->
                                     <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
                                         <div class="media-body px-1">
-                                            <span class="font-weight-bold">
-                                                S1 E1 - date
-                                            </span>
+                                            <div style="display: inline;">
+                                                <span class="font-weight-bold">
+                                                    S1 E1 - date
+                                                </span>
+                                                <button type="button" class="flg-comm-button px-2" data-toggle="modal"
+                                                data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;">
+                                                        <i style="color: red;" class="fas fa-flag"></i>
+                                                </button>
+                                            </div>
                                             <div class="d-cent text-justify">
                                                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                                 Distinctio doloribus explicabo enim quae tenetur omnis, optio
                                                 dolorem et. Eaque similique obcaecati laborum blanditiis
                                                 officiis veniam maxime veritatis alias inventore voluptates!
                                             </div>
-                                            <button type="button" class="flg-comm-button px-2" data-toggle="modal"
-                                            data-target="#flagCommentCenter">
-                                                    <i class="fas fa-flag"></i>
-                                            </button>
                                             <button type="button" class="show-mr-button">
                                                    show
                                             </button>
@@ -295,7 +298,77 @@
                                     </div>
                                 </div>
                             </li>
+                            <li>
+                                    <div class="row media">
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <!-- user-profile  -->
+                                            <img src="/img/img1.png" alt="" class="img-fluid">
+                                        </div>
+                                        <!-- video-desccription  -->
+                                        <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                                            <div class="media-body px-1">
+                                                <div style="display: inline;">
+                                                    <span class="font-weight-bold">
+                                                        S1 E1 - date
+                                                    </span>
+                                                    <button type="button" class="flg-comm-button px-2" data-toggle="modal"
+                                                    data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;">
+                                                            <i style="color: red;" class="fas fa-flag"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="d-cent text-justify">
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                    Distinctio doloribus explicabo enim quae tenetur omnis, optio
+                                                    dolorem et. Eaque similique obcaecati laborum blanditiis
+                                                    officiis veniam maxime veritatis alias inventore voluptates!
+                                                </div>
+                                                <button type="button" class="show-mr-button">
+                                                       show
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                        <div class="row media">
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                                <!-- user-profile  -->
+                                                <img src="/img/img1.png" alt="" class="img-fluid">
+                                            </div>
+                                            <!-- video-desccription  -->
+                                            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                                                <div class="media-body px-1">
+                                                    <div style="display: inline;">
+                                                        <span class="font-weight-bold">
+                                                            S1 E1 - date
+                                                        </span>
+                                                        <button type="button" class="flg-comm-button px-2" data-toggle="modal"
+                                                        data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;">
+                                                                <i style="color: red;" class="fas fa-flag"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="d-cent text-justify">
+                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                        Distinctio doloribus explicabo enim quae tenetur omnis, optio
+                                                        dolorem et. Eaque similique obcaecati laborum blanditiis
+                                                        officiis veniam maxime veritatis alias inventore voluptates!
+                                                    </div>
+                                                    <button type="button" class="show-mr-button">
+                                                           show
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
                         </ul>
+                        <div style="display: inline;">
+                            <div style="float: left;width: 100%;">
+                                <textarea name="comment" id="comment" rows="3" tabindex="4" placeholder="comment" required="required"></textarea>
+                            </div>
+                            <div style="float: right;width: 100%;">
+                                <button type="submit">Comment</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -337,7 +410,16 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <input type="radio" id="comment_flag_1" name="comment_flag" value="1">
+                <label for="male">Unwanted commercial content or spam</label><br>
+                <input type="radio" id="comment_flag_2" name="comment_flag" value="2">
+                <label for="female">Sexually explicit material</label><br>
+                <input type="radio" id="comment_flag_3" name="comment_flag" value="3">
+                <label for="other">Child abuse</label><br>
+                <input type="radio" id="comment_flag_4" name="comment_flag" value="4">
+                <label for="other">Hate speech or graphic violence</label><br>
+                <input type="radio" id="comment_flag_5" name="comment_flag" value="5">
+                <label for="other">Harassment or bullying</label><br>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-sm" id="flag-submit">Submit</button>
