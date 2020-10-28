@@ -1,0 +1,77 @@
+<video class="player__video viewer" id="video" preload="metadata">
+    <source id="insert-video" src="http://localhost:8000/video/1" type="video/mp4">
+</video>
+
+<style>
+    /* Style The Dropdown Button */
+    .dropbtn {
+      background-color:black;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    /* Links inside the dropdown */
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    </style>
+    
+    <div class="dropdown">
+      <button class="dropbtn" id="transfer-room">Open in room</button>
+      <div class="dropdown-content" id="room-list">
+        
+      </div>
+    </div>
+    <script>
+        const roomChannel = new BroadcastChannel('room-channel');
+        document.getElementById('transfer-room').addEventListener('click',function(){
+            document.getElementById("room-list").innerHTML='';
+            var roomList = JSON.parse(localStorage.getItem('roomlist'));
+            if( (!roomList) || roomList.rooms.length == 0)
+            {
+                document.getElementById("room-list").innerHTML+='<a href="#">No rooms Available</a>';
+            }
+            else
+            {
+                var uniqueRooms = roomList.rooms.filter((item, i, ar) => ar.indexOf(item) === i);
+                uniqueRooms.forEach(element => {
+                    document.getElementById("room-list").innerHTML+='<a href="#" onclick="sendToTab('+element+')">'+element+'</a>';
+                });
+            }
+            document.getElementById("room-list").style.display = "block";
+        });
+        function sendToTab(room_id)
+        {
+            document.getElementById("room-list").style.display = "none";
+            var videoData = document.getElementById("video").innerHTML;
+            var roomData = {
+                'room_id':room_id,
+                'videoData':videoData
+            }
+            roomChannel.postMessage(roomData);
+
+        }
+    </script>

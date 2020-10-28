@@ -115,6 +115,45 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
 
 
 
+        // For data transfer across tabs
+        const roomChannel = new BroadcastChannel('room-channel');
+        function addRoomToList()
+        {
+            var roomList = JSON.parse(localStorage.getItem('roomlist'));
+            if(!roomList)
+            {
+                roomList = {
+                    rooms:[]
+                }
+            }
+            roomList.rooms.push(room_id);
+            localStorage.setItem('roomlist',JSON.stringify(roomList));
+
+        }
+        addRoomToList();
+        window.addEventListener('beforeunload',function (){
+            var roomList = JSON.parse(localStorage.getItem('roomlist'));
+            if(roomList.rooms.find((s)=> s===room_id))
+            {
+                const index = roomList.rooms.indexOf(room_id);
+                console.log(index);
+                if (index > -1) {
+                    roomList.rooms.splice(index, 1);
+                }
+            }
+            localStorage.setItem('roomlist',JSON.stringify(roomList));
+        });
+        roomChannel.onmessage = function(e) {
+            const message = e.data;
+            console.log(room_id === e.data.room_id);
+            if(room_id == e.data.room_id)
+            {
+                console.log(e.data.videoData);
+                video.innerHTML = e.data.videoData;
+                video.load();
+                hostUpdate();
+            }
+        };
 
 
 
