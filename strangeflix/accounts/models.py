@@ -34,3 +34,6 @@ class UserDetails(models.Model):
 
     class Meta:
         verbose_name_plural = "User Details"
+
+    def __str__(self):
+        return str('user--') + str(self.user.username) + str(' || wallet_money--') + str(self.wallet_money)
