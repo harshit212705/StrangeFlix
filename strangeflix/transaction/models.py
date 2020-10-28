@@ -40,6 +40,10 @@ class TransactionDetails(models.Model):
     class Meta:
         verbose_name_plural = "Transaction Details"
 
+    def __str__(self):
+        return str('user--') + str(self.user.username) + str(' || plan_duration--') + str(self.sub_plan_id.plan_duration) + str(' || payment_type--') + str(self.payment_type) + str(' || transaction_amount--') + str(self.transaction_amount) + str(' || status--') + str(self.status) + str(' || transaction_id--') + str(self.transaction_id)
+
+
 
 # model for storing transaction token details
 class TransactionToken(models.Model):
@@ -62,6 +66,9 @@ class TransactionToken(models.Model):
 
     class Meta:
         verbose_name_plural = 'Transaction Tokens'
+
+    def __str__(self):
+        return str('transaction_id--') + str(self.transaction_id.transaction_id) + str(' || status--') + str(self.status)
 
 
 # model for storing transaction details made for adding money to wallet
@@ -91,3 +98,6 @@ class AddMoneyTransactionDetails(models.Model):
 
     class Meta:
         verbose_name_plural = "Add Money Transaction Details"
+
+    def __str__(self):
+        return str('user--') + str(self.user.username) + str(' || transaction_amount--') + str(self.transaction_amount) + str(' || status--') + str(self.status) + str(' || transaction_id--') + str(self.transaction_id)

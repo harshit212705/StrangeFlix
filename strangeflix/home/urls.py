@@ -13,12 +13,12 @@ urlpatterns = [
     url('report_video/', home_views.report_video, name = "report_video"),
     url('add_to_favourite/', home_views.add_to_favourite, name = "add_to_favourite"),
     url('add_video_comment/', home_views.add_video_comment, name = "add_video_comment"),
+    url('check_min_wallet_bal/', home_views.check_min_wallet_bal, name = "check_min_wallet_bal"),
+    url('get_pay_per_view_video/', home_views.get_pay_per_view_video, name = "get_pay_per_view_video"),
 
 
-    # url('stream_movie/', home_views.stream_movie, name = "stream_movie"),
     url('rate_movie/', home_views.rate_movie, name = "rate_movie"),
     url('rate_series/', home_views.rate_series, name = "rate_series"),
     url(r'^video/(?P<video_id>[0-9]+)/$', home_views.fetch_video, name = "fetch_video"),
-    # url('stream_video/', home_views.stream_video, name = "stream_video"),
     path('', home_views.HomeView.as_view(), name='home_page'),
 ]

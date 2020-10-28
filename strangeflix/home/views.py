@@ -4,16 +4,19 @@ from provider.models import Videos, SeriesDetails, SeriesSubCategories, SeriesSe
                     FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, MovieRating, \
                     SeriesRating, VideoComment, VideoRejectionComment, ReportComment, ReportVideo, Favourites
 
+from .models import PayPerViewTransaction
+from accounts.models import UserDetails
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from accounts.forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from subscribe.models import Subscriptions
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import os
 import json
 import uuid
 import urllib.request
+import hashlib
 from django.http import HttpResponse, Http404, JsonResponse
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -523,9 +526,31 @@ def get_season_details(request):
             # fetching all tags for the episodes that are to be included
             tags_data = {}
             comments_data = {}
+            is_video_locked = {}
             for obj in series_video_id:
                 tags_data.update({obj['video_id']: []})
                 comments_data.update({obj['video_id']: []})
+                is_video_locked.update({obj['video_id']: 0})
+
+            # checking logged in user subscription plan details
+            subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+
+            curr_time = datetime.today() - timedelta(days=1)
+            get_pay_per_view_videos = PayPerViewTransaction.objects.filter(
+                user_id=request.user,
+                video_id__in=series_video_id,
+                transaction_start_time__gt=curr_time,
+            ).values('video_id')
+
+            videos_with_pay_per_view = {}
+            for vid in get_pay_per_view_videos:
+                videos_with_pay_per_view.update({vid['video_id']: 1})
+
+            for v_id in is_video_locked.keys():
+                if subscribe or (v_id in videos_with_pay_per_view.keys()):
+                    is_video_locked[v_id] = 1
+                else:
+                    is_video_locked[v_id] = 0
 
             for tag in all_tags_data:
                 tags_data[tag.video_id.video_id].append(tag.tag_word)
@@ -547,14 +572,15 @@ def get_season_details(request):
             ).values('episode_no').order_by('-episode_no')[0]
             max_episode_no = max_episode_no['episode_no']
 
+
             season_episodes = {}
             for obj in series_video_details:
-
-                season_episodes.update({int(obj.episode_no): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, subcategory_data[int(season_details[0].series_id.series_id)], obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], obj.cost_of_video, series_category, series_language, comments_data[obj.video_id.video_id])})
+                # print(is_video_locked[obj.video_id.video_id])
+                season_episodes.update({int(obj.episode_no): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, subcategory_data[int(season_details[0].series_id.series_id)], obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], obj.cost_of_video, series_category, series_language, comments_data[obj.video_id.video_id], is_video_locked[obj.video_id.video_id])})
 
             for i in range(max_episode_no):
                 if i+1 not in season_episodes.keys():
-                    season_episodes.update({int(i+1): (-1, 'Not Available', 'Not Available', '', subcategory_data[int(season_details[0].series_id.series_id)], '', '', str(VERIFICATION_REVERSE[3]).title(), [], 0, series_category, series_language, [])})
+                    season_episodes.update({int(i+1): (-1, 'Not Available', 'Not Available', '', subcategory_data[int(season_details[0].series_id.series_id)], '', '', str(VERIFICATION_REVERSE[3]).title(), [], 0, series_category, series_language, [], 0)})
 
             season_episodes = {k: v for k, v in sorted(season_episodes.items(), key=lambda item: item[0])}
 
@@ -835,8 +861,168 @@ def add_to_favourite(request):
         return render(request, 'templates/404.html')
 
 
+# function to get video cost
+@csrf_exempt
+def get_video_cost(video_obj):
 
-def response_iter(url, first_byte, subscription_required, request):
+    if video_obj.video_type == 1:
+        cost = 0
+    elif video_obj.video_type == 2:
+        cost = SeriesVideos.objects.filter(video_id=video_obj).first().cost_of_video
+    elif video_obj.video_type == 3:
+        cost = MovieVideo.objects.filter(video_id=video_obj).first().cost_of_video
+
+    return cost
+
+
+# function to handle min wallet bal check for paying for pay per view service
+@csrf_exempt
+def get_pay_per_view_video(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'insufficient_balance': '',
+            'is_successful': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                cost = get_video_cost(video_details)
+                user_details = UserDetails.objects.filter(user=request.user).first()
+                wallet_bal = user_details.wallet_money
+                if wallet_bal < cost:
+                    context['insufficient_balance'] = 'You do not have enough money in your wallet. Add money to your wallet first to continue paying for this video.'
+                else:
+                    # generating a unique transaction id for wallet payment
+                    transaction_id = str(request.user.id) + str(datetime.now())
+                    hash_object = hashlib.sha1(transaction_id.encode('utf-8'))
+                    hex_dig = hash_object.hexdigest()
+
+                    transaction = PayPerViewTransaction.objects.create(
+                        transaction_id=hex_dig,
+                        user_id=request.user,
+                        video_id=video_details,
+                        transaction_start_time=datetime.now(tz=timezone.utc),
+                    )
+                    transaction.save()
+
+                    user_details.wallet_money -= cost
+                    user_details.save()
+
+                    context['is_successful'] = 'Paid successful for video!!'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# function to handle min wallet bal check for paying for pay per view service
+@csrf_exempt
+def check_min_wallet_bal(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'insufficient_balance': '',
+            'is_successful': '',
+            'video_cost': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                cost = get_video_cost(video_details)
+                wallet_bal = UserDetails.objects.filter(user=request.user).first().wallet_money
+                if wallet_bal < cost:
+                    context['insufficient_balance'] = 'You do not have enough money in your wallet. Add money to your wallet first to continue paying for this video.'
+                else:
+                    context['is_successful'] = 'Sufficient balance found!!'
+                    context['video_cost'] = cost
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to check whther user has bought a pay per view for current video
+def check_pay_per_view_for_video(user, video_id):
+    curr_time = datetime.today() - timedelta(days=1)
+    is_allowed = PayPerViewTransaction.objects.filter(
+        user_id=user,
+        video_id=video_id,
+        transaction_start_time__gt=curr_time
+    )
+    if is_allowed:
+        return True
+    else:
+        return False
+
+
+
+# function to check whether user is subsscribed or not
+@csrf_exempt
+def check_user_subscription(request):
+    if request.method == 'POST':
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        context = {
+            'is_subscribed': '',
+        }
+
+        if request.user.is_authenticated and request.user.user_type == 'U':
+            # checking logged in user subscription plan details
+            subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+            if subscribe:
+                context['is_subscribed'] = 'true'
+            else:
+                if video_id != '' and video_id != -1:
+                    video_obj = Videos.objects.filter(video_id=video_id).first()
+                    if video_obj and video_obj.video_type == 1:
+                        context['is_subscribed'] = 'true'
+                    else:
+                        is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                        if is_subscribe_for_video:
+                            context['is_subscribed'] = 'true'
+                        else:
+                            context['is_subscribed'] = 'false'
+                else:
+                    context['is_subscribed'] = 'false'
+        else:
+            context['is_subscribed'] = 'false'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# sending chunk by chunk video data to the video tag on request
+def response_iter(url, first_byte, subscription_required, request, video_id):
     ran = 'bytes=' + str(first_byte) + '-'
     headers = {'Range': ran}
     r = requests.get(url, headers=headers, stream=True)
@@ -849,7 +1035,11 @@ def response_iter(url, first_byte, subscription_required, request):
                     if subscribe:
                         yield chunk
                     else:
-                        return redirect('subscription_plans')
+                        is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                        if is_subscribe_for_video:
+                            yield chunk
+                        else:
+                            return redirect('subscription_plans')
                 else:
                     return redirect('home_page')
             else:
@@ -893,7 +1083,7 @@ def stream_video(request, video_obj):
         length = last_byte - first_byte + 1
         content_type = 'video/mp4'
 
-        chunk_response = response_iter(firebase_video_url, first_byte, subscription_required, request)
+        chunk_response = response_iter(firebase_video_url, first_byte, subscription_required, request, video_obj)
         resp = StreamingHttpResponse(chunk_response, status=206, content_type=content_type)
         resp['Content-Length'] = str(length)
         resp['Content-Range'] = 'bytes %s-%s/%s' % (first_byte, last_byte, size)
@@ -917,29 +1107,15 @@ def fetch_video(request, video_id):
                 if subscribe:
                     return stream_video(request, video_obj)
                 else:
-                    return render(request, 'templates/404.html')
+                    is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                    if is_subscribe_for_video:
+                        return stream_video(request, video_obj)
+                    else:
+                        return render(request, 'templates/404.html')
             else:
                 return render(request, 'templates/404.html')
     else:
         return render(request, 'templates/404.html')
-
-
-@csrf_exempt
-def check_user_subscription(request):
-    context = {
-        'is_subscribed': '',
-    }
-
-    if request.user.is_authenticated:
-        # checking logged in user subscription plan details
-        subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
-        if subscribe:
-            context['is_subscribed'] = 'true'
-        else:
-            context['is_subscribed'] = 'false'
-    else:
-        context['is_subscribed'] = 'false'
-    return JsonResponse(context)
 
 
 
