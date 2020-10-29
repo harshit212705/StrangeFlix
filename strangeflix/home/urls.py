@@ -15,6 +15,7 @@ urlpatterns = [
     url('add_video_comment/', home_views.add_video_comment, name = "add_video_comment"),
     url('check_min_wallet_bal/', home_views.check_min_wallet_bal, name = "check_min_wallet_bal"),
     url('get_pay_per_view_video/', home_views.get_pay_per_view_video, name = "get_pay_per_view_video"),
+    url('save_video_history/', home_views.save_video_history, name = "save_video_history"),
 
 
     url('rate_movie/', home_views.rate_movie, name = "rate_movie"),
