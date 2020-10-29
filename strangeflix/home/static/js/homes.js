@@ -318,6 +318,13 @@ function movie_handleProgress() {
    movie_timeDuration.innerHTML = movie_durmins + ":" + movie_dursecs;
 }
 
+// function to handle if user wants to resume playing video from where he last left
+function resume_play(history_time) {
+   $('#resume_btn').css('display', 'none');
+   movie_video.currentTime = history_time;
+}
+
+
 var movie_player, movie_video, movie_progress, movie_progressBar, movie_playpause, movie_skipButtons, movie_ranges;
 var movie_mousedown, movie_prev, movie_voloff, movie_fulls, movie_pip, movie_total_duration;
 var movie_playback, movie_quality, movie_dis, movie_plbk, movie_qual, movie_seli;
@@ -498,10 +505,6 @@ function initialize_movie_player() {
       });
    })
 
-   // $("#movie-video").bind("drop", function() {
-   //    console.log('ended');
-   // });
-
    // theatre mode 
 
    $('.theatre__button').on('click', function (e) {
@@ -522,4 +525,30 @@ function initialize_movie_player() {
    });
 
 
+   var vid = document.getElementById("movie-video");
+   vid.onloadedmetadata = function() {
+      var history_time = document.getElementById('playing_video_history_time').innerHTML;
+      if (history_time != 0) {
+
+         // curr mins spend
+         var movie_currmins = Math.floor(history_time / 60);
+
+         // curr secs spend
+         var movie_currsecs = Math.floor(history_time - movie_currmins * 60);
+
+         if (movie_currsecs < 10) {
+            movie_currsecs = "0" + movie_currsecs;
+         }
+         if (movie_currmins < 10) {
+            movie_currmins = "0" + movie_currmins;
+         }
+
+         var resume_btn= '<div id="resume_btn" style="text-align: right;position:relative;top: -100px;"><button onclick="resume_play('+ history_time +')" style="opacity: 0.5;background: #272B2C;color: white;border: 1px solid white;">Resume playing at '+ movie_currmins +':'+ movie_currsecs +'</button></div>';
+
+         $(resume_btn).insertAfter('#video_body');
+         $('#resume_btn').fadeIn('slow', function(){
+            $('#resume_btn').delay(5000).fadeOut();
+         });
+      }
+   };
 }

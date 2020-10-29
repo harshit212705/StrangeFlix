@@ -2,7 +2,8 @@
 from provider.models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
                     SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
                     FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, MovieRating, \
-                    SeriesRating, VideoComment, VideoRejectionComment, ReportComment, ReportVideo, Favourites
+                    SeriesRating, VideoComment, VideoRejectionComment, ReportComment, ReportVideo, \
+                    Favourites, History
 
 from .models import PayPerViewTransaction
 from accounts.models import UserDetails
@@ -765,6 +766,70 @@ def report_video(request):
         return render(request, 'templates/404.html')
 
 
+# function to get the video actual duration
+def get_video_duration(video_obj):
+    if video_obj.video_type == 1:
+        # is_free_series = FreeSeriesVideos.objects.filter(video_id=video_obj).first()
+        # if is_free_series:
+        #     duration = is_free_series.duration_of_video
+        # else:
+        #     duration = FreeMovieVideo.objects.filter(video_id=video_obj).first().duration_of_video
+        duration = 0
+    elif video_obj.video_type == 2:
+        duration = SeriesVideos.objects.filter(video_id=video_obj).first().duration_of_video
+    elif video_obj.video_type == 3:
+        duration = MovieVideo.objects.filter(video_id=video_obj).first().duration_of_video
+
+    return duration
+
+
+# function to handle user save video history request
+@csrf_exempt
+def save_video_history(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+        curr_time = int(json_data['curr_time'])
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_user_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                video_duration = get_video_duration(video_details)
+                curr_time = min(curr_time, video_duration)
+                if curr_time != 0:
+                    history = History.objects.filter(user_id=request.user, video_id=video_id).first()
+                    if history:
+                        history.video_watched = curr_time
+                        history.save()
+                    else:
+                        history = History.objects.create(
+                            video_id=video_details,
+                            user_id=request.user,
+                            video_watched=curr_time,
+                            timestamp=datetime.now(tz=timezone.utc),
+                        )
+                        history.save()
+                context['is_successful'] = 'Video is added to history.'
+            else:
+                context['is_user_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
 # function to handle ad new comment to video
 @csrf_exempt
 def add_video_comment(request):
@@ -993,29 +1058,48 @@ def check_user_subscription(request):
         video_id = json_data['video_id']
 
         context = {
+            'is_video_exists': '',
             'is_subscribed': '',
+            'is_video_in_history': '',
+            'video_watched': '',
         }
 
-        if request.user.is_authenticated and request.user.user_type == 'U':
-            # checking logged in user subscription plan details
-            subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
-            if subscribe:
-                context['is_subscribed'] = 'true'
-            else:
-                if video_id != '' and video_id != -1:
-                    video_obj = Videos.objects.filter(video_id=video_id).first()
-                    if video_obj and video_obj.video_type == 1:
-                        context['is_subscribed'] = 'true'
-                    else:
-                        is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
-                        if is_subscribe_for_video:
-                            context['is_subscribed'] = 'true'
-                        else:
-                            context['is_subscribed'] = 'false'
-                else:
-                    context['is_subscribed'] = 'false'
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
         else:
-            context['is_subscribed'] = 'false'
+            if request.user.is_authenticated and request.user.user_type == 'U':
+                # checking logged in user subscription plan details
+                subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+                history = History.objects.filter(user_id=request.user, video_id=video_details).first()
+
+                if subscribe:
+                    context['is_subscribed'] = 'true'
+                    if history:
+                        context['is_video_in_history'] = 'This video exists in history.'
+                        context['video_watched'] = history.video_watched
+                else:
+                    if video_id != '' and video_id != -1:
+                        video_obj = Videos.objects.filter(video_id=video_id).first()
+                        if video_obj and video_obj.video_type == 1:
+                            context['is_subscribed'] = 'true'
+                            if history:
+                                context['is_video_in_history'] = 'This video exists in history.'
+                                context['video_watched'] = history.video_watched
+                        else:
+                            is_subscribe_for_video = check_pay_per_view_for_video(request.user, video_id)
+                            if is_subscribe_for_video:
+                                context['is_subscribed'] = 'true'
+                                if history:
+                                    context['is_video_in_history'] = 'This video exists in history.'
+                                    context['video_watched'] = history.video_watched
+                            else:
+                                context['is_subscribed'] = 'false'
+                    else:
+                        context['is_subscribed'] = 'false'
+            else:
+                context['is_subscribed'] = 'false'
         return JsonResponse(context)
     else:
         return render(request, 'templates/404.html')
@@ -1072,6 +1156,7 @@ def stream_video(request, video_obj):
     base_url = str(firebase_video_url).split('?')[0]
     video_details = requests.get(base_url).text
     details_dict = eval(video_details)
+    print(details_dict)
     size = int(details_dict['size'])
 
     if range_match:

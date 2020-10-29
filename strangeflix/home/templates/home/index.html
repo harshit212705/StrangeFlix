@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{% static "css/homes.css" %}">
 </head>
 
-<body>
+<body onbeforeunload="save_history_before_unloading()">
     <div class="navbar-section">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
             <a href="#" class="navbar-brand py-3 font-weight-bold">Strangeflix</a>
@@ -277,6 +277,7 @@
 
     </div>
     <p id="playing_video_id" hidden></p>
+    <p id="playing_video_history_time" hidden></p>
     <p id="selected_comment_id" hidden></p>
     <div id="video_with_comments" style="display: none;">
 
@@ -538,7 +539,9 @@
                 contentType: false,
                 success: function (data) {
                     // checking and handling error conditions
-                    if (data.is_subscribed == 'false') {
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    } else if (data.is_subscribed == 'false') {
                         // console.log('not ok');
                         is_user_subscribed = false;
                     } else if (data.is_subscribed == 'true') {
@@ -574,6 +577,7 @@
                     if (data.is_movie_exists != '') {
                         alert(data.is_movie_exists);
                     } else if (data.is_successful != '') {
+                        save_history_before_unloading();
                         $("#selected_movie_description").empty();
                         $("#selected_movie_freecontent").empty();
 
@@ -771,7 +775,6 @@
                             $(pay_btn_id).remove();
                             play_episode(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments)
                         }
-                        // redirect user to video and also add check to the per second call to check for the user whether the video which is currently playing is in payperview or not, also add transaction details o wallet transactions data, add check while sending video chunk to user
                     } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
@@ -846,6 +849,7 @@
                     if (data.is_series_exists != '') {
                         alert(data.is_series_exists);
                     } else if (data.is_successful != '') {
+                        save_history_before_unloading();
                         $("#selected_series_description").empty();
                         $("#selected_series_season").empty();
 
@@ -920,6 +924,7 @@
                     if (data.is_season_exists != '') {
                         alert(data.is_season_exists);
                     } else if (data.is_successful != '') {
+                        save_history_before_unloading();
                         $("#selected_season_description").empty();
                         $("#selected_season_freecontent").empty();
                         $("#selected_season_episodes").empty();
@@ -1075,7 +1080,7 @@
 
         // HTML CODE FOR VIDEO PLAYER
 
-        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row" style="height: 500px;"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5" style="border: 1px solid grey;"><div class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div style="display: inline;"><div style="float: left;width: 100%;"><textarea name="comment" id="comment_section" rows="3" tabindex="4" placeholder="comment" required="required"></textarea></div><div style="float: right;width: 100%;"><button onclick="comment_on_video()" type="submit">Comment</button></div></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-6 col-md-7"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-6 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-3" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button><button type="button" class="vid-flag mx-3" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div></div></div>';
+        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row" style="height: 500px;"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body" id="video_body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5" style="border: 1px solid grey;"><div class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div style="display: inline;"><div style="float: left;width: 100%;"><textarea name="comment" id="comment_section" rows="3" tabindex="4" placeholder="comment" required="required"></textarea></div><div style="float: right;width: 100%;"><button onclick="comment_on_video()" type="submit">Comment</button></div></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-6 col-md-7"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-6 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-3" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button><button type="button" class="vid-flag mx-3" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div></div></div>';
 
 
         // function to handle truncated comment
@@ -1093,9 +1098,15 @@
             }
         }
 
+        // INCOMPLETE CODE FOR RESUME BUTTON --- RESUME BUTTON TO BE ADDED
+        // function to resume video from where you have left it
+        function resume_video(curr_time) {
+            
+        }
+
 
         //  setting up the video player
-        function video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
+        function video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, video_watched) {
 
             $("#video_with_comments").empty();
             $("#video_with_comments").append(playerhtml);
@@ -1134,6 +1145,7 @@
             $('#movie-vid-comments').append(add_comm);
 
             document.getElementById('playing_video_id').innerHTML = video_id;
+            document.getElementById('playing_video_history_time').innerHTML = video_watched;
             initialize_movie_player();
 
             var video = document.querySelector('#movie-video');
@@ -1156,43 +1168,39 @@
         // function to play movie video
         function play_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
 
-            if (!is_user_subscribed) {
+            // javascript data object
+            var data = {
+                'video_id': video_id,
+            }
 
-                // javascript data object
-                var data = {
-                    'video_id': video_id,
-                }
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
 
-                // adding data to javascript form which is to be send over ajax request
-                var formData = new FormData();
-                formData.append('data', JSON.stringify(data));
+            $.ajax({
+                type: 'POST',
+                url: '{% url "check_user_subscription" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    } else if (data.is_subscribed == 'false') {
+                        alert('You have no active subscription pack. Buy a new one to enjoy streaming.');
+                    } else if (data.is_subscribed == 'true') {
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "check_user_subscription" %}',
-                    data: formData,
-                    dataType: 'json',
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        // checking and handling error conditions
-                        if (data.is_subscribed == 'false') {
-                            alert('You have no active subscription pack. Buy a new one to enjoy streaming.');
-                        } else if (data.is_subscribed == 'true') {
-                            // console.log('pay per view video entry');
-                            set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
-                            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments);
-                        } else {
-                            alert('Some unexpected error has occured. Try again.');
-                        }
+                        save_history_before_unloading();
+                        set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
+                        video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, data.video_watched);
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
                     }
-                });
-            }
-            else{
-                set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
-                video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments);
-            }
+                }
+            });
         }
 
 
@@ -1222,13 +1230,15 @@
                     contentType: false,
                     success: function (data) {
                         // checking and handling error conditions
-                        // console.log(data.is_subscribed);
-                        if (data.is_subscribed == 'false') {
+                        if (data.is_video_exists != '') {
+                            alert(data.is_video_exists);
+                        } else if (data.is_subscribed == 'false') {
                             alert('You are not allowed to watch this episode. Either subscribe or pay for video.');
                         } else if (data.is_subscribed == 'true') {
 
+                            save_history_before_unloading();
                             set_content_display('block', 'none', 'block', 'block', 'none', 'block', 'none', 'none');
-                            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments);
+                            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, data.video_watched);
                             $('html, body').animate({
                                 scrollTop: '0px'
                             },1000);
@@ -1243,15 +1253,17 @@
         // function to play movie free video
         function play_free_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
 
+            save_history_before_unloading();
             set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
-            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments);
+            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, '');
         }
 
         // function to play series free video
         function play_free_episode(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
 
+            save_history_before_unloading();
             set_content_display('block', 'none', 'block', 'block', 'none', 'block', 'none', 'none');
-            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments);
+            video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, '');
         }
 
 
@@ -1283,9 +1295,9 @@
                     contentType: false,
                     success: function (data) {
                         // checking and handling error conditions
-                        // console.log(data.is_subscribed);
-                        // console.log(is_user_subscribed);
-                        if (data.is_subscribed == 'false') {
+                        if (data.is_video_exists != '') {
+                            alert(data.is_video_exists);
+                        } else if (data.is_subscribed == 'false') {
                             if (is_user_subscribed == true) {
                                 alert('You are no longer subscribed. Buy a new plan to enjoy streaming!!')
                             }
@@ -1556,6 +1568,52 @@
             });
         })
 
+        // function to add video last time watched history
+        function save_video_history(video_id, curr_time) {
+            // javascript data object
+            var data = {
+                'video_id': video_id,
+                'curr_time':  curr_time,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "save_video_history" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    } else if (data.is_user_logged_in != '') {
+                        alert(data.is_user_logged_in);
+                    } else if (data.is_successful != '') {
+                        // video history saved to database
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        // adding video history on closing window or tab or going to another link
+        function save_history_before_unloading() {
+            if (document.getElementById('video_with_comments').style.display == 'block') {
+                // console.log('hit');
+                var video_id = document.getElementById('playing_video_id').innerHTML;
+                var video_player = document.querySelector('#movie-video');
+                var curr_time = Math.floor(video_player.currentTime);
+                save_video_history(video_id, curr_time);
+            }
+        }
 
     </script>
 </body>
