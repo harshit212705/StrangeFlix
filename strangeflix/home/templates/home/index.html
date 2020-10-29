@@ -27,7 +27,7 @@
 
 <body onbeforeunload="save_history_before_unloading()">
     <div class="navbar-section">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a href="#" class="navbar-brand py-3 font-weight-bold">Strangeflix</a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -159,7 +159,7 @@
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true" style="color: black;">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+                <div class="modal-content bg-dark">
                     <div class="modal-header border-bottom-0">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -213,13 +213,13 @@
                                 </div>
                                 <div class="text-center my-4">
                                     <button onclick="custom_login()" type="button"
-                                        class="btn btn-info btn-round">Login</button>
+                                        class="btn btn-danger btn-round">Login</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">Not a member yet? <a href="#a" id="signup" class="text-info"
+                        <div class="signup-section">Not a member yet? <a href="#a" id="signup" class="text-danger"
                                 data-toggle="modal" data-target="#signupModal"> Sign Up</a>.</div>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
         <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true" style="color: black;">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+                <div class="modal-content bg-dark">
                     <div class="modal-header border-bottom-0">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -256,30 +256,30 @@
                                     {{ registration_form.password2|add_class:"form-control"|as_crispy_field }}
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-round">Register</button>
+                                    <button type="submit" class="btn btn-danger btn-round">Register</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">Already a member? <a href="#a" id="login" class="text-info"
+                        <div class="signup-section">Already a member? <a href="#a" id="login" class="text-danger"
                                 data-toggle="modal" data-target="#loginModal">Login</a>.</div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- if not logged in  -->
-        <div class="n-l-section">
-
+        <div class="back-wrapper">
+            <div class="back-img-par">
+                <div class="back-img-child">
+                    <img src="{% static "/images/homico.png" %}" alt="">
+                </div>
+            </div>
         </div>
-
     </div>
     <p id="playing_video_id" hidden></p>
     <p id="playing_video_history_time" hidden></p>
     <p id="selected_comment_id" hidden></p>
-    <div id="video_with_comments" style="display: none;">
+    <div id="video_with_comments" style="display:none;">
 
     </div>
     <div id="selected_series">
@@ -309,11 +309,11 @@
         <div id="selected_movie_freecontent">
 
         </div>
-    
     </div>
     {% include "home/recommen.html" %}
     <!-- movie rating modal  -->
-    <div class="modal fade" id="movierateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title" aria-hidden="true">
+    <div class="modal fade" id="movierateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
@@ -349,7 +349,8 @@
         </div>
     </div>
     <!-- series rating modal  -->
-    <div class="modal fade" id="seriesrateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title" aria-hidden="true">
+    <div class="modal fade" id="seriesrateCenter" tabindex="-1" role="dialog" aria-labelledby="rate-title"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
@@ -386,7 +387,8 @@
     </div>
 
     <!-- flag comment modal  -->
-    <div class="modal fade" id="flagCommentCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title" aria-hidden="true">
+    <div class="modal fade" id="flagCommentCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
@@ -408,14 +410,16 @@
                     <label for="comment_flag_5">Harassment or bullying</label><br>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="report_comment()" type="button" class="btn btn-danger btn-sm" id="flag-submit">Report</button>
+                    <button onclick="report_comment()" type="button" class="btn btn-danger btn-sm"
+                        id="flag-submit">Report</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- flag video modal  -->
-    <div class="modal fade" id="flagVideoCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title" aria-hidden="true">
+    <div class="modal fade" id="flagVideoCenter" tabindex="-1" role="dialog" aria-labelledby="flag-title"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
@@ -445,7 +449,8 @@
                     <label for="video_flag_9">Captions issue</label><br>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="report_video()" type="button" class="btn btn-danger btn-sm" id="flag-submit">Report</button>
+                    <button onclick="report_video()" type="button" class="btn btn-danger btn-sm"
+                        id="flag-submit">Report</button>
                 </div>
             </div>
         </div>
@@ -581,12 +586,14 @@
                         $("#selected_movie_description").empty();
                         $("#selected_movie_freecontent").empty();
 
-                        set_content_display('none', 'none', 'none', 'none', 'none', 'none', 'block', 'block');
+                        set_content_display('none', 'none', 'none', 'none', 'none', 'none', 'block',
+                            'block');
 
                         document.getElementById('selected_movie_id').innerHTML = movie_id;
 
                         for (var key in data.movie_content_data) {
-                            var htmlgen = '<div id="movie_'+ movie_id +'" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4">';
+                            var htmlgen = '<div id="movie_' + movie_id +
+                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4">';
 
                             // javascript data object
                             var data1 = {
@@ -609,30 +616,43 @@
 
                                     // collecing movie movie data and sending it to the play movie and pay per view functions
                                     var video_name = `'${data.movie_content_data[key][1]}'`;
-                                    var video_description = `'${data.movie_content_data[key][2]}'`;
+                                    var video_description =
+                                        `'${data.movie_content_data[key][2]}'`;
                                     var video_category = `'${data.movie_content_data[key][4]}'`;
                                     var video_tags = new Array();
                                     var video_subcategory = new Array();
-                                    var video_language = `'${data.movie_content_data[key][10]}'`;
+                                    var video_language =
+                                        `'${data.movie_content_data[key][10]}'`;
                                     var video_cost = data.movie_content_data[key][11];
                                     var video_comments = new Array();
 
-                                    for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
+                                    for (var i = 0; i < data.movie_content_data[key][8]
+                                        .length; i++) {
                                         video_tags.push(data.movie_content_data[key][8][i]);
                                     }
                                     var tags = video_tags.join("!@#$%^&*");
                                     tags = `'${tags}'`;
 
-                                    for (var i = 0; i < data.movie_content_data[key][9].length; i++) {
-                                        video_subcategory.push(data.movie_content_data[key][9][i]);
+                                    for (var i = 0; i < data.movie_content_data[key][9]
+                                        .length; i++) {
+                                        video_subcategory.push(data.movie_content_data[key][9][
+                                            i
+                                        ]);
                                     }
                                     var subcategories = video_subcategory.join("!@#$%^&*");
                                     subcategories = `'${subcategories}'`;
 
-                                    for (var i = 0; i < data.movie_content_data[key][12].length; i++) {
-                                        video_comments.push(data.movie_content_data[key][12][i][0]);
-                                        video_comments.push(data.movie_content_data[key][12][i][1]);
-                                        video_comments.push(data.movie_content_data[key][12][i][2]);
+                                    for (var i = 0; i < data.movie_content_data[key][12]
+                                        .length; i++) {
+                                        video_comments.push(data.movie_content_data[key][12][i][
+                                            0
+                                        ]);
+                                        video_comments.push(data.movie_content_data[key][12][i][
+                                            1
+                                        ]);
+                                        video_comments.push(data.movie_content_data[key][12][i][
+                                            2
+                                        ]);
                                     }
                                     var comments = video_comments.join("!@#$%^&*");
                                     comments = `'${comments}'`;
@@ -641,7 +661,16 @@
                                     if (data2.is_subscribed == 'false') {
                                         is_user_subscribed = false;
                                         if (!is_user_subscribed) {
-                                            htmlgen += '<div><div class="access-lock bg-danger text-center"><div class="py-1"><i class="fas fa-lock"></i></div></div><button onclick="pay_per_view('+ data.movie_content_data[key][0] +','+ video_name +','+ video_description +','+ video_category +','+ tags +','+ subcategories +','+ video_language +','+ video_cost +','+ comments+','+ `'movie'` +')" class="bg-danger" style="border: 0;">Pay Rs. '+ data.movie_content_data[key][11] +' to unlock</button></div>';
+                                            htmlgen +=
+                                                '<div><div class="access-lock bg-danger text-center"><div class="py-1"><i class="fas fa-lock"></i></div></div><button onclick="pay_per_view(' +
+                                                data.movie_content_data[key][0] + ',' +
+                                                video_name + ',' + video_description + ',' +
+                                                video_category + ',' + tags + ',' +
+                                                subcategories + ',' + video_language + ',' +
+                                                video_cost + ',' + comments + ',' + `'movie'` +
+                                                ')" class="bg-danger" style="border: 0;">Pay Rs. ' +
+                                                data.movie_content_data[key][11] +
+                                                ' to unlock</button></div>';
                                         }
                                     } else if (data2.is_subscribed == 'true') {
                                         is_user_subscribed = true;
@@ -650,29 +679,46 @@
                                         alert('Some unexpected error has occured. Try again.');
                                     }
 
-                                    htmlgen += '<div class="series-naam py-4"><h4 class="font-weight-bold">'+ data.movie_content_data[key][1] +'</h4><div class="class-muted"><p class="text-muted">';
+                                    htmlgen +=
+                                        '<div class="series-naam py-4"><h4 class="font-weight-bold">' +
+                                        data.movie_content_data[key][1] +
+                                        '</h4><div class="class-muted"><p class="text-muted">';
 
-                                    for (var i = 0; i < data.movie_content_data[key][9].length; i++) {
+                                    for (var i = 0; i < data.movie_content_data[key][9]
+                                        .length; i++) {
                                         htmlgen += data.movie_content_data[key][9][i] + ' | ';
                                     }
 
                                     htmlgen += '</p><p class="text-muted">';
 
-                                    for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
+                                    for (var i = 0; i < data.movie_content_data[key][8]
+                                        .length; i++) {
                                         htmlgen += data.movie_content_data[key][8][i] + ' | ';
                                     }
 
-                                    htmlgen += '</p><p class="text-muted">'+ data.movie_content_data[key][10] +'</p></div><div class="ser-describ">'+ data.movie_content_data[key][2] +'</div></div></div><button type="button" onclick="play_movie('+ data.movie_content_data[key][0] +','+ video_name +','+ video_description +','+ video_category +','+ tags +','+ subcategories +','+ video_language +','+ video_cost +','+ comments+')" class="vid-dislike mx-4 mr-auto" title="play"><span class="ico-cont bg-danger text-center py-1 px-2"><span class="py-3"><i class="fas fa-play"></i></span></span><p class="add-to-rate py-3">Play</p></button><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#movierateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="'+ data.movie_content_data[key][3] +'"alt="image4"></div></div></div></div>';
+                                    htmlgen += '</p><p class="text-muted">' + data
+                                        .movie_content_data[key][10] +
+                                        '</p></div><div class="ser-describ">' + data
+                                        .movie_content_data[key][2] +
+                                        '</div></div></div><button type="button" onclick="play_movie(' +
+                                        data.movie_content_data[key][0] + ',' + video_name +
+                                        ',' + video_description + ',' + video_category + ',' +
+                                        tags + ',' + subcategories + ',' + video_language +
+                                        ',' + video_cost + ',' + comments +
+                                        ')" class="vid-dislike mx-4 mr-auto" title="play"><span class="ico-cont bg-danger text-center py-1 px-2"><span class="py-3"><i class="fas fa-play"></i></span></span><p class="add-to-rate py-3">Play</p></button><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#movierateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
+                                        data.movie_content_data[key][3] +
+                                        '"alt="image4"></div></div></div></div>';
                                     $("#selected_movie_description").append(htmlgen);
                                 }
                             });
 
-                            var freecontent = '<div class="show-up"><div id="movie_content_'+ movie_id +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="movie_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+                            var freecontent = '<div class="show-up"><div id="movie_content_' + movie_id +
+                                '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="movie_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
 
                             var count = 0;
                             for (var val in data.movie_free_data) {
                                 count++;
-                                if (count != 1 && (count-1)%6 == 0) {
+                                if (count != 1 && (count - 1) % 6 == 0) {
                                     freecontent += '<div class="carousel-item"><div class="row">';
                                 }
 
@@ -705,25 +751,39 @@
                                 var comments = video_comments.join("!@#$%^&*");
                                 comments = `'${comments}'`;
 
-                                freecontent += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">'+ data.movie_free_data[val][1] +'</div><div class="img-seci"><a href="#" onclick="play_free_movie('+ data.movie_free_data[val][0] +','+ video_name +','+ video_description +','+ video_category +','+ tags +','+ subcategories +','+ video_language +','+ video_cost +','+ comments+')"><img class="img-fluid ser-img" src="'+ data.movie_free_data[val][3] +'" alt="image4"></a></div></div></div></div>';
+                                freecontent +=
+                                    '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">' +
+                                    data.movie_free_data[val][1] +
+                                    '</div><div class="img-seci"><a href="#" onclick="play_free_movie(' +
+                                    data.movie_free_data[val][0] + ',' + video_name + ',' +
+                                    video_description + ',' + video_category + ',' + tags + ',' +
+                                    subcategories + ',' + video_language + ',' + video_cost + ',' +
+                                    comments + ')"><img class="img-fluid ser-img" src="' + data
+                                    .movie_free_data[val][3] +
+                                    '" alt="image4"></a></div></div></div></div>';
 
-                                if (count%6 == 0) {
+                                if (count % 6 == 0) {
                                     freecontent += '</div></div>';
                                 }
                             }
-                            if (Object.keys(data.movie_free_data).length%6 != 0) {
+                            if (Object.keys(data.movie_free_data).length % 6 != 0) {
                                 freecontent += '</div></div>';
                             }
-                            freecontent += '</div><a class="carousel-control-prev bg-danger" href="#movie_freecontent-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#movie_freecontent-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+                            freecontent +=
+                                '</div><a class="carousel-control-prev bg-danger" href="#movie_freecontent-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#movie_freecontent-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
 
                         }
 
                         $("#selected_movie_freecontent").append(freecontent);
-                        if ($('#movie_freecontent-controls .carousel-inner .carousel-item:first').hasClass('active')) {
-                            $('#movie_freecontent-controls').children('#movie_freecontent-controls .carousel-control-prev').hide();
+                        if ($('#movie_freecontent-controls .carousel-inner .carousel-item:first').hasClass(
+                                'active')) {
+                            $('#movie_freecontent-controls').children(
+                                '#movie_freecontent-controls .carousel-control-prev').hide();
                         }
-                        if ($('#movie_freecontent-controls .carousel-inner .carousel-item:last').hasClass('active')) {
-                            $('#movie_freecontent-controls').children('#movie_freecontent-controls .carousel-control-next').hide();
+                        if ($('#movie_freecontent-controls .carousel-inner .carousel-item:last').hasClass(
+                                'active')) {
+                            $('#movie_freecontent-controls').children(
+                                '#movie_freecontent-controls .carousel-control-next').hide();
                         }
 
                     } else {
@@ -737,7 +797,8 @@
 
 
         // function to pay for pay_per_view video
-        function get_pay_per_view_video(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, video_type) {
+        function get_pay_per_view_video(video_id, video_name, video_description, video_category, video_tags,
+            video_subcategory, video_language, video_cost, video_comments, video_type) {
             // javascript data object
             var data = {
                 'video_id': video_id,
@@ -765,15 +826,17 @@
                         alert(data.insufficient_balance);
                     } else if (data.is_successful != '') {
 
-                        if(video_type == 'movie') {
-                            play_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments);
-                        }
-                        else if (video_type == 'series'){
+                        if (video_type == 'movie') {
+                            play_movie(video_id, video_name, video_description, video_category, video_tags,
+                                video_subcategory, video_language, video_cost, video_comments);
+                        } else if (video_type == 'series') {
                             var lock_id = '#lock_' + video_id;
                             var pay_btn_id = '#pay_per_view_button_' + video_id;
                             $(lock_id).remove();
                             $(pay_btn_id).remove();
-                            play_episode(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments)
+                            play_episode(video_id, video_name, video_description, video_category,
+                                video_tags, video_subcategory, video_language, video_cost,
+                                video_comments)
                         }
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -783,7 +846,8 @@
         }
 
         // function to check whether user has sufficient bal in his wallet to pay for pay per view service
-        function pay_per_view(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, video_type) {
+        function pay_per_view(video_id, video_name, video_description, video_category, video_tags, video_subcategory,
+            video_language, video_cost, video_comments, video_type) {
             // javascript data object
             var data = {
                 'video_id': video_id
@@ -810,10 +874,12 @@
                     } else if (data.insufficient_balance != '') {
                         alert(data.insufficient_balance);
                     } else if (data.is_successful != '') {
-                        var r = confirm("Paying Rs. " +  data.video_cost);
+                        var r = confirm("Paying Rs. " + data.video_cost);
                         if (r == true) {
                             // user confimed payment for pay-per-view
-                            get_pay_per_view_video(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, video_type);
+                            get_pay_per_view_video(video_id, video_name, video_description, video_category,
+                                video_tags, video_subcategory, video_language, video_cost,
+                                video_comments, video_type);
                         } else {
                             // user cancelled payment for pay-per-view
                         }
@@ -853,44 +919,63 @@
                         $("#selected_series_description").empty();
                         $("#selected_series_season").empty();
 
-                        set_content_display('none', 'none', 'none', 'none', 'block', 'block', 'none', 'none');
+                        set_content_display('none', 'none', 'none', 'none', 'block', 'block', 'none',
+                            'none');
 
                         document.getElementById('selected_series_id').innerHTML = series_id;
                         for (var key in data.series_content_data) {
-                            var htmlgen = '<div id="series_'+ key +'" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">'+ data.series_content_data[key][0] +'</h4><div class="class-muted"><p class="text-muted">'+ data.series_content_data[key][3] + ' | ';
+                            var htmlgen = '<div id="series_' + key +
+                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">' +
+                                data.series_content_data[key][0] +
+                                '</h4><div class="class-muted"><p class="text-muted">' + data
+                                .series_content_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.series_content_data[key][5].length; i++) {
                                 htmlgen += data.series_content_data[key][5][i] + ' | ';
                             }
 
-                            htmlgen += '</p></div><div class="ser-describ">'+ data.series_content_data[key][1] +'</div></div></div><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#seriesrateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="'+ data.series_content_data[key][4] +'"alt="image4"></div></div></div></div>';
-                            var seasons = '<div class="show-up"><div id="series_season_'+ key +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Seasons<i class="arrow right mx-1"></i></h4><div id="series_season-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+                            htmlgen += '</p></div><div class="ser-describ">' + data.series_content_data[key]
+                                [1] +
+                                '</div></div></div><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#seriesrateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
+                                data.series_content_data[key][4] + '"alt="image4"></div></div></div></div>';
+                            var seasons = '<div class="show-up"><div id="series_season_' + key +
+                                '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Seasons<i class="arrow right mx-1"></i></h4><div id="series_season-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
                             var count = 0;
                             for (var val in data.series_season_data) {
                                 count++;
-                                if (count != 1 && (count-1)%6 == 0) {
+                                if (count != 1 && (count - 1) % 6 == 0) {
                                     seasons += '<div class="carousel-item"><div class="row">';
                                 }
-                                seasons += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Season '+ data.series_season_data[val][1] +'</div><div class="img-seci"><a href="#" onclick="open_season('+ val +')"><img class="img-fluid ser-img" src="'+ data.series_season_data[val][5] +'" alt="image4"></a></div></div></div></div>';
+                                seasons +=
+                                    '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Season ' +
+                                    data.series_season_data[val][1] +
+                                    '</div><div class="img-seci"><a href="#" onclick="open_season(' + val +
+                                    ')"><img class="img-fluid ser-img" src="' + data.series_season_data[val]
+                                    [5] + '" alt="image4"></a></div></div></div></div>';
 
-                                if (count%6 == 0) {
+                                if (count % 6 == 0) {
                                     seasons += '</div></div>';
                                 }
                             }
-                            if (Object.keys(data.series_season_data).length%6 != 0) {
+                            if (Object.keys(data.series_season_data).length % 6 != 0) {
                                 seasons += '</div></div>';
                             }
-                            seasons += '</div><a class="carousel-control-prev bg-danger" href="#series_season-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+                            seasons +=
+                                '</div><a class="carousel-control-prev bg-danger" href="#series_season-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
 
                         }
                         $("#selected_series_description").append(htmlgen);
                         $("#selected_series_season").append(seasons);
 
-                        if ($('#series_season-controls .carousel-inner .carousel-item:first').hasClass('active')) {
-                            $('#series_season-controls').children('#series_season-controls .carousel-control-prev').hide();
+                        if ($('#series_season-controls .carousel-inner .carousel-item:first').hasClass(
+                                'active')) {
+                            $('#series_season-controls').children(
+                                '#series_season-controls .carousel-control-prev').hide();
                         }
-                        if ($('#series_season-controls .carousel-inner .carousel-item:last').hasClass('active')) {
-                            $('#series_season-controls').children('#series_season-controls .carousel-control-next').hide();
+                        if ($('#series_season-controls .carousel-inner .carousel-item:last').hasClass(
+                                'active')) {
+                            $('#series_season-controls').children(
+                                '#series_season-controls .carousel-control-next').hide();
                         }
 
                     } else {
@@ -932,20 +1017,28 @@
                         document.getElementById('selected_series_season_id').innerHTML = series_season_id;
 
                         for (var key in data.season_content_data) {
-                            var htmlgen = '<div id="series_season_'+ key +'" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">Season '+ data.season_content_data[key][0] +'</h4><div class="class-muted"><p class="text-muted">'+ data.season_content_data[key][3] + ' | ';
+                            var htmlgen = '<div id="series_season_' + key +
+                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">Season ' +
+                                data.season_content_data[key][0] +
+                                '</h4><div class="class-muted"><p class="text-muted">' + data
+                                .season_content_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.season_content_data[key][5].length; i++) {
                                 htmlgen += data.season_content_data[key][5][i] + ' | ';
                             }
 
-                            htmlgen += '</p></div><div class="ser-describ">'+ data.season_content_data[key][1] +'</div></div></div></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="'+ data.season_content_data[key][4] +'"alt="image4"></div></div></div></div>';
+                            htmlgen += '</p></div><div class="ser-describ">' + data.season_content_data[key]
+                                [1] +
+                                '</div></div></div></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
+                                data.season_content_data[key][4] + '"alt="image4"></div></div></div></div>';
 
-                            var freecontent = '<div class="show-up"><div id="series_season_content_'+ key +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="series_season_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+                            var freecontent = '<div class="show-up"><div id="series_season_content_' + key +
+                                '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="series_season_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
 
                             var count = 0;
                             for (var val in data.season_free_data) {
                                 count++;
-                                if (count != 1 && (count-1)%6 == 0) {
+                                if (count != 1 && (count - 1) % 6 == 0) {
                                     freecontent += '<div class="carousel-item"><div class="row">';
                                 }
                                 var video_name = `'${data.season_free_data[val][1]}'`;
@@ -977,23 +1070,34 @@
                                 var comments = video_comments.join("!@#$%^&*");
                                 comments = `'${comments}'`;
 
-                                freecontent += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">'+ data.season_free_data[val][1] +'</div><div class="img-seci"><a href="#" onclick="play_free_episode('+ data.season_free_data[val][0] +','+ video_name +','+ video_description +','+ video_category +','+ tags +','+ subcategories +','+ video_language +','+ video_cost +','+ comments+')"><img class="img-fluid ser-img" src="'+ data.season_free_data[val][3] +'" alt="image4"></a></div></div></div></div>';
+                                freecontent +=
+                                    '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">' +
+                                    data.season_free_data[val][1] +
+                                    '</div><div class="img-seci"><a href="#" onclick="play_free_episode(' +
+                                    data.season_free_data[val][0] + ',' + video_name + ',' +
+                                    video_description + ',' + video_category + ',' + tags + ',' +
+                                    subcategories + ',' + video_language + ',' + video_cost + ',' +
+                                    comments + ')"><img class="img-fluid ser-img" src="' + data
+                                    .season_free_data[val][3] +
+                                    '" alt="image4"></a></div></div></div></div>';
 
-                                if (count%6 == 0) {
+                                if (count % 6 == 0) {
                                     freecontent += '</div></div>';
                                 }
                             }
-                            if (Object.keys(data.season_free_data).length%6 != 0) {
+                            if (Object.keys(data.season_free_data).length % 6 != 0) {
                                 freecontent += '</div></div>';
                             }
-                            freecontent += '</div><a class="carousel-control-prev bg-danger" href="#series_season_freecontent-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_freecontent-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+                            freecontent +=
+                                '</div><a class="carousel-control-prev bg-danger" href="#series_season_freecontent-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_freecontent-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
 
-                            var episodes = '<div class="show-up"><div id="series_episode_'+ key +'" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Episodes<i class="arrow right mx-1"></i></h4><div id="series_season_episodes-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+                            var episodes = '<div class="show-up"><div id="series_episode_' + key +
+                                '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Episodes<i class="arrow right mx-1"></i></h4><div id="series_season_episodes-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
 
                             count = 0;
                             for (var val in data.season_episodes) {
                                 count++;
-                                if (count != 1 && (count-1)%6 == 0) {
+                                if (count != 1 && (count - 1) % 6 == 0) {
                                     episodes += '<div class="carousel-item"><div class="row">';
                                 }
 
@@ -1026,28 +1130,46 @@
                                 var comments = video_comments.join("!@#$%^&*");
                                 comments = `'${comments}'`;
 
-                                episodes += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Episode '+ val +' - '+ data.season_episodes[val][1] +'</div><div class="img-seci"><a href="#" onclick="play_episode('+ data.season_episodes[val][0] +','+ video_name +','+ video_description +','+ video_category +','+ tags +','+ subcategories +','+ video_language +','+ video_cost +','+ comments+')">';
+                                episodes +=
+                                    '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Episode ' +
+                                    val + ' - ' + data.season_episodes[val][1] +
+                                    '</div><div class="img-seci"><a href="#" onclick="play_episode(' + data
+                                    .season_episodes[val][0] + ',' + video_name + ',' + video_description +
+                                    ',' + video_category + ',' + tags + ',' + subcategories + ',' +
+                                    video_language + ',' + video_cost + ',' + comments + ')">';
 
                                 if (data.season_episodes[val][13] == 0) {
-                                    episodes += '<div id="lock_'+ data.season_episodes[val][0] +'" class="access-lock-img bg-danger text-center"><div class="py-1 px-2"><i class="fas fa-lock"></i></div></div>';
+                                    episodes += '<div id="lock_' + data.season_episodes[val][0] +
+                                        '" class="access-lock-img bg-danger text-center"><div class="py-1 px-2"><i class="fas fa-lock"></i></div></div>';
                                 }
 
-                                episodes += '<img class="img-fluid ser-img" src="'+ data.season_episodes[val][3] +'" alt="image4"></a>';
+                                episodes += '<img class="img-fluid ser-img" src="' + data.season_episodes[
+                                    val][3] + '" alt="image4"></a>';
 
                                 if (data.season_episodes[val][13] == 0) {
-                                    episodes += '<div id="pay_per_view_button_'+ data.season_episodes[val][0] +'" class="card-view-button text-center"><button onclick="pay_per_view('+ data.season_episodes[val][0] +','+ video_name +','+ video_description +','+ video_category +','+ tags +','+ subcategories +','+ video_language +','+ video_cost +','+ comments+','+ `'series'` +')" type="submit" id="show-img-det" class="bg-danger" style="border: 0;border-radius: 2px;">Pay Rs. '+ data.season_episodes[val][9] +' to unlock</a></div>';
+                                    episodes += '<div id="pay_per_view_button_' + data.season_episodes[val][
+                                            0
+                                        ] +
+                                        '" class="card-view-button text-center"><button onclick="pay_per_view(' +
+                                        data.season_episodes[val][0] + ',' + video_name + ',' +
+                                        video_description + ',' + video_category + ',' + tags + ',' +
+                                        subcategories + ',' + video_language + ',' + video_cost + ',' +
+                                        comments + ',' + `'series'` +
+                                        ')" type="submit" id="show-img-det" class="bg-danger" style="border: 0;border-radius: 2px;">Pay Rs. ' +
+                                        data.season_episodes[val][9] + ' to unlock</a></div>';
                                 }
 
                                 episodes += '</div></div></div></div>';
 
-                                if (count%6 == 0) {
+                                if (count % 6 == 0) {
                                     episodes += '</div></div>';
                                 }
                             }
-                            if (Object.keys(data.season_episodes).length%6 != 0) {
+                            if (Object.keys(data.season_episodes).length % 6 != 0) {
                                 episodes += '</div></div>';
                             }
-                            episodes += '</div><a class="carousel-control-prev bg-danger" href="#series_season_episodes-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_episodes-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+                            episodes +=
+                                '</div><a class="carousel-control-prev bg-danger" href="#series_season_episodes-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_episodes-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
 
                         }
 
@@ -1055,20 +1177,29 @@
                         $("#selected_season_freecontent").append(freecontent);
                         $("#selected_season_episodes").append(episodes);
 
-                        set_content_display('none', 'block', 'block', 'block', 'none', 'block', 'none', 'none');
+                        set_content_display('none', 'block', 'block', 'block', 'none', 'block', 'none',
+                            'none');
 
-                        if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:first').hasClass('active')) {
-                            $('#series_season_freecontent-controls').children('#series_season_freecontent-controls .carousel-control-prev').hide();
+                        if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:first')
+                            .hasClass('active')) {
+                            $('#series_season_freecontent-controls').children(
+                                '#series_season_freecontent-controls .carousel-control-prev').hide();
                         }
-                        if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:last').hasClass('active')) {
-                            $('#series_season_freecontent-controls').children('#series_season_freecontent-controls .carousel-control-next').hide();
+                        if ($('#series_season_freecontent-controls .carousel-inner .carousel-item:last')
+                            .hasClass('active')) {
+                            $('#series_season_freecontent-controls').children(
+                                '#series_season_freecontent-controls .carousel-control-next').hide();
                         }
 
-                        if ($('#series_season_episodes-controls .carousel-inner .carousel-item:first').hasClass('active')) {
-                            $('#series_season_episodes-controls').children('#series_season_episodes-controls .carousel-control-prev').hide();
+                        if ($('#series_season_episodes-controls .carousel-inner .carousel-item:first')
+                            .hasClass('active')) {
+                            $('#series_season_episodes-controls').children(
+                                '#series_season_episodes-controls .carousel-control-prev').hide();
                         }
-                        if ($('#series_season_episodes-controls .carousel-inner .carousel-item:last').hasClass('active')) {
-                            $('#series_season_episodes-controls').children('#series_season_episodes-controls .carousel-control-next').hide();
+                        if ($('#series_season_episodes-controls .carousel-inner .carousel-item:last')
+                            .hasClass('active')) {
+                            $('#series_season_episodes-controls').children(
+                                '#series_season_episodes-controls .carousel-control-next').hide();
                         }
 
                     } else {
@@ -1087,13 +1218,11 @@
         function show_comment(comment_id) {
             var text_id = "#show_comment_" + comment_id;
             var button_id = "#show_comment_button_" + comment_id;
-            if($(button_id).text().trim()=='show'){
-                $(text_id).css('display','block');
+            if ($(button_id).text().trim() == 'show') {
+                $(text_id).css('display', 'block');
                 $(button_id).text('hide');
-            }
-            else
-            {
-                $(text_id).css('display','-webkit-box');
+            } else {
+                $(text_id).css('display', '-webkit-box');
                 $(button_id).text('show');
             }
         }
@@ -1115,10 +1244,9 @@
             var des = video_language + ' || ' + video_category + ' || ';
             var arr_subcat = video_subcategory.split("!@#$%^&*");
             var arr_tags = video_tags.split("!@#$%^&*");
-            if (arr_subcat.length == 1 && arr_subcat[0] == ''){
+            if (arr_subcat.length == 1 && arr_subcat[0] == '') {
 
-            }
-            else {
+            } else {
                 for (var i = 0; i < arr_subcat.length; i++) {
                     des += arr_subcat[i] + ' ';
                 }
@@ -1126,10 +1254,9 @@
                     des += ' || ';
                 }
             }
-            if (arr_tags.length == 1 && arr_tags[0] == ''){
+            if (arr_tags.length == 1 && arr_tags[0] == '') {
 
-            }
-            else {
+            } else {
                 for (var i = 0; i < arr_tags.length; i++) {
                     des += arr_tags[i] + ' ';
                 }
@@ -1139,8 +1266,15 @@
 
             var arr_comments = video_comments.split("!@#$%^&*");
             var add_comm = '';
-            for (var i = 0; i < arr_comments.length && arr_comments.length >= 3; i+=3) {
-                add_comm += '<li><div class="row media"><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><div style="display: inline;"><span class="font-weight-bold">'+  arr_comments[i] +'</span><button onclick="set_comment_id('+ arr_comments[i+2] +')" type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;"><i style="color: #d9534f;" class="fas fa-flag"></i></button></div><div class="d-cent text-justify" id="show_comment_'+ arr_comments[i+2] +'">'+ arr_comments[i+1] +'</div><button type="button" class="show-mr-button" id="show_comment_button_'+ arr_comments[i+2] +'" onclick="show_comment('+ arr_comments[i+2] +')">show</button></div></div></div></li><br>';
+            for (var i = 0; i < arr_comments.length && arr_comments.length >= 3; i += 3) {
+                add_comm +=
+                    '<li><div class="row media"><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><div style="display: inline;"><span class="font-weight-bold">' +
+                    arr_comments[i] + '</span><button onclick="set_comment_id(' + arr_comments[i + 2] +
+                    ')" type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;"><i style="color: #d9534f;" class="fas fa-flag"></i></button></div><div class="d-cent text-justify" id="show_comment_' +
+                    arr_comments[i + 2] + '">' + arr_comments[i + 1] +
+                    '</div><button type="button" class="show-mr-button" id="show_comment_button_' + arr_comments[i +
+                        2] + '" onclick="show_comment(' + arr_comments[i + 2] +
+                    ')">show</button></div></div></div></li><br>';
             }
             $('#movie-vid-comments').append(add_comm);
 
@@ -1153,20 +1287,21 @@
             var playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
-                    // Automatic playback started!
-                    // Show playing UI.
-                })
-                .catch(error => {
-                    // Auto-play was prevented
-                    // Show paused UI.
-                });
+                        // Automatic playback started!
+                        // Show playing UI.
+                    })
+                    .catch(error => {
+                        // Auto-play was prevented
+                        // Show paused UI.
+                    });
             }
             $('#movie-insert-vid').attr('src', video_url);
             $('.progress__filled').css('flex', '0');
         }
 
         // function to play movie video
-        function play_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
+        function play_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory,
+            video_language, video_cost, video_comments) {
 
             // javascript data object
             var data = {
@@ -1205,12 +1340,12 @@
 
 
         // function to play series episode
-        function play_episode(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
+        function play_episode(video_id, video_name, video_description, video_category, video_tags, video_subcategory,
+            video_language, video_cost, video_comments) {
 
-            if (video_id == -1){
+            if (video_id == -1) {
                 alert('This episode is currently unavailable.');
-            }
-            else{
+            } else {
                 // javascript data object
                 var data = {
                     'video_id': video_id,
@@ -1241,7 +1376,7 @@
                             video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, data.video_watched);
                             $('html, body').animate({
                                 scrollTop: '0px'
-                            },1000);
+                            }, 1000);
                         } else {
                             alert('Some unexpected error has occured. Try again.');
                         }
@@ -1251,7 +1386,8 @@
         }
 
         // function to play movie free video
-        function play_free_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
+        function play_free_movie(video_id, video_name, video_description, video_category, video_tags, video_subcategory,
+            video_language, video_cost, video_comments) {
 
             save_history_before_unloading();
             set_content_display('block', 'none', 'none', 'none', 'none', 'none', 'none', 'block');
@@ -1259,7 +1395,8 @@
         }
 
         // function to play series free video
-        function play_free_episode(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments) {
+        function play_free_episode(video_id, video_name, video_description, video_category, video_tags,
+            video_subcategory, video_language, video_cost, video_comments) {
 
             save_history_before_unloading();
             set_content_display('block', 'none', 'block', 'block', 'none', 'block', 'none', 'none');
@@ -1269,7 +1406,7 @@
 
         var is_user_subscribed = false;
         // function to check whether user is subscribed or not
-        window.setInterval(function(){
+        window.setInterval(function () {
 
             var video_id = '';
             if (document.getElementById('video_with_comments').style.display == 'block') {
@@ -1299,7 +1436,9 @@
                             alert(data.is_video_exists);
                         } else if (data.is_subscribed == 'false') {
                             if (is_user_subscribed == true) {
-                                alert('You are no longer subscribed. Buy a new plan to enjoy streaming!!')
+                                alert(
+                                    'You are no longer subscribed. Buy a new plan to enjoy streaming!!'
+                                    )
                             }
                             is_user_subscribed = false;
                         } else if (data.is_subscribed == 'true') {
@@ -1325,8 +1464,8 @@
             var comment_flag_val = '';
             var ele = document.getElementsByName('comment_flag');
 
-            for(var i = 0; i < ele.length; i++) {
-                if ( ele[i].checked ) {
+            for (var i = 0; i < ele.length; i++) {
+                if (ele[i].checked) {
                     comment_flag_val = ele[i].value;
                 }
             }
@@ -1372,8 +1511,8 @@
             var video_flag_val = '';
             var ele = document.getElementsByName('video_flag');
 
-            for(var i = 0; i < ele.length; i++) {
-                if ( ele[i].checked ) {
+            for (var i = 0; i < ele.length; i++) {
+                if (ele[i].checked) {
                     video_flag_val = ele[i].value;
                 }
             }
@@ -1443,7 +1582,14 @@
                     } else if (data.is_user_logged_in != '') {
                         alert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
-                        var add_comm = '<li><div class="row media"><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><div style="display: inline;"><span class="font-weight-bold">'+  data.username +'</span><button onclick="set_comment_id('+ data.comment_id +')" type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;"><i style="color: #d9534f;" class="fas fa-flag"></i></button></div><div class="d-cent text-justify" id="show_comment_'+ data.comment_id +'">'+ data.comment +'</div><button type="button" class="show-mr-button" id="show_comment_button_'+ data.comment_id +'" onclick="show_comment('+ data.comment_id +')">show</button></div></div></div></li><br>';
+                        var add_comm =
+                            '<li><div class="row media"><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><div style="display: inline;"><span class="font-weight-bold">' +
+                            data.username + '</span><button onclick="set_comment_id(' + data.comment_id +
+                            ')" type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCenter" style="float: right;background: #272B2C; border:0;"><i style="color: #d9534f;" class="fas fa-flag"></i></button></div><div class="d-cent text-justify" id="show_comment_' +
+                            data.comment_id + '">' + data.comment +
+                            '</div><button type="button" class="show-mr-button" id="show_comment_button_' +
+                            data.comment_id + '" onclick="show_comment(' + data.comment_id +
+                            ')">show</button></div></div></div></li><br>';
 
                         $('#movie-vid-comments').append(add_comm);
                     } else {
@@ -1495,10 +1641,10 @@
         $('#movierate-submit').on('click', function (e) {
             var movie_id = document.getElementById('selected_movie_id').innerHTML;
 
-             // javascript data object
-             var data = {
+            // javascript data object
+            var data = {
                 'movie_id': movie_id,
-                'movie_rating':  movierating,
+                'movie_rating': movierating,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -1530,14 +1676,14 @@
 
         })
 
-         //got the rating ajax call to save it in the database
+        //got the rating ajax call to save it in the database
         $('#seriesrate-submit').on('click', function (e) {
             var series_id = document.getElementById('selected_series_id').innerHTML;
 
-             // javascript data object
-             var data = {
+            // javascript data object
+            var data = {
                 'series_id': series_id,
-                'series_rating':  seriesrating,
+                'series_rating': seriesrating,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -1613,8 +1759,62 @@
                 var curr_time = Math.floor(video_player.currentTime);
                 save_video_history(video_id, curr_time);
             }
+
+
+
+                    // for animation
+        let options = {
+            rootMargin: '0px 0px -20px 0px',
+            threshold: 0.5
         }
 
+        let callback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = "sectionAnimate 1s forwards ease-in-out";
+                    // unobserve
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        let observer = new IntersectionObserver(callback, options);
+        var sectionToObserve = document.querySelectorAll('.to-observe');
+        // to obsereve the element
+        sectionToObserve.forEach(element => {
+            observer.observe(element);
+        });
+        
+
+        // lazy-loader
+        let opt = {
+            rootMargin: '0px 0px -300px 0px',
+            threshold: 0
+        }
+
+        let callbac = (entries, observerImg) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    var src = entry.target.getAttribute('data-src');
+                    entry.target.src = src;
+                    console.log("hii");
+                    // unobserve
+                    observerImg.unobserve(entry.target);
+                }
+            });
+        };
+
+        let observerImg = new IntersectionObserver(callbac, opt);
+        function callit(){
+            var images=document.querySelectorAll('[data-src]');
+        
+            images.forEach(image => {
+                observerImg.observe(image);
+            })
+        }
+
+        // function should be called after observerImg has been created and after the element neede to be  observered has been loaded
+        callit();
     </script>
 </body>
 

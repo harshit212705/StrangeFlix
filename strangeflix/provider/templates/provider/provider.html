@@ -1091,7 +1091,9 @@
                                 '"><h4 class="text-secondary font-weight-bold my-4">Season' +
                                 seasoncount +
                                 '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img id="season' +
-                                seasoncount + 'thumbnail" src="' + data.all_season_details[key][1] +
+                                seasoncount +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data.all_season_details[key][1] +
                                 '" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="mx-3"><div class="middle-section"><p>' +
                                 data.all_season_details[key][0] +
                                 '</p></div><div class="position-absolute" style="bottom:0;"><button onclick="add_season_videos(' +
@@ -1099,7 +1101,7 @@
                                 ')" class="btn btn-primary btn-sm">Add season videos</button></div></div></div></div></div>';
                             $('#apnd').append(htmlgen);
                         }
-
+                        callit();
                         // appending current season to right navigation bar
                         $('#season-right').append('<li><a href="#season' + key +
                             '">season' + seasoncount + '</a></li>');
@@ -1237,7 +1239,9 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_episode_data[key][5] +
                                 '</span></div></div><img id="episode' +
-                                data.season_episode_data[key][6] + 'thumbnail" src="' + data
+                                data.season_episode_data[key][6] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .season_episode_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -1267,7 +1271,7 @@
                                 '</a></li>');
 
                         }
-
+                        callit();
                         // reset the form
                         $('#selected-tags').empty();
                         $('#seasonepisodeForm').each(function () {
@@ -1398,7 +1402,9 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_episode_data[key][5] +
                                 '</span></div></div><img id="content' +
-                                contentcount + 'thumbnail" src="' + data
+                                contentcount +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .season_episode_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -1425,7 +1431,7 @@
                                 .season_episode_data[key][0] + '">content' + contentcount +
                                 '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#c-selected-tags').empty();
                         $('#freecontentForm').each(function () {
@@ -1513,7 +1519,8 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_episode_data[key][5] +
                                 '</span></div></div><img id="episode' +
-                                data.season_episode_data[key][6] + 'thumbnail" src="' + data
+                                data.season_episode_data[key][6] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' + data
                                 .season_episode_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -1575,7 +1582,8 @@
                                 ':' + currsecs + '</span>' +
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_content_data[key][5] + '</span></div></div><img id="content' +
-                                data.season_content_data[key][0] + 'thumbnail" src="' + data
+                                data.season_content_data[key][0] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' + data
                                 .season_content_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -1614,7 +1622,7 @@
 
                         }
 
-
+                        callit();
                         // reset the form
                         $('#selected-tags').empty();
                         $('#seasonepisodeForm').each(function () {
@@ -1709,7 +1717,7 @@
                                 data
                                 .all_series_data[
                                     key][0] +
-                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="{% static "/images/img_prev.gif"%}" data-src="' +
                                 data.all_series_data[key][5] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><p class="font-weight-bold">' +
                                 data.all_series_data[key][3] + ' | ';
@@ -1721,7 +1729,8 @@
                                     2
                                 ] +
                                 '</p><div class="middle-section"><p>' + data.all_series_data[key][
-                                1] +
+                                    1
+                                ] +
                                 '</p></div><div class="position-absolute" style="bottom:0"><button type="button" class="btn btn-primary btn-sm" onclick="go_to_seasons(' +
                                 key + ')">Go to seasons</button><div></div></div></div></div>';
                             $('#previously-uploaded-series').append(htmlgen);
@@ -1730,7 +1739,9 @@
                             $('#series-right').append('<li><a href="#' + data.all_series_data[
                                     key][0].split(" ").join("") + '">' + data
                                 .all_series_data[key][0] + '</a></li>');
+
                         }
+                        callit();
                     } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
@@ -1799,7 +1810,7 @@
                             var htmlgen = '<div id="season' + key +
                                 '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Season ' +
                                 data.all_series_season_data[key][0] +
-                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="{% static "/images/img_prev.gif"%}" data-src="' +
                                 data.all_series_season_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
                                 data.all_series_season_data[key][1] +
@@ -1816,7 +1827,7 @@
                                 .all_series_season_data[key][0] + '</a></li>');
 
                         }
-
+                        callit();
                         // restricting pointer events for other tabs
                         $('#list-added-seriesform-list').css('pointer-events', 'all');
                         $('#list-added-seriesinfo-list').css('pointer-events', 'all');
@@ -1923,7 +1934,8 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_episode_data[key][5] +
                                 '</span></div></div><img id="episode' +
-                                data.season_episode_data[key][6] + 'thumbnail" src="' + data
+                                data.season_episode_data[key][6] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' + data
                                 .season_episode_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -1947,7 +1959,8 @@
                                 htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
                                     'onclick="edit(' +
                                     data.season_episode_data[key][0] + ',' + data.season_episode_data[key][
-                                        6] + ',' +
+                                        6
+                                    ] + ',' +
                                     '1' +
                                     ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
@@ -1997,7 +2010,8 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_content_data[key][5] +
                                 '</span></div></div><img id="content' +
-                                count + 'thumbnail" src="' + data
+                                count + 'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .season_content_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -2036,7 +2050,7 @@
                             count++;
 
                         }
-
+                        callit();
                         // restricting pointer events for other tabs
                         $('#list-added-seriesform-list').css('pointer-events', 'all');
                         $('#list-added-seriesinfo-list').css('pointer-events', 'all');
@@ -2119,7 +2133,7 @@
                             var htmlgen = '<div id="season' + key +
                                 '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">Season ' +
                                 seasoncount +
-                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="{% static "/images/img_prev.gif"%}" data-src="' +
                                 data.all_season_details[key][1] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
                                 data.all_season_details[key][0] +
@@ -2135,7 +2149,7 @@
                             $('#add-season-right').append('<li><a href="#season' + key +
                                 '">season' + seasoncount + '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#add-seasonForm').each(function () {
                             this.reset();
@@ -2269,7 +2283,9 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_episode_data[key][5] +
                                 '</span></div></div><img id="episode' +
-                                data.season_episode_data[key][6] + 'thumbnail" src="' + data
+                                data.season_episode_data[key][6] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .season_episode_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -2305,7 +2321,7 @@
                                 .season_episode_data[key][0] + '">episode' + data
                                 .season_episode_data[key][6] + '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#add-selected-tags').empty();
                         $('#add-episodeForm').each(function () {
@@ -2435,7 +2451,9 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .season_episode_data[key][5] +
                                 '</span></div></div><img id="content' +
-                                contentcount + 'thumbnail" src="' + data
+                                contentcount +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .season_episode_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -2471,7 +2489,7 @@
                                 .season_episode_data[key][0] + '">content' + contentcount +
                                 '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#e-add-selected-tags').empty();
                         $('#add-free-content-form').each(function () {
@@ -2491,7 +2509,7 @@
             });
         });
 
-        
+
 
         // function to handle play video
         function play_video(video_id, video_url) {
@@ -2687,7 +2705,9 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .movie_video_data[key][5] +
                                 '</span></div></div><img id="movie_video_thumbnail' +
-                                data.movie_video_data[key][0] + 'thumbnail" src="' + data
+                                data.movie_video_data[key][0] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}"  data-src="' +
+                                data
                                 .movie_video_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -2844,7 +2864,9 @@
                                 ':' + currsecs + '</span>' +
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .movie_video_data[key][5] + '</span></div></div><img id="content' +
-                                contentcount + 'thumbnail" src="' + data
+                                contentcount +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .movie_video_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -2872,7 +2894,7 @@
                                 .movie_video_data[key][0] + '">content' + contentcount +
                                 '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#cm-selected-tags').empty();
                         $('#moviefreecontentForm').each(function () {
@@ -2944,7 +2966,7 @@
                                 '" class="container my-5"><h4 class="text-secondary font-weight-bold my-4">' +
                                 data.all_movies_data[
                                     key][0] +
-                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="' +
+                                '<i class="arro text-secondary right mx-1"></i></h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6"><img src="{% static "/images/img_prev.gif"%}" data-src="' +
                                 data.all_movies_data[key][5] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">' +
                                 data.all_movies_data[key][3] + ' | ';
@@ -2966,6 +2988,7 @@
                             $('#add-movie-right').append('<li><a href="#movie' + key + '">' + data
                                 .all_movies_data[key][0] + '</a></li>');
                         }
+                        callit();
                     } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
@@ -3055,7 +3078,8 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .movie_content_data[key][5] +
                                 '</span></div></div><img id="movie_video_thumbnail' +
-                                data.movie_content_data[key][0] + 'thumbnail" src="' + data
+                                data.movie_content_data[key][0] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' + data
                                 .movie_content_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -3094,7 +3118,6 @@
                                 '</a></li>');
 
                         }
-
                         var count = 1;
                         // appending the already uploaded free movie content
                         for (var key in data.movie_free_data) {
@@ -3128,7 +3151,8 @@
                                 ':' + currsecs + '</span>' +
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .movie_free_data[key][5] + '</span></div></div><img id="content' +
-                                data.movie_free_data[key][0] + 'thumbnail" src="' + data
+                                data.movie_free_data[key][0] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' + data
                                 .movie_free_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -3166,7 +3190,7 @@
                             count++;
 
                         }
-
+                        callit();
                         // setting whether movie video button to be displayed or not
                         if (Object.keys(data.movie_content_data).length > 0) {
                             $('#btn_add_add_movie_video').css('display', 'none');
@@ -3296,7 +3320,9 @@
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .movie_video_data[key][5] +
                                 '</span></div></div><img id="movie_video_thumbnail' +
-                                data.movie_video_data[key][0] + 'thumbnail" src="' + data
+                                data.movie_video_data[key][0] +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .movie_video_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -3332,7 +3358,7 @@
                                 .movie_video_data[key][0] + '">' + 'Movie video' + data
                                 .movie_video_data[key][1] + '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#m-add-selected-tags').empty();
                         $('#add-movievideoForm').each(function () {
@@ -3461,7 +3487,9 @@
                                 ':' + currsecs + '</span>' +
                                 '<span class="font-weight-bold" style="color:white;right:0">' + data
                                 .movie_video_data[key][5] + '</span></div></div><img id="content' +
-                                contentcount + 'thumbnail" src="' + data
+                                contentcount +
+                                'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                data
                                 .movie_video_data[key][3] +
                                 '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
 
@@ -3497,7 +3525,7 @@
                                 .movie_video_data[key][0] + '">content' + contentcount +
                                 '</a></li>');
                         }
-
+                        callit();
                         // reset the form
                         $('#cm-add-selected-tags').empty();
                         $('#add-moviefreecontentForm').each(function () {
@@ -3581,7 +3609,33 @@
                 add_tag_in_added();
             }
             $('#edit-content-modal').html('');
+
         })
+        // lazy-loader
+        let options = {
+            rootMargin: '0px 0px -300px 0px',
+            threshold: 0
+        }
+
+        let callback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    var src = entry.target.getAttribute('data-src');
+                    entry.target.src = src;
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        let observer = new IntersectionObserver(callback, options);
+
+        function callit() {
+            var imge = document.querySelectorAll("[data-src]");
+
+            imge.forEach(image => {
+                observer.observe(image);
+            })
+        }
     </script>
 </body>
 

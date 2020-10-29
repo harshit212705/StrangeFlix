@@ -583,3 +583,9 @@ ul {
         flex-direction: row;
     }
 } */
+
+img{
+    width:100%;
+    object-fit:fill;
+    height:15rem !important;
+}
