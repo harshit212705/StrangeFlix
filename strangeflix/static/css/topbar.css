@@ -1,4 +1,3 @@
-
 /* common css  */
 
 .row {
@@ -16,7 +15,7 @@
 }
 body{
   background-color: #272B2C; 
-  color:#fff; 
+  color:#eeeeee; 
 }
 
 .col-gl-1,
@@ -87,34 +86,6 @@ p {
   font-size: 1rem;
 }
 
-
-/* home page  */
-.back-wrapper{
-  max-width: 100%;
-  position: relative;
-  top:-1rem;
-}
-.back-img-par{
-  width: 100%;
-  height:56rem;
-  overflow: hidden;
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-.back-img-child {
-  height: 100%;
-  width: 100%;
-}
-.back-img-child img{
-  width:100%;
-  height:inherit;
-  object-fit:cover;
-  animation-name: homeView;
-  animation-direction: forward;
-  animation-duration: 15s;
-  animation-timing-function: linear;
-}
 /*insert-vid.html*/
 #pl-vid a {
   text-decoration: none;
@@ -188,7 +159,7 @@ p {
 
 .player-wrapper {
   width: 100%;
-  height: 100%;
+  height: auto;
   position: relative;
   background-color: #232222;
 }
@@ -224,8 +195,6 @@ video-player section
 a {
   text-decoration: none;
 }
-
-
 
 
 /* icon  */
@@ -543,9 +512,9 @@ a {
 
 .arrow {
   border: solid white;
-  border-width: 0 5px 5px 0;
+  border-width: 0 3px 3px 0;
   display: inline-block;
-  padding: 9px;
+  padding: 3px;
 }
 
 .right {
@@ -556,7 +525,6 @@ a {
 
 /* comments section  */
 .vid-cont {
-  overflow-y: scroll;
   padding: 0% 0% !important;
 
 }
@@ -733,26 +701,12 @@ a {
 
 
 
-/* recommen  */
-.pad-addr{
-  padding:8% 0% 8% 0%;
-}
-.pad-car-add{
-  padding:4% 0%;
-}
-
-.to-observe{
-  opacity:0;
-}
-
 /* images descrption (series,movies )  */
-
-
 .ser-img {
   /* display:none; */
   position: relative;
   border-radius: 3%;
-  height: 22rem;
+  height: 18rem;
   width: 100%;
   object-fit: fill;
   opacity: 1;
@@ -872,27 +826,3 @@ a {
   text-decoration: underline;
   cursor: pointer;
 }
-
-
-
-
-@keyframes homeView{
-  from{
-    transform: scale(1.5);
-  }
-  to{
-    transform: scale(1.0);
-  }
-}
-
-@keyframes sectionAnimate{
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 40%, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-

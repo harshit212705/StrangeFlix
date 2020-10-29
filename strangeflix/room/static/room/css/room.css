@@ -1,0 +1,170 @@
+
+/*  index css */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    position: fixed;
+    height: 100%;
+}
+
+#sidebar {
+    min-width: 15em;
+    background:  #1F1F1F;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 1.2em;
+    background:#1C1C1C;
+}
+
+#sidebar ul.components {
+    padding: 1.2em 0;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 0.64em;
+}
+
+#sidebar ul li a {
+    padding: 0.65em;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #fff;
+    background: #191a1b;
+}
+
+
+
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+
+
+/* create room  */
+.create-room-section{
+    margin:7% 15%;
+}
+
+.pado {
+    padding: 1% 1%;
+}
+
+
+/* administartered rooms  */
+.adm-tble{
+    margin:7% 2%;
+}
+
+
+
+.card{
+    border:1px solid #181a1b !important;
+}
+.card-footer{
+    border-top:1px solid #181a1b !important; 
+}
+
+
+/* arrows  */
+.arro {
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 6px;
+}
+
+.right {
+    transform: rotate(-45deg);
+}
+
+
+/* details section  */
+
+#pending_request,#members_list{
+    min-height:100px;
+    background-color:#373B3E;
+}
+
+
+
+@media(max-width:1300px) {
+    .middle-section {
+        -webkit-line-clamp: 4;
+    }
+
+    #sidebar {
+        min-width: 12em;
+    }
+}
+
+
+@media(max-width:1050px) {
+    .middle-section {
+        -webkit-line-clamp: 3;
+    }
+
+    #sidebar {
+        min-width: 10em;
+    }
+}
+
+
+@media(max-width:900px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .col-sm-1,
+    .col-md-1,
+    .col-lg-1 {
+        flex: 0 0 8.333333%;
+        max-width: 8.333333%;
+    }
+    h4 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    .col-lg-2,
+    .col-sm-2,
+    .col-md-2,
+    .col-md-8 {
+        width: 100% !important;
+    }
+
+    .media-full {
+        left: 0;
+    }
+
+    .wrapper {
+        display: block;
+        position: relative;
+    }
+
+    .col-md-8,
+    .col-lg-2 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .middle-section {
+        -webkit-line-clamp: 4;
+    }
+    .arro{
+        padding:4px;
+    }
+}
