@@ -370,9 +370,13 @@
         }
     </script>
     <script>
+
+        {% if context.not_subscribed %}
+            alert('You are not subscribed');
+            window.location.href = "{% url 'home_page' %}"
+            {% endif %}
         getHostRooms();
         getMyRooms();
-
         function getHostRooms() {
             var userRoom = document.getElementById('user-room');
             userRoom.innerHTML = '';

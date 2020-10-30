@@ -124,6 +124,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             'user':self.user.username
                         }
                     )
+                if message_type == 'close_room':
+                    print(hi)
+                    await self.channel_layer.group_send(
+                        self.room_group_name,
+                        {
+                            'type': 'close_room',
+                            'message': message,
+                            'user':self.user.username
+                        }
+                )
 
     # Receive message from room group
     async def chat_message(self, event):
@@ -214,5 +224,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #Send play control to WebSocket
         await self.send(text_data=json.dumps({
             'type':'remove_user',
+            'user':event['user']
+        }))
+    
+    # Receive host left from room group
+    async def close_room(self, event):
+        message = event['message']
+        # Send host left to WebSocket
+        await self.send(text_data=json.dumps({
+            'type':'close_room',
+            'message': message,
             'user':event['user']
         }))

@@ -106,6 +106,11 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
                 }
                 fillUsers()
             }
+            if(data.type === 'close_room')
+            {
+                alert(data.message);
+                window.close();
+            }
 
         };
 

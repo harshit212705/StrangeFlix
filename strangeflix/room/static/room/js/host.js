@@ -131,7 +131,8 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
 
         }
         addRoomToList();
-        window.addEventListener('beforeunload',function (){
+        window.addEventListener('beforeunload',function (e){
+
             var roomList = JSON.parse(localStorage.getItem('roomlist'));
             if(roomList.rooms.find((s)=> s===room_id))
             {
@@ -141,7 +142,6 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
                     roomList.rooms.splice(index, 1);
                 }
             }
-            localStorage.setItem('roomlist',JSON.stringify(roomList));
         });
         roomChannel.onmessage = function(e) {
             const message = e.data;
