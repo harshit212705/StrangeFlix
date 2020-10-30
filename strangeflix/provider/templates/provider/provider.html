@@ -18,6 +18,7 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="{% static "/css/provider.css" %}">
     <link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+    <link rel="stylesheet" href="{% static "/css/providerhome.css" %}">
 </head>
 
 <body>
@@ -79,7 +80,41 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                         aria-labelledby="list-home-list">
-
+                        <div class="example">
+  
+                            <div class="clip">
+                                
+                              <div class="film"><div class="welcome-text">Welcome to the provider's dashboard.</div></div>
+                                
+                            </div>
+                            <div class="clip">
+                                
+                              <div class="film">
+                                  <div class = "row">
+                                  <div class="col-sm">
+                                <div class="welcome-text">Add movies and series and get them verified.</div>
+                              </div>
+                              <div class="col-sm">
+                                <img src="{% static "/image/QU3H.gif" %}" alt="Add movies and series and get them verified." srcset="" height="300px"></div>
+                              </div>
+                                
+                            </div>
+                            </div>
+                            <div class="clip">
+                                
+                                <div class="film">
+                                    <div class = "row">
+                                    <div class="col-sm">
+                                  <div class="welcome-text">Upload directly from thousands of resources.</div>
+                                </div>
+                                <div class="col-sm">
+                                  <img src="{% static "/image/giphy.webp" %}" alt="Add movies and series and get them verified." srcset="" height="300px"></div>
+                                </div>
+                                  
+                              </div>
+                                
+                            </div>
+                              </div>
                     </div>
                     <!-- add movie -->
                     <div class="tab-pane fade" id="list-movie" role="tabpanel" aria-labelledby="list-movie-list">
@@ -2172,7 +2207,6 @@
         // submitting new season episode form using ajax call
         $("#add-episodeForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
             // Extracting Form Data
             var series_season_id = document.getElementById('add_series_season_id').innerHTML;
             var episode_no = document.getElementById('add__series__season__episodeno').value;

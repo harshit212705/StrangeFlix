@@ -1,0 +1,111 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+.welcome-text{
+    font-family: 'Staatliches', cursive;
+    color: white;
+    font-size: 100px;
+}
+.clip {
+    float: left;
+    left: -5.2%;
+    width: 129.245%;
+    height: 900px;
+    margin: 0 1%;
+    padding-top: 23%;
+    position: relative;
+    background-color: #2d252e;
+    background-image:  
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff),        
+         
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff), 
+        linear-gradient(to right, #fff, #fff);
+
+    background-repeat:no-repeat;
+    background-position: 
+        5% 5%,
+        15% 5%,
+        25% 5%, 
+        35% 5%,
+        45% 5%,
+        55% 5%,
+        65% 5%,
+        75% 5%, 
+        85% 5%,
+        95% 5%,
+             
+        5% 95%,
+        15% 95%,
+        25% 95%, 
+        35% 95%,
+        45% 95%,
+        55% 95%,
+        65% 95%,
+        75% 95%, 
+        85% 95%,
+        95% 95%;
+    
+    background-size:
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+            
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%,
+        5% 8%;
+}
+.clip .film {  
+  margin: 12% 5%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  display: -webkit-grid;
+  display: -ms-grid;
+  -webkit-grid-columns: 1fr;
+  -webkit-grid-rows: 1fr;
+  -ms-grid-columns: 1fr;
+  -ms-grid-rows: 1fr;
+}
+.clip img {
+  /* max-width: 100%; */
+  height: 500px;
+  -webkit-grid-row-align: center;
+  -ms-grid-row-align: center;
+}
