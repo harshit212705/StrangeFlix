@@ -3,296 +3,314 @@
     <div id="subcategory_search_results">
     </div>
     {% if recommended_series != '' %}
-    <div class="container-fluid my-5">
-        <h4 class="font-weight-bold mx-5">Recommended Series</h4>
-        <div id="recommended_series" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active mx-5">
-                    <div class="row">
-                        {% for key, value in recommended_series.items %}
+    <div class="container-fluid to-observe">
+        <div class="pad-addr">
+            <h2 class="font-weight-bold mx-5">Recommended Series <i class="arrow right mx-1"></i></h2>
+            <div id="recommended_series" class="carousel slide pad-car-add" data-ride="carousel" data-interval="false"
+                data-wrap="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-5">
+                        <div class="row">
+                            {% for key, value in recommended_series.items %}
                             {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:6 %}
-                                <div class="carousel-item">
+                            <div class="carousel-item">
                                 <div class="row">
-                            {% endif %}
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
-                                <div class="card py-3 px-3" style="border:0">
-                                    <div class="card-body">
-                                        <div class="ser-name-carouse text-center font-weight-bold" style="font-size: 24px;">
-                                            {{ value.0 }}
-                                        </div>
-                                        <div class="img-seci">
-                                            <a href="#" onclick="open_series('{{ key }}')">
-                                                <img class="img-fluid ser-img"
-                                                    src="{{ value.5 }}"
-                                                    alt="image4">
-                                            </a>
+                                    {% endif %}
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
+                                        <div class="card py-3 px-3" style="border:0">
+                                            <div class="card-body">
+                                                <div class="ser-name-carouse text-center font-weight-bold"
+                                                    style="font-size: 24px;">
+                                                    {{ value.0 }}
+                                                </div>
+                                                <div class="img-seci">
+                                                    <a href="#" onclick="open_series('{{ key }}')">
+                                                    <img class="img-fluid ser-img" src="{% static "images/img_prev.gif"%}" data-src="{{ value.5 }}" alt="image4">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {% if forloop.counter|divisibleby:6 %}
                                 </div>
                             </div>
-                            {% if forloop.counter|divisibleby:6 %}
-                                </div></div>
                             {% endif %}
-                        {% endfor %}
-                        {% if recommended_series|length|divisibleby:6 %}
-                        {% else %}
-                            </div></div>
-                        {% endif %}
+                            {% endfor %}
+                            {% if recommended_series|length|divisibleby:6 %}
+                            {% else %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev bg-danger" href="#recommended_series" role="button" data-slide="prev"
+                    style="display:none">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-danger" href="#recommended_series" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev bg-danger" href="#recommended_series" role="button" data-slide="prev"
-                style="display:none">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next bg-danger" href="#recommended_series" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     {% endif %}
     {% if recommended_movies != '' %}
-    <div class="container-fluid my-5">
-        <h4 class="font-weight-bold mx-5">Recommended Movies</h4>
-        <div id="recommended_movies" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active mx-5">
-                    <div class="row">
-                        {% for key, value in recommended_movies.items %}
+    <div class="container-fluid to-observe">
+        <div class="pad-addr">
+            <h2 class="font-weight-bold mx-5">Recommended Movies <i class="arrow right mx-1"></i></h2>
+            <div id="recommended_movies" class="carousel slide pad-car-add" data-ride="carousel" data-interval="false"
+                data-wrap="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-5">
+                        <div class="row">
+                            {% for key, value in recommended_movies.items %}
                             {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:6 %}
-                                <div class="carousel-item">
+                            <div class="carousel-item">
                                 <div class="row">
-                            {% endif %}
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
-                                <div class="card py-3 px-3" style="border:0">
-                                    <div class="card-body">
-                                        <div class="ser-name-carouse text-center font-weight-bold">
-                                            {{ value.0 }}
-                                        </div>
-                                        <div class="img-seci">
-                                            <a href="#" onclick="open_movie('{{ key }}')">
-                                                <img class="img-fluid ser-img"
-                                                    src="{{ value.5 }}"
-                                                    alt="image4">
-                                            </a>
+                                    {% endif %}
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
+                                        <div class="card py-3 px-3" style="border:0">
+                                            <div class="card-body">
+                                                <div class="ser-name-carouse text-center font-weight-bold">
+                                                    {{ value.0 }}
+                                                </div>
+                                                <div class="img-seci">
+                                                    <a href="#" onclick="open_movie('{{ key }}')">
+                                                        <img class="img-fluid ser-img" src="{% static "images/img_prev.gif"%}" data-src="{{ value.5 }}" alt="image4">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {% if forloop.counter|divisibleby:6 %}
                                 </div>
                             </div>
-                            {% if forloop.counter|divisibleby:6 %}
-                                </div></div>
                             {% endif %}
-                        {% endfor %}
-                        {% if recommended_movies|length|divisibleby:6 %}
-                        {% else %}
-                            </div></div>
-                        {% endif %}
+                            {% endfor %}
+                            {% if recommended_movies|length|divisibleby:6 %}
+                            {% else %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev bg-danger" href="#recommended_movies" role="button" data-slide="prev"
+                    style="display:none">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-danger" href="#recommended_movies" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev bg-danger" href="#recommended_movies" role="button" data-slide="prev"
-                style="display:none">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next bg-danger" href="#recommended_movies" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     {% endif %}
     {% if recent_series != '' %}
-    <div class="container-fluid my-5">
-        <h4 class="font-weight-bold mx-5">Recent Series</h4>
-        <div id="recent_series" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active mx-5">
-                    <div class="row">
-                        {% for key, value in recent_series.items %}
+    <div class="container-fluid to-observe">
+        <div class="pad-addr">
+            <h2 class="font-weight-bold mx-5">Recent Series <i class="arrow right mx-1"></i></h2>
+            <div id="recent_series" class="carousel slide pad-car-add" data-ride="carousel" data-interval="false"
+                data-wrap="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-5">
+                        <div class="row">
+                            {% for key, value in recent_series.items %}
                             {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:6 %}
-                                <div class="carousel-item">
+                            <div class="carousel-item">
                                 <div class="row">
-                            {% endif %}
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
-                                <div class="card py-3 px-3" style="border:0">
-                                    <div class="card-body">
-                                        <div class="ser-name-carouse text-center font-weight-bold" style="font-size: 24px;">
-                                            {{ value.0 }}
-                                        </div>
-                                        <div class="img-seci">
-                                            <a href="#" onclick="open_series('{{ key }}')">
-                                                <img class="img-fluid ser-img"
-                                                    src="{{ value.5 }}"
-                                                    alt="image4">
-                                            </a>
+                                    {% endif %}
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
+                                        <div class="card py-3 px-3" style="border:0">
+                                            <div class="card-body">
+                                                <div class="ser-name-carouse text-center font-weight-bold"
+                                                    style="font-size: 24px;">
+                                                    {{ value.0 }}
+                                                </div>
+                                                <div class="img-seci">
+                                                    <a href="#" onclick="open_series('{{ key }}')">
+                                                        <img class="img-fluid ser-img" src="{% static "images/img_prev.gif"%}" data-src="{{ value.5 }}" alt="image4">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {% if forloop.counter|divisibleby:6 %}
                                 </div>
                             </div>
-                            {% if forloop.counter|divisibleby:6 %}
-                                </div></div>
                             {% endif %}
-                        {% endfor %}
-                        {% if recent_series|length|divisibleby:6 %}
-                        {% else %}
-                            </div></div>
-                        {% endif %}
+                            {% endfor %}
+                            {% if recent_series|length|divisibleby:6 %}
+                            {% else %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev bg-danger" href="#recent_series" role="button" data-slide="prev"
+                    style="display:none">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-danger" href="#recent_series" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev bg-danger" href="#recent_series" role="button" data-slide="prev"
-                style="display:none">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next bg-danger" href="#recent_series" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     {% endif %}
     {% if recent_movies != '' %}
-    <div class="container-fluid my-5">
-        <h4 class="font-weight-bold mx-5">Recent Movies</h4>
-        <div id="recent_movies" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active mx-5">
-                    <div class="row">
-                        {% for key, value in recent_movies.items %}
+    <div class="container-fluid to-observe">
+        <div class="pad-addr">
+            <h2 class="font-weight-bold mx-5">Recent Movies <i class="arrow right mx-1"></i></h2>
+            <div id="recent_movies" class="carousel slide pad-car-add" data-ride="carousel" data-interval="false" data-wrap="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-5">
+                        <div class="row">
+                            {% for key, value in recent_movies.items %}
                             {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:6 %}
-                                <div class="carousel-item">
+                            <div class="carousel-item">
                                 <div class="row">
-                            {% endif %}
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
-                                <div class="card py-3 px-3" style="border:0">
-                                    <div class="card-body">
-                                        <div class="ser-name-carouse text-center font-weight-bold">
-                                            {{ value.0 }}
-                                        </div>
-                                        <div class="img-seci">
-                                            <a href="#" onclick="open_movie('{{ key }}')">
-                                                <img class="img-fluid ser-img"
-                                                    src="{{ value.5 }}"
-                                                    alt="image4">
-                                            </a>
+                                    {% endif %}
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
+                                        <div class="card py-3 px-3" style="border:0">
+                                            <div class="card-body">
+                                                <div class="ser-name-carouse text-center font-weight-bold">
+                                                    {{ value.0 }}
+                                                </div>
+                                                <div class="img-seci">
+                                                    <a href="#" onclick="open_movie('{{ key }}')">
+                                                        <img class="img-fluid ser-img" src="{% static "images/img_prev.gif"%}" data-src="{{ value.5 }}" alt="image4">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {% if forloop.counter|divisibleby:6 %}
                                 </div>
                             </div>
-                            {% if forloop.counter|divisibleby:6 %}
-                                </div></div>
                             {% endif %}
-                        {% endfor %}
-                        {% if recent_movies|length|divisibleby:6 %}
-                        {% else %}
-                            </div></div>
-                        {% endif %}
+                            {% endfor %}
+                            {% if recent_movies|length|divisibleby:6 %}
+                            {% else %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev bg-danger" href="#recent_movies" role="button" data-slide="prev"
+                    style="display:none">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-danger" href="#recent_movies" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev bg-danger" href="#recent_movies" role="button" data-slide="prev"
-                style="display:none">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next bg-danger" href="#recent_movies" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     {% endif %}
     {% if popular_series != '' %}
-    <div class="container-fluid my-5">
-        <h4 class="font-weight-bold mx-5">Popular Series</h4>
-        <div id="popular_series" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active mx-5">
-                    <div class="row">
-                        {% for key, value in popular_series.items %}
+    <div class="container-fluid to-observe">
+        <div class="pad-addr">
+            <h2 class="font-weight-bold mx-5">Popular Series <i class="arrow right mx-1"></i></h2>
+            <div id="popular_series" class="carousel slide pad-car-add" data-ride="carousel" data-interval="false" data-wrap="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-5">
+                        <div class="row">
+                            {% for key, value in popular_series.items %}
                             {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:6 %}
-                                <div class="carousel-item">
+                            <div class="carousel-item">
                                 <div class="row">
-                            {% endif %}
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
-                                <div class="card py-3 px-3" style="border:0">
-                                    <div class="card-body">
-                                        <div class="ser-name-carouse text-center font-weight-bold" style="font-size: 24px;">
-                                            {{ value.0 }}
-                                        </div>
-                                        <div class="img-seci">
-                                            <a href="#" onclick="open_series('{{ key }}')">
-                                                <img class="img-fluid ser-img"
-                                                    src="{{ value.5 }}"
-                                                    alt="image4">
-                                            </a>
+                                    {% endif %}
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
+                                        <div class="card py-3 px-3" style="border:0">
+                                            <div class="card-body">
+                                                <div class="ser-name-carouse text-center font-weight-bold"
+                                                    style="font-size: 24px;">
+                                                    {{ value.0 }}
+                                                </div>
+                                                <div class="img-seci">
+                                                    <a href="#" onclick="open_series('{{ key }}')">
+                                                        <img class="img-fluid ser-img" src="{% static "images/img_prev.gif"%}" data-src="{{ value.5 }}" alt="image4">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {% if forloop.counter|divisibleby:6 %}
                                 </div>
                             </div>
-                            {% if forloop.counter|divisibleby:6 %}
-                                </div></div>
                             {% endif %}
-                        {% endfor %}
-                        {% if popular_series|length|divisibleby:6 %}
-                        {% else %}
-                            </div></div>
-                        {% endif %}
+                            {% endfor %}
+                            {% if popular_series|length|divisibleby:6 %}
+                            {% else %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev bg-danger" href="#popular_series" role="button" data-slide="prev"
+                    style="display:none">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-danger" href="#popular_series" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev bg-danger" href="#popular_series" role="button" data-slide="prev"
-                style="display:none">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next bg-danger" href="#popular_series" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     {% endif %}
     {% if popular_movies != '' %}
-    <div class="container-fluid my-5">
-        <h4 class="font-weight-bold mx-5">Popular Movies</h4>
-        <div id="popular_movies" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active mx-5">
-                    <div class="row">
-                        {% for key, value in popular_movies.items %}
+    <div class="container-fluid to-observe">
+        <div class="pad-addr">
+            <h2 class="font-weight-bold mx-5">Popular Movies <i class="arrow right mx-1"></i></h2>
+            <div id="popular_movies" class="carousel slide pad-car-add" data-ride="carousel" data-interval="false" data-wrap="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-5">
+                        <div class="row">
+                            {% for key, value in popular_movies.items %}
                             {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:6 %}
-                                <div class="carousel-item">
+                            <div class="carousel-item">
                                 <div class="row">
-                            {% endif %}
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
-                                <div class="card py-3 px-3" style="border:0">
-                                    <div class="card-body">
-                                        <div class="ser-name-carouse text-center font-weight-bold">
-                                            {{ value.0 }}
-                                        </div>
-                                        <div class="img-seci">
-                                            <a href="#" onclick="open_movie('{{ key }}')">
-                                                <img class="img-fluid ser-img"
-                                                    src="{{ value.5 }}"
-                                                    alt="image4">
-                                            </a>
+                                    {% endif %}
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card">
+                                        <div class="card py-3 px-3" style="border:0">
+                                            <div class="card-body">
+                                                <div class="ser-name-carouse text-center font-weight-bold">
+                                                    {{ value.0 }}
+                                                </div>
+                                                <div class="img-seci">
+                                                    <a href="#" onclick="open_movie('{{ key }}')">
+                                                        <img class="img-fluid ser-img" src="{% static "images/img_prev.gif"%}" data-src="{{ value.5 }}" alt="image4">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {% if forloop.counter|divisibleby:6 %}
                                 </div>
                             </div>
-                            {% if forloop.counter|divisibleby:6 %}
-                                </div></div>
                             {% endif %}
-                        {% endfor %}
-                        {% if popular_movies|length|divisibleby:6 %}
-                        {% else %}
-                            </div></div>
-                        {% endif %}
+                            {% endfor %}
+                            {% if popular_movies|length|divisibleby:6 %}
+                            {% else %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev bg-danger" href="#popular_movies" role="button" data-slide="prev"
+                    style="display:none">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-danger" href="#popular_movies" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev bg-danger" href="#popular_movies" role="button" data-slide="prev"
-                style="display:none">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next bg-danger" href="#popular_movies" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
     {% endif %}

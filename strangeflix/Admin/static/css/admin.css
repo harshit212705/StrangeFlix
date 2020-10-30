@@ -107,6 +107,7 @@ ul ul a {
 
 ul {
     list-style-type: none;
+    padding-inline-start: 10px;
 }
 
 .fix {
@@ -461,4 +462,13 @@ ul {
     .arro {
         padding: 4px;
     }
+}
+
+
+
+/* new changes  */
+img{
+    width:100%;
+    object-fit:fill;
+    height:15rem !important;
 }

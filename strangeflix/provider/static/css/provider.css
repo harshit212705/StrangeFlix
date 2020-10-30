@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #2d252e;
 }
 
 p {
@@ -132,7 +132,7 @@ ul {
 }
 
 .fix ul a {
-    color: #77757a;
+    color: white;
 }
 
 #section1,
@@ -582,4 +582,10 @@ ul {
     .series__form .list-group,.series__added__form .list-group {
         flex-direction: row;
     }
+} */
+
+/* img{
+    width:100%;
+    object-fit:fill;
+    height:15rem !important;
 } */

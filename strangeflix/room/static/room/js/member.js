@@ -63,6 +63,7 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
             {
                 console.log(data.message);
                 video.innerHTML = data.videoStatus;
+                video.load();
                 users = data.users;
                 fillUsers();
                 upd(data.currentTimeStatus)
@@ -104,6 +105,11 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
                     }
                 }
                 fillUsers()
+            }
+            if(data.type === 'close_room')
+            {
+                alert(data.message);
+                window.close();
             }
 
         };

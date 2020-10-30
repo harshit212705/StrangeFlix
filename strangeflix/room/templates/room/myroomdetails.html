@@ -1,26 +1,212 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Chat Rooms</title>
+    <!-- Font Awesome JS -->
+    <!-- font-awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <script src="{% static "/js/jquery-3.5.1.js" %}"></script>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{% static "/css/topbar.css" %}">
+    <link rel="stylesheet" href="{% static "room/css/room.css" %}">
 </head>
+
 <body>
-    <b>Room Title: {{ context.title }}</b>
-    <br>
-    <b>Room Id: {{ context.room_id }}</b>
-    <br>
-    <b>Description : {{ context.description }} </b>
-    <br>
-    <b>Host: {{ context.host }}</b>
-    <br>
-    <b>Members</b>
-    <a href="/room/join/{{ context.room_id }}" target="_blank">Join room</a>
-    <div id='members_list'></div>
-        {% for member in context.members %}
-            {{ member }} <br>
-        {% endfor %}
-    
+    <div class="navbar-section">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+            <a href="#" class="navbar-brand py-3 font-weight-bold">Strangeflix</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'home_page' %}">Home</a></li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#"> -->
+                        <div class="dropdown py-2 px-2 specia-drop">
+                            <button class="rem-button" id="dropdownMenu2" aria-haspopup="true" aria-expanded="false">
+                                Sports
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <div class="dropdown-item">
+                                    <a href="#">Cricket</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Football</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Tennis</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Martial Arts</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">eSports</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Hockey</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Badminton</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Wrestling</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Kabbadi</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Table Tennis</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </a> -->
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown py-2 px-2 specia-drop">
+                            <button class="rem-button" id="dropdownMenu3" aria-haspopup="true" aria-expanded="false">
+                                Entertainment
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                <div class="dropdown-item">
+                                    <a href="#">Action</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Adventure</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Animation</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Comedy</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Crime</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Drama</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Horror</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Romance</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Thriller</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="navbar-nav ml-auto">
+
+                    <!-- search bar  -->
+                    <input type="text" id="sear" class="form-control mr-sm-2" placeholder="search by name">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-dark">Search</button>
+                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                            aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu">
+                            <button id="sear-by-nam" class="dropdown-item btn-secondary">Search by name</a>
+                                <button id="sear-by-tag" class="dropdown-item btn-secondary">Search by tags</a>
+                        </div>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <li class="mx-4">
+                        <div class="btn-group specia-drop">
+                            <button class="rem-button py-2 px-2" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{% url "subscription_plans" %}">Subscribe</a>
+                                <a class="dropdown-item" href="{% url "wallet_details" %}">Wallet</a>
+                                <a class="dropdown-item" href="{% url "index" %}">My Rooms</a>
+                                <a class="dropdown-item" href="{% url "account_logout" %}">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="mx-4">
+                        <!-- login  -->
+                        <a href="#" class="nav-item nav-link ml-2" data-toggle="modal"
+                            data-target="#loginModal">Login</a>
+                    </li>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card create-room-section">
+            <div class="card-body">
+                <div class="heade">
+                    <h4 class="text-center font-weight-bold my-3">{{ context.title }}</h4>
+                    <div class="d-flex flex-row-reverse align-items-flex-end">
+                        <a class="btn btn-danger btn-sm mt-2" href="/room/join/{{ context.room_id }}"
+                            target="_blank">Join
+                            room</a>
+                    </div>
+                </div>
+
+                <h5 class="font-weight-bold my-3">Room Id: {{ context.room_id }}</h5>
+                <h5 class="font-weight-bold my-3">Description : {{ context.description }} </h5>
+                <h5 class="font-weight-bold my-3">Host : {{ context.host }} </h5>
+                <div class="members">
+                    <h5 class="font-weight-bold my-3">Members :</h5>
+                    <div id='members_list'>
+                        {% for member in context.members %}
+                        {{ member }} <br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <form id="AddUserForm">
+                        <div class="form-group">
+                            <div class="row pado">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="{% static "/js/jquery-3.5.1.js" %}"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+    <script src="{% static "room/js/room.js" %}"></script>
+
+    <!-- to truncate the extra hash in url -->
+    <script type="text/javascript">
+        if (window.location.hash === "#_=_") {
+            history.replaceState ?
+                history.replaceState(null, null, window.location.href.split("#")[0]) :
+                window.location.hash = "";
+        }
+    </script>
 </body>
+
 </html>
