@@ -23,9 +23,10 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 import base64
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
-
+from django.db.models import Max
 import re
 import os
+import itertools
 import mimetypes
 from wsgiref.util import FileWrapper
 from django.http import StreamingHttpResponse
@@ -43,7 +44,7 @@ from .recommendations import recommend_movies, recommend_series, recent_movies_s
     recent_series_suggestion, popular_movies_suggestion, popular_series_suggestion
 from provider.views import LANGUAGE_REVERSE, SUBCATEGORY_REVERSE, CATEGORY_REVERSE, VERIFICATION_REVERSE, \
                             VIDEO_EXTENSION_REVERSE, VIDEO_QUALITY_REVERSE, VIDEO_TYPE_REVERSE, \
-                            VIDEO_BASE_FILEPATH, storage
+                            VIDEO_BASE_FILEPATH, storage, SUBCATEGORY
 
 
 
@@ -828,6 +829,182 @@ def save_video_history(request):
         return JsonResponse(context)
     else:
         return render(request, 'templates/404.html')
+
+
+
+# function to handle user search query request
+@csrf_exempt
+def get_search_results(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        search_based_on = json_data['search_based_on']
+        search_query = json_data['search_query']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_successful': '',
+            'search_results': '',
+        }
+
+        if search_based_on == 'search by name':
+            movies = MovieVideo.objects.filter(
+                movie_id__movie_name__icontains=search_query,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+                verification_status=2,
+            ).values('movie_id__movie_id', 'movie_id__movie_name', 'date_of_release')
+            series = SeriesVideos.objects.filter(
+                series_season_id__series_id__series_name__icontains=search_query,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+                verification_status=2,
+            ).values('series_season_id__series_id__series_id', 'series_season_id__series_id__series_name').annotate(max_release_date=Max('date_of_release'))
+
+            search_results = {}
+            for obj in movies:
+                diff = (datetime.now(tz=timezone.utc) - obj['date_of_release']).total_seconds()
+                search_results.update({diff: ('M', obj['movie_id__movie_id'], obj['movie_id__movie_name'])})
+
+            for obj in series:
+                diff = (datetime.now(tz=timezone.utc) - obj['max_release_date']).total_seconds()
+                search_results.update({diff: ('S', obj['series_season_id__series_id__series_id'], obj['series_season_id__series_id__series_name'])})
+
+            search_results = {k: v for k, v in sorted(search_results.items(), key=lambda item: item[0])}
+
+            context['search_results'] = search_results
+
+        elif search_based_on == 'search by tag':
+            movie_video_ids = MovieVideoTags.objects.filter(
+                tag_word__icontains=search_query,
+            ).values('video_id')
+            movies = MovieVideo.objects.filter(
+                video_id__in=movie_video_ids,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+                verification_status=2,
+            ).values('movie_id__movie_id', 'movie_id__movie_name', 'date_of_release')
+
+            series_video_ids = SeriesVideosTags.objects.filter(
+                tag_word__icontains=search_query,
+            ).values('video_id')
+            series = SeriesVideos.objects.filter(
+                video_id__in=series_video_ids,
+                date_of_release__lte=datetime.now(tz=timezone.utc),
+                verification_status=2,
+            ).values('series_season_id__series_id__series_id', 'series_season_id__series_id__series_name').annotate(max_release_date=Max('date_of_release'))
+
+            search_results = {}
+            for obj in movies:
+                diff = (datetime.now(tz=timezone.utc) - obj['date_of_release']).total_seconds()
+                search_results.update({diff: ('M', obj['movie_id__movie_id'], obj['movie_id__movie_name'])})
+
+            for obj in series:
+                diff = (datetime.now(tz=timezone.utc) - obj['max_release_date']).total_seconds()
+                search_results.update({diff: ('S', obj['series_season_id__series_id__series_id'], obj['series_season_id__series_id__series_name'])})
+
+            search_results = {k: v for k, v in sorted(search_results.items(), key=lambda item: item[0])}
+
+            context['search_results'] = search_results
+
+        context['is_successful'] = 'Results Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# function to handle user search query by subcategory request
+@csrf_exempt
+def search_results_by_subcategory(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        subcategory = json_data['subcategory']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_successful': '',
+            'search_results': '',
+        }
+
+        all_movie_ids_with_subcategory = MovieSubCategories.objects.filter(
+            sub_category=SUBCATEGORY[str(subcategory).lower()],
+        ).values('movie_id').distinct()
+
+        released_movie_ids = MovieVideo.objects.filter(
+            movie_id__in=all_movie_ids_with_subcategory,
+            date_of_release__lte=datetime.now(tz=timezone.utc),
+            verification_status=2,
+        ).values('movie_id__movie_id')
+
+        movie_release_dates = MovieVideo.objects.filter(
+            movie_id__in=released_movie_ids,
+        ).values('movie_id__movie_id', 'date_of_release')
+
+        movie_release_date_mapping = {}
+        for obj in movie_release_dates:
+            movie_release_date_mapping.update({obj['movie_id__movie_id']: obj['date_of_release']})
+        # print(movie_release_date_mapping)
+
+        movies_data = MovieDetails.objects.filter(movie_id__in=released_movie_ids)
+        all_subcategory_data = MovieSubCategories.objects.filter(movie_id__in=released_movie_ids)
+
+        # fetching all subcategories for the movies that are to be included
+        subcategory_data = {}
+        for obj in released_movie_ids:
+            subcategory_data.update({obj['movie_id__movie_id']: []})
+
+        for sub_cat in all_subcategory_data:
+            subcategory_data[sub_cat.movie_id.movie_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
+
+        search_results = {}
+        for obj in movies_data:
+            diff = (datetime.now(tz=timezone.utc) - movie_release_date_mapping[obj.pk]).total_seconds()
+            search_results.update({diff: ('M', obj.movie_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), 'Entertainment', obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk], str(obj.pk))})
+        # print(search_results)
+
+        all_series_ids_with_subcategory = SeriesSubCategories.objects.filter(
+            sub_category=SUBCATEGORY[str(subcategory).lower()],
+        ).values('series_id').distinct()
+
+        released_series_ids = SeriesVideos.objects.filter(
+            series_season_id__series_id__in=all_series_ids_with_subcategory,
+            date_of_release__lte=datetime.now(tz=timezone.utc),
+            verification_status=2,
+        ).values('series_season_id__series_id__series_id').distinct()
+
+        series_max_release_dates = SeriesVideos.objects.filter(
+            series_season_id__series_id__in=released_series_ids,
+        ).values('series_season_id__series_id__series_id').annotate(max_release_date=Max('date_of_release'))
+
+        series_max_release_date_mapping = {}
+        for obj in series_max_release_dates:
+            series_max_release_date_mapping.update({obj['series_season_id__series_id__series_id']: obj['max_release_date']})
+        # print(series_max_release_date_mapping)
+
+        series_data = SeriesDetails.objects.filter(series_id__in=released_series_ids)
+        all_subcategory_data = SeriesSubCategories.objects.filter(series_id__in=released_series_ids)
+
+        # fetching all subcategories for the series that are to be included
+        subcategory_data = {}
+        for obj in released_series_ids:
+            subcategory_data.update({obj['series_season_id__series_id__series_id']: []})
+
+        for sub_cat in all_subcategory_data:
+            subcategory_data[sub_cat.series_id.series_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
+
+        for obj in series_data:
+            diff = (datetime.now(tz=timezone.utc) - series_max_release_date_mapping[obj.pk]).total_seconds()
+            search_results.update({diff: ('S', obj.series_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), str(CATEGORY_REVERSE[obj.category]).title(), obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk], str(obj.pk))})
+
+        search_results = {k: v for k, v in sorted(search_results.items(), key=lambda item: item[0])}
+        # print(search_results)
+
+        context['search_results'] = dict(itertools.islice(search_results.items(), 24))
+        context['is_successful'] = 'Results Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
 
 
 # function to handle ad new comment to video

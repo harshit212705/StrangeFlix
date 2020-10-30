@@ -4,6 +4,9 @@
 
 
 ### By <b>_Harshit Garg_</b> on <b>_October 29, 2020_</b>
+* Search feature added.
+
+### By <b>_Harshit Garg_</b> on <b>_October 29, 2020_</b>
 * History feature added.
 
 ### By <b>_Harshit Garg_</b> on <b>_October 28, 2020_</b>
