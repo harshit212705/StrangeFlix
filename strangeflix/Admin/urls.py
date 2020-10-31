@@ -20,4 +20,7 @@ urlpatterns = [
     url('search_users/', admin_views.search_users, name = "search_users"),
     url('change_user_type/', admin_views.change_user_type, name = "change_user_type"),
     url('update_user_type/', admin_views.update_user_type, name = "update_user_type"),
+    url('get_video_comments/', admin_views.get_video_comments, name = "get_video_comments"),
+    url('get_video_flags/', admin_views.get_video_flags, name = "get_video_flags"),
+    url('delete_comment/', admin_views.delete_comment, name = "delete_comment"),
 ]

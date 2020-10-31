@@ -584,7 +584,7 @@ class VideoComment(models.Model):
         verbose_name_plural = "Video Comment"
 
     def __str__(self):
-        return str('User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || comment--') + str(self.comment) + str(' || comment_type--') + str(self.comment_type)
+        return str('comment_id--') + str(self.comment_id) + str(' || User--') + str(self.user_id.username) + str(' || video_id--') + str(self.video_id.video_id) + str(' || comment--') + str(self.comment) + str(' || comment_type--') + str(self.comment_type)
 
 
 

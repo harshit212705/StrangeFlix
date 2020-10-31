@@ -5,13 +5,16 @@ from provider.models import Videos, SeriesDetails, SeriesSubCategories, SeriesSe
                     SeriesRating, VideoComment, VideoRejectionComment, ReportComment, ReportVideo, \
                     Favourites, History
 
+# importing required models from different apps
 from .models import PayPerViewTransaction
 from accounts.models import UserDetails
+from subscribe.models import Subscriptions
+
+# importing django modules needed
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from accounts.forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from subscribe.models import Subscriptions
 from datetime import datetime, timedelta, timezone
 import os
 import json
@@ -21,25 +24,26 @@ import hashlib
 from django.http import HttpResponse, Http404, JsonResponse
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-import base64
-from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from django.db.models import Max
 import re
 import os
 import itertools
 import mimetypes
+
+# importing modules to Stream video to user
+import base64
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from wsgiref.util import FileWrapper
 from django.http import StreamingHttpResponse
 import requests
 from django.views.decorators.http import condition
-
 
 # modules to import for classify the comment positivity or negativity
 import nltk.classify.util
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import movie_reviews
 
-
+# importing other functions or variables from other files
 from .recommendations import recommend_movies, recommend_series, recent_movies_suggestion, \
     recent_series_suggestion, popular_movies_suggestion, popular_series_suggestion
 from provider.views import LANGUAGE_REVERSE, SUBCATEGORY_REVERSE, CATEGORY_REVERSE, VERIFICATION_REVERSE, \
@@ -51,9 +55,6 @@ from provider.views import LANGUAGE_REVERSE, SUBCATEGORY_REVERSE, CATEGORY_REVER
 # function to render the mainpage or homepage
 class HomeView(View):
     def get(self, request):
-
-        # res = stream_video(request)
-        # return res
 
         registration_form = CustomUserCreationForm()
         login_form = AuthenticationForm()
@@ -81,7 +82,6 @@ class HomeView(View):
             # fetching recommended movies for logged in user
             movies_ids = recommend_movies(request)
             if len(movies_ids) != 0:
-                # print(movies_ids)
                 # fetching movie details in the same order as received from recommend_movies function
                 clauses = ' '.join(['WHEN movie_id=%s THEN %s' % (pk, i) for i, pk in enumerate(movies_ids)])
                 ordering = 'CASE %s END' % clauses
@@ -102,12 +102,12 @@ class HomeView(View):
                 for obj in movies_data:
                     recommended_movies.update({str(obj.pk): (obj.movie_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), 'Entertainment', obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
 
+                # returning recommended movies
                 context['recommended_movies'] = recommended_movies
 
 
             # fetching recommended series for logged in user
             series_ids = recommend_series(request)
-            # print(series_ids)
             if len(series_ids) != 0:
                 # fetching series details in the same order as received from recommend_series function
                 clauses = ' '.join(['WHEN series_id=%s THEN %s' % (pk, i) for i, pk in enumerate(series_ids)])
@@ -129,6 +129,7 @@ class HomeView(View):
                 for obj in series_data:
                     recommended_series.update({str(obj.pk): (obj.series_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), str(CATEGORY_REVERSE[obj.category]).title(), obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
 
+                # returning recommended series
                 context['recommended_series'] = recommended_series
 
 
@@ -155,12 +156,12 @@ class HomeView(View):
             for obj in movies_data:
                 recent_movies.update({str(obj.pk): (obj.movie_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), 'Entertainment', obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
 
+            # returning recent movies
             context['recent_movies'] = recent_movies
 
 
         # fetching recent series for everyone
         recent_series_ids = recent_series_suggestion(request)
-        # print(series_ids)
         if len(recent_series_ids) != 0:
             # fetching series details in the same order as received from recent_series function
             clauses = ' '.join(['WHEN series_id=%s THEN %s' % (pk, i) for i, pk in enumerate(recent_series_ids)])
@@ -182,6 +183,7 @@ class HomeView(View):
             for obj in series_data:
                 recent_series.update({str(obj.pk): (obj.series_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), str(CATEGORY_REVERSE[obj.category]).title(), obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
 
+            # returning recent series
             context['recent_series'] = recent_series
 
 
@@ -208,12 +210,12 @@ class HomeView(View):
             for obj in movies_data:
                 popular_movies.update({str(obj.pk): (obj.movie_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), 'Entertainment', obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
 
+            # returning popular movies
             context['popular_movies'] = popular_movies
 
 
         # fetching popular series for everyone
         popular_series_ids = popular_series_suggestion(request)
-        # print(series_ids)
         if len(popular_series_ids) != 0:
             # fetching series details in the same order as received from popular_series_suggestion function
             clauses = ' '.join(['WHEN series_id=%s THEN %s' % (pk, i) for i, pk in enumerate(popular_series_ids)])
@@ -235,6 +237,7 @@ class HomeView(View):
             for obj in series_data:
                 popular_series.update({str(obj.pk): (obj.series_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), str(CATEGORY_REVERSE[obj.category]).title(), obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk])})
 
+            # returning popular series
             context['popular_series'] = popular_series
 
         return render(request, 'home/index.html', context)
@@ -272,7 +275,6 @@ def get_movie_details(request):
             all_tags_data = MovieVideoTags.objects.filter(video_id__in=movie_video_id)
 
             all_subcategory_data = MovieSubCategories.objects.filter(movie_id=movie_id)
-            # print(all_subcategory_data)
 
             # fetching all subcategories for the movies that is to be included
             subcategory_data = {}
@@ -281,6 +283,7 @@ def get_movie_details(request):
             for sub_cat in all_subcategory_data:
                 subcategory_data[sub_cat.movie_id.movie_id].append(SUBCATEGORY_REVERSE[sub_cat.sub_category].title())
 
+            # fetching comments data for the movie
             all_comments_data = VideoComment.objects.filter(video_id__in=movie_video_id).order_by('timestamp')
 
             # fetching all tags for the episodes that are to be included
@@ -413,7 +416,7 @@ def get_series_details(request):
                     series_season_id__series_id=series_id,
                 ).values('series_season_id__series_season_id').distinct()
             )
-
+            # fetching series season details that need to be included
             series_seasons_details = SeriesSeasonDetails.objects.filter(series_season_id__in=series_season_id).order_by('season_no')
 
             series_season_data = {}
@@ -525,7 +528,7 @@ def get_season_details(request):
             all_tags_data = SeriesVideosTags.objects.filter(video_id__in=series_video_id)
             all_comments_data = VideoComment.objects.filter(video_id__in=series_video_id).order_by('timestamp')
 
-            # fetching all tags for the episodes that are to be included
+            # fetching all tags, comments and locking info for the episodes that are to be included
             tags_data = {}
             comments_data = {}
             is_video_locked = {}
@@ -537,6 +540,7 @@ def get_season_details(request):
             # checking logged in user subscription plan details
             subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
 
+            # calculating locking info here using subscription and pay per piew
             curr_time = datetime.today() - timedelta(days=1)
             get_pay_per_view_videos = PayPerViewTransaction.objects.filter(
                 user_id=request.user,
@@ -567,6 +571,7 @@ def get_season_details(request):
                 date_of_release__lte=datetime.now(tz=timezone.utc),
             ).order_by('episode_no')
 
+            # finding max episode number available
             max_episode_no = SeriesVideos.objects.filter(
                 series_season_id=series_season_id,
                 verification_status=2,
@@ -574,16 +579,17 @@ def get_season_details(request):
             ).values('episode_no').order_by('-episode_no')[0]
             max_episode_no = max_episode_no['episode_no']
 
-
+            # adding episodes info to response
             season_episodes = {}
             for obj in series_video_details:
-                # print(is_video_locked[obj.video_id.video_id])
                 season_episodes.update({int(obj.episode_no): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, subcategory_data[int(season_details[0].series_id.series_id)], obj.date_of_release, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], obj.cost_of_video, series_category, series_language, comments_data[obj.video_id.video_id], is_video_locked[obj.video_id.video_id])})
 
+            # adding missing episodes data as dummy data
             for i in range(max_episode_no):
                 if i+1 not in season_episodes.keys():
                     season_episodes.update({int(i+1): (-1, 'Not Available', 'Not Available', '', subcategory_data[int(season_details[0].series_id.series_id)], '', '', str(VERIFICATION_REVERSE[3]).title(), [], 0, series_category, series_language, [], 0)})
 
+            # sorting episodes on episode number basis
             season_episodes = {k: v for k, v in sorted(season_episodes.items(), key=lambda item: item[0])}
 
             # returning success response to ajax request
@@ -595,7 +601,7 @@ def get_season_details(request):
         return render(request, 'templates/404.html')
 
 
-
+# function to handle when user wants to rate a movie
 @csrf_exempt
 def rate_movie(request):
     if request.method == 'POST':
@@ -617,7 +623,9 @@ def rate_movie(request):
         if movie_details is None:
             context['is_movie_exists'] = 'This movie do not exists'
         else:
+            # checking if user is authenticated to do so or not
             if request.user.is_authenticated and request.user.user_type == 'U':
+                # checking if user has already rated a movie just update it
                 rated = MovieRating.objects.filter(user_id=request.user, movie_id=movie_details).first()
                 if rated:
                     rated.rating = rating
@@ -638,7 +646,7 @@ def rate_movie(request):
         return render(request, 'templates/404.html')
 
 
-
+# function to rate series by user
 @csrf_exempt
 def rate_series(request):
     if request.method == 'POST':
@@ -660,7 +668,9 @@ def rate_series(request):
         if series_details is None:
             context['is_series_exists'] = 'This series do not exists'
         else:
+            # checking if user is logged in or not
             if request.user.is_authenticated and request.user.user_type == 'U':
+                # checking if user has already rated a series
                 rated = SeriesRating.objects.filter(user_id=request.user, series_id=series_details).first()
                 if rated:
                     rated.rating = rating
@@ -703,7 +713,9 @@ def report_comment(request):
         if comment_details is None:
             context['is_comment_exists'] = 'There is no such comment.'
         else:
+            # checking user logged in info
             if request.user.is_authenticated and request.user.user_type == 'U':
+                # if user has already flag that comment just change it or update it
                 comment_flag = ReportComment.objects.filter(user_id=request.user, comment_id=comment_id).first()
                 if comment_flag:
                     comment_flag.flag_val = comment_flag_val
@@ -746,7 +758,9 @@ def report_video(request):
         if video_details is None:
             context['is_video_exists'] = 'This video does not exists.'
         else:
+            # checking if user is logged in
             if request.user.is_authenticated and request.user.user_type == 'U':
+                # check if user has already flagged that video just update it
                 video_flag = ReportVideo.objects.filter(user_id=request.user, video_id=video_id).first()
                 if video_flag:
                     video_flag.flag_val = video_flag_val
@@ -769,6 +783,7 @@ def report_video(request):
 
 # function to get the video actual duration
 def get_video_duration(video_obj):
+    # checking the video video_type to know the video duration
     if video_obj.video_type == 1:
         # is_free_series = FreeSeriesVideos.objects.filter(video_id=video_obj).first()
         # if is_free_series:

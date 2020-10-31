@@ -3,6 +3,10 @@
 ## DO NOT add new events at last. Recent changes should be at the top.
 
 
+### By <b>_Harshit Garg_</b> on <b>_October 31, 2020_</b>
+* Next prev button in video player added.
+* Checking video flags and comment flags and delete in admin panel added.
+
 ### By <b>_Harshit Garg_</b> on <b>_October 29, 2020_</b>
 * Search feature added.
 

@@ -2,7 +2,7 @@
 from provider.models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
                     SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
                     FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, \
-                    VideoRejectionComment
+                    VideoRejectionComment, VideoComment, ReportComment, ReportVideo
 
 from accounts.models import CustomUser
 # importing dictionaries from provider/views.py
@@ -18,6 +18,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta, date
+from django.db.models import Count
 from django.utils import timezone
 import os
 import json
@@ -33,6 +34,11 @@ from django.utils.encoding import force_bytes, force_text
 from accounts.tokens import account_activation_token
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from accounts.views import send_email
+
+
+COMMENT_REPORT_FLAGS_REVERSE = {1: 'Unwanted commercial content or spam', 2: 'Sexually explicit material', 3: 'Child abuse', 4: 'Hate speech or graphic violence', 5: 'Harassment or bullying'}
+
+VIDEO_REPORT_FLAGS_REVERSE = {1: 'Violent or repulsive content', 2: 'Hateful or abusive content', 3: 'Harmful or dangerous act', 4: 'Sexual content', 5: 'Child abuse', 6: 'Promotes terrorism', 7: 'Spam or misleading', 8: 'Infringes my rights', 9: 'Captions issue'}
 
 
 # renders the admin dashboard page on get request from admin account
@@ -294,6 +300,140 @@ def pending_uploaded_episodes(request):
             context['season_content_data'] = season_content_data
 
             context['is_successful'] = 'Result Found!!'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# returning comments on a video through ajax request
+@csrf_exempt
+@login_required(login_url='home_page')
+def get_video_comments(request):
+    if request.method == 'POST' and request.user.user_type == 'A':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_admin_logged_in': '',
+            'is_successful': '',
+            'comment_report_flags': '',
+            'comments_data': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'A':
+                all_comment_ids = VideoComment.objects.filter(video_id=video_id).values('comment_id')
+                all_comments = VideoComment.objects.filter(video_id=video_id).order_by('-timestamp')
+
+                comment_flags_count = {}
+                for obj in all_comments:
+                    comment_flags_count.update({obj.comment_id: [0, 0, 0, 0, 0]})
+                comment_flags = ReportComment.objects.filter(comment_id__in=all_comment_ids).values('comment_id', 'flag_val').annotate(count=Count('user_id'))
+
+                for obj in comment_flags:
+                    comment_flags_count[obj['comment_id']][obj['flag_val']-1] = obj['count']
+                # print(comment_flags_count)
+
+                comments_data = {}
+                for obj in all_comments:
+                    comments_data.update({str(obj.comment_id): (obj.user_id.username, obj.comment, obj.timestamp, comment_flags_count[obj.comment_id])})
+
+                context['comments_data'] = comments_data
+                context['comment_report_flags'] = COMMENT_REPORT_FLAGS_REVERSE
+                context['is_successful'] = 'Results Found!!.'
+            else:
+                context['is_admin_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+# deleting comment and its associated flags data
+@csrf_exempt
+@login_required(login_url='home_page')
+def delete_comment(request):
+    if request.method == 'POST' and request.user.user_type == 'A':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        comment_id = json_data['comment_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_comment_exists': '',
+            'is_admin_logged_in': '',
+            'is_successful': '',
+        }
+
+        # checking if comment exists
+        comment_details = VideoComment.objects.filter(comment_id=comment_id).first()
+        if comment_details is None:
+            context['is_comment_exists'] = 'This comment does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'A':
+                delete_comment_flags = ReportComment.objects.filter(comment_id=comment_id)
+                delete_comment_flags.delete()
+                delete_comment = VideoComment.objects.filter(comment_id=comment_id)
+                delete_comment.delete()
+
+                context['is_successful'] = 'Comment Deleted!!.'
+            else:
+                context['is_admin_logged_in'] = 'You are not logged in.'
+
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
+
+
+
+# returning flags count on a video through ajax request
+@csrf_exempt
+@login_required(login_url='home_page')
+def get_video_flags(request):
+    if request.method == 'POST' and request.user.user_type == 'A':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        video_id = json_data['video_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_video_exists': '',
+            'is_admin_logged_in': '',
+            'is_successful': '',
+            'video_report_flags': '',
+            'flags_data': '',
+        }
+
+        # checking if video exists
+        video_details = Videos.objects.filter(video_id=video_id).first()
+        if video_details is None:
+            context['is_video_exists'] = 'This video does not exists.'
+        else:
+            if request.user.is_authenticated and request.user.user_type == 'A':
+
+                video_flags_count = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                video_flags = ReportVideo.objects.filter(video_id=video_details).values('video_id', 'flag_val').annotate(count=Count('user_id'))
+
+                for obj in video_flags:
+                    video_flags_count[obj['flag_val']-1] = obj['count']
+
+                context['flags_data'] = video_flags_count
+                context['video_report_flags'] = VIDEO_REPORT_FLAGS_REVERSE
+                context['is_successful'] = 'Results Found!!.'
+            else:
+                context['is_admin_logged_in'] = 'You are not logged in.'
+
         return JsonResponse(context)
     else:
         return render(request, 'templates/404.html')
@@ -677,7 +817,7 @@ def reject_video(request):
             context['is_video_exists'] = 'This video does not exists.'
         else:
             # checking if video already evaluated or not
-            if video_details.verification_status != 1:
+            if video_details.verification_status != 1 and video_details.verification_status != 2:
                 context['is_video_already_evaluated'] = 'This video has already been evaluated.'
             else:
                 # checking if comment is provided or not

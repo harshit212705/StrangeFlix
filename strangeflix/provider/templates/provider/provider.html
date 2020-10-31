@@ -1637,15 +1637,7 @@
                                 .season_content_data[key][7] +
                                 '</p><button type="button" onclick="play_video(' +
                                 data.season_content_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button>';
-                            if (data.season_content_data[key][7] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.season_content_data[key][0] + ',' + count + ',' + '1' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
-                            } else {
-                                htmlgen += '</div></div></div></div></div>';
-                            }
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
 
                             $('#uploaded-free-contents').append(htmlgen);
 
@@ -1996,7 +1988,7 @@
                                     data.season_episode_data[key][0] + ',' + data.season_episode_data[key][
                                         6
                                     ] + ',' +
-                                    '1' +
+                                    '4' +
                                     ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
                                 htmlgen += '</div></div></div></div></div>';
@@ -2071,7 +2063,7 @@
                                 htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
                                     'onclick="edit(' +
                                     data.season_content_data[key][0] + ',' + count + ',' +
-                                    '1' +
+                                    '3' +
                                     ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
                                 htmlgen += '</div></div></div></div></div>';
@@ -2339,16 +2331,8 @@
                                 .season_episode_data[key][8] +
                                 '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button>';
-                            if (data.season_episode_data[key][8] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.season_episode_data[key][0] + ',' + episodecount + ',' +
-                                    '1' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
-                            } else {
-                                htmlgen += '</div></div></div></div></div>';
-                            }
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
+
                             $('#previously-uploaded-episodes').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -2507,16 +2491,8 @@
                                 .season_episode_data[key][7] +
                                 '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button>';
-                            if (data.season_episode_data[key][7] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.season_episode_data[key][0] + ',' + contentcount + ',' +
-                                    '1' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
-                            } else {
-                                htmlgen += '</div></div></div></div></div>';
-                            }
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
+
                             $('#previously-added-content').append(htmlgen);
 
                             // appending the already uploaded episodes to right navigation
@@ -3375,16 +3351,8 @@
                                 .movie_video_data[key][7] +
                                 '</p><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button>';
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
 
-                            if (data.movie_video_data[key][7] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary"' +
-                                    'onclick="edit(' +
-                                    data.movie_video_data[key][0] + ',' + '1' + ',' + '2' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
-                            } else {
-                                htmlgen += '</div></div></div></div></div>';
-                            }
                             $('#add-uploaded_movie').append(htmlgen);
 
                             // appending current movie video to right navigation bar
@@ -3542,16 +3510,7 @@
                                 .movie_video_data[key][7] +
                                 '</p><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button>';
-
-                            if (data.movie_video_data[key][7] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.movie_video_data[key][0] + ',' + contentcount + ',' + '1' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
-                            } else {
-                                htmlgen += '</div></div></div></div></div>';
-                            }
+                                ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div></div>';
 
                             $('#m-add-uploaded-free-contents').append(htmlgen);
 
@@ -3578,7 +3537,7 @@
             });
         });
         //my changes
-        // function to handle play video
+        // function to handle edit video if rejected
         function edit(globalId, localId, formtype) {
             // Add code to launch modal
             if (formtype == '1') {
