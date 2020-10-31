@@ -469,24 +469,60 @@
         </div>
     </div>
 
+    <!-- flag video modal  -->
+    <div class="modal fade" id="flagVideoCount" tabindex="-1" role="dialog" aria-labelledby="flag-title"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark" style="color: white;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="flag-video-title">Video Flags Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="video_flag_modal_body" style="margin-left: 30px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- showing comments in modal  -->
     <div class="modal fade" id="comments-in-modal" tabindex="-1" role="dialog" aria-labelledby="comm-ent"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark" style="color: white;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="comm-ent">Comments</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    
+                <div class="modal_body" id="comments_modal_body">
+                    <ul id="vid-comments" style="margin-left: 30px;margin-right: 30px;"></ul>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- flag comment modal  -->
+    <div class="modal fade" id="flagCommentCount" tabindex="-1" role="dialog" aria-labelledby="flag-title"
+    aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark" style="color: white;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="flag-video-title">Comment Flags Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="comment_flag_modal_body" style="margin-left: 30px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% include "templates/footfooter.html" %}
     <script src="{% static "/js/admin.js" %}"></script>
     <script src="{% static "/js/videoplayer.js" %}"></script>
@@ -1224,6 +1260,77 @@
         }
 
 
+        // function when admin wants to reject a video
+        function reject_video_in_added_section(video_id, type) {
+
+            // fetching form data
+            var id = 'rejection_comment' + video_id;
+            var comment = document.getElementById(id).value;
+
+            // javascript data object
+            var data = {
+                'video_id': video_id,
+                'type': type,
+                'comment': comment,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "reject_video" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    } else if (data.is_video_already_evaluated != '') {
+                        alert(data.is_video_already_evaluated);
+                    } else if (data.is_comment_provided != '') {
+                        alert(data.is_comment_provided);
+                    } else if (data.is_successful != '') {
+
+                        var id_to_be_removed = '#';
+                        var li_id_to_be_removed = '#li_';
+                        if (type == 'series_episode') {
+                            id_to_be_removed += 'episode';
+                            li_id_to_be_removed += 'episode';
+                        } else if (type == 'series_content') {
+                            id_to_be_removed += 'content';
+                            li_id_to_be_removed += 'content';
+                        } else if (type == 'movies_episode') {
+                            id_to_be_removed += 'movie_video';
+                            li_id_to_be_removed += 'movie_video';
+                        } else if (type == 'movies_content') {
+                            id_to_be_removed += 'movie_content';
+                            li_id_to_be_removed += 'movie_content';
+                        }
+
+                        id_to_be_removed += data.video_id;
+                        li_id_to_be_removed += data.video_id;
+
+                        $(id_to_be_removed).remove();
+                        $(li_id_to_be_removed).remove();
+
+                        // restricting pointer events for other tabs
+                        $('#list-added-seasoninfo-list').css('pointer-events', 'all');
+                        $('#list-added-seasoninfo-list').tab('show');
+
+                        alert(data.is_successful);
+
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
         // get all the added or verified series
         function get_added_series() {
 
@@ -1449,8 +1556,17 @@
                                 .season_episode_data[key][2] +
                                 '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm mx-1" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
-                                ')" >Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
-                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" >Play video</button><button onclick="get_video_flags('+ data.season_episode_data[key][0] +')" type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#flagVideoCount">Flags <span class="badge badge-light"></span></button><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.season_episode_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .season_episode_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .season_episode_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="rejection_comment' +
+                                data.season_episode_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video_in_added_section(' +
+                                data.season_episode_data[key][0] + ',' + `'series_episode'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div><button type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#comments-in-modal" onclick="get_comments(' + data.season_episode_data[key][0] +
                                 ')" >Comments</button></div></div></div></div></div>';
 
                             $('#verified-get-episodes').append(htmlgen);
@@ -1504,8 +1620,17 @@
                                 .season_content_data[key][2] +
                                 '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm" onclick="play_video(' +
                                 data.season_content_data[key][0] + ',' + specialol +
-                                ')">Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
-                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')">Play video</button><button onclick="get_video_flags('+ data.season_content_data[key][0] +')" type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#flagVideoCount">Flags <span class="badge badge-light"></span></button><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.season_content_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .season_content_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .season_content_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="rejection_comment' +
+                                data.season_content_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video_in_added_section(' +
+                                data.season_content_data[key][0] + ',' + `'series_content'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div><button type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#comments-in-modal" onclick="get_comments(' + data.season_content_data[key][0] +
                                 ')" >Comments</button></div></div></div></div></div>';
 
                             $('#verified-get-content').append(htmlgen);
@@ -1672,8 +1797,17 @@
                                 .movie_video_data[key][2] +
                                 '</p></div><div class="position-absolute" style="bottom:0"><button type="button" onclick="play_video(' +
                                 data.movie_video_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
-                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" class="btn btn-primary btn-sm">Play video</button><button onclick="get_video_flags('+ data.movie_video_data[key][0] +')" type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#flagVideoCount">Flags <span class="badge badge-light"></span></button><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.movie_video_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .movie_video_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .movie_video_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="rejection_comment' +
+                                data.movie_video_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video_in_added_section(' +
+                                data.movie_video_data[key][0] + ',' + `'movies_episode'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div><button type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#comments-in-modal" onclick="get_comments(' + data.movie_video_data[key][0] +
                                 ')" >Comments</button></div></div></div></div></div>';
 
                             $('#movie_verified_uploaded_episodes').append(htmlgen);
@@ -1726,8 +1860,17 @@
                                 .movie_content_data[key][2] +
                                 '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" onclick="play_video(' +
                                 data.movie_content_data[key][0] + ',' + specialol +
-                                ')" class="btn btn-primary btn-sm">Play video</button><button type="button" class="btn btn-primary btn-sm mx-1">Flags <span class="badge badge-light">9</span></button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="delete_video(' +
-                                ')" >Delete</button><button type="button" class="btn btn-primary btn-sm mx-1" onclick="get_comments(' +
+                                ')" class="btn btn-primary btn-sm">Play video</button><button onclick="get_video_flags('+ data.movie_content_data[key][0] +')" type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#flagVideoCount">Flags <span class="badge badge-light"></span></button><button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#reject-sect' +
+                                data.movie_content_data[key][0] +
+                                '" aria-expanded="false" aria-controls="reject-sect' + data
+                                .movie_content_data[key][0] +
+                                '">Reject</button><div class="collapse" id="reject-sect' + data
+                                .movie_content_data[key][0] +
+                                '"><div class="card card-body"><div class="form-group"><label for="comment">Comment</label><textarea class="form-control" name="comment" id="rejection_comment' +
+                                data.movie_content_data[key][0] +
+                                '" rows="3"></textarea></div><button type="button" onclick="reject_video_in_added_section(' +
+                                data.movie_content_data[key][0] + ',' + `'movies_content'` +
+                                ')" class="btn btn-primary btn-sm">submit</button></div></div><button type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#comments-in-modal" onclick="get_comments(' + data.movie_content_data[key][0] +
                                 ')" >Comments</button></div></div></div></div></div>';
 
                             $('#movie_verified_uploaded_content').append(htmlgen);
@@ -1750,7 +1893,177 @@
                 }
             });
         }
-        // get all the pending series
+
+
+        // get all the video comments with their flags
+        function get_comments(video_id) {
+
+            var data = {
+                'video_id': video_id,
+            }
+
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_video_comments" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    }
+                    else if (data.is_admin_logged_in != '') {
+                        alert(data.is_admin_logged_in);
+                    }
+                    else if (data.is_successful != '') {
+                        $('#vid-comments').empty();
+                        flags = new Array();
+                        for (var key in  data.comment_report_flags) {
+                            flags.push(data.comment_report_flags[key]);
+                        }
+                        comment_flags = `'${flags}'`;
+
+                        for (var key in data.comments_data) {
+                            flag_count = new Array();
+                            for (var i = 0; i < data.comments_data[key][3].length; i++) {
+                                flag_count.push(data.comments_data[key][3][i]);
+                            }
+                            each_flag_count = `'${flag_count}'`;
+
+                            var add_comm = '<li id="comment_id_'+ key +'"><br><div class="row media"><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><div style="display: inline;"><span class="font-weight-bold">' +
+                            data.comments_data[key][0] + '</span><button onclick="delete_comment(' + key +
+                            ')" type="button" class="flg-comm-button px-2" style="float: right;margin-left: 10px;background: #272B2C; border:0;"><i style="color: #d9534f;" class="fas fa-trash"></i></button><button onclick="set_comment_flags_to_modal(' + key +
+                            ','+ each_flag_count +', '+ comment_flags +')" type="button" class="flg-comm-button px-2" data-toggle="modal" data-target="#flagCommentCount" style="float: right;background: #272B2C; border:0;"><i style="color: #d9534f;" class="fas fa-flag"></i></button></div><div class="d-cent text-justify" id="show_comment_' +
+                            key + '">' + data.comments_data[key][1] +
+                            '</div><button type="button" class="show-mr-button" id="show_comment_button_' +
+                            key + '" onclick="show_comment(' + key +
+                            ')">show</button></div></div></div><div style="margin-left: 50px;margin-right: 50px;"><hr style="background: white;"></div></li>';
+
+                            $('#vid-comments').append(add_comm);
+                        }
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        // function to handle truncated comment
+        function show_comment(comment_id) {
+            var text_id = "#show_comment_" + comment_id;
+            var button_id = "#show_comment_button_" + comment_id;
+            if ($(button_id).text().trim() == 'show') {
+                $(text_id).css('display', 'block');
+                $(button_id).text('hide');
+            } else {
+                $(text_id).css('display', '-webkit-box');
+                $(button_id).text('show');
+            }
+        }
+
+
+        // function to show comment flag on modal
+        function set_comment_flags_to_modal(comment_id, flag_count, flags) {
+            var flag_html = '';
+            $('#comment_flag_modal_body').empty();
+            var arr_flag_count = flag_count.split(',');
+            var arr_flags = flags.split(',');
+
+            for (var i = 0; i < arr_flag_count.length; i++) {
+                flag_html += '<label for="video_flag_'+ (i+1) +'">'+ arr_flags[i] +'</label><span class="badge badge-light" style="margin-left: 10px;">'+ arr_flag_count[i] +'</span><br>';
+            }
+            console.log(flag_html);
+            $('#comment_flag_modal_body').append(flag_html);
+            $('#comments-in-modal').modal('show');
+        }
+
+
+        //delete comment
+        function delete_comment(comment_id) {
+
+            var data = {
+                'comment_id': comment_id,
+            }
+
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "delete_comment" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_comment_exists != '') {
+                        alert(data.is_comment_exists);
+                    }
+                    else if (data.is_admin_logged_in != '') {
+                        alert(data.is_admin_logged_in);
+                    }
+                    else if (data.is_successful != '') {
+                        var comment_section_id = '#comment_id_' + comment_id;
+                        $(comment_section_id).remove();
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        // get all the video flags count
+        function get_video_flags(video_id) {
+
+            var data = {
+                'video_id': video_id,
+            }
+
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_video_flags" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_video_exists != '') {
+                        alert(data.is_video_exists);
+                    }
+                    else if (data.is_admin_logged_in != '') {
+                        alert(data.is_admin_logged_in);
+                    }
+                    else if (data.is_successful != '') {
+                        var flag_html = '';
+                        $('#video_flag_modal_body').empty();
+                        for (var key in data.video_report_flags) {
+                            flag_html += '<label for="video_flag_'+ key +'">'+ data.video_report_flags[key] +'</label><span class="badge badge-light" style="margin-left: 10px;">'+ data.flags_data[key-1] +'</span><br>';
+                        }
+                        $('#video_flag_modal_body').append(flag_html);
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        // get the search user results
         function search_users(search_text) {
 
             // Emptying the main content displaying area
@@ -1797,7 +2110,7 @@
         }
 
 
-        // function when admin wants to see the uploaded episodes in added content section
+        // function when admin wants to change the account type of any user
         function change_user_type(userId) {
 
             $('#user_id').html(userId);

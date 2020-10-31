@@ -78,3 +78,18 @@ $('#list-added-movie-list').on('click', function (e) {
     get_added_movies();
 
 });
+
+
+// comment full show
+$('.show-mr-button').on('click',function(e){
+// console.log($('.show-mr-button').text().trim());
+if($('.show-mr-button').text().trim()=='show'){
+    $('.d-cent').css('display','block');
+    $('.show-mr-button').text('hide');
+}
+else
+{
+    $('.d-cent').css('display','-webkit-box');
+    $('.show-mr-button').text('show');
+}
+})

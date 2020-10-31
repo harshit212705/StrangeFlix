@@ -44,34 +44,34 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 <div class="dropdown-item">
-                                    <a href="#">Cricket</a>
+                                    <a href="" onclick="search_results_by_subcategory('Cricket')">Cricket</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Football</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Football')">Football</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Tennis</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Tennis')">Tennis</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Martial Arts</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Martial Arts')">Martial Arts</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">eSports</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Esports')">eSports</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Hockey</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Hockey')">Hockey</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Badminton</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Badminton')">Badminton</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Wrestling</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Wrestling')">Wrestling</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Kabbadi</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Kabaddi')">Kabbadi</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Table Tennis</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Table Tennis')">Table Tennis</a>
                                 </div>
                             </div>
                         </div>
@@ -84,31 +84,31 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
                                 <div class="dropdown-item">
-                                    <a href="#">Action</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Action')">Action</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Adventure</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Adventure')">Adventure</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Animation</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Animation')">Animation</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Comedy</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Comedy')">Comedy</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Crime</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Crime')">Crime</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Drama</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Drama')">Drama</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Horror</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Horror')">Horror</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Romance</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Romance')">Romance</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a href="#">Thriller</a>
+                                    <a href="#" onclick="search_results_by_subcategory('Thriller')">Thriller</a>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,12 @@
                 <div class="navbar-nav ml-auto">
 
                     <!-- search bar  -->
-                    <input type="text" id="sear" class="form-control mr-sm-2" placeholder="search by name">
+                    <div class="dropdown px-1 specia-drop">
+                        <input onkeyup="get_search_results()" type="text" id="sear" class="form-control mr-sm-2" placeholder="search by name">
+                        <div id="search-results">
+                        </div>
+
+                    </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-dark">Search</button>
                         <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
@@ -485,6 +490,194 @@
     </script>
 
     <script>
+
+        // class to manage next and prevs of buttons
+        class DoublyLinkedList {
+            constructor() {
+                this.head = null;
+                this.tail = null;
+                this.pointer = null;
+                this.length = 0;
+            }
+            insert(data, position = this.length) {
+                let node = new this.Node(data);
+                // List is currently empty
+                if (this.head === null) {
+                    this.head = node;
+                    this.tail = node;
+                    this.length++;
+                    this.pointer = this.head;
+                    return this.head;
+                }
+                // Insertion at head
+                if (position == 0) {
+                    node.prev = null;
+                    node.next = this.head;
+                    this.head.prev = node;
+                    this.head = node;
+                    this.pointer = this.head;
+                    return this.head;
+                }
+                let iter = 1;
+                let currNode = this.head;
+                while (currNode.next != null && iter < position) {
+                    currNode = currNode.next;
+                    iter++;
+                }
+                // Make new node point to next node in list
+                node.next = currNode.next;
+                // Make next node's previous point to new
+                if (currNode.next != null) {
+                    currNode.next.prev = node;
+                }
+                // Make our node point to previous node
+                node.prev = currNode;
+
+                // Make previous node's next point to new node
+                currNode.next = node;
+
+                // check if inserted element was at the tail, if yes then make tail point to it
+                if (this.tail.next != null) {
+                    this.tail = this.tail.next;
+                }
+                this.length++;
+                return node;
+            }
+            remove(data, position = 0) {
+                if (this.length === 0) {
+                    console.log("List is already empty");
+                    return;
+                }
+                this.length--;
+                let currNode = this.head;
+                if (position <= 0) {
+                    this.head = this.head.next;
+                    this.head.prev = null;
+                } else if (position >= this.length - 1) {
+                    this.tail = this.tail.prev;
+                    this.tail.next = null;
+                } else {
+                    let iter = 0;
+                    while (iter < position) {
+                        currNode = currNode.next;
+                        iter++;
+                    }
+                    currNode.next = currNode.next.next;
+                    currNode.next.prev = currNode;
+                }
+                return currNode;
+            }
+            display() {
+                let currNode = this.head;
+                while (currNode != null) {
+                    console.log(currNode.data + " <-> ");
+                    currNode = currNode.next;
+                }
+            }
+            iterate(data) {
+                let currNode = this.head;
+                while (currNode != null && currNode.data != data) {
+                    // console.log(currNode.data + " <-> ");
+                    currNode = currNode.next;
+                }
+                this.pointer = currNode;
+            }
+            prev() {
+                if (this.pointer.prev != null) {
+                    // javascript data object
+                    var data = {
+                        'video_id': this.pointer.prev.data,
+                    }
+
+                    // adding data to javascript form which is to be send over ajax request
+                    var formData = new FormData();
+                    formData.append('data', JSON.stringify(data));
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "check_user_subscription" %}',
+                        data: formData,
+                        dataType: 'json',
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            // checking and handling error conditions
+                            if (data.is_video_exists != '') {
+                                alert(data.is_video_exists);
+                            } else if (data.is_subscribed == 'false') {
+                                alert('You are not subscribed for previous video!!');
+                                return -2;
+                            } else if (data.is_subscribed == 'true') {
+                                playervid.pointer = playervid.pointer.prev;
+                                var ele_id = 'click_to_play_episode_video_' + playervid.pointer.data;
+                                document.getElementById(ele_id).click();
+                                return playervid.pointer.data;
+                            } else {
+                                alert('Some unexpected error has occured. Try again.');
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert('No more episodes to left!!');
+                    return -1;
+                }
+            }
+            next() {
+                if (this.pointer.next != null) {
+                    // javascript data object
+                    var data = {
+                        'video_id': this.pointer.next.data,
+                    }
+
+                    // adding data to javascript form which is to be send over ajax request
+                    var formData = new FormData();
+                    formData.append('data', JSON.stringify(data));
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "check_user_subscription" %}',
+                        data: formData,
+                        dataType: 'json',
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            // checking and handling error conditions
+                            if (data.is_video_exists != '') {
+                                alert(data.is_video_exists);
+                            } else if (data.is_subscribed == 'false') {
+                                alert('You are not subscribed for next video!!');
+                                return -2;
+                            } else if (data.is_subscribed == 'true') {
+                                playervid.pointer = playervid.pointer.next;
+                                var ele_id = 'click_to_play_episode_video_' + playervid.pointer.data;
+                                document.getElementById(ele_id).click();
+                                return playervid.pointer.data;
+                            } else {
+                                alert('Some unexpected error has occured. Try again.');
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert('No more episodes to right!!');
+                    return -1;
+                }
+            }
+        }
+
+        DoublyLinkedList.prototype.Node = class {
+            constructor(data) {
+                this.data = data;
+                this.next = null;
+                this.prev = null;
+            }
+        };
+
+        var playervid;
+
         function custom_login() {
 
             var username = document.querySelector("#loginform #id_username").value;
@@ -523,7 +716,137 @@
             });
         }
 
+        // function to get search results
+        function get_search_results() {
+            var search_based_on = document.getElementById('sear').placeholder;
+            var search_query = document.getElementById('sear').value;
+            $('#search-results').empty();
+            if (search_query != '') {
+                // javascript data object
+                var data = {
+                    'search_based_on': search_based_on,
+                    'search_query': search_query,
+                }
 
+                // adding data to javascript form which is to be send over ajax request
+                var formData = new FormData();
+                formData.append('data', JSON.stringify(data));
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "get_search_results" %}',
+                    data: formData,
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        // checking and handling error conditions
+                        if (data.is_successful != '') {
+                            var results = '';
+                            if (Object.keys(data.search_results).length == 0) {
+                                results = '<div class="dropdown-menu" aria-labelledby="sear"><div class="dropdown-item"><a href="#">No results found</a></div></div>';
+                            }
+                            else {
+                                results = '<div class="dropdown-menu" aria-labelledby="sear">';
+                                for (var key in data.search_results) {
+                                    if (data.search_results[key][0] == 'M') {
+                                        results += '<div class="dropdown-item"><a href="#" onclick="open_movie('+ data.search_results[key][1] +')">'+ data.search_results[key][2] +'</a></div>';
+                                    }
+                                    else {
+                                        results += '<div class="dropdown-item"><a href="#" onclick="open_series('+ data.search_results[key][1] +')">'+ data.search_results[key][2] +'</a></div>';
+                                    }
+                                }
+                                results += '</div>';
+                            }
+                            $('#search-results').append(results);
+                        } else {
+                            alert('Some unexpected error has occured. Try again.');
+                        }
+                    }
+                });
+            }
+        }
+
+
+        // function to get search results by category
+        function search_results_by_subcategory(subcategory) {
+
+            // javascript data object
+            var data = {
+                'subcategory': subcategory,
+            }
+
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "search_results_by_subcategory" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // checking and handling error conditions
+                    if (data.is_successful != '') {
+                        $('#subcategory_search_results').empty();
+                        set_content_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
+
+                        if (Object.keys(data.search_results).length == 0) {
+                            alert('No data found for ' + subcategory);
+                        }
+                        else {
+                            var results = '<div class="container-fluid my-5""><h4 class="font-weight-bold mx-5">Popular in '+ subcategory +'</h4><div id="search_results_subcategory-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+
+                            var count = 0;
+                            for (var val in data.search_results) {
+                                count++;
+                                if (count != 1 && (count-1)%6 == 0) {
+                                    results += '<div class="carousel-item"><div class="row">';
+                                }
+
+                                results += '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">'+ data.search_results[val][1] +'</div><div class="img-seci">';
+
+                                if (data.search_results[val][0] == 'M') {
+                                    results += '<a href="#" onclick="open_movie('+ data.search_results[val][8] +')">';
+                                }
+                                else if (data.search_results[val][0] == 'S') {
+                                    results += '<a href="#" onclick="open_series('+ data.search_results[val][8] +')">';
+                                }
+
+                                results += '<img class="img-fluid ser-img" src="'+ data.search_results[val][6] +'" alt="image4"></a></div></div></div></div>';
+
+                                if (count%6 == 0) {
+                                    results += '</div></div>';
+                                }
+                            }
+                            if (Object.keys(data.search_results).length%6 != 0) {
+                                results += '</div></div>';
+                            }
+
+                            results += '</div><a class="carousel-control-prev bg-danger" href="#search_results_subcategory-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#search_results_subcategory-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div>';
+                        }
+
+                        $('#subcategory_search_results').append(results);
+                        if ($('#search_results_subcategory-controls .carousel-inner .carousel-item:first').hasClass('active')) {
+                            $('#search_results_subcategory-controls').children('#search_results_subcategory-controls .carousel-control-prev').hide();
+                        }
+                        if ($('#search_results_subcategory-controls .carousel-inner .carousel-item:last').hasClass('active')) {
+                            $('#search_results_subcategory-controls').children('#search_results_subcategory-controls .carousel-control-next').hide();
+                        }
+                        bind_control_arrow_search_results_subcategory();
+                    } else {
+                        alert('Some unexpected error has occured. Try again.');
+                    }
+                }
+            });
+        }
+
+
+        // function that checks whether user is subscribed for a particular video or not
         function update_user_subscribed(video_id) {
             // javascript data object
             var data = {
@@ -543,14 +866,13 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    console.log('check');
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
                         alert(data.is_video_exists);
                     } else if (data.is_subscribed == 'false') {
-                        // console.log('not ok');
                         is_user_subscribed = false;
                     } else if (data.is_subscribed == 'true') {
-                        console.log('ok');
                         is_user_subscribed = true;
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -785,6 +1107,7 @@
                             $('#movie_freecontent-controls').children(
                                 '#movie_freecontent-controls .carousel-control-next').hide();
                         }
+                        bind_control_arrow_movie_freecontent();
 
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -977,6 +1300,7 @@
                             $('#series_season-controls').children(
                                 '#series_season-controls .carousel-control-next').hide();
                         }
+                        bind_control_arrow_series_season();
 
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -1095,6 +1419,7 @@
                                 '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Episodes<i class="arrow right mx-1"></i></h4><div id="series_season_episodes-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
 
                             count = 0;
+                            playervid = new DoublyLinkedList();
                             for (var val in data.season_episodes) {
                                 count++;
                                 if (count != 1 && (count - 1) % 6 == 0) {
@@ -1130,10 +1455,12 @@
                                 var comments = video_comments.join("!@#$%^&*");
                                 comments = `'${comments}'`;
 
+                                playervid.insert(data.season_episodes[val][0]);
+
                                 episodes +=
                                     '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Episode ' +
                                     val + ' - ' + data.season_episodes[val][1] +
-                                    '</div><div class="img-seci"><a href="#" onclick="play_episode(' + data
+                                    '</div><div class="img-seci"><a id="click_to_play_episode_video_'+ data.season_episodes[val][0] +'" href="#" onclick="play_episode(' + data
                                     .season_episodes[val][0] + ',' + video_name + ',' + video_description +
                                     ',' + video_category + ',' + tags + ',' + subcategories + ',' +
                                     video_language + ',' + video_cost + ',' + comments + ')">';
@@ -1172,7 +1499,6 @@
                                 '</div><a class="carousel-control-prev bg-danger" href="#series_season_episodes-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season_episodes-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
 
                         }
-
                         $("#selected_season_description").append(htmlgen);
                         $("#selected_season_freecontent").append(freecontent);
                         $("#selected_season_episodes").append(episodes);
@@ -1190,6 +1516,7 @@
                             $('#series_season_freecontent-controls').children(
                                 '#series_season_freecontent-controls .carousel-control-next').hide();
                         }
+                        bind_control_arrow_series_season_freecontent();
 
                         if ($('#series_season_episodes-controls .carousel-inner .carousel-item:first')
                             .hasClass('active')) {
@@ -1201,6 +1528,7 @@
                             $('#series_season_episodes-controls').children(
                                 '#series_season_episodes-controls .carousel-control-next').hide();
                         }
+                        bind_control_arrow_series_season_episodes();
 
                     } else {
                         alert('Some unexpected error has occured. Try again.');
@@ -1210,8 +1538,7 @@
         }
 
         // HTML CODE FOR VIDEO PLAYER
-
-        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row" style="height: 500px;"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body" id="video_body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause  --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5" style="border: 1px solid grey;"><div class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div style="display: inline;"><div style="float: left;width: 100%;"><textarea name="comment" id="comment_section" rows="3" tabindex="4" placeholder="comment" required="required"></textarea></div><div style="float: right;width: 100%;"><button onclick="comment_on_video()" type="submit">Comment</button></div></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-6 col-md-7"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-6 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-3" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button>  <div class="dropdown" style="position: relative;display: inline-block;"><button onclick="getRoomList()" type="button" class="add-to-fav mx-3 dropbtn" data-toggle="tooltip" data-placement="bottom" title="Play in room" id="transfer-room"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="40" height="40" x="0" y="0" viewBox="0 0 80.13 80.13" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><circle r="40.065" cx="40.065" cy="40.065" fill="#da1f1f" shape="circle"/><g transform="matrix(0.7,0,0,0.7,12.019500732421879,12.019351673126224)"><g xmlns="http://www.w3.org/2000/svg">	<path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112   c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984   c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984   z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263   c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833   C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088   c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699   C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276   c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752   C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032   c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265   c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z" fill="#ffffff" data-original="#000000" style="" class=""/></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g></g></svg></span><p class="add-to-fav-title py-3">Play in Room</p></button><div class="dropdown-content" id="room-list"> </div><button type="button" class="vid-flag mx-3" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div></div></div>';
+        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row" style="height: 500px;"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button onclick="prev_btn_pressed()" type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button onclick="next_btn_pressed()" type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5" style="border: 1px solid grey;"><div class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div style="display: inline;"><div style="float: left;width: 100%;"><textarea name="comment" id="comment_section" rows="3" tabindex="4" placeholder="comment" required="required"></textarea></div><div style="float: right;width: 100%;"><button onclick="comment_on_video()" type="submit">Comment</button></div></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-6 col-md-7"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-6 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-3" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button>  <div class="dropdown" style="position: relative;display: inline-block;"><button onclick="getRoomList()" type="button" class="add-to-fav mx-3 dropbtn" data-toggle="tooltip" data-placement="bottom" title="Play in room" id="transfer-room"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="40" height="40" x="0" y="0" viewBox="0 0 80.13 80.13" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><circle r="40.065" cx="40.065" cy="40.065" fill="#da1f1f" shape="circle"/><g transform="matrix(0.7,0,0,0.7,12.019500732421879,12.019351673126224)"><g xmlns="http://www.w3.org/2000/svg">	<path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112   c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984   c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984   z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263   c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833   C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088   c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699   C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276   c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752   C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032   c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265   c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z" fill="#ffffff" data-original="#000000" style="" class=""/></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g></g></svg></span><p class="add-to-fav-title py-3">Play in Room</p></button><div class="dropdown-content" id="room-list"> </div>  <button type="button" class="vid-flag mx-3" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div></div></div>';
 
 
         // function to handle truncated comment
@@ -1227,10 +1554,16 @@
             }
         }
 
-        // INCOMPLETE CODE FOR RESUME BUTTON --- RESUME BUTTON TO BE ADDED
-        // function to resume video from where you have left it
-        function resume_video(curr_time) {
-            
+
+        // function to handle prev btn pressed request
+        function prev_btn_pressed() {
+            var episode_id = playervid.prev();
+        }
+
+
+        // function to handle next btn pressed request
+        function next_btn_pressed() {
+            var episode_id = playervid.next();
         }
 
 
@@ -1370,6 +1703,7 @@
                         } else if (data.is_subscribed == 'false') {
                             alert('You are not allowed to watch this episode. Either subscribe or pay for video.');
                         } else if (data.is_subscribed == 'true') {
+                            playervid.iterate(video_id);
 
                             save_history_before_unloading();
                             set_content_display('block', 'none', 'block', 'block', 'none', 'block', 'none', 'none');
