@@ -172,12 +172,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-title text-center">
-                            <h4>Login</h4>
+                            <h4 class="font-weight-bold my-3">Login</h4>
                         </div>
-                        <div>
-                            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook"
+                        <div class="text-center mt-4">
+                            <!-- <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook"
                                 style="text-align:center;color: white;background: #3b5998;">
-                                <!-- <span class="fa fa-facebook"></span> -->
                                 <svg aria-hidden="true" class="svg-icon iconFacebook" width="20" height="20"
                                     viewBox="0 0 18 18">
                                     <path
@@ -189,7 +188,6 @@
                             <a href="{% url 'social:begin' 'google-oauth2' %}"
                                 class="btn btn-block btn-social btn-facebook"
                                 style="background-color:#ebecf5;text-align:center">
-                                <!-- <span class="fa fa-facebook"></span> -->
                                 <svg aria-hidden="true" class="native svg-icon iconGoogle" width="20" height="20"
                                     viewBox="0 0 18 18">
                                     <path
@@ -204,7 +202,40 @@
                                         d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"
                                         fill="#EA4335"></path>
                                 </svg>
+
                                 Sign in with Google
+                            </a> -->
+                            <a href="{% url 'social:begin' 'google-oauth2' %}"
+                                class="btn btn-md btn-social btn-facebook bg-danger mx-1"
+                                style="background-color:#ebecf5;text-align:center;border-radius:50%;">
+                                <!-- <span class="fa fa-facebook"></span> -->
+                                <svg aria-hidden="true" class="native svg-icon iconGoogle" width="20" height="20" style="font-size:1.2rem;position:relative;top:2px;"
+                                    viewBox="0 0 18 18">
+                                    <path
+                                        d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"
+                                        fill="#4285F4"></path>
+                                    <path
+                                        d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"
+                                        fill="#34A853"></path>
+                                    <path d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"
+                                        fill="#FBBC05"></path>
+                                    <path
+                                        d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"
+                                        fill="#EA4335"></path>
+                                </svg>
+
+                                <!-- Sign in with Google -->
+                            </a>
+                            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-md btn-social btn-facebook bg-danger mx-1"
+                                style="text-align:center;color: white;background: #3b5998;border-radius:50%;">
+                                <!-- <span class="fa fa-facebook"></span> -->
+                                <svg aria-hidden="true" class="svg-icon iconFacebook" width="20" height="20" style="font-size:1.2rem;position:relative;top:2px;"
+                                    viewBox="0 0 18 18">
+                                    <path
+                                        d="M3 1a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2V3a2 2 0 00-2-2H3zm6.55 16v-6.2H7.46V8.4h2.09V6.61c0-2.07 1.26-3.2 3.1-3.2.88 0 1.64.07 1.87.1v2.16h-1.29c-1 0-1.19.48-1.19 1.18V8.4h2.39l-.31 2.42h-2.08V17h-2.5z"
+                                        fill="#ffffff"></path>
+                                </svg>
+                                <!-- Sign in with Facebook -->
                             </a>
                         </div>
                         <div class="d-flex flex-column mx-5">
@@ -273,13 +304,20 @@
                 </div>
             </div>
         </div>
-        <div class="back-wrapper">
+
+        <div style="margin-top:5%;">
+{% if user.is_authenticated %}
+{% else %}
+
+        <div class="back-wrapper" id = "bg-wall">
             <div class="back-img-par">
                 <div class="back-img-child">
                     <img src="{% static "/images/homico.png" %}" alt="">
                 </div>
             </div>
         </div>
+{% endif %}
+</div>
     </div>
     <p id="playing_video_id" hidden></p>
     <p id="playing_video_history_time" hidden></p>
@@ -293,12 +331,13 @@
         <div id="selected_season_description">
 
         </div>
-        <div id="selected_season_freecontent">
-
-        </div>
         <div id="selected_season_episodes">
 
         </div>
+        <div id="selected_season_freecontent">
+
+        </div>
+
         <div id="selected_series_description">
 
         </div>
@@ -460,7 +499,6 @@
             </div>
         </div>
     </div>
-
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -792,6 +830,7 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_successful != '') {
+                        $("#bg-wall").hide();
                         $('#subcategory_search_results').empty();
                         set_content_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
 
@@ -882,6 +921,7 @@
         }
 
         function open_movie(movie_id) {
+
             // javascript data object
             var data = {
                 'movie_id': movie_id
@@ -904,6 +944,8 @@
                     if (data.is_movie_exists != '') {
                         alert(data.is_movie_exists);
                     } else if (data.is_successful != '') {
+
+                        $("#bg-wall").hide();
                         save_history_before_unloading();
                         $("#selected_movie_description").empty();
                         $("#selected_movie_freecontent").empty();
@@ -915,7 +957,7 @@
 
                         for (var key in data.movie_content_data) {
                             var htmlgen = '<div id="movie_' + movie_id +
-                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4">';
+                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-5 col-md-5 col-sm-5 col-xs-5"><div class="info-sect mx-4">';
 
                             // javascript data object
                             var data1 = {
@@ -1004,21 +1046,21 @@
                                     htmlgen +=
                                         '<div class="series-naam py-4"><h4 class="font-weight-bold">' +
                                         data.movie_content_data[key][1] +
-                                        '</h4><div class="class-muted"><p class="text-muted">';
+                                        '</h4><div class="font-weight-bold"><p>';
 
                                     for (var i = 0; i < data.movie_content_data[key][9]
                                         .length; i++) {
                                         htmlgen += data.movie_content_data[key][9][i] + ' | ';
                                     }
 
-                                    htmlgen += '</p><p class="text-muted">';
+                                    htmlgen += '</p><p>';
 
                                     for (var i = 0; i < data.movie_content_data[key][8]
                                         .length; i++) {
                                         htmlgen += data.movie_content_data[key][8][i] + ' | ';
                                     }
 
-                                    htmlgen += '</p><p class="text-muted">' + data
+                                    htmlgen += '</p><p>' + data
                                         .movie_content_data[key][10] +
                                         '</p></div><div class="ser-describ">' + data
                                         .movie_content_data[key][2] +
@@ -1027,14 +1069,14 @@
                                         ',' + video_description + ',' + video_category + ',' +
                                         tags + ',' + subcategories + ',' + video_language +
                                         ',' + video_cost + ',' + comments +
-                                        ')" class="vid-dislike mx-4 mr-auto" title="play"><span class="ico-cont bg-danger text-center py-1 px-2"><span class="py-3"><i class="fas fa-play"></i></span></span><p class="add-to-rate py-3">Play</p></button><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#movierateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
+                                        ')" class="vid-dislike mx-4 mr-auto" title="play"><span class="ico-cont bg-danger text-center py-1 px-2"><span class="py-3"><i class="fas fa-play"></i></span></span><p class="add-to-rate py-3">Play</p></button><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#movierateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-7 col-md-7 col-sm-7 col-xs-7"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
                                         data.movie_content_data[key][3] +
                                         '"alt="image4"></div></div></div></div>';
                                     $("#selected_movie_description").append(htmlgen);
                                 }
                             });
 
-                            var freecontent = '<div class="show-up"><div id="movie_content_' + movie_id +
+                            var freecontent = '<div><div id="movie_content_' + movie_id +
                                 '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Trailers and Clips<i class="arrow right mx-1"></i></h4><div id="movie_freecontent-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
 
                             var count = 0;
@@ -1238,6 +1280,8 @@
                     if (data.is_series_exists != '') {
                         alert(data.is_series_exists);
                     } else if (data.is_successful != '') {
+
+                        $("#bg-wall").hide();
                         save_history_before_unloading();
                         $("#selected_series_description").empty();
                         $("#selected_series_season").empty();
@@ -1248,9 +1292,9 @@
                         document.getElementById('selected_series_id').innerHTML = series_id;
                         for (var key in data.series_content_data) {
                             var htmlgen = '<div id="series_' + key +
-                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">' +
+                                '" class="series-view-section container-fluid"><div class="row lin-grade"><div class="col-xl-3 col-lg-5 col-md-5 col-sm-5 col-xs-5"><div class="info-sect mx-4"><div class="series-naam py-4"><h4 class="font-weight-bold">' +
                                 data.series_content_data[key][0] +
-                                '</h4><div class="class-muted"><p class="text-muted">' + data
+                                '</h4><div class="font-weight-bold"><p>' + data
                                 .series_content_data[key][3] + ' | ';
 
                             for (var i = 0; i < data.series_content_data[key][5].length; i++) {
@@ -1259,10 +1303,10 @@
 
                             htmlgen += '</p></div><div class="ser-describ">' + data.series_content_data[key]
                                 [1] +
-                                '</div></div></div><button type="button" class="vid-dislike mx-2 mr-auto" title="Dislike" data-toggle="modal" data-target="#seriesrateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
+                                '</div></div></div><button type="button" class="vid-dislike mx-4" title="Dislike" data-toggle="modal" data-target="#seriesrateCenter"><span class="ico-cont bg-danger text-center py-1 px-1"><span class="py-3"><i class="fas fa-star"></i></span></span><p class="add-to-rate py-3">Rate</p></button></div><div class="col-xl-9 col-lg-7 col-md-7 col-sm-7 col-xs-7"><div class="ser-tp-tmb"><img class="img-fluid ser-tmb-img" src="' +
                                 data.series_content_data[key][4] + '"alt="image4"></div></div></div></div>';
-                            var seasons = '<div class="show-up"><div id="series_season_' + key +
-                                '" class="free-description-section"><div class="container-fluid my-5"><h3 class="font-weight-bold mx-5 px-4">Seasons<i class="arrow right mx-1"></i></h4><div id="series_season-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active mx-5"><div class="row">';
+                            var seasons = '<div><div id="series_season_' + key +
+                                '" class="free-description-section"><div class="container-fluid to-observe"><div class="pad-addr"><h3 class="font-weight-bold">Seasons<i class="arrow right mx-1"></i></h3><div class="pad-car-add"><div id="series_season-controls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false"><div class="carousel-inner"><div class="carousel-item active"><div class="row">';
                             var count = 0;
                             for (var val in data.series_season_data) {
                                 count++;
@@ -1270,7 +1314,7 @@
                                     seasons += '<div class="carousel-item"><div class="row">';
                                 }
                                 seasons +=
-                                    '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Season ' +
+                                    '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-1" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Season ' +
                                     data.series_season_data[val][1] +
                                     '</div><div class="img-seci"><a href="#" onclick="open_season(' + val +
                                     ')"><img class="img-fluid ser-img" src="' + data.series_season_data[val]
@@ -1284,7 +1328,7 @@
                                 seasons += '</div></div>';
                             }
                             seasons +=
-                                '</div><a class="carousel-control-prev bg-danger" href="#series_season-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div>';
+                                '</div><a class="carousel-control-prev bg-danger" href="#series_season-controls" role="button" data-slide="prev"style="display:none"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next bg-danger" href="#series_season-controls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div></div></div></div></div></div>';
 
                         }
                         $("#selected_series_description").append(htmlgen);
@@ -1301,7 +1345,8 @@
                                 '#series_season-controls .carousel-control-next').hide();
                         }
                         bind_control_arrow_series_season();
-
+                        callit();
+                        oncallit();
                     } else {
                         alert('Some unexpected error has occured. Try again.');
                     }
@@ -1333,6 +1378,7 @@
                     if (data.is_season_exists != '') {
                         alert(data.is_season_exists);
                     } else if (data.is_successful != '') {
+                        $("#bg-wall").hide();
                         save_history_before_unloading();
                         $("#selected_season_description").empty();
                         $("#selected_season_freecontent").empty();
@@ -1460,10 +1506,7 @@
                                 episodes +=
                                     '<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 spec-card"><div class="card py-3 px-3" style="border:0"><div class="card-body"><div class="ser-name-carouse text-center font-weight-bold">Episode ' +
                                     val + ' - ' + data.season_episodes[val][1] +
-                                    '</div><div class="img-seci"><a id="click_to_play_episode_video_'+ data.season_episodes[val][0] +'" href="#" onclick="play_episode(' + data
-                                    .season_episodes[val][0] + ',' + video_name + ',' + video_description +
-                                    ',' + video_category + ',' + tags + ',' + subcategories + ',' +
-                                    video_language + ',' + video_cost + ',' + comments + ')">';
+                                    '</div><div class="img-seci"><a id="click_to_play_episode_video_'+ data.season_episodes[val][0] +'" href="#" onclick="play_episode(' + data.season_episodes[val][0] + ',' + video_name + ',' + video_description + ',' + video_category + ',' + tags + ',' + subcategories + ',' +                video_language + ',' + video_cost + ',' + comments + ')">';
 
                                 if (data.season_episodes[val][13] == 0) {
                                     episodes += '<div id="lock_' + data.season_episodes[val][0] +
@@ -1538,7 +1581,7 @@
         }
 
         // HTML CODE FOR VIDEO PLAYER
-        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row" style="height: 500px;"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button onclick="prev_btn_pressed()" type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button onclick="next_btn_pressed()" type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item quali dis">Video Quality</a><a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a><a href="#" class="dropdown-item qual">Auto</a><a href="#" class="dropdown-item qual">480p</a><a href="#" class="dropdown-item qual">720p</a><a href="#" class="dropdown-item qual">1080p</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-6 col-md-5" style="border: 1px solid grey;"><div class="card comment"><div class="card-header"><h4>Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div style="display: inline;"><div style="float: left;width: 100%;"><textarea name="comment" id="comment_section" rows="3" tabindex="4" placeholder="comment" required="required"></textarea></div><div style="float: right;width: 100%;"><button onclick="comment_on_video()" type="submit">Comment</button></div></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-6 col-md-7"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-6 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-3" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button>  <div class="dropdown" style="position: relative;display: inline-block;"><button onclick="getRoomList()" type="button" class="add-to-fav mx-3 dropbtn" data-toggle="tooltip" data-placement="bottom" title="Play in room" id="transfer-room"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="40" height="40" x="0" y="0" viewBox="0 0 80.13 80.13" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><circle r="40.065" cx="40.065" cy="40.065" fill="#da1f1f" shape="circle"/><g transform="matrix(0.7,0,0,0.7,12.019500732421879,12.019351673126224)"><g xmlns="http://www.w3.org/2000/svg">	<path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112   c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984   c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984   z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263   c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833   C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088   c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699   C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276   c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752   C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032   c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265   c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z" fill="#ffffff" data-original="#000000" style="" class=""/></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g></g></svg></span><p class="add-to-fav-title py-3">Play in Room</p></button><div class="dropdown-content" id="room-list"> </div>  <button type="button" class="vid-flag mx-3" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div></div></div>';
+        var playerhtml = '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video></div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button onclick="prev_btn_pressed()" type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button onclick="next_btn_pressed()" type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-4 col-md-5 d-wt-th" ><div class="card comment"><div class="card-header ser-hd"><h4 class="text-center">Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div class="position-absolute mx-2 my-2 bt-heig" style="bottom:0"><form class="form-inline row" role="form"><div class="form-group col-xl-8 col-lg-8 col-md-8"><textarea class="form-control" id="comment_section" rows="2" type="text" placeholder="Your comments"></textarea></div><div class="form-group col-xl-4 col-lg-4 col-md-4"><button class="btn btn-danger btn-sm mx-1" type="button" onclick="comment_on_video()">comment</button></div></form></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-12 col-md-12"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row py-3 px-3"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-6 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-3" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button>  <div class="dropdown" style="position: relative;display: inline-block;"><button onclick="getRoomList()" type="button" class="add-to-fav mx-3 dropbtn" data-toggle="tooltip" data-placement="bottom" title="Play in room" id="transfer-room"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="40" height="40" x="0" y="0" viewBox="0 0 80.13 80.13" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><circle r="40.065" cx="40.065" cy="40.065" fill="#da1f1f" shape="circle"/><g transform="matrix(0.7,0,0,0.7,12.019500732421879,12.019351673126224)"><g xmlns="http://www.w3.org/2000/svg">	<path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112   c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984   c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984   z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263   c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833   C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088   c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699   C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276   c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752   C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032   c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265   c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z" fill="#ffffff" data-original="#000000" style="" class=""/></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g></g></svg></span><p class="add-to-fav-title py-3">Play in Room</p></button><div class="dropdown-content" id="room-list"> </div>  <button type="button" class="vid-flag mx-3" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div><div class="col-xl-3 col-lg-12 col-md-12 d-on-th"></div> </div></div></div>';
 
 
         // function to handle truncated comment
@@ -1569,7 +1612,7 @@
 
         //  setting up the video player
         function video_player_setup(video_id, video_name, video_description, video_category, video_tags, video_subcategory, video_language, video_cost, video_comments, video_watched) {
-
+            $("#bg-wall").hide();
             $("#video_with_comments").empty();
             $("#video_with_comments").append(playerhtml);
             document.getElementById('video_description_1').innerHTML = video_name;
@@ -1772,7 +1815,7 @@
                             if (is_user_subscribed == true) {
                                 alert(
                                     'You are no longer subscribed. Buy a new plan to enjoy streaming!!'
-                                    )
+                                )
                             }
                             is_user_subscribed = false;
                         } else if (data.is_subscribed == 'true') {
@@ -2097,29 +2140,36 @@
 
 
 
-                    // for animation
+        // for animation
         let options = {
-            rootMargin: '0px 0px -20px 0px',
-            threshold: 0.5
+            rootMargin: '0px 0px 0px 0px',
+            threshold: 0.3
         }
 
         let callback = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animation = "sectionAnimate 1s forwards ease-in-out";
+                    entry.target.classList.add('back-img-roo');
                     // unobserve
-                    observer.unobserve(entry.target);
+                    // observer.unobserve(entry.target);
+                }
+                else
+                {
+                    entry.target.className="container-fluid to-observe";
                 }
             });
         };
 
         let observer = new IntersectionObserver(callback, options);
-        var sectionToObserve = document.querySelectorAll('.to-observe');
-        // to obsereve the element
-        sectionToObserve.forEach(element => {
-            observer.observe(element);
-        });
-        
+
+        function oncallit() {
+            var sectionToObserve = document.querySelectorAll('.to-observe');
+            // to obsereve the element
+            sectionToObserve.forEach(element => {
+                observer.observe(element);
+            });
+        }
 
         // lazy-loader
         let opt = {
@@ -2132,7 +2182,6 @@
                 if (entry.isIntersecting) {
                     var src = entry.target.getAttribute('data-src');
                     entry.target.src = src;
-                    console.log("hii");
                     // unobserve
                     observerImg.unobserve(entry.target);
                 }
@@ -2140,9 +2189,10 @@
         };
 
         let observerImg = new IntersectionObserver(callbac, opt);
-        function callit(){
-            var images=document.querySelectorAll('[data-src]');
-        
+
+        function callit() {
+            var images = document.querySelectorAll('[data-src]');
+
             images.forEach(image => {
                 observerImg.observe(image);
             })
@@ -2150,6 +2200,7 @@
 
         // function should be called after observerImg has been created and after the element neede to be  observered has been loaded
         callit();
+        oncallit();
     </script>
 </body>
 

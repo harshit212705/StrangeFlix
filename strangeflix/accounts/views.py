@@ -133,7 +133,7 @@ def user_registration(request):
 
 
 # function called when user clicks on the verification link sent through email
-def activate(request, uidb64, token):
+def activate(request, uidb64, token,backend='django.contrib.auth.backends.ModelBackend'):
     """
         This function is called when user clicks the activation link sent to his account.
     """
@@ -151,7 +151,7 @@ def activate(request, uidb64, token):
         user.save()
 
         # logging in user
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
         if user.is_authenticated:
             # redirecting according to account type

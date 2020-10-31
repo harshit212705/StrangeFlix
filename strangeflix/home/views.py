@@ -536,27 +536,27 @@ def get_season_details(request):
                 tags_data.update({obj['video_id']: []})
                 comments_data.update({obj['video_id']: []})
                 is_video_locked.update({obj['video_id']: 0})
+            if request.user.is_authenticated and  request.user.user_type == 'U':
+                # checking logged in user subscription plan details
+                subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
 
-            # checking logged in user subscription plan details
-            subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+                # calculating locking info here using subscription and pay per piew
+                curr_time = datetime.today() - timedelta(days=1)
+                get_pay_per_view_videos = PayPerViewTransaction.objects.filter(
+                    user_id=request.user,
+                    video_id__in=series_video_id,
+                    transaction_start_time__gt=curr_time,
+                ).values('video_id')
 
-            # calculating locking info here using subscription and pay per piew
-            curr_time = datetime.today() - timedelta(days=1)
-            get_pay_per_view_videos = PayPerViewTransaction.objects.filter(
-                user_id=request.user,
-                video_id__in=series_video_id,
-                transaction_start_time__gt=curr_time,
-            ).values('video_id')
+                videos_with_pay_per_view = {}
+                for vid in get_pay_per_view_videos:
+                    videos_with_pay_per_view.update({vid['video_id']: 1})
 
-            videos_with_pay_per_view = {}
-            for vid in get_pay_per_view_videos:
-                videos_with_pay_per_view.update({vid['video_id']: 1})
-
-            for v_id in is_video_locked.keys():
-                if subscribe or (v_id in videos_with_pay_per_view.keys()):
-                    is_video_locked[v_id] = 1
-                else:
-                    is_video_locked[v_id] = 0
+                for v_id in is_video_locked.keys():
+                    if subscribe or (v_id in videos_with_pay_per_view.keys()):
+                        is_video_locked[v_id] = 1
+                    else:
+                        is_video_locked[v_id] = 0
 
             for tag in all_tags_data:
                 tags_data[tag.video_id.video_id].append(tag.tag_word)

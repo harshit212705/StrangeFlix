@@ -1,13 +1,15 @@
-$('document').on('resize', function (e) {
+window.addEventListener('resize', function (e) {
    var adjust = $('.player-wrapper').css('height');
    var hd = $('.ser-hd').css('height');
-   adjust = parseInt(adjust) - parseInt(hd);
-   $('.vid-cont').css('height', adjust);
+   var hdd = $('.bt-heig').css('height');
+   adjust = parseInt(adjust)-parseInt(hd)-parseInt(hdd);
+   $('#movie-vid-comments').css('height', adjust);
 });
 var adjust = $('.player-wrapper').css('height');
 var hd = $('.ser-hd').css('height');
-adjust = parseInt(adjust) - parseInt(hd);
-$('.vid-cont').css('height', adjust);
+var hdd = $('.bt-heig').css('height');
+adjust = parseInt(adjust)-parseInt(hd)-parseInt(hdd);
+$('#movie-vid-comments').css('height', adjust);
 
 // theatre mode 
 
@@ -97,7 +99,7 @@ $('.movierating-val').each(function (e) {
 
 
 
-// movie rating
+// series rating
 
 var serieslistItem = [];
 var seriesrating = 0;
@@ -389,44 +391,49 @@ function initialize_movie_player() {
          });
       });
    });
-   movie_quality.addEventListener('click', function (e) {
-      e.stopPropagation();
-      movie_qual.forEach(element => {
-         element.style.display = "block";
-      });
-      movie_plbk.forEach(element => {
-         element.style.display = "none";
-      });
-      movie_dis.forEach(element => {
-         element.style.display = "none";
-      });
-      movie_qual.forEach(element => {
-         element.addEventListener('click', function () {
-               movie_qual.forEach(element => {
-                  element.style.display = "none";
-               });
-               movie_plbk.forEach(element => {
-                  element.style.display = "none";
-               });
-               movie_dis.forEach(element => {
-                  element.style.display = "block";
-               });
-         });
-      });
-   })
+   // movie_quality.addEventListener('click', function (e) {
+   //    e.stopPropagation();
+   //    movie_qual.forEach(element => {
+   //       element.style.display = "block";
+   //    });
+   //    movie_plbk.forEach(element => {
+   //       element.style.display = "none";
+   //    });
+   //    movie_dis.forEach(element => {
+   //       element.style.display = "none";
+   //    });
+   //    movie_qual.forEach(element => {
+   //       element.addEventListener('click', function () {
+   //             movie_qual.forEach(element => {
+   //                element.style.display = "none";
+   //             });
+   //             movie_plbk.forEach(element => {
+   //                element.style.display = "none";
+   //             });
+   //             movie_dis.forEach(element => {
+   //                element.style.display = "block";
+   //             });inser
+   //       });
+   //    });
+   // })
 
    // theatre mode 
 
    $('.theatre__button').on('click', function (e) {
       var movie_chk = $('.theatre__button').attr('class');
       if (movie_chk == 'theatre__button') {
-         $('.playlist-container').css('display', 'none');
-         $('.c-visible-t-mode').css('display', 'block');
+         var store=$('.d-wt-th').html();
+         $('.d-wt-th').css('display', 'none');
+         $('.d-on-th').html(store);
+         $('.d-on-th').css('display', 'block');
          $('.player-wrapper').attr('class', 'col-xl-12 col-lg-12 col-md-12 player-wrapper');
          $('.theatre__button').attr('class', 'theatre__button hellooo');
          $('.video-body').css('padding', '0% 13%');
       } else {
-         $('.playlist-container').css('display', 'block');
+         var store=$('.d-on-th').html();
+         $('.d-wt-th').html(store);
+         $('.d-wt-th').css('display', 'block');
+         $('.d-on-th').css('display', 'none');
          $('.c-visible-t-mode').css('display', 'none');
          $('.player-wrapper').attr('class', 'col-xl-9 col-lg-8 col-md-7 player-wrapper');
          $('.theatre__button').attr('class', 'theatre__button');

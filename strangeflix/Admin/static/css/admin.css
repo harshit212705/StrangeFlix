@@ -495,3 +495,7 @@ img{
     text-decoration: underline;
     cursor: pointer;
 }
+button,input{
+    overflow:hidden !important;
+}
+
