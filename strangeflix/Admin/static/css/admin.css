@@ -472,3 +472,8 @@ img{
     object-fit:fill;
     height:15rem !important;
 }
+
+button,input{
+    overflow:hidden !important;
+}
+

@@ -1,0 +1,18 @@
+body {
+    background-color: #272B2C;
+    color: #fff;
+}
+
+.tkmb {
+    background-color: #000000;
+    background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+    color: #fff;
+    border-radius: 4%;
+    margin:15% 25%;
+}
+
+@media(max-width:1000px){
+    .tkmb{
+        margin:14% 10%;
+    }
+}
