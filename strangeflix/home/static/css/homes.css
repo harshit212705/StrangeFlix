@@ -112,8 +112,9 @@ p {
   object-fit:cover;
   animation-name: homeView;
   animation-direction: forward;
-  animation-duration: 15s;
+  animation-duration: 3s;
   animation-timing-function: linear;
+  opacity: 0.3;
 }
 /*insert-vid.html*/
 #pl-vid a {
@@ -896,3 +897,27 @@ a {
   }
 }
 
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}

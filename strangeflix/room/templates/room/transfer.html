@@ -1,5 +1,5 @@
 <video class="player__video viewer" id="video" preload="metadata">
-    <source id="insert-video" src="http://localhost:8000/video/1" type="video/mp4">
+    <source id="insert-video" src="http://localhost:8000/video/2" type="video/mp4">
 </video>
 
 <style>
@@ -47,7 +47,7 @@
     </div>
     <script>
         const roomChannel = new BroadcastChannel('room-channel');
-        document.getElementById('transfer-room').addEventListener('click',function(){
+       function getRoomList(){
             document.getElementById("room-list").innerHTML='';
             var roomList = JSON.parse(localStorage.getItem('roomlist'));
             if( (!roomList) || roomList.rooms.length == 0)
@@ -62,7 +62,7 @@
                 });
             }
             document.getElementById("room-list").style.display = "block";
-        });
+        }
         function sendToTab(room_id)
         {
             document.getElementById("room-list").style.display = "none";

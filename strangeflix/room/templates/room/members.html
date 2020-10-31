@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+    <!-- <link rel="stylesheet" href="{% static "/css/videoplayer.css" %}"> -->
+    <link rel="stylesheet" href="{% static "/css/topbar.css" %}">
+    <link rel="stylesheet" href="{% static "room/css/room.css" %}">
     <style>
                 #overlay {
             background-color: white;
@@ -32,99 +34,270 @@
 </head>
 <body>
     <div id="overlay">joining room.....</div>
-    <div class="player" id="video-player">
-        <!-- video-head  -->
-        <div class="video-head">
+    <div class="navbar-section">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+            <a href="#" class="navbar-brand py-3 font-weight-bold">Strangeflix</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        </div>
-        <!-- video-body  -->
-        <div class="video-body">
-            <!-- video is initially muted in order to falicitate autoplay -->
-            <video class="player__video viewer" id="video" preload="metadata">
-                <!-- <source id="insert-video" src="https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2Fb5aeb676-0ae1-4876-8429-6712707880f5.mp4?alt=media&token=9c49ac3f-987d-4896-80e9-d0ad46f63692" type="video/mp4"> -->
-            </video>
-        </div>
-        <!-- video-footer  -->
-        <div class="video-footer">
-            <div class="player__controls" id="plact">
-                <!-- progress-bar  -->
-                <div class="progress">
-                    <div class="progress__filled"></div>
-                </div>
-
-
-                <!-- play/pause  -->
-                <button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="play-icon"
-                        class="fas fa-play"></i></button>
-
-                <!-- skip 10s backword -->
-                <button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">« 10s</button>
-
-                <!-- skip 10s forward -->
-                <button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s »</button>
-
-                <!-- volume  -->
-                <button class="volume__button" data-toggle="tooltip" title="mute" id="volume"><i id="vol-ico"
-                        class="fas fa-volume-mute"></i></button>
-                <input type="range" name="volume" id="vol-ran" class="player__slider" min="0" max="1" step="0.05"
-                    value="0">
-
-                <!-- video timer  -->
-                <button id="progressTime" class="timer__button">
-                    <span id="current">00:00 / </span>
-                    <span id="duration">00:00</span>
-                </button>
-                <!-- playbackrate  -->
-                <!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> -->
-
-                <div class="fullscreen">
-                    <!-- setting 
-                    <!-- <button id="setting" class="setting__button" data-toggle="tooltip" title="setting"><span
-                            class="px-4"><i id="setting-ico" class="fas fa-cog"></i></span></button> -->
-                    <!-- <div class="btn-group dropup">
-                        <button id="setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"><span class="px-4"><i id="setting-ico"
-                                    class="fas fa-cog"></i></span></button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item playbacki dis">Playback speed</a>
-                            <a href="#" class="dropdown-item quali dis">Video Quality</a>
-                            <a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a>
-                            <a href="#" class="dropdown-item playback">0.25</a>
-                            <a href="#" class="dropdown-item playback">0.5</a>
-                            <a href="#" class="dropdown-item playback">1</a>
-                            <a href="#" class="dropdown-item playback">1.25</a>
-                            <a href="#" class="dropdown-item playback">1.5</a>
-                            <a href="#" class="dropdown-item playback">1.75</a>
-                            <a href="#" class="dropdown-item playback">2</a>
-                            <a href="#" class="dropdown-item qual">Auto</a>
-                            <a href="#" class="dropdown-item qual">480p</a>
-                            <a href="#" class="dropdown-item qual">720p</a>
-                            <a href="#" class="dropdown-item qual">1080p</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'home_page' %}">Home</a></li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#"> -->
+                        <div class="dropdown py-2 px-2 specia-drop">
+                            <button class="rem-button" id="dropdownMenu2" aria-haspopup="true" aria-expanded="false">
+                                Sports
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <div class="dropdown-item">
+                                    <a href="#">Cricket</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Football</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Tennis</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Martial Arts</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">eSports</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Hockey</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Badminton</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Wrestling</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Kabbadi</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Table Tennis</a>
+                                </div>
+                            </div>
                         </div>
-                    </div> --> 
+                        <!-- </a> -->
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown py-2 px-2 specia-drop">
+                            <button class="rem-button" id="dropdownMenu3" aria-haspopup="true" aria-expanded="false">
+                                Entertainment
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                <div class="dropdown-item">
+                                    <a href="#">Action</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Adventure</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Animation</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Comedy</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Crime</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Drama</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Horror</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Romance</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#">Thriller</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="navbar-nav ml-auto">
+
+                    <!-- search bar  -->
+                    <input type="text" id="sear" class="form-control mr-sm-2" placeholder="search by name">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-dark">Search</button>
+                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                            aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu">
+                            <button id="sear-by-nam" class="dropdown-item btn-secondary">Search by name</a>
+                                <button id="sear-by-tag" class="dropdown-item btn-secondary">Search by tags</a>
+                        </div>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <li class="mx-4">
+                        <div class="btn-group specia-drop">
+                            <button class="rem-button py-2 px-2" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{% url "subscription_plans" %}">Subscribe</a>
+                                <a class="dropdown-item" href="{% url "wallet_details" %}">Wallet</a>
+                                <a class="dropdown-item" href="{% url "index" %}">My Rooms</a>
+                                <a class="dropdown-item" href="{% url "account_logout" %}">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="mx-4">
+                        <!-- login  -->
+                        <a href="#" class="nav-item nav-link ml-2" data-toggle="modal"
+                            data-target="#loginModal">Login</a>
+                    </li>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="runner-section container-fluid">
+        <div class="row">
+            <!-- video-player  -->
+            <div class="col-xl-9 col-lg-8 col-md-7 player-wrapper">
+                <div class="player" id="video-player">
+          
+                    <!-- video-head  -->
+                    <div class="video-head">
+                        <div class="text-white">
+                            <h3 class="font-weight-bold">heading</h4>
+                        </div>
+                    </div>
+                    <!-- video-body  -->
+                    <div class="video-body">
+                        <video class="player__video viewer" id="video" preload="metadata">
+                            <source
+                                src="https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2F835aee21-d65a-4dea-b64a-d4d0a8950fc8.mp4?alt=media&token=fbbac811-8e9e-4e4a-b235-62e83681eeea"
+                                id="insert-vid" type="video/mp4">
+                        </video>
+                    </div>
+                    <!-- https://firebasestorage.googleapis.com/v0/b/strangeflix-85ae0.appspot.com/o/videos%2F835aee21-d65a-4dea-b64a-d4d0a8950fc8.mp4?alt=media&token=fbbac811-8e9e-4e4a-b235-62e83681eeea -->
+                    <!-- video-footer  -->
+                    <div class="video-footer">
+                        <div class="player__controls" id="plact">
+                            <!-- progress-bar  -->
+                            <div class="progress">
+                                <div class="progress__filled"></div>
+                            </div>
+            
+            
+                            <!-- play/pause  -->
+                            <button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="play-icon"
+                                    class="fas fa-play"></i></button>
+            
+                            <!-- skip 10s backword -->
+                            <button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«
+                                10s</button>
+            
+                            <!-- skip 10s forward -->
+                            <button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s
+                                »</button>
+            
+                            <!-- volume  -->
+                            <button class="volume__button" data-toggle="tooltip" title="mute" id="volume"><i id="vol-ico"
+                                    class="fas fa-volume-mute"></i></button>
+                            <input type="range" name="volume" id="vol-ran" class="player__slider" min="0" max="1"
+                                step="0.05" value="0">
+            
+                            <!-- video timer  -->
+                            <button id="progressTime" class="timer__button">
+                                <span id="current">00:00 / </span>
+                                <span id="duration">00:00</span>
+                            </button>
+                            <!-- playbackrate  -->
+                            <!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> -->
+            
+                            <div class="fullscreen">
+                                <!-- setting  -->
+                                <!-- <button id="setting" class="setting__button" data-toggle="tooltip" title="setting"><span
+                                        class="px-4"><i id="setting-ico" class="fas fa-cog"></i></span></button> -->
+            
+                                <button type="button" class="prev-button mr-3">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                                <button type="button" class="next-button">
+                                    <i class="fas fa-step-forward"></i>
+                                </button>
+                                <div class="btn-group dropup">
+                                    <button id="setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><span class="px-4"><i id="setting-ico"
+                                                class="fas fa-cog"></i></span></button>
+                                    <div class="dropdown-menu plbcrt">
+                                        <a href="#" class="dropdown-item playbacki dis">Playback speed</a>
+                                        <a href="#" class="dropdown-item quali dis">Video Quality</a>
+                                        <a href="#" class="dropdown-item shortcuts dis">Keyboard shortcuts</a>
+                                        <a href="#" class="dropdown-item playback">0.25</a>
+                                        <a href="#" class="dropdown-item playback">0.5</a>
+                                        <a href="#" class="dropdown-item playback">1</a>
+                                        <a href="#" class="dropdown-item playback">1.25</a>
+                                        <a href="#" class="dropdown-item playback">1.5</a>
+                                        <a href="#" class="dropdown-item playback">1.75</a>
+                                        <a href="#" class="dropdown-item playback">2</a>
+                                        <a href="#" class="dropdown-item qual">Auto</a>
+                                        <a href="#" class="dropdown-item qual">480p</a>
+                                        <a href="#" class="dropdown-item qual">720p</a>
+                                        <a href="#" class="dropdown-item qual">1080p</a>
+                                    </div>
+                                </div>
+                                <!-- picture-in-picture  -->
+                                <button id="pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span
+                                        class="px-4"><i id="pip-ico" class="fas fa-window-maximize"></i></span></button>
+                                <!-- theatre view  -->
+                                <button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span
+                                        class="px-4"><i id="th-ico" class="fas fa-arrows-alt-v"></i></span></button>
+                                <!-- fullscreen  -->
+                                <button id="fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span
+                                        class="px-4"><i id="fs-ico" class="fas fa-expand"></i></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- sidebar content  -->
+            <div class="col-xl-3 col-lg-4 col-md-5 playlist-container">
+                <div class="card">
+                    <div class="card-header ser-hd">
+                        <span><h4>Actions</h4></span>
+                    </div>
+                    <div class="card-body vid-cont">
+                        <div id="chat-log" style="width: 100%; height:250px; overflow-y: scroll;padding-left: 1rem;">
+
+                        </div>
+                        <div class="my-4">
+                            <div class="row">
+                                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                                    <input id="chat-message-input" type="text" class="form-control">
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                    <button id="chat-message-submit"  class="btn btn-danger btn-sm mx-3 my-1">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        {{ room_id|json_script:"room-id" }}
+                        <div class="card-header ser-hd">
+                            <span><h4>Active Users</h4></span>
+                        </div>
+                        <div id="user-log" style="width: 100%; height:250px;overflow-y: scroll;padding-left: 1rem;">
                     
-                    <!-- theatre view  -->
-                    <button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i
-                                id="th-ico" class="fas fa-mobile-alt"></i></span></button>
-                    <!-- fullscreen  -->
-                    <button id="fs" class="fs__button" data-toggle="tooltip" title="fullscreen(f)"><span class="px-4"><i
-                                id="fs-ico" class="fas fa-expand"></i></span></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-    <div id = "chat-log" style = "width: 100%; height:100; border: 1px black solid;overflow: scroll;">
-
-    </div>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_id|json_script:"room-id" }}
-    <div id = "user-log" style = "width: 100%; height:100; border: 1px black solid;overflow: scroll;">
-        
     </div>
 
     <script src="{% static "/room/js/member.js" %}"></script>

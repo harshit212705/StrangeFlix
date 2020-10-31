@@ -21,6 +21,9 @@
 </head>
 
 <body>
+    <script>
+        
+    </script>
     <div class="navbar-section">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
             <a href="#" class="navbar-brand py-3 font-weight-bold">Strangeflix</a>
@@ -195,9 +198,9 @@
             
                             <!-- volume  -->
                             <button class="volume__button" data-toggle="tooltip" title="mute" id="volume"><i id="vol-ico"
-                                    class="fas fa-volume-up"></i></button>
+                                    class="fas fa-volume-mute"></i></button>
                             <input type="range" name="volume" id="vol-ran" class="player__slider" min="0" max="1"
-                                step="0.05" value="1">
+                                step="0.05" value="0">
             
                             <!-- video timer  -->
                             <button id="progressTime" class="timer__button">
@@ -258,10 +261,10 @@
             <div class="col-xl-3 col-lg-4 col-md-5 playlist-container">
                 <div class="card">
                     <div class="card-header ser-hd">
-                        <span>Actions</span>
+                        <span><h4>Actions</h4></span>
                     </div>
                     <div class="card-body vid-cont">
-                        <div id="chat-log" style="width: 100%; height:250px; overflow-y: scroll;">
+                        <div id="chat-log" style="width: 100%; height:250px; overflow-y: scroll;padding-left: 1rem;">
 
                         </div>
                         <div class="my-4">
@@ -276,8 +279,10 @@
                         </div>
                        
                         {{ room_id|json_script:"room-id" }}
-                    
-                        <div id="user-log" style="width: 100%; height:250px;overflow-y: scroll;">
+                        <div class="card-header ser-hd">
+                            <span><h4>Active Users</h4></span>
+                        </div>
+                        <div id="user-log" style="width: 100%; height:250px;overflow-y: scroll; padding-left: 1rem;">
                     
                         </div>
                     </div>

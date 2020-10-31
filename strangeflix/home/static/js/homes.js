@@ -552,3 +552,39 @@ function initialize_movie_player() {
       }
    };
 }
+
+
+
+
+const roomChannel = new BroadcastChannel('room-channel');
+function getRoomList(){
+    document.getElementById("room-list").innerHTML='';
+    var roomList = JSON.parse(localStorage.getItem('roomlist'));
+    if( (!roomList) || roomList.rooms.length == 0)
+    {
+        document.getElementById("room-list").innerHTML+='<a href="#" onclick = "hideRoomList()">No rooms Available</a>';
+    }
+    else
+    {
+        var uniqueRooms = roomList.rooms.filter((item, i, ar) => ar.indexOf(item) === i);
+        uniqueRooms.forEach(element => {
+            document.getElementById("room-list").innerHTML+='<a href="#" onclick="sendToTab('+element+')">'+element+'</a>';
+        });
+    }
+    document.getElementById("room-list").style.display = "block";
+}
+function sendToTab(room_id)
+{
+    document.getElementById("room-list").style.display = "none";
+    var videoData = document.getElementById("movie-video").innerHTML;
+    var roomData = {
+        'room_id':room_id,
+        'videoData':videoData
+    }
+    roomChannel.postMessage(roomData);
+    document.getElementById("room-list").style.display = "none";
+}
+function hideRoomList()
+{
+   document.getElementById("room-list").style.display = "none";
+}

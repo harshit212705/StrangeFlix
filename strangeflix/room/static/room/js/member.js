@@ -33,7 +33,8 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
         function fillUsers()
         {
             document.querySelector('#user-log').innerHTML = '';
-            users.forEach(element => {
+            userslist = users.filter((item, i, ar) => ar.indexOf(item) === i);
+            userslist.forEach(element => {
                 document.querySelector('#user-log').innerHTML += element+'<br>';
             });
         }
@@ -89,17 +90,15 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
             if(data.type === 'add_user')
             {
                 
-                if(!users.find((s)=> s===data.user))
-                {
-                    users.push(data.user)
-                }
+                
+                users.push(data.user)
                 fillUsers()
             }
             if(data.type === 'remove_user')
             {
-                if(user.sfind((s)=> s===data.user))
+                if(users.find((s)=> s===data.user))
                 {
-                    const index = user.indexOf(data.user);
+                    const index = users.indexOf(data.user);
                     if (index > -1) {
                     users.splice(index, 1);
                     }

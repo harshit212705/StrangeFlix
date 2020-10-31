@@ -1,5 +1,26 @@
 //fetch room id
+
 const room_id = JSON.parse(document.getElementById('room-id').textContent);
+var checkList = JSON.parse(localStorage.getItem('roomlist'));
+            if(checkList)
+            {
+                if(checkList.rooms.find((s)=> s===room_id))
+                {
+                    alert("Host is already opened in another tab.Redirecting...");
+                    window.location.href = "/room"
+                }
+                else
+                {
+
+                    addRoomToList();
+                }
+            }
+            else
+            {
+
+                addRoomToList();
+            }
+
         //connect to respective room socket
         const chatSocket = new WebSocket(
             'ws://'
@@ -35,7 +56,8 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
         function fillUsers()
         {
             document.querySelector('#user-log').innerHTML = '';
-            users.forEach(element => {
+            userslist = users.filter((item, i, ar) => ar.indexOf(item) === i);
+            userslist.forEach(element => {
                 document.querySelector('#user-log').innerHTML += element+'<br>';
             });
         }
@@ -68,10 +90,8 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
             if(data.type === 'add_user')
             {
                 console.log(typeof(data.user))
-                if(!users.find((s)=> s===data.user))
-                {
-                    users.push(""+data.user)
-                }
+               
+                users.push(""+data.user)
                 fillUsers()
             }
             if(data.type === 'remove_user')
@@ -130,7 +150,6 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
             localStorage.setItem('roomlist',JSON.stringify(roomList));
 
         }
-        addRoomToList();
         window.addEventListener('beforeunload',function (e){
 
             var roomList = JSON.parse(localStorage.getItem('roomlist'));
@@ -141,7 +160,9 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
                 if (index > -1) {
                     roomList.rooms.splice(index, 1);
                 }
+
             }
+            localStorage.setItem('roomlist',JSON.stringify(roomList));
         });
         roomChannel.onmessage = function(e) {
             const message = e.data;
@@ -150,6 +171,9 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
             {
                 console.log(e.data.videoData);
                 video.innerHTML = e.data.videoData;
+                video.load();
+                video.currentTime = 0;
+                video.pause();
                 video.load();
                 hostUpdate();
             }
