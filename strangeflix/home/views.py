@@ -55,7 +55,8 @@ from provider.views import LANGUAGE_REVERSE, SUBCATEGORY_REVERSE, CATEGORY_REVER
 # function to render the mainpage or homepage
 class HomeView(View):
     def get(self, request):
-
+        if request.user.is_authenticated and (request.user.user_type == 'A' or request.user.user_type == 'P'):
+            return render(request, 'templates/404.html')
         registration_form = CustomUserCreationForm()
         login_form = AuthenticationForm()
         is_subscribed = False

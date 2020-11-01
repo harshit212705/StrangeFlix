@@ -332,18 +332,25 @@
                                         class="arro text-secondary right mx-1"></i></h4>
                                         <div class="wallet-details">
                                             <div class="text-center my-5">
-                                                <div style="margin-left:475px;text-align: center;height:relative;width: 400px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
-                                                    <h4 class="text-center my-5" style="padding-top:30px;">Wallet</h4>
-                                                    <div style="display: inline-block;width: 100%;">
-                                                        <div style="float: left;margin-left: 50px;">Wallet Balance</div>
-                                                        <div style="float: right;margin-right: 50px;">Rs. {{ wallet_bal }}</div>
-                                                    </div>
-                                                    <!-- add money form -->
-                                                    <form method='post' action="{% url "add_money" %}">
-                                                        {% csrf_token %}
-                                                        {{ add_money_form.amount|as_crispy_field }}
-                                                        <button type="submit" class="btn btn-primary" style="margin-left:30px;margin-top:20px;">Add Money</button>
-                                                    </form>
+                                                <div style="text-align: center;height:relative;width: auto;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
+                                                    <div class="row">
+                                                        <div class="col-lg-6" style="margin-top:10%;">
+                                                            <!-- <h4 class="text-center my-5" style="padding-top:30px;">Wallet</h4> -->
+                                                            <div style="display: inline-block;width: 100%;">
+                                                                <div style="float: left;margin-left: 50px;">Wallet Balance</div>
+                                                                <div style="float: right;margin-right: 50px;">Rs. {{ wallet_bal }}</div>
+                                                            </div>
+                                                            <!-- add money form -->
+                                                            <form method='post' action="{% url "add_money" %}">
+                                                                {% csrf_token %}
+                                                                {{ add_money_form.amount|as_crispy_field }}
+                                                                <button type="submit" class="btn btn-primary" style="margin-left:30px;margin-top:20px;">Add Money</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-lg-6" style="border-left: 1px solid white;">
+
+                                                        
+                                                    
                                                     <!-- wallet transactions -->
                                                     <h5 class="text-left my-5" style="padding-top:30px;margin-left: 20px;">Transactions</h5>
                                                     {% for key, value in context.items %}
@@ -373,8 +380,11 @@
                                                             <div style="float: right;margin-right: 50px;font-size: 12px;">{{ value.1 }}</div>
                                                         </div>
                                                     </div>
+
                                                         <hr>
                                                     {% endfor %}
+                                                </div>
+                                            </div>
                                                 </div>
                                             </div>
                                         </div>

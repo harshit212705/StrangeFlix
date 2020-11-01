@@ -503,7 +503,6 @@ img {
     cursor: pointer;
 }
 
-button,
 input {
     overflow: hidden !important;
 }

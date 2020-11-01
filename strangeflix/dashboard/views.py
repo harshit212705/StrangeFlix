@@ -108,7 +108,7 @@ def user_dashboard(request):
             favourite_data = {
                 'video_id' : favourite.video_id.video_id,
                 'video_name' : video.video_name,
-                'video_description' : video.video_name,
+                'video_description' : video.description,
                 'video_image' : video.thumbnail_image.url,
 
             }
