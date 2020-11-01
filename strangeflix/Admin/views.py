@@ -50,7 +50,7 @@ def admin_dashboard(request):
         return render(request, 'templates/404.html')
 
 
-# get all the users 
+# get all the users
 @csrf_exempt
 @login_required(login_url='home_page')
 def search_users(request):
@@ -333,7 +333,7 @@ def get_video_comments(request):
             if request.user.is_authenticated and request.user.user_type == 'A':
                 all_comment_ids = VideoComment.objects.filter(video_id=video_id).values('comment_id')
                 all_comments = VideoComment.objects.filter(video_id=video_id).order_by('-timestamp')
-
+                # fetching all comments on a video and their respective flags count
                 comment_flags_count = {}
                 for obj in all_comments:
                     comment_flags_count.update({obj.comment_id: [0, 0, 0, 0, 0]})
@@ -381,6 +381,7 @@ def delete_comment(request):
             context['is_comment_exists'] = 'This comment does not exists.'
         else:
             if request.user.is_authenticated and request.user.user_type == 'A':
+                # deleting comment and its flags
                 delete_comment_flags = ReportComment.objects.filter(comment_id=comment_id)
                 delete_comment_flags.delete()
                 delete_comment = VideoComment.objects.filter(comment_id=comment_id)
@@ -421,7 +422,7 @@ def get_video_flags(request):
             context['is_video_exists'] = 'This video does not exists.'
         else:
             if request.user.is_authenticated and request.user.user_type == 'A':
-
+                # fetching video flags
                 video_flags_count = [0, 0, 0, 0, 0, 0, 0, 0, 0]
                 video_flags = ReportVideo.objects.filter(video_id=video_details).values('video_id', 'flag_val').annotate(count=Count('user_id'))
 
@@ -633,7 +634,7 @@ def get_movies(request):
     else:
         return render(request, 'templates/404.html')
 
-
+# email to provider on its video verification or rejection
 def video_status_email(video_type, provider_username, provider_email, video_name, season_no, series_name, movie_name, status):
 
     # Sending email process starts
@@ -648,6 +649,7 @@ def video_status_email(video_type, provider_username, provider_email, video_name
     else:
         return
 
+    # email instance
     email_context = {
         'provider': provider_username,
         'message': ''
@@ -783,7 +785,7 @@ def verify_video(request):
         return render(request, 'templates/404.html')
 
 
-# function to verify video uploaded by the provider
+# function to reject video uploaded by the provider
 @csrf_exempt
 @login_required(login_url='home_page')
 def reject_video(request):
@@ -827,7 +829,7 @@ def reject_video(request):
 
                 video_details.verification_status = 3
                 video_details.save()
-
+                # adding video rejection comment
                 video_obj = Videos.objects.filter(video_id=video_id).first()
                 comment_exists = VideoRejectionComment.objects.filter(video_id=video_obj).first()
                 if comment_exists:
@@ -867,7 +869,7 @@ def reject_video(request):
                             verification_status=1,
                         ).values('video_id')
                     )
-
+                    # updating season status
                     if pending_episodes is None:
                         series_season = SeriesSeasonDetails.objects.filter(
                             series_season_id=series_season_id.series_season_id

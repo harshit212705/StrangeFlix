@@ -298,6 +298,7 @@ def add_new_episode(request):
         if series_season is None:
             context['is_series_season_exists'] = 'This season or series do not exists'
         else:
+            # check if it is an update query and checking whether video exists or not
             if query_type == 'U':
                 video_details = Videos.objects.filter(video_id=video_id).first()
                 if video_details is None:
@@ -309,6 +310,7 @@ def add_new_episode(request):
                         context['is_video_exists'] = 'Video is not of the required type'
                         return JsonResponse(context)
 
+            # fetching episode details
             episode_details = SeriesVideos.objects.filter(
                 series_season_id=series_season_id,
                 episode_no=episode_no
@@ -508,6 +510,7 @@ def add_new_series_content(request):
         if series_season is None:
             context['is_series_season_exists'] = 'This season or series do not exists'
         else:
+            # check if query is of update type and check if video exists or not
             if query_type == 'U':
                 video_details = Videos.objects.filter(video_id=video_id).first()
                 if video_details is None:
@@ -723,7 +726,7 @@ def save_series_content_file_details_to_database(series_season, episode_name, un
     )
     video.save()
 
-    # saving new episode details to database
+    # saving new series content details to database
     new_season_free_content = FreeSeriesVideos.objects.create(
         series_season_id=series_season,
         video_id=video,
@@ -1296,7 +1299,7 @@ def save_movie_video_file_details_to_database(movie_id, movie_video_name, movie_
     )
     video.save()
 
-    # saving new episode details to database
+    # saving new movie video details to database
     movie_video = MovieVideo.objects.create(
         movie_id=movie_id,
         video_name=movie_video_name,
@@ -1503,10 +1506,9 @@ def add_movie_free_content(request):
         movie_videorelease_date = json_data['content_videorelease_date']
         movie_videolinkorvideo = json_data['content_videolinkorvideo']
         movie_link = json_data['content_link']
-        # 
         query_type = json_data['query_type']
         video_id = json_data['video_id']
-        # 
+
 
         # response object to return as response to ajax request
         context = {
@@ -1518,9 +1520,7 @@ def add_movie_free_content(request):
             'is_video_mimetype_problem': '',
             'is_successful': '',
             'movie_video_data': '',
-            # 
             'is_video_exists': '',
-            # 
         }
 
         # check if movie by this movie id exists or not
@@ -1528,7 +1528,7 @@ def add_movie_free_content(request):
         if movie is None:
             context['is_movie_exists'] = 'This movie do not exists'
         else:
-            # 
+            # check if query is of update type and check if video exists or not
             if query_type == 'U':
                 video_details = Videos.objects.filter(video_id=video_id).first()
                 if video_details is None:
@@ -1539,7 +1539,7 @@ def add_movie_free_content(request):
                     if movie_video_details is None:
                         context['is_video_exists'] = 'Video is not of the required type'
                         return JsonResponse(context)
-            # 
+
 
             # checking if quality of movie video not selected by the user
             if movie_videoquality == 'Quality':
@@ -1735,6 +1735,7 @@ def save_movie_free_content_file_details_to_database(movie_id, movie_video_name,
 # updating movie video details to database
 def update_movie_free_content_file_details_to_database(movie_id, movie_video_name, movie_video_description, unique_video_name, download_token, movie_video_release_date, video_duration, video_quality, video_extension, thumbnail_image, video_tags, video_details, movie_video_details):
 
+    # updating movie free content video details
     movie_video_details.video_name = movie_video_name
     movie_video_details.description = movie_video_description
     movie_video_details.firebase_save_name = unique_video_name
@@ -1767,6 +1768,7 @@ def update_movie_free_content_file_details_to_database(movie_id, movie_video_nam
 # updating movie video details to database
 def update_movie_video_file_details_to_database(movie_id, movie_video_name, movie_video_description, unique_video_name, download_token, movie_video_release_date, video_duration, video_quality, video_extension, thumbnail_image, video_tags, video_details, movie_video_details):
 
+    # updating movie video details
     movie_video_details.video_name = movie_video_name
     movie_video_details.description = movie_video_description
     movie_video_details.firebase_save_name = unique_video_name
@@ -1800,6 +1802,7 @@ def update_movie_video_file_details_to_database(movie_id, movie_video_name, movi
 # updating new content series details to database
 def update_series_content_file_details_to_database(series_season, episode_name, unique_video_name, download_token, episode_description, episode_release_date, video_duration, video_quality, video_extension, thumbnail_image, episode_tags, video_details, series_video_details):
 
+    # updating series free content video details
     series_video_details.video_name = episode_name
     series_video_details.firebase_save_name = unique_video_name
     series_video_details.firebase_token = download_token
@@ -1832,6 +1835,7 @@ def update_series_content_file_details_to_database(series_season, episode_name, 
 # updating new episode details to database
 def update_video_file_details_to_database(series_season, episode_name, unique_video_name, download_token, episode_description, episode_release_date, episode_no, video_duration, video_quality, video_extension, thumbnail_image, episode_tags, video_details, series_video_details):
 
+    # updating series episode video details
     series_video_details.video_name = episode_name
     series_video_details.firebase_save_name = unique_video_name
     series_video_details.firebase_token = download_token

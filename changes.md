@@ -3,6 +3,12 @@
 ## DO NOT add new events at last. Recent changes should be at the top.
 
 
+### By <b>_Harshit Garg_</b> on <b>_November 02, 2020_</b>
+* Comments added.
+
+### By <b>_Harshit Garg_</b> on <b>_November 01, 2020_</b>
+* Check payment request status.
+
 ### By <b>_Harshit Garg_</b> on <b>_November 01, 2020_</b>
 * Editing rejected content in provider added.
 
