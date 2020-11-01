@@ -552,6 +552,7 @@ def get_season_details(request):
                 for vid in get_pay_per_view_videos:
                     videos_with_pay_per_view.update({vid['video_id']: 1})
 
+                # checking for which video user has pay per view service
                 for v_id in is_video_locked.keys():
                     if subscribe or (v_id in videos_with_pay_per_view.keys()):
                         is_video_locked[v_id] = 1
@@ -821,11 +822,14 @@ def save_video_history(request):
         if video_details is None:
             context['is_video_exists'] = 'This video does not exists.'
         else:
+            # check if user is logged in
             if request.user.is_authenticated and request.user.user_type == 'U':
                 video_duration = get_video_duration(video_details)
+                # fetching video history time
                 curr_time = min(curr_time, video_duration)
                 if curr_time != 0:
                     history = History.objects.filter(user_id=request.user, video_id=video_id).first()
+                    # adding to user history
                     if history:
                         history.video_watched = curr_time
                         history.save()
@@ -862,13 +866,15 @@ def get_search_results(request):
             'is_successful': '',
             'search_results': '',
         }
-
+        # if searching by name
         if search_based_on == 'search by name':
+            # fetching movies based on query
             movies = MovieVideo.objects.filter(
                 movie_id__movie_name__icontains=search_query,
                 date_of_release__lte=datetime.now(tz=timezone.utc),
                 verification_status=2,
             ).values('movie_id__movie_id', 'movie_id__movie_name', 'date_of_release')
+            # fetching series based on query
             series = SeriesVideos.objects.filter(
                 series_season_id__series_id__series_name__icontains=search_query,
                 date_of_release__lte=datetime.now(tz=timezone.utc),
@@ -883,12 +889,13 @@ def get_search_results(request):
             for obj in series:
                 diff = (datetime.now(tz=timezone.utc) - obj['max_release_date']).total_seconds()
                 search_results.update({diff: ('S', obj['series_season_id__series_id__series_id'], obj['series_season_id__series_id__series_name'])})
-
+            # all matched results
             search_results = {k: v for k, v in sorted(search_results.items(), key=lambda item: item[0])}
 
             context['search_results'] = search_results
-
+        # if searching by tag
         elif search_based_on == 'search by tag':
+            # fetching movies based on query
             movie_video_ids = MovieVideoTags.objects.filter(
                 tag_word__icontains=search_query,
             ).values('video_id')
@@ -898,6 +905,7 @@ def get_search_results(request):
                 verification_status=2,
             ).values('movie_id__movie_id', 'movie_id__movie_name', 'date_of_release')
 
+            # fetching series based on query
             series_video_ids = SeriesVideosTags.objects.filter(
                 tag_word__icontains=search_query,
             ).values('video_id')
@@ -916,6 +924,7 @@ def get_search_results(request):
                 diff = (datetime.now(tz=timezone.utc) - obj['max_release_date']).total_seconds()
                 search_results.update({diff: ('S', obj['series_season_id__series_id__series_id'], obj['series_season_id__series_id__series_name'])})
 
+            # all matched results
             search_results = {k: v for k, v in sorted(search_results.items(), key=lambda item: item[0])}
 
             context['search_results'] = search_results
@@ -941,6 +950,7 @@ def search_results_by_subcategory(request):
             'search_results': '',
         }
 
+        # fetching movies based on query
         all_movie_ids_with_subcategory = MovieSubCategories.objects.filter(
             sub_category=SUBCATEGORY[str(subcategory).lower()],
         ).values('movie_id').distinct()
@@ -960,6 +970,7 @@ def search_results_by_subcategory(request):
             movie_release_date_mapping.update({obj['movie_id__movie_id']: obj['date_of_release']})
         # print(movie_release_date_mapping)
 
+        # fetching movies data
         movies_data = MovieDetails.objects.filter(movie_id__in=released_movie_ids)
         all_subcategory_data = MovieSubCategories.objects.filter(movie_id__in=released_movie_ids)
 
@@ -977,6 +988,7 @@ def search_results_by_subcategory(request):
             search_results.update({diff: ('M', obj.movie_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), 'Entertainment', obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk], str(obj.pk))})
         # print(search_results)
 
+        # fetching series based on query
         all_series_ids_with_subcategory = SeriesSubCategories.objects.filter(
             sub_category=SUBCATEGORY[str(subcategory).lower()],
         ).values('series_id').distinct()
@@ -991,6 +1003,7 @@ def search_results_by_subcategory(request):
             series_season_id__series_id__in=released_series_ids,
         ).values('series_season_id__series_id__series_id').annotate(max_release_date=Max('date_of_release'))
 
+        # checking if series is released or not
         series_max_release_date_mapping = {}
         for obj in series_max_release_dates:
             series_max_release_date_mapping.update({obj['series_season_id__series_id__series_id']: obj['max_release_date']})
@@ -1011,6 +1024,7 @@ def search_results_by_subcategory(request):
             diff = (datetime.now(tz=timezone.utc) - series_max_release_date_mapping[obj.pk]).total_seconds()
             search_results.update({diff: ('S', obj.series_name, obj.description, str(LANGUAGE_REVERSE[obj.language]).title(), str(CATEGORY_REVERSE[obj.category]).title(), obj.date_of_creation, obj.thumbnail_image.url, subcategory_data[obj.pk], str(obj.pk))})
 
+        # all matched data
         search_results = {k: v for k, v in sorted(search_results.items(), key=lambda item: item[0])}
         # print(search_results)
 
@@ -1060,6 +1074,7 @@ def add_video_comment(request):
                 else:
                     comment_type = 3
 
+                # adding new comment to the database
                 new_comment = VideoComment.objects.create(
                     user_id=request.user,
                     video_id=video_details,
@@ -1101,7 +1116,9 @@ def add_to_favourite(request):
         if video_details is None:
             context['is_video_exists'] = 'This video does not exists.'
         else:
+            # check if user is logged in
             if request.user.is_authenticated and request.user.user_type == 'U':
+                # adding user favourites
                 favourite = Favourites.objects.filter(video_id=video_id).first()
                 if favourite is None:
                     favourite = Favourites.objects.create(
@@ -1154,10 +1171,12 @@ def get_pay_per_view_video(request):
         if video_details is None:
             context['is_video_exists'] = 'This video does not exists.'
         else:
+            # check if user is logged in
             if request.user.is_authenticated and request.user.user_type == 'U':
                 cost = get_video_cost(video_details)
                 user_details = UserDetails.objects.filter(user=request.user).first()
                 wallet_bal = user_details.wallet_money
+                # if insufficient balance
                 if wallet_bal < cost:
                     context['insufficient_balance'] = 'You do not have enough money in your wallet. Add money to your wallet first to continue paying for this video.'
                 else:
@@ -1166,6 +1185,7 @@ def get_pay_per_view_video(request):
                     hash_object = hashlib.sha1(transaction_id.encode('utf-8'))
                     hex_dig = hash_object.hexdigest()
 
+                    # saving transaction details
                     transaction = PayPerViewTransaction.objects.create(
                         transaction_id=hex_dig,
                         user_id=request.user,
@@ -1265,13 +1285,14 @@ def check_user_subscription(request):
                 # checking logged in user subscription plan details
                 subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
                 history = History.objects.filter(user_id=request.user, video_id=video_details).first()
-
+                # if user is subscribed to a plan
                 if subscribe:
                     context['is_subscribed'] = 'true'
                     if history:
                         context['is_video_in_history'] = 'This video exists in history.'
                         context['video_watched'] = history.video_watched
                 else:
+                    # checking for pay per view subscription for video
                     if video_id != '' and video_id != -1:
                         video_obj = Videos.objects.filter(video_id=video_id).first()
                         if video_obj and video_obj.video_type == 1:
@@ -1299,9 +1320,11 @@ def check_user_subscription(request):
 
 # sending chunk by chunk video data to the video tag on request
 def response_iter(url, first_byte, subscription_required, request, video_id):
+    # setting headers for start bytes
     ran = 'bytes=' + str(first_byte) + '-'
     headers = {'Range': ran}
     r = requests.get(url, headers=headers, stream=True)
+    # fetching video data
     for chunk in r.iter_content(chunk_size=8192):
         if chunk:  # filter out keep-alive new chunks
             if subscription_required:
@@ -1325,6 +1348,7 @@ def response_iter(url, first_byte, subscription_required, request, video_id):
 
 @condition(etag_func=None)
 def stream_video(request, video_obj):
+    # getting video details
     if video_obj.video_type == 1:
         subscription_required = False
         video_details = FreeSeriesVideos.objects.filter(video_id=video_obj).first()
@@ -1340,17 +1364,17 @@ def stream_video(request, video_obj):
     # getting firebase url for uploaded video file
     path_on_cloud = 'videos/' + video_details.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[video_details.extension]
     firebase_video_url = storage.child(path_on_cloud).get_url(video_details.firebase_token)
-
+    # setting request headers
     range_header = request.META.get('HTTP_RANGE', '').strip()
     range_re = re.compile(r'bytes\s*=\s*(\d+)\s*-\s*(\d*)', re.I)
     range_match = range_re.match(range_header)
-
+    # getting firebase url
     base_url = str(firebase_video_url).split('?')[0]
     video_details = requests.get(base_url).text
     details_dict = eval(video_details)
-    print(details_dict)
+    # print(details_dict)
     size = int(details_dict['size'])
-
+    # if range matches
     if range_match:
         first_byte, last_byte = range_match.groups()
         first_byte = int(first_byte) if first_byte else 0
@@ -1359,7 +1383,7 @@ def stream_video(request, video_obj):
             last_byte = size - 1
         length = last_byte - first_byte + 1
         content_type = 'video/mp4'
-
+        # fetching video chunk
         chunk_response = response_iter(firebase_video_url, first_byte, subscription_required, request, video_obj)
         resp = StreamingHttpResponse(chunk_response, status=206, content_type=content_type)
         resp['Content-Length'] = str(length)
@@ -1368,16 +1392,18 @@ def stream_video(request, video_obj):
         return render(request, 'templates/404.html')
     resp['accept-ranges'] = 'bytes'
     print('response_sent')
+    # sending response
     return resp
 
 
-
+# function to handle user video fetch request
 def fetch_video(request, video_id):
     video_obj = Videos.objects.filter(video_id=video_id).first()
     if video_obj:
         if video_obj.video_type == 1:
             return stream_video(request, video_obj)
         else:
+            # if user is logged in
             if request.user.is_authenticated:
                 # checking logged in user subscription plan details
                 subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
@@ -1395,11 +1421,11 @@ def fetch_video(request, video_id):
         return render(request, 'templates/404.html')
 
 
-
+# extracting features for comments classification
 def extract_features(word_list):
     return dict([(word, True) for word in word_list])
 
-
+# training classifier
 def train_comment_judging_classifier():
     # Load positive and negative reviews
     positive_fileids = movie_reviews.fileids('pos')
@@ -1417,5 +1443,5 @@ def train_comment_judging_classifier():
     classifier = NaiveBayesClassifier.train(features_train)
     return classifier
 
-
+# classifier instance
 classifier = train_comment_judging_classifier()

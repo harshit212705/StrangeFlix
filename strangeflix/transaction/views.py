@@ -20,8 +20,6 @@ from provider.models import SeriesVideos, MovieVideo
 from .forms import AddMoneyForm
 
 
-
-
 # function to get wallet details
 @login_required(login_url='home_page')
 def wallet_details(request):
@@ -40,6 +38,7 @@ def wallet_details(request):
                 user=request.user,
             ).only('transaction_id', 'transaction_start_time', 'transaction_amount', 'status')).order_by('-transaction_start_time')
 
+        # fetching user payperview transaction details
         payperview_transactions = PayPerViewTransaction.objects.filter(user_id=request.user)
         payperview_video_ids = PayPerViewTransaction.objects.filter(user_id=request.user).values('video_id').distinct()
         payperview_costs = SeriesVideos.objects.filter(
@@ -50,10 +49,12 @@ def wallet_details(request):
             ).only('video_id__video_id', 'cost_of_video')
         )
 
+        # fetching video details and cost
         video_costs = {}
         for obj in payperview_costs:
             video_costs.update({obj.video_id.video_id: obj.cost_of_video})
 
+        # returning all transactions ordered by date
         all_trans = {}
         for obj in transactions:
             diff = (datetime.now(tz=timezone.utc) - obj.transaction_start_time).total_seconds()
@@ -199,17 +200,20 @@ def check_payment_status(request):
             'is_payment_refunded': '',
         }
 
-        # checking if video exists
+        # checking if transaction exists
         transaction_details = AddMoneyTransactionDetails.objects.filter(transaction_id=transaction_id).first()
         if transaction_details is None:
             context['is_transaction_exists'] = 'This transaction does not exists.'
         else:
+            # checking is transaction must be in pending stage
             if transaction_details.status != 2:
                 context['is_transaction_already_resolved'] = 'This transaction is already resolved.'
             else:
+                # checking if user is logged in or not
                 if request.user.is_authenticated and request.user.user_type == 'U':
                     if transaction_details.user == request.user:
                         response = settings.INSTAMOJO_API.payment_request_status(transaction_id)
+                        # checking if payment is done or not for that payment request id
                         if response['payment_request']['payments'] == []:
                             transaction_details.status = 1
                             transaction_details.save()
@@ -222,11 +226,13 @@ def check_payment_status(request):
                             if 'status' in response['payment_request']['payments'][0].keys():
                                 status = response['payment_request']['payments'][0]['status']
 
+                            # checking if no payment id is there then failed
                             if payment_id == '' or status == '':
                                 transaction_details.status = 1
                                 transaction_details.save()
                                 context['is_payment_failed'] = 'Your transaction failed!!'
                             else:
+                                # if money credited than refund the amount
                                 if status == 'Credit':
                                     # initiate refund
                                     refund_response = initiate_refund_payment(payment_id)
@@ -236,6 +242,7 @@ def check_payment_status(request):
                                     transaction_details.save()
                                     context['is_payment_refunded'] = 'Payment successfully refunded!!'
                                 else:
+                                    # else transaction is again failed
                                     transaction_details.status = 1
                                     transaction_details.payment_id = payment_id
                                     transaction_details.save()
