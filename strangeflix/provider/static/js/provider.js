@@ -273,6 +273,58 @@ function add_tag_c_added(){
 add_tag_c_added();
 
 
+// handling ADD TAG in ADD EPISODE SECTION of SERIES IN ADDED CONTENT SECTION FOR REJECTED VIDEOS
+function edit_add_tag_in_added(){
+	var addAddTag = document.querySelector("#edit-content-modal #add-add-tag");
+	var addTagText = document.querySelector("#edit-content-modal #add-tag-text");
+	var addShowTags = document.querySelector("#edit-content-modal #add-selected-tags");
+	var addSelectedTags = document.querySelectorAll("#edit-modal-add-tag-toggler");
+	addAddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = addTagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="edit-modal-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		addShowTags.append(span);
+		addSelectedTags = document.querySelectorAll("#edit-modal-add-tag-toggler");
+		addSelectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
+		});
+	});
+}
+
+
+// handling ADD TAG in ADD FREE CONTENT SECTION of SERIES IN ADDED CONTENT SECTION FOR REJECTED VIDEOS
+function edit_add_tag_c_added(){
+	var eaddAddTag = document.querySelector("#edit-content-modal #e-add-add-tag");
+	var eaddTagText = document.querySelector("#edit-content-modal #e-add-tag-text");
+	var eaddShowTags = document.querySelector("#edit-content-modal #e-add-selected-tags");
+	var eaddSelectedTags = document.querySelectorAll("#edit-modal-e-add-tag-toggler");
+	eaddAddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = eaddTagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="edit-modal-e-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		eaddShowTags.append(span);
+		eaddSelectedTags = document.querySelectorAll("#edit-modal-e-add-tag-toggler");
+		eaddSelectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
+		});
+	});
+}
+
+
 // handling selection between video or link in ADD EPISODE SECTION of SERIES IN ADD CONTENT SECTION
 var linkorvideo = document.querySelector('#linkorvideo');
 var episodeVideo = document.querySelector('#episode-video');

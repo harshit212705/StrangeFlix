@@ -1210,6 +1210,8 @@
                 'episode_release_date': episode_release_date,
                 'episode_linkorvideo': episode_linkorvideo,
                 'episode_link': episode_link,
+                'query_type': 'N',
+                'video_id': video_id,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -1375,6 +1377,8 @@
                 'content_release_date': content_release_date,
                 'content_linkorvideo': content_linkorvideo,
                 'content_link': content_link,
+                'query_type': 'N',
+                'video_id': video_id,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -1992,14 +1996,21 @@
                                 '</p><button type="button" onclick="play_video(' +
                                 data.season_episode_data[key][0] + ',' + specialol +
                                 ')" class="btn btn-primary btn-sm">Play video</button>';
+
+                                var video_name = `'${data.season_episode_data[key][1]}'`;
+                                var video_description = `'${data.season_episode_data[key][2]}'`;
+                                var video_tags = new Array();
+                                for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
+                                    video_tags.push(data.season_episode_data[key][9][i]);
+                                }
+                                var tags = video_tags.join("!@#$%^&*");
+                                tags = `'${tags}'`;
+                                var video_quality = `'${data.season_episode_data[key][11]}'`;
+                                var video_release_date = `'${data.season_episode_data[key][5]}'`;
+                                var video_rejecton_comment = `'${data.season_episode_data[key][10]}'`;
+
                             if (data.season_episode_data[key][8] == 'Rejected') {
-                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.season_episode_data[key][0] + ',' + data.season_episode_data[key][
-                                        6
-                                    ] + ',' +
-                                    '4' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                                htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +'onclick="edit(' + `'episode'` + ',' + data.season_episode_data[key][0] + ',' + video_name + ',' + video_description + ',' + tags + ',' + video_quality + ',' + video_release_date + ',' + video_rejecton_comment + ',' + data.season_episode_data[key][6] + ',' + '4' +','+ series_season_id +')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
                                 htmlgen += '</div></div></div></div></div>';
                             }
@@ -2069,12 +2080,21 @@
                                 data.season_content_data[key][0] + ',' + specialol +
                                 ')" class="btn btn-primary btn-sm">Play video</button>';
 
+                            var video_name = `'${data.season_content_data[key][1]}'`;
+                            var video_description = `'${data.season_content_data[key][2]}'`;
+                            var video_tags = new Array();
+                            for (var i = 0; i < data.season_content_data[key][8].length; i++) {
+                                video_tags.push(data.season_content_data[key][8][i]);
+                            }
+                            var tags = video_tags.join("!@#$%^&*");
+                            tags = `'${tags}'`;
+                            var video_quality = `'${data.season_content_data[key][10]}'`;
+                            var video_release_date = `'${data.season_content_data[key][5]}'`;
+                            var video_rejecton_comment = `'${data.season_content_data[key][9]}'`;
+
                             if (data.season_content_data[key][7] == 'Rejected') {
                                 htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.season_content_data[key][0] + ',' + count + ',' +
-                                    '3' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                                    'onclick="edit(' + `'content'` + ',' + data.season_content_data[key][0] + ',' + video_name + ',' + video_description + ',' + tags + ',' + video_quality + ',' + video_release_date + ',' + video_rejecton_comment + ',' + count + ',' + '3' +','+ series_season_id +')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
                                 htmlgen += '</div></div></div></div></div>';
                             }
@@ -2245,6 +2265,8 @@
                 'episode_release_date': episode_release_date,
                 'episode_linkorvideo': episode_linkorvideo,
                 'episode_link': episode_link,
+                'query_type': 'N',
+                'video_id': video_id,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -2407,6 +2429,8 @@
                 'content_release_date': content_release_date,
                 'content_linkorvideo': content_linkorvideo,
                 'content_link': content_link,
+                'query_type': 'N',
+                'video_id': video_id,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -2657,6 +2681,8 @@
                 'movie_videorelease_date': movie_videorelease_date,
                 'movie_videolinkorvideo': movie_videolinkorvideo,
                 'movie_link': movie_link,
+                'query_type': 'N',
+                'video_id': video_id,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -2814,6 +2840,8 @@
                 'content_videorelease_date': movie_videorelease_date,
                 'content_videolinkorvideo': movie_videolinkorvideo,
                 'content_link': movie_link,
+                'query_type': 'N',
+                'video_id': '',
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -3121,12 +3149,22 @@
                                 ')" class="btn btn-primary btn-sm">Play video</button>';
 
                             //my changes
+                            var video_name = `'${data.movie_content_data[key][1]}'`;
+                            var video_description = `'${data.movie_content_data[key][2]}'`;
+                            var video_tags = new Array();
+                            for (var i = 0; i < data.movie_content_data[key][8].length; i++) {
+                                video_tags.push(data.movie_content_data[key][8][i]);
+                            }
+                            var tags = video_tags.join("!@#$%^&*");
+                            tags = `'${tags}'`;
+                            var video_quality = `'${data.movie_content_data[key][10]}'`;
+                            var video_release_date = `'${data.movie_content_data[key][5]}'`;
+                            var video_rejecton_comment = `'${data.movie_content_data[key][9]}'`;
+
                             if (data.movie_content_data[key][7] == 'Rejected') {
 
                                 htmlgen += '<button type="button" class="btn btn-primary"' +
-                                    'onclick="edit(' +
-                                    data.movie_content_data[key][0] + ',' + '1' + ',' + '2' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                                    'onclick="edit(' + `'movie_video'` + ',' + data.movie_content_data[key][0] + ',' + video_name + ',' + video_description + ',' + tags + ',' + video_quality + ',' + video_release_date + ',' + video_rejecton_comment + ',' + '1' + ',' + '2' +','+ movie_id +')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
                                 htmlgen += '</div></div></div></div></div>';
                             }
@@ -3192,11 +3230,22 @@
                                 data.movie_free_data[key][0] + ',' + specialol +
                                 ')" class="btn btn-primary btn-sm">Play video</button>';
 
+
+                            var video_name = `'${data.movie_free_data[key][1]}'`;
+                            var video_description = `'${data.movie_free_data[key][2]}'`;
+                            var video_tags = new Array();
+                            for (var i = 0; i < data.movie_free_data[key][8].length; i++) {
+                                video_tags.push(data.movie_free_data[key][8][i]);
+                            }
+                            var tags = video_tags.join("!@#$%^&*");
+                            tags = `'${tags}'`;
+                            var video_quality = `'${data.movie_free_data[key][10]}'`;
+                            var video_release_date = `'${data.movie_free_data[key][5]}'`;
+                            var video_rejecton_comment = `'${data.movie_free_data[key][9]}'`;
+
                             if (data.movie_free_data[key][7] == 'Rejected') {
                                 htmlgen += '<button type="button" class="btn btn-primary btn-sm"' +
-                                    'onclick="edit(' +
-                                    data.movie_free_data[key][0] + ',' + count + ',' + '1' +
-                                    ')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
+                                    'onclick="edit(' + `'content'` + ',' + data.movie_free_data[key][0] + ',' + video_name + ',' + video_description + ',' + tags + ',' + video_quality + ',' + video_release_date + ',' + video_rejecton_comment + ',' + count + ',' + '1' +','+ movie_id +')" class="btn btn-primary btn-sm">Edit content</button></div></div></div></div></div>';
                             } else {
                                 htmlgen += '</div></div></div></div></div>';
                             }
@@ -3272,6 +3321,8 @@
                 'movie_videorelease_date': movie_videorelease_date,
                 'movie_videolinkorvideo': movie_videolinkorvideo,
                 'movie_link': movie_link,
+                'query_type': 'N',
+                'video_id': video_id,
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -3391,7 +3442,7 @@
         });
 
 
-        // submitting movie free count form from ADDED SECTION using ajax call
+        // submitting movie free content form from ADDED SECTION using ajax call
         $("#add-moviefreecontentForm").submit(function (e) {
             e.preventDefault(); //prevent default action
 
@@ -3429,6 +3480,8 @@
                 'content_videorelease_date': movie_videorelease_date,
                 'content_videolinkorvideo': movie_videolinkorvideo,
                 'content_link': movie_link,
+                'query_type': 'N',
+                'video_id': '',
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -3548,73 +3601,746 @@
         });
         //my changes
         // function to handle edit video if rejected
-        function edit(globalId, localId, formtype) {
-            // Add code to launch modal
+        function edit(local_reference_id, video_id, video_name, video_description, video_tags, video_quality, video_release_date, video_rejecton_comment, video_episode_no, formtype, show_id) {
+
+            $('#edit-content-modal').empty();
+            var video_id_html = '<p id="modal_video_id" hidden>'+ video_id +'</p>';
+            $('#edit-content-modal').append(video_id_html);
+            var show_id_html = '<p id="modal_show_id" hidden>'+ show_id +'</p>';
+            $('#edit-content-modal').append(show_id_html);
+            var add_comment = '<p id="rejection_comment_video" style="color: red;">'+ video_rejecton_comment +'</p>';
+            $('#edit-content-modal').append(add_comment);
+
+            var date = new Date(video_release_date);
+            var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
+            var tags_arr = video_tags.split('!@#$%^&*');
+
+            // Setting modal content according to formtype
             if (formtype == '1') {
+
                 //add-moviefreecontentForm
-                $('#edit-content-modal').html('<form id="edit-add-moviefreecontentForm"></form>');
+                $('#edit-content-modal').append('<form id="edit-add-moviefreecontentForm"></form>');
                 $('#edit-add-moviefreecontentForm').html($('#add-moviefreecontentForm').html());
-                $('#add-moviefreecontentForm').html('');
-                // var val = $('#add__series__season__episodeno').attr('value');
-                $('#edit-content-modal').append('<p hidden value="1" id="' + localId + '"></p>');
-                // $('#add__series__season__episodeno').attr('value', localId);
-                add_m_c_in_add()
+                edit_add_m_c_in_add();
+
+                // setting previous data into the form
+                if (tags_arr.length == 1 && tags_arr[0] == '') {
+
+                }
+                else {
+                    for (var i = 0; i < tags_arr.length; i++) {
+                        $('#edit-content-modal #cm-add-tag-text').val(tags_arr[i]);
+                        $('#edit-content-modal #cm-add-add-tag').click();
+                    }
+                }
+
+                $('#edit-content-modal #add_movie__contentname').val(video_name);
+                $('#edit-content-modal #add_movie__contentdescription').val(video_description);
+                $('#edit-content-modal #add-content_movie_quality').val(video_quality);
+                $('#edit-content-modal #add_movie__contentdate').val(dateString);
+                // binding form to onsubmit event listener
+                bind_edit_moviefreecontentForm(local_reference_id, video_episode_no);
+
             } else if (formtype == '2') {
+
                 //add-movievideoForm
-                $('#edit-content-modal').html('<form id="edit-add-movievideoForm"></form>');
+                $('#edit-content-modal').append('<form id="edit-add-movievideoForm"></form>');
                 $('#edit-add-movievideoForm').html($('#add-movievideoForm').html());
-                $('#add-movievideoForm').html('');
-                // var val = $('#add__series__season__episodeno').attr('value');
-                $('#edit-content-modal').append('<p hidden value="2" id="' + localId + '"></p>');
-                // $('#add__series__season__episodeno').attr('value', localId);
-                add_m_in_add();
+                edit_add_m_in_add();
+
+                // setting previous data into the form
+                if (tags_arr.length == 1 && tags_arr[0] == '') {
+
+                }
+                else {
+                    for (var i = 0; i < tags_arr.length; i++) {
+                        $('#edit-content-modal #m-add-tag-text').val(tags_arr[i]);
+                        $('#edit-content-modal #m-add-add-tag').click();
+                    }
+                }
+
+                $('#edit-content-modal #add_movie__videoname').val(video_name);
+                $('#edit-content-modal #add_movie__videodescription').val(video_description);
+                $('#edit-content-modal #m-add-video_quality').val(video_quality);
+                $('#edit-content-modal #add_movie__videodate').val(dateString);
+                // binding form to onsubmit event listener
+                bind_edit_movievideoForm(local_reference_id, video_episode_no);
+
             } else if (formtype == '3') {
-                // add-free-content-form
-                $('#edit-content-modal').html('<form id="edit-add-free-content-form"></form>');
+
+                // add-free-content-form for series
+                $('#edit-content-modal').append('<form id="edit-add-free-content-form"></form>');
                 $('#edit-add-free-content-form').html($('#add-free-content-form').html());
-                $('#add-free-content-form').html('');
-                // var val=$('#add__series__season__episodeno').attr('value');
-                $('#edit-content-modal').append('<p hidden value="3" id="' + localId + '"></p>');
-                // $('#add__series__season__episodeno').attr('value',data);
-                add_tag_c_added();
-            } else {
-                // add-episodeForm
-                $('#edit-content-modal').html('<form id="edit-add-episodeForm"></form>');
+                edit_add_tag_c_added();
+
+                // setting previous data into the form
+                if (tags_arr.length == 1 && tags_arr[0] == '') {
+
+                }
+                else {
+                    for (var i = 0; i < tags_arr.length; i++) {
+                        $('#edit-content-modal #e-add-tag-text').val(tags_arr[i]);
+                        $('#edit-content-modal #e-add-add-tag').click();
+                    }
+                }
+
+                $('#edit-content-modal #add__series__season__contentname').val(video_name);
+                $('#edit-content-modal #add__series__season__contentdescription').val(video_description);
+                $('#edit-content-modal #add__content_quality').val(video_quality);
+                $('#edit-content-modal #add__series__season__contentdate').val(dateString);
+                // binding form to onsubmit event listener
+                bind_edit_seriesfreecontentForm(local_reference_id, video_episode_no);
+
+            } else if (formtype == '4') {
+
+                // add-episodeForm for series
+                $('#edit-content-modal').append('<form id="edit-add-episodeForm"></form>');
                 $('#edit-add-episodeForm').html($('#add-episodeForm').html());
-                $('#add-episodeForm').html('');
-                var val = $('#add__series__season__episodeno').attr('value');
-                $('#edit-content-modal').append('<p hidden value="4" id="' + val + '"></p>');
-                $('#add__series__season__episodeno').attr('value', localId);
-                add_tag_in_added();
+                edit_add_tag_in_added();
+
+                // setting previous data into the form
+                if (tags_arr.length == 1 && tags_arr[0] == '') {
+
+                }
+                else {
+                    for (var i = 0; i < tags_arr.length; i++) {
+                        $('#edit-content-modal #add-tag-text').val(tags_arr[i]);
+                        $('#edit-content-modal #add-add-tag').click();
+                    }
+                }
+
+                $('#edit-content-modal #add__series__season__episodeno').val(video_episode_no);
+                $('#edit-content-modal #add__series__season__episodename').val(video_name);
+                $('#edit-content-modal #add__series__season__episodedescription').val(video_description);
+                $('#edit-content-modal #add__video_quality').val(video_quality);
+                $('#edit-content-modal #add__series__season__episodedate').val(dateString);
+                // binding form to onsubmit event listener
+                bind_edit_seriesepisodeForm(local_reference_id, video_episode_no);
             }
+
+            // Add code to launch modal
             $('#edit-in-modal').modal('show');
         }
-        // once modal is closed remove the video
-        $('#edit-in-modal').on('hide.bs.modal', function (e) {
-            var formtype = $('#edit-content-modal p').attr('value');
-            var prevval = $('#edit-content-modal p').attr('id');
-            console.log(formtype);
-            if (formtype == '1') {
-                //add-moviefreecontentForm
-                $('#add-moviefreecontentForm').html($('#edit-add-moviefreecontentForm').html());
-                add_m_c_in_add()
-            } else if (formtype == '2') {
-                // add-movievideoForm
-                $('#add-movievideoForm').html($('#edit-add-movievideoForm').html());
-                add_m_in_add();
-            } else if (formtype == '3') {
-                // add-free-content-form
-                $('#add-free-content-form').html($('#add-free-content-form').html());
-                add_tag_in_added();
-            } else {
-                // add-episodeForm
-                $('#add__series__season__episodeno').attr('value', prevval);
-                $('#add-episodeForm').html($('#edit-add-episodeForm').html());
-                add_tag_in_added();
-            }
-            $('#edit-content-modal').html('');
 
-        })
+
+        // function to add series episode video
+        function bind_edit_seriesepisodeForm(local_reference_id, episodecount) {
+            // submitting new season episode form using ajax call
+            $("#edit-add-episodeForm").submit(function (e) {
+                e.preventDefault(); //prevent default action
+                // Extracting Form Data
+                var series_season_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
+                var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
+                var episode_no = document.querySelector('#edit-content-modal #add__series__season__episodeno').value;
+                var episode_name = document.querySelector('#edit-content-modal #add__series__season__episodename').value;
+                var episode_description = document.querySelector('#edit-content-modal #add__series__season__episodedescription')
+                    .value;
+                var episode_tags = "";
+                $('#edit-content-modal #add-selected-tags span').each(function () {
+                    episode_tags += $(this).attr('value');
+                    episode_tags += ",";
+                });
+                episode_tags = episode_tags.substring(0, episode_tags.length - 1);
+                var episode_quality = document.querySelector('#edit-content-modal #add__video_quality').value;
+                var episode_release_date = document.querySelector('#edit-content-modal #add__series__season__episodedate').value;
+                var episode_linkorvideo = document.querySelector('#edit-content-modal #add__linkorvideo').value;
+
+                var episode_link = '';
+                if (episode_linkorvideo == 'Link') {
+                    var episode_link = document.querySelector('#edit-content-modal #add__episode-link').value;
+                }
+
+                // Files from episode form
+                var thumbnail_image = $('#edit-content-modal #add__file2')[0].files[0];
+                var episode_video = $('#edit-content-modal #add__episode-video')[0].files[0];
+
+                // javascript data object
+                var data = {
+                    'series_season_id': series_season_id,
+                    'episode_no': episode_no,
+                    'episode_name': episode_name,
+                    'episode_description': episode_description,
+                    'episode_tags': episode_tags,
+                    'episode_quality': episode_quality,
+                    'episode_release_date': episode_release_date,
+                    'episode_linkorvideo': episode_linkorvideo,
+                    'episode_link': episode_link,
+                    'query_type': 'U',
+                    'video_id': video_id,
+                }
+
+                // adding data to javascript form which is to be send over ajax request
+                var formData = new FormData();
+                formData.append('data', JSON.stringify(data));
+                formData.append('file', thumbnail_image, thumbnail_image.name);
+                formData.append('video', episode_video);
+
+                $('#edit-content-modal #added-episode-submit').attr('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "add_new_episode" %}',
+                    data: formData,
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#edit-content-modal #added-episode-submit').attr('disabled', false);
+
+                        // checking and handling error conditions
+                        if (data.is_series_season_exists != '') {
+                            alert(data.is_series_season_exists);
+                        } else if (data.is_video_exists != '') {
+                            alert(data.is_video_exists);
+                        } else if (data.is_episode_no_exists != '') {
+                            alert(data.is_episode_no_exists);
+                        } else if (data.is_quality_selected != '') {
+                            alert(data.is_quality_selected);
+                        } else if (data.is_release_date_future != '') {
+                            alert(data.is_release_date_future);
+                        } else if (data.is_thumbnail_too_large != '') {
+                            alert(data.is_thumbnail_too_large);
+                        } else if (data.is_thumbnail_mimetype_problem != '') {
+                            alert(data.is_thumbnail_mimetype_problem);
+                        } else if (data.is_video_mimetype_problem != '') {
+                            alert(data.is_video_mimetype_problem);
+                        } else if (data.is_successful != '') {
+
+                            // appending the new episode to previously created episodes list
+                            for (var key in data.season_episode_data) {
+                                // removing old uploaded movie video
+                                var box_id = '#' + local_reference_id + data.season_episode_data[key][0];
+                                $(box_id).empty();
+
+                                var specialol = `'${data.season_episode_data[key][4]}'`;
+                                // curr mins spend
+                                var currmins = Math.floor(data.season_episode_data[key][7] / 60);
+
+                                // curr secs spend
+                                var currsecs = Math.floor(data.season_episode_data[key][7] - currmins *
+                                    60);
+
+                                if (currsecs < 10) {
+                                    currsecs = "0" + currsecs;
+                                }
+                                if (currmins < 10) {
+                                    currmins = "0" + currmins;
+                                }
+                                var htmlgen = '<h4 class="text-secondary font-weight-bold my-4">Episode ' +
+                                    data
+                                    .season_episode_data[key][6] + '-' + data.season_episode_data[
+                                        key][
+                                        1
+                                    ] + '<i class="arro text-secondary right mx-1"></i>' +
+                                    '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                    'onclick="play_video(' +
+                                    data.season_episode_data[key][0] + ',' + specialol +
+                                    ')"' +
+                                    '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                    '<span class="font-weight-bold mx-3" style="color:white">' +
+                                    currmins +
+                                    ':' + currsecs + '</span>' +
+                                    '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                    .season_episode_data[key][5] +
+                                    '</span></div></div><img id="episode' +
+                                    data.season_episode_data[key][6] +
+                                    'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                    data
+                                    .season_episode_data[key][3] +
+                                    '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
+
+                                for (var i = 0; i < data.season_episode_data[key][9].length; i++) {
+                                    htmlgen += data.season_episode_data[key][9][i] + ' | ';
+                                }
+
+                                var decide_color = data.season_episode_data[key][8] == "Pending" ?
+                                    "text-info" : (
+                                        data.season_episode_data[key][8] == "Rejected" ? "text-danger" :
+                                        "text-success");
+                                htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                    .season_episode_data[key][2] +
+                                    '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                    decide_color + '">Status - ' + data
+                                    .season_episode_data[key][8] +
+                                    '</p><button type="button" onclick="play_video(' +
+                                    data.season_episode_data[key][0] + ',' + specialol +
+                                    ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+
+                                $(box_id).append(htmlgen);
+                            }
+                            callit();
+
+                            alert(data.is_successful);
+                            $('#edit-in-modal').modal('hide');
+                        } else {
+                            alert('Some unexpected error has occured. Try again.');
+                        }
+                    }
+                });
+            });
+        }
+
+
+        // function to edit series free content video
+        function bind_edit_seriesfreecontentForm(local_reference_id, contentcount) {
+            // submitting adding free content form in series in ADDED SECTION using ajax call
+            $("#edit-add-free-content-form").submit(function (e) {
+                e.preventDefault(); //prevent default action
+
+                // Extracting Form Data
+                var series_season_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
+                var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
+                var content_name = document.querySelector('#edit-content-modal #add__series__season__contentname').value;
+                var content_description = document.querySelector('#edit-content-modal #add__series__season__contentdescription').value;
+                var content_tags = "";
+                $('#edit-content-modal #e-add-selected-tags span').each(function () {
+                    content_tags += $(this).attr('value')
+                    content_tags += ',';
+                });
+                content_tags = content_tags.substring(0, content_tags.length - 1);
+                var content_quality = document.querySelector('#edit-content-modal #add__content_quality').value;
+                var content_release_date = document.querySelector('#edit-content-modal #add__series__season__contentdate').value;
+                var content_linkorvideo = document.querySelector('#edit-content-modal #add__contentlinkorvideo').value;
+                var content_link = '';
+                if (content_linkorvideo == 'Link') {
+                    var content_link = document.querySelector('#edit-content-modal #add__content-link').value;
+                }
+
+                // Files from episode form
+                var thumbnail_image = $('#edit-content-modal #add__file3')[0].files[0];
+                var content_video = $('#edit-content-modal #add__content-video')[0].files[0];
+
+                // javascript data object
+                var data = {
+                    'series_season_id': series_season_id,
+                    'content_name': content_name,
+                    'content_description': content_description,
+                    'content_tags': content_tags,
+                    'content_quality': content_quality,
+                    'content_release_date': content_release_date,
+                    'content_linkorvideo': content_linkorvideo,
+                    'content_link': content_link,
+                    'query_type': 'U',
+                    'video_id': video_id,
+                }
+
+                // adding data to javascript form which is to be send over ajax request
+                var formData = new FormData();
+                formData.append('data', JSON.stringify(data));
+                formData.append('file', thumbnail_image, thumbnail_image.name);
+                formData.append('video', content_video);
+
+                $('#edit-content-modal #added-content-submit').attr('disabled', true);
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "add_new_series_content" %}',
+                    data: formData,
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#edit-content-modal #added-content-submit').attr('disabled', false);
+
+                        // checking and handling error conditions
+                        if (data.is_series_season_exists != '') {
+                            alert(data.is_series_season_exists);
+                        } else if (data.is_video_exists != '') {
+                            alert(data.is_video_exists);
+                        } else if (data.is_quality_selected != '') {
+                            alert(data.is_quality_selected);
+                        } else if (data.is_release_date_future != '') {
+                            alert(data.is_release_date_future);
+                        } else if (data.is_thumbnail_too_large != '') {
+                            alert(data.is_thumbnail_too_large);
+                        } else if (data.is_thumbnail_mimetype_problem != '') {
+                            alert(data.is_thumbnail_mimetype_problem);
+                        } else if (data.is_video_mimetype_problem != '') {
+                            alert(data.is_video_mimetype_problem);
+                        } else if (data.is_successful != '') {
+
+                            // appending the new episode to previously created episodes list
+                            for (var key in data.season_episode_data) {
+                                // removing old uploaded movie video
+                                var box_id = '#' + local_reference_id + data.season_episode_data[key][0];
+                                $(box_id).empty();
+
+                                var specialol = `'${data.season_episode_data[key][4]}'`;
+                                // curr mins spend
+                                var currmins = Math.floor(data.season_episode_data[key][6] / 60);
+
+                                // curr secs spend
+                                var currsecs = Math.floor(data.season_episode_data[key][6] - currmins *
+                                    60);
+
+                                if (currsecs < 10) {
+                                    currsecs = "0" + currsecs;
+                                }
+                                if (currmins < 10) {
+                                    currmins = "0" + currmins;
+                                }
+                                var htmlgen = '<h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                    contentcount + '-' +
+                                    data
+                                    .season_episode_data[key][1] +
+                                    '<i class="arro text-secondary right mx-1"></i>' +
+                                    '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                    'onclick="play_video(' +
+                                    data.season_episode_data[key][0] + ',' + specialol +
+                                    ')"' +
+                                    '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                    '<span class="font-weight-bold mx-3" style="color:white">' +
+                                    currmins +
+                                    ':' + currsecs + '</span>' +
+                                    '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                    .season_episode_data[key][5] +
+                                    '</span></div></div><img id="content' +
+                                    contentcount +
+                                    'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                    data
+                                    .season_episode_data[key][3] +
+                                    '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
+
+                                for (var i = 0; i < data.season_episode_data[key][8].length; i++) {
+                                    htmlgen += data.season_episode_data[key][8][i] + ' | ';
+                                }
+
+                                var decide_color = data.season_episode_data[key][7] == "Pending" ?
+                                    "text-info" : (
+                                        data.season_episode_data[key][7] == "Rejected" ? "text-danger" :
+                                        "text-success");
+                                htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                    .season_episode_data[key][2] +
+                                    '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                    decide_color + '">Status - ' + data
+                                    .season_episode_data[key][7] +
+                                    '</p><button type="button" onclick="play_video(' +
+                                    data.season_episode_data[key][0] + ',' + specialol +
+                                    ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+
+                                $(box_id).append(htmlgen);
+                            }
+                            callit();
+
+                            alert(data.is_successful);
+                            $('#edit-in-modal').modal('hide');
+                        } else {
+                            alert('Some unexpected error has occured. Try again.');
+                        }
+                    }
+                });
+            });
+        }
+
+
+        // function to handle edit movie video
+        function bind_edit_movievideoForm(local_reference_id, video_episode_no) {
+            // submitting movie video form using ajax call
+            $("#edit-add-movievideoForm").submit(function (e) {
+                e.preventDefault(); //prevent default action
+
+                // Extracting Form Data
+                var movie_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
+                var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
+                var movie_videoname = document.querySelector('#edit-content-modal #add_movie__videoname').value;
+                var movie_videodescription = document.querySelector('#edit-content-modal #add_movie__videodescription').value;
+                var movie_videotags = "";
+                $('#edit-content-modal #m-add-selected-tags span').each(function () {
+                    movie_videotags += $(this).attr("value");
+                    movie_videotags += ",";
+                });
+                movie_videotags = movie_videotags.substring(0, movie_videotags.length - 1);
+
+                var movie_videoquality = document.querySelector('#edit-content-modal #m-add-video_quality').value;
+                var movie_videorelease_date = document.querySelector('#edit-content-modal #add_movie__videodate').value;
+                var movie_videolinkorvideo = document.querySelector('#edit-content-modal #m-add-linkorvideo').value;
+
+                var movie_link = '';
+                if (movie_videolinkorvideo == 'Link') {
+                    var movie_link = document.querySelector('#edit-content-modal #movie-add-link').value;
+                }
+
+                // Files from episode form
+                var thumbnail_image = $('#edit-content-modal #movie-add-file2')[0].files[0];
+                var movie_video = $('#edit-content-modal #movie-add-video')[0].files[0];
+
+                // javascript data object
+                var data = {
+                    'movie_id': movie_id,
+                    'movie_videoname': movie_videoname,
+                    'movie_videodescription': movie_videodescription,
+                    'movie_videotags': movie_videotags,
+                    'movie_videoquality': movie_videoquality,
+                    'movie_videorelease_date': movie_videorelease_date,
+                    'movie_videolinkorvideo': movie_videolinkorvideo,
+                    'movie_link': movie_link,
+                    'query_type': 'U',
+                    'video_id': video_id,
+                }
+
+                // adding data to javascript form which is to be send over ajax request
+                var formData = new FormData();
+                formData.append('data', JSON.stringify(data));
+                formData.append('file', thumbnail_image, thumbnail_image.name);
+                formData.append('video', movie_video);
+
+                $('#edit-content-modal #movie-add-video-submit').attr('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "add_movie_video" %}',
+                    data: formData,
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#edit-content-modal #movie-add-video-submit').attr('disabled', false);
+                        // checking and handling error conditions
+                        if (data.is_movie_exists != '') {
+                            alert(data.is_movie_exists);
+                        } else if (data.is_video_exists != '') {
+                            alert(data.is_video_exists);
+                        } else if (data.is_movie_video_exists != '') {
+                            alert(data.is_movie_video_exists);
+                        } else if (data.is_quality_selected != '') {
+                            alert(data.is_quality_selected);
+                        } else if (data.is_release_date_future != '') {
+                            alert(data.is_release_date_future);
+                        } else if (data.is_thumbnail_too_large != '') {
+                            alert(data.is_thumbnail_too_large);
+                        } else if (data.is_thumbnail_mimetype_problem != '') {
+                            alert(data.is_thumbnail_mimetype_problem);
+                        } else if (data.is_video_mimetype_problem != '') {
+                            alert(data.is_video_mimetype_problem);
+                        } else if (data.is_successful != '') {
+
+                            // appending the movie video to previously added free content section
+                            for (var key in data.movie_video_data) {
+                                // removing old uploaded movie video
+                                var box_id = '#' + local_reference_id + data.movie_video_data[key][0];
+                                $(box_id).empty();
+
+                                var specialol = `'${data.movie_video_data[key][4]}'`;
+                                //my changes
+
+                                // curr mins spend
+                                var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                                // curr secs spend
+                                var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                    60);
+
+                                if (currsecs < 10) {
+                                    currsecs = "0" + currsecs;
+                                }
+                                if (currmins < 10) {
+                                    currmins = "0" + currmins;
+                                }
+                                var htmlgen = '<h4 class="text-secondary font-weight-bold my-4">Movie video -' +
+                                    data.movie_video_data[key][1] +
+                                    '<i class="arro text-secondary right mx-1"></i>' +
+                                    '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                    'onclick="play_video(' +
+                                    data.movie_video_data[key][0] + ',' + specialol +
+                                    ')"' +
+                                    '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                    '<span class="font-weight-bold mx-3" style="color:white">' +
+                                    currmins + ':' + currsecs + '</span>' +
+                                    '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                    .movie_video_data[key][5] +
+                                    '</span></div></div><img id="movie_video_thumbnail' +
+                                    data.movie_video_data[key][0] +
+                                    'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                    data
+                                    .movie_video_data[key][3] +
+                                    '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
+
+                                for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
+                                    htmlgen += data.movie_video_data[key][8][i] + ' | ';
+                                }
+
+                                var decide_color = data.movie_video_data[key][7] == "Pending" ?
+                                    "text-info" : (data.movie_video_data[key][7] == "Rejected" ?
+                                        "text-danger" : "text-success");
+                                htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                    .movie_video_data[key][2] +
+                                    '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                    decide_color + '">Status - ' + data
+                                    .movie_video_data[key][7] +
+                                    '</p><button type="button" onclick="play_video(' +
+                                    data.movie_video_data[key][0] + ',' + specialol +
+                                    ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+
+                                $(box_id).append(htmlgen);
+                            }
+                            callit();
+
+                            alert(data.is_successful);
+                            $('#edit-in-modal').modal('hide');
+                        } else {
+                            alert('Some unexpected error has occured. Try again.');
+                        }
+                    }
+                });
+            });
+        }
+
+
+        // function ti handle edit movie free content request
+        function bind_edit_moviefreecontentForm(local_reference_id, contentcount) {
+            // submitting movie free content form from ADDED SECTION using ajax call FOR REJECTED VIDEOS
+            $("#edit-add-moviefreecontentForm").submit(function (e) {
+                e.preventDefault(); //prevent default action
+
+                // Extracting Form Data
+                var movie_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
+                var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
+                var movie_videoname = document.querySelector('#edit-content-modal #add_movie__contentname').value;
+                var movie_videodescription = document.querySelector('#edit-content-modal #add_movie__contentdescription').value;
+                var movie_videotags = "";
+                $('#edit-content-modal #cm-add-selected-tags span').each(function () {
+                    movie_videotags += $(this).attr("value");
+                    movie_videotags += ",";
+                });
+                movie_videotags = movie_videotags.substring(0, movie_videotags.length - 1);
+
+                var movie_videoquality = document.querySelector('#edit-content-modal #add-content_movie_quality').value;
+                var movie_videorelease_date = document.querySelector('#edit-content-modal #add_movie__contentdate').value;
+                var movie_videolinkorvideo = document.querySelector('#edit-content-modal #movieaddcontentlinkorvideo').value;
+
+                var movie_link = '';
+                if (movie_videolinkorvideo == 'Link') {
+                    var movie_link = document.querySelector('#edit-content-modal #movie-add-content-link').value;
+                }
+
+                // Files from episode form
+                var thumbnail_image = $('#edit-content-modal #movie_add_file4')[0].files[0];
+                var movie_video = $('#edit-content-modal #movie-add-content-video')[0].files[0];
+
+                // javascript data object
+                var data = {
+                    'movie_id': movie_id,
+                    'content_videoname': movie_videoname,
+                    'content_videodescription': movie_videodescription,
+                    'content_videotags': movie_videotags,
+                    'content_videoquality': movie_videoquality,
+                    'content_videorelease_date': movie_videorelease_date,
+                    'content_videolinkorvideo': movie_videolinkorvideo,
+                    'content_link': movie_link,
+                    'query_type': 'U',
+                    'video_id': video_id,
+                }
+
+                // adding data to javascript form which is to be send over ajax request
+                var formData = new FormData();
+                formData.append('data', JSON.stringify(data));
+                formData.append('file', thumbnail_image, thumbnail_image.name);
+                formData.append('video', movie_video);
+
+                $('#edit-content-modal #movie-add-content-submit').attr('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "add_movie_free_content" %}',
+                    data: formData,
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#edit-content-modal #movie-add-content-submit').attr('disabled', false);
+                        // checking and handling error conditions
+                        if (data.is_movie_exists != '') {
+                            alert(data.is_movie_exists);
+                        } else if (data.is_video_exists != '') {
+                            alert(data.is_video_exists);
+                        } else if (data.is_quality_selected != '') {
+                            alert(data.is_quality_selected);
+                        } else if (data.is_release_date_future != '') {
+                            alert(data.is_release_date_future);
+                        } else if (data.is_thumbnail_too_large != '') {
+                            alert(data.is_thumbnail_too_large);
+                        } else if (data.is_thumbnail_mimetype_problem != '') {
+                            alert(data.is_thumbnail_mimetype_problem);
+                        } else if (data.is_video_mimetype_problem != '') {
+                            alert(data.is_video_mimetype_problem);
+                        } else if (data.is_successful != '') {
+
+                            // appending the movie video to previously added free content section
+                            for (var key in data.movie_video_data) {
+                                // removing old uploaded movie video
+                                var box_id = '#' + local_reference_id + data.movie_video_data[key][0];
+                                $(box_id).empty();
+
+                                var specialol = `'${data.movie_video_data[key][4]}'`;
+                                // curr mins spend
+                                var currmins = Math.floor(data.movie_video_data[key][6] / 60);
+
+                                // curr secs spend
+                                var currsecs = Math.floor(data.movie_video_data[key][6] - currmins *
+                                    60);
+
+                                if (currsecs < 10) {
+                                    currsecs = "0" + currsecs;
+                                }
+                                if (currmins < 10) {
+                                    currmins = "0" + currmins;
+                                }
+                                var htmlgen = '<h4 class="text-secondary font-weight-bold my-4">Content ' +
+                                    contentcount + '-' +
+                                    data
+                                    .movie_video_data[key][1] +
+                                    '<i class="arro text-secondary right mx-1"></i>' +
+                                    '</h4><div class="row"><div class="col-lg-6 col-md-6 col-sm-6" style="cursor:pointer"><div class="position-absolute" style="width:100%;height:100%;z-index:1;background-image:linear-gradient(to bottom,rgba(25,33,51,0) 80%,#272B2C 100%);"' +
+                                    'onclick="play_video(' +
+                                    data.movie_video_data[key][0] + ',' + specialol +
+                                    ')"' +
+                                    '><div class="position-absolute mx-2 my-2" style="bottom:0"><span style="font-size:1rem;color:white;"><i class="fas fa-play"></i></span>' +
+                                    '<span class="font-weight-bold mx-3" style="color:white">' +
+                                    currmins +
+                                    ':' + currsecs + '</span>' +
+                                    '<span class="font-weight-bold" style="color:white;right:0">' + data
+                                    .movie_video_data[key][5] + '</span></div></div><img id="content' +
+                                    contentcount +
+                                    'thumbnail" src="{% static "/images/img_prev.gif"%}" data-src="' +
+                                    data
+                                    .movie_video_data[key][3] +
+                                    '"alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="upper-section"><span class="font-weight-bold">';
+
+                                for (var i = 0; i < data.movie_video_data[key][8].length; i++) {
+                                    htmlgen += data.movie_video_data[key][8][i] + ' | ';
+                                }
+                                var decide_color = data.movie_video_data[key][7] == "Pending" ?
+                                    "text-info" : (
+                                        data.movie_video_data[key][7] == "Rejected" ? "text-danger" :
+                                        "text-success");
+                                htmlgen += '</span></div><div class="middle-section"><p>' + data
+                                    .movie_video_data[key][2] +
+                                    '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
+                                    decide_color + '">Status - ' + data
+                                    .movie_video_data[key][7] +
+                                    '</p><button type="button" onclick="play_video(' +
+                                    data.movie_video_data[key][0] + ',' + specialol +
+                                    ')" class="btn btn-primary btn-sm">Play video</button></div></div></div></div>';
+
+                                $(box_id).append(htmlgen);
+                            }
+                            callit();
+
+                            alert(data.is_successful);
+                            $('#edit-in-modal').modal('hide');
+                        } else {
+                            alert('Some unexpected error has occured. Try again.');
+                        }
+                    }
+                });
+            });
+        }
+
+
+
         // lazy-loader
         let options = {
             rootMargin: '0px 0px -300px 0px',

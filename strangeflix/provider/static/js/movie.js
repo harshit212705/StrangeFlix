@@ -182,6 +182,57 @@ function add_m_c_in_add() {
 add_m_c_in_add();
 
 
+// handling ADD TAG in ADD EPISODE SECTION of MOVIES IN ADDED CONTENT SECTION FOR REJECTED VIDEOS
+function edit_add_m_in_add() {
+	var maddaddTag = document.querySelector("#edit-content-modal #m-add-add-tag");
+	var maddtagText = document.querySelector("#edit-content-modal #m-add-tag-text");
+	var maddshowTags = document.querySelector("#edit-content-modal #m-add-selected-tags");
+	var maddselectedTags = document.querySelectorAll("#edit-modal-m-add-tag-toggler");
+	maddaddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = maddtagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="edit-modal-m-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		maddshowTags.append(span);
+		maddselectedTags = document.querySelectorAll("#edit-modal-m-add-tag-toggler");
+		maddselectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
+		});
+	});
+}
+
+// handling ADD TAG in ADD FREE CONTENT SECTION of MOVIES IN ADDED CONTENT SECTION FOR REJECTED VIDEOS
+function edit_add_m_c_in_add() {
+	var cmaddaddTag = document.querySelector("#edit-content-modal #cm-add-add-tag");
+	var cmaddtagText = document.querySelector("#edit-content-modal #cm-add-tag-text");
+	var cmaddshowTags = document.querySelector("#edit-content-modal #cm-add-selected-tags");
+	var cmaddselectedTags = document.querySelectorAll("#edit-modal-cm-add-tag-toggler");
+	cmaddaddTag.addEventListener('click', function (e) {
+		var span = document.createElement('span');
+		var textValue = cmaddtagText.value;
+		span.setAttribute("value", textValue);
+		span.setAttribute("class", "text-center px-2 py-2 bg-primary text-white");
+		span.style.border = "2px solid blue";
+		span.style.borderRadius = "50%";
+		span.innerHTML = textValue + '<a id="edit-modal-cm-add-tag-toggler" type="button"><i class="fas fa-times mx-1"></i></a>';
+		cmaddshowTags.append(span);
+		cmaddselectedTags = document.querySelectorAll("#edit-modal-cm-add-tag-toggler");
+		cmaddselectedTags.forEach(element => {
+			element.addEventListener('click', function (e) {
+				var obj = element.parentNode;
+				obj.remove();
+			});
+		});
+	});
+};
+
+
 
 // handling selection between video or link in ADD EPISODE SECTION of MOVIES IN ADD CONTENT SECTION
 var mlinkorvideo = document.querySelector('#m-linkorvideo');

@@ -202,9 +202,5 @@ pay_per_view - transaction_id, video_id, user_id, start_date time,
 
 
 
-// not required
-Like - like_id, video_id, user_id, timestamp
-
-
 
  

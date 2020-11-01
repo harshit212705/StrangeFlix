@@ -1,7 +1,7 @@
 # importing models from provider/models.py
 from .models import Videos, SeriesDetails, SeriesSubCategories, SeriesSeasonDetails, SeriesVideos, \
                     SeriesVideosTags, MovieDetails, MovieSubCategories, MovieVideoTags, MovieVideo, \
-                    FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo
+                    FreeSeriesVideosTags, FreeSeriesVideos, FreeMovieVideoTags, FreeMovieVideo, VideoRejectionComment
 
 # importing other modules
 from django.shortcuts import render, redirect
@@ -276,6 +276,8 @@ def add_new_episode(request):
         episode_release_date = json_data['episode_release_date']
         episode_linkorvideo = json_data['episode_linkorvideo']
         episode_link = json_data['episode_link']
+        query_type = json_data['query_type']
+        video_id = json_data['video_id']
 
         # response object to return as response to ajax request
         context = {
@@ -288,6 +290,7 @@ def add_new_episode(request):
             'is_video_mimetype_problem': '',
             'is_successful': '',
             'season_episode_data': '',
+            'is_video_exists': '',
         }
 
         # check if series season already exists
@@ -295,13 +298,24 @@ def add_new_episode(request):
         if series_season is None:
             context['is_series_season_exists'] = 'This season or series do not exists'
         else:
+            if query_type == 'U':
+                video_details = Videos.objects.filter(video_id=video_id).first()
+                if video_details is None:
+                    context['is_video_exists'] = 'This video do not exists'
+                    return JsonResponse(context)
+                else:
+                    series_video_details = SeriesVideos.objects.filter(video_id=video_id).first()
+                    if series_video_details is None:
+                        context['is_video_exists'] = 'Video is not of the required type'
+                        return JsonResponse(context)
+
             episode_details = SeriesVideos.objects.filter(
                 series_season_id=series_season_id,
                 episode_no=episode_no
             ).first()
 
             # check if episode already exists for that season of series
-            if episode_details is None:
+            if (episode_details is None and query_type == 'N') or (episode_details and query_type == 'U'):
 
                 # checking if quality of episode not selected by the user
                 if episode_quality == 'Quality':
@@ -352,8 +366,12 @@ def add_new_episode(request):
                                     # deleting the locally saved video file
                                     os.remove(video_filepath)
 
-                                    # saving new episode details
-                                    new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                                    if query_type == 'N':
+                                        # saving new episode details
+                                        new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                                    elif query_type == 'U':
+                                        # saving new episode details
+                                        new_season_episode = update_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags, video_details, series_video_details)
 
                                     # returning successful response to ajax request
                                     context['is_successful'] = 'New season episode added successfully!!'
@@ -425,8 +443,12 @@ def add_new_episode(request):
                             # deleting the locally saved video file
                             os.remove(video_filepath)
 
-                            # saving new episode details
-                            new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                            if query_type == 'N':
+                                # saving new episode details
+                                new_season_episode = save_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                            elif query_type == 'U':
+                                # saving new episode details
+                                new_season_episode = update_video_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, episode_no, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags, video_details, series_video_details)
 
                             # returning successful response to ajax request
                             context['is_successful'] = 'New season episode added successfully!!'
@@ -465,6 +487,8 @@ def add_new_series_content(request):
         episode_release_date = json_data['content_release_date']
         episode_linkorvideo = json_data['content_linkorvideo']
         episode_link = json_data['content_link']
+        query_type = json_data['query_type']
+        video_id = json_data['video_id']
 
         # response object to return as response to ajax request
         context = {
@@ -476,6 +500,7 @@ def add_new_series_content(request):
             'is_video_mimetype_problem': '',
             'is_successful': '',
             'season_episode_data': '',
+            'is_video_exists': '',
         }
 
         # check if series season already exists
@@ -483,6 +508,16 @@ def add_new_series_content(request):
         if series_season is None:
             context['is_series_season_exists'] = 'This season or series do not exists'
         else:
+            if query_type == 'U':
+                video_details = Videos.objects.filter(video_id=video_id).first()
+                if video_details is None:
+                    context['is_video_exists'] = 'This video do not exists'
+                    return JsonResponse(context)
+                else:
+                    series_video_details = FreeSeriesVideos.objects.filter(video_id=video_id).first()
+                    if series_video_details is None:
+                        context['is_video_exists'] = 'Video is not of the required type'
+                        return JsonResponse(context)
 
             # checking if quality of episode not selected by the user
             if episode_quality == 'Quality':
@@ -533,8 +568,12 @@ def add_new_series_content(request):
                                 # deleting the locally saved video file
                                 os.remove(video_filepath)
 
-                                # saving new episode details
-                                new_season_episode = save_series_content_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                                if query_type == 'N':
+                                    # saving new episode details
+                                    new_season_episode = save_series_content_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                                elif query_type == 'U':
+                                    # updating new episode details
+                                    new_season_episode = update_series_content_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags, video_details, series_video_details)
 
                                 # returning successful response to ajax request
                                 context['is_successful'] = 'New free content added successfully!!'
@@ -606,8 +645,12 @@ def add_new_series_content(request):
                         # deleting the locally saved video file
                         os.remove(video_filepath)
 
-                        # saving new episode details
-                        new_season_episode = save_series_content_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                        if query_type == 'N':
+                            # saving new episode details
+                            new_season_episode = save_series_content_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags)
+                        elif query_type == 'U':
+                            # updating new episode details
+                            new_season_episode = update_series_content_file_details_to_database(series_season, episode_name, unique_video_name, firebase_upload['downloadTokens'], episode_description, episode_release_date, video_duration, VIDEO_QUALITY[episode_quality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], episode_tags, video_details, series_video_details)
 
                         # returning successful response to ajax request
                         context['is_successful'] = 'New free content added successfully!!'
@@ -791,6 +834,11 @@ def previously_uploaded_episodes(request):
             for tag in all_tags_data:
                 tags_data[tag.video_id.video_id].append(tag.tag_word)
 
+            # fetching comments for rejected videos means the reason for their rejection
+            video_rejection = VideoRejectionComment.objects.filter(video_id__in=all_video_id)
+            video_rejection_comments = {}
+            for obj in video_rejection:
+                video_rejection_comments.update({obj.video_id.video_id: obj.comment})
 
             # fetching episodes ordered by their episode number
             episode_details = SeriesVideos.objects.filter(
@@ -803,8 +851,11 @@ def previously_uploaded_episodes(request):
                 # getting firebase url for uploaded video file
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
+                rejection_comment = ''
+                if obj.video_id.video_id in video_rejection_comments.keys():
+                    rejection_comment = video_rejection_comments[obj.video_id.video_id]
 
-                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_episode_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.episode_no, obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], rejection_comment, VIDEO_QUALITY_REVERSE[obj.quality_of_video])})
 
             context['season_episode_data'] = season_episode_data
 
@@ -821,6 +872,11 @@ def previously_uploaded_episodes(request):
             for tag in all_tags_data:
                 tags_data[tag.video_id.video_id].append(tag.tag_word)
 
+            # fetching comments for rejected videos means the reason for their rejection
+            video_rejection = VideoRejectionComment.objects.filter(video_id__in=all_video_id)
+            video_rejection_comments = {}
+            for obj in video_rejection:
+                video_rejection_comments.update({obj.video_id.video_id: obj.comment})
 
             # fetching free content ordered by their date of upload
             episode_details = FreeSeriesVideos.objects.filter(
@@ -833,8 +889,11 @@ def previously_uploaded_episodes(request):
                 # getting firebase url for uploaded video file
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
+                rejection_comment = ''
+                if obj.video_id.video_id in video_rejection_comments.keys():
+                    rejection_comment = video_rejection_comments[obj.video_id.video_id]
 
-                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                season_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], rejection_comment, VIDEO_QUALITY_REVERSE[obj.quality_of_video])})
 
             # returning success response to ajax request
             context['season_content_data'] = season_content_data
@@ -1035,6 +1094,8 @@ def add_movie_video(request):
         movie_videorelease_date = json_data['movie_videorelease_date']
         movie_videolinkorvideo = json_data['movie_videolinkorvideo']
         movie_link = json_data['movie_link']
+        query_type = json_data['query_type']
+        video_id = json_data['video_id']
 
         # response object to return as response to ajax request
         context = {
@@ -1047,6 +1108,7 @@ def add_movie_video(request):
             'is_video_mimetype_problem': '',
             'is_successful': '',
             'movie_video_data': '',
+            'is_video_exists': '',
         }
 
         # check if movie by this movie id exists or not
@@ -1054,12 +1116,23 @@ def add_movie_video(request):
         if movie is None:
             context['is_movie_exists'] = 'This movie do not exists'
         else:
+            if query_type == 'U':
+                video_details = Videos.objects.filter(video_id=video_id).first()
+                if video_details is None:
+                    context['is_video_exists'] = 'This video do not exists'
+                    return JsonResponse(context)
+                else:
+                    movie_video_details = MovieVideo.objects.filter(video_id=video_id).first()
+                    if movie_video_details is None:
+                        context['is_video_exists'] = 'Video is not of the required type'
+                        return JsonResponse(context)
+
             movie_video_details = MovieVideo.objects.filter(
                 movie_id=movie_id,
             ).first()
 
             # check if movie video already exists for that movie
-            if movie_video_details is None:
+            if (movie_video_details is None and query_type == 'N') or (movie_video_details and query_type == 'U'):
 
                 # checking if quality of movie video not selected by the user
                 if movie_videoquality == 'Quality':
@@ -1110,8 +1183,12 @@ def add_movie_video(request):
                                     # deleting the locally saved video file
                                     os.remove(video_filepath)
 
-                                    # saving new episode details
-                                    movie_video = save_movie_video_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                                    if query_type == 'N':
+                                        # saving new episode details
+                                        movie_video = save_movie_video_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                                    elif query_type == 'U':
+                                        # saving new episode details
+                                        movie_video = update_movie_video_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags, video_details, movie_video_details)
 
                                     # returning successful response to ajax request
                                     context['is_successful'] = 'Movie video added successfully!!'
@@ -1183,8 +1260,12 @@ def add_movie_video(request):
                             # deleting the locally saved video file
                             os.remove(video_filepath)
 
-                            # saving new episode details
-                            movie_video = save_movie_video_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                            if query_type == 'N':
+                                # saving new episode details
+                                movie_video = save_movie_video_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                            elif query_type == 'U':
+                                # saving new episode details
+                                movie_video = update_movie_video_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags, video_details, movie_video_details)
 
                             # returning successful response to ajax request
                             context['is_successful'] = 'Movie video added successfully!!'
@@ -1336,6 +1417,11 @@ def previously_uploaded_movie_content(request):
             for tag in all_tags_data:
                 tags_data[tag.video_id.video_id].append(tag.tag_word)
 
+            # fetching comments for rejected videos means the reason for their rejection
+            video_rejection = VideoRejectionComment.objects.filter(video_id__in=movie_video_id)
+            video_rejection_comments = {}
+            for obj in video_rejection:
+                video_rejection_comments.update({obj.video_id.video_id: obj.comment})
 
             # fetching movie video details
             movie_video_details = MovieVideo.objects.filter(
@@ -1348,8 +1434,11 @@ def previously_uploaded_movie_content(request):
                 # getting firebase url for uploaded video file
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
+                rejection_comment = ''
+                if obj.video_id.video_id in video_rejection_comments.keys():
+                    rejection_comment = video_rejection_comments[obj.video_id.video_id]
 
-                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_content_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], rejection_comment, VIDEO_QUALITY_REVERSE[obj.quality_of_video])})
 
             # returning success response to ajax request
             context['movie_content_data'] = movie_content_data
@@ -1366,6 +1455,12 @@ def previously_uploaded_movie_content(request):
             for tag in all_tags_data:
                 tags_data[tag.video_id.video_id].append(tag.tag_word)
 
+            # fetching comments for rejected videos means the reason for their rejection
+            video_rejection = VideoRejectionComment.objects.filter(video_id__in=movie_video_id)
+            video_rejection_comments = {}
+            for obj in video_rejection:
+                video_rejection_comments.update({obj.video_id.video_id: obj.comment})
+
             # fetching movie free content details
             movie_video_details = FreeMovieVideo.objects.filter(
                 movie_id=movie_details,
@@ -1377,8 +1472,11 @@ def previously_uploaded_movie_content(request):
                 # getting firebase url for uploaded video file
                 path_on_cloud = 'videos/' + obj.firebase_save_name + '.' + VIDEO_EXTENSION_REVERSE[obj.extension]
                 firebase_video_url = storage.child(path_on_cloud).get_url(obj.firebase_token)
+                rejection_comment = ''
+                if obj.video_id.video_id in video_rejection_comments.keys():
+                    rejection_comment = video_rejection_comments[obj.video_id.video_id]
 
-                movie_free_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id])})
+                movie_free_data.update({str(obj.pk): (obj.video_id.video_id, obj.video_name, obj.description, obj.thumbnail_image.url, firebase_video_url, obj.date_of_release.strftime("%d %b, %Y"), obj.duration_of_video, str(VERIFICATION_REVERSE[obj.verification_status]).title(), tags_data[obj.video_id.video_id], rejection_comment, VIDEO_QUALITY_REVERSE[obj.quality_of_video])})
 
             # returning success response to ajax request
             context['movie_free_data'] = movie_free_data
@@ -1405,6 +1503,10 @@ def add_movie_free_content(request):
         movie_videorelease_date = json_data['content_videorelease_date']
         movie_videolinkorvideo = json_data['content_videolinkorvideo']
         movie_link = json_data['content_link']
+        # 
+        query_type = json_data['query_type']
+        video_id = json_data['video_id']
+        # 
 
         # response object to return as response to ajax request
         context = {
@@ -1416,6 +1518,9 @@ def add_movie_free_content(request):
             'is_video_mimetype_problem': '',
             'is_successful': '',
             'movie_video_data': '',
+            # 
+            'is_video_exists': '',
+            # 
         }
 
         # check if movie by this movie id exists or not
@@ -1423,6 +1528,18 @@ def add_movie_free_content(request):
         if movie is None:
             context['is_movie_exists'] = 'This movie do not exists'
         else:
+            # 
+            if query_type == 'U':
+                video_details = Videos.objects.filter(video_id=video_id).first()
+                if video_details is None:
+                    context['is_video_exists'] = 'This video do not exists'
+                    return JsonResponse(context)
+                else:
+                    movie_video_details = FreeMovieVideo.objects.filter(video_id=video_id).first()
+                    if movie_video_details is None:
+                        context['is_video_exists'] = 'Video is not of the required type'
+                        return JsonResponse(context)
+            # 
 
             # checking if quality of movie video not selected by the user
             if movie_videoquality == 'Quality':
@@ -1473,8 +1590,12 @@ def add_movie_free_content(request):
                                 # deleting the locally saved video file
                                 os.remove(video_filepath)
 
-                                # saving new episode details
-                                movie_video = save_movie_free_content_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                                if query_type == 'N':
+                                    # saving new episode details
+                                    movie_video = save_movie_free_content_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                                elif query_type == 'U':
+                                    # updating edit episode details
+                                    movie_video = update_movie_free_content_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags, video_details, movie_video_details)
 
                                 # returning successful response to ajax request
                                 context['is_successful'] = 'Content video added successfully!!'
@@ -1546,8 +1667,12 @@ def add_movie_free_content(request):
                         # deleting the locally saved video file
                         os.remove(video_filepath)
 
-                        # saving new episode details
-                        movie_video = save_movie_free_content_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                        if query_type == 'N':
+                            # saving new episode details
+                            movie_video = save_movie_free_content_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags)
+                        elif query_type == 'U':
+                            # updating edit episode details
+                            movie_video = update_movie_free_content_file_details_to_database(movie, movie_videoname, movie_videodescription, unique_video_name, firebase_upload['downloadTokens'], movie_videorelease_date, video_duration, VIDEO_QUALITY[movie_videoquality], VIDEO_EXTENSION[extension.lower()], request.FILES['file'], movie_videotags, video_details, movie_video_details)
 
                         # returning successful response to ajax request
                         context['is_successful'] = 'Content video added successfully!!'
@@ -1605,3 +1730,135 @@ def save_movie_free_content_file_details_to_database(movie_id, movie_video_name,
             movie_video_tag.save()
 
     return movie_video
+
+
+# updating movie video details to database
+def update_movie_free_content_file_details_to_database(movie_id, movie_video_name, movie_video_description, unique_video_name, download_token, movie_video_release_date, video_duration, video_quality, video_extension, thumbnail_image, video_tags, video_details, movie_video_details):
+
+    movie_video_details.video_name = movie_video_name
+    movie_video_details.description = movie_video_description
+    movie_video_details.firebase_save_name = unique_video_name
+    movie_video_details.firebase_token = download_token
+    movie_video_details.date_of_upload = datetime.now(tz=timezone.utc)
+    movie_video_details.date_of_release = movie_video_release_date
+    movie_video_details.duration_of_video = video_duration
+    movie_video_details.quality_of_video = video_quality
+    movie_video_details.extension = video_extension
+    movie_video_details.verification_status = 1
+    movie_video_details.thumbnail_image = thumbnail_image
+    movie_video_details.save()
+
+    # deleting previous video tags
+    tags = FreeMovieVideoTags.objects.filter(video_id=video_details)
+    tags.delete()
+
+    # adding movie free content related tag data to the database
+    for i in range(len(video_tags)):
+        if video_tags[i] != '':
+            movie_video_tag = FreeMovieVideoTags.objects.create(
+                video_id=video_details,
+                tag_word=video_tags[i],
+            )
+            movie_video_tag.save()
+
+    return movie_video_details
+
+
+# updating movie video details to database
+def update_movie_video_file_details_to_database(movie_id, movie_video_name, movie_video_description, unique_video_name, download_token, movie_video_release_date, video_duration, video_quality, video_extension, thumbnail_image, video_tags, video_details, movie_video_details):
+
+    movie_video_details.video_name = movie_video_name
+    movie_video_details.description = movie_video_description
+    movie_video_details.firebase_save_name = unique_video_name
+    movie_video_details.firebase_token = download_token
+    movie_video_details.date_of_upload = datetime.now(tz=timezone.utc)
+    movie_video_details.date_of_release = movie_video_release_date
+    movie_video_details.duration_of_video = video_duration
+    movie_video_details.quality_of_video = video_quality
+    movie_video_details.extension = video_extension
+    movie_video_details.verification_status = 1
+    movie_video_details.cost_of_video = 0
+    movie_video_details.thumbnail_image = thumbnail_image
+    movie_video_details.save()
+
+    # deleting previous video tags
+    tags = MovieVideoTags.objects.filter(video_id=video_details)
+    tags.delete()
+
+    # adding movie free content related tag data to the database
+    for i in range(len(video_tags)):
+        if video_tags[i] != '':
+            movie_video_tag = MovieVideoTags.objects.create(
+                video_id=video_details,
+                tag_word=video_tags[i],
+            )
+            movie_video_tag.save()
+
+    return movie_video_details
+
+
+# updating new content series details to database
+def update_series_content_file_details_to_database(series_season, episode_name, unique_video_name, download_token, episode_description, episode_release_date, video_duration, video_quality, video_extension, thumbnail_image, episode_tags, video_details, series_video_details):
+
+    series_video_details.video_name = episode_name
+    series_video_details.firebase_save_name = unique_video_name
+    series_video_details.firebase_token = download_token
+    series_video_details.description = episode_description
+    series_video_details.date_of_upload = datetime.now(tz=timezone.utc)
+    series_video_details.date_of_release = episode_release_date
+    series_video_details.duration_of_video = video_duration
+    series_video_details.quality_of_video = video_quality
+    series_video_details.extension = video_extension
+    series_video_details.verification_status = 1
+    series_video_details.thumbnail_image = thumbnail_image
+    series_video_details.save()
+
+    # deleting previous video tags
+    tags = FreeSeriesVideosTags.objects.filter(video_id=video_details)
+    tags.delete()
+
+    # adding series video related tag data to the database
+    for i in range(len(episode_tags)):
+        if episode_tags[i] != '':
+            series_video_tag = FreeSeriesVideosTags.objects.create(
+                video_id=video_details,
+                tag_word=episode_tags[i],
+            )
+            series_video_tag.save()
+
+    return series_video_details
+
+
+# updating new episode details to database
+def update_video_file_details_to_database(series_season, episode_name, unique_video_name, download_token, episode_description, episode_release_date, episode_no, video_duration, video_quality, video_extension, thumbnail_image, episode_tags, video_details, series_video_details):
+
+    series_video_details.video_name = episode_name
+    series_video_details.firebase_save_name = unique_video_name
+    series_video_details.firebase_token = download_token
+    series_video_details.description = episode_description
+    series_video_details.date_of_upload = datetime.now(tz=timezone.utc)
+    series_video_details.date_of_release = episode_release_date
+    series_video_details.episode_no = episode_no
+    series_video_details.duration_of_video = video_duration
+    series_video_details.quality_of_video = video_quality
+    series_video_details.extension = video_extension
+    series_video_details.verification_status = 1
+    series_video_details.cost_of_video = 0
+    series_video_details.thumbnail_image = thumbnail_image
+    series_video_details.save()
+
+    # deleting previous video tags
+    tags = SeriesVideosTags.objects.filter(video_id=video_details)
+    tags.delete()
+
+    # adding series video related tag data to the database
+    for i in range(len(episode_tags)):
+        if episode_tags[i] != '':
+            series_video_tag = SeriesVideosTags.objects.create(
+                video_id=video_details,
+                episode_no=episode_no,
+                tag_word=episode_tags[i],
+            )
+            series_video_tag.save()
+
+    return series_video_details

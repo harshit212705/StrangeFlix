@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 # importing required models
 from accounts.models import CustomUser as User
@@ -17,6 +18,7 @@ from provider.models import SeriesVideos, MovieVideo
 
 # importing required forms
 from .forms import AddMoneyForm
+
 
 
 
@@ -164,3 +166,85 @@ def add_money_details(request):
         transaction_details.save()
 
         raise Http404('Error in processing request. If any amount is deducted from your account it will be refunded in three days.')
+
+
+# function to initiate refund in case the user add money transaction is in pending state but amount credited to website
+def initiate_refund_payment(payment_id):
+    response = settings.INSTAMOJO_API.refund_create(
+        payment_id=payment_id,
+        type='TAN',
+        body='Refunding amount for completed payment',
+        refund_amount=None
+    )
+    return response
+
+
+# function to check the payment request payment status
+@csrf_exempt
+def check_payment_status(request):
+    if request.method == 'POST':
+
+        # extracting form data coming from ajax request
+        json_data = json.loads(request.POST['data'])
+        transaction_id = json_data['transaction_id']
+
+        # response object to return as response to ajax request
+        context = {
+            'is_transaction_exists': '',
+            'is_transaction_already_resolved': '',
+            'is_user_logged_in': '',
+            'if_transaction_belongs_to_user': '',
+            'is_successful': '',
+            'is_payment_failed': '',
+            'is_payment_refunded': '',
+        }
+
+        # checking if video exists
+        transaction_details = AddMoneyTransactionDetails.objects.filter(transaction_id=transaction_id).first()
+        if transaction_details is None:
+            context['is_transaction_exists'] = 'This transaction does not exists.'
+        else:
+            if transaction_details.status != 2:
+                context['is_transaction_already_resolved'] = 'This transaction is already resolved.'
+            else:
+                if request.user.is_authenticated and request.user.user_type == 'U':
+                    if transaction_details.user == request.user:
+                        response = settings.INSTAMOJO_API.payment_request_status(transaction_id)
+                        if response['payment_request']['payments'] == []:
+                            transaction_details.status = 1
+                            transaction_details.save()
+                            context['is_payment_failed'] = 'Your transaction failed!!'
+                        else:
+                            payment_id = ''
+                            if 'payment_id' in response['payment_request']['payments'][0].keys():
+                                payment_id = response['payment_request']['payments'][0]['payment_id']
+                            status = ''
+                            if 'status' in response['payment_request']['payments'][0].keys():
+                                status = response['payment_request']['payments'][0]['status']
+
+                            if payment_id == '' or status == '':
+                                transaction_details.status = 1
+                                transaction_details.save()
+                                context['is_payment_failed'] = 'Your transaction failed!!'
+                            else:
+                                if status == 'Credit':
+                                    # initiate refund
+                                    refund_response = initiate_refund_payment(payment_id)
+
+                                    transaction_details.status = 6
+                                    transaction_details.payment_id = payment_id
+                                    transaction_details.save()
+                                    context['is_payment_refunded'] = 'Payment successfully refunded!!'
+                                else:
+                                    transaction_details.status = 1
+                                    transaction_details.payment_id = payment_id
+                                    transaction_details.save()
+                                    context['is_payment_failed'] = 'Your transaction failed!!'
+                                context['is_successful'] = 'request processed'
+                    else:
+                        context['if_transaction_belongs_to_user'] = 'This transaction does not belongs to you.'
+                else:
+                    context['is_user_logged_in'] = 'You are not logged in.'
+        return JsonResponse(context)
+    else:
+        return render(request, 'templates/404.html')
