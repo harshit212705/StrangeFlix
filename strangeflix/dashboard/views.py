@@ -8,7 +8,68 @@ from accounts.models import UserDetails
 from subscribe.models import Subscriptions
 from provider.models import Videos,SeriesVideos,MovieVideo,FreeSeriesVideos,FreeMovieVideo,History
 from datetime import datetime, timedelta, timezone
+from transaction.models import TransactionDetails, TransactionToken, AddMoneyTransactionDetails
+from home.models import PayPerViewTransaction
+
+
+
+from transaction.forms import AddMoneyForm
 # Create your views here.
+
+
+
+#To get the Wallet Details
+def wallet_details(request):
+    if request.method == 'GET' and request.user.user_type == 'U':
+
+        # add money form
+        add_money_form = AddMoneyForm()
+        user_details = UserDetails.objects.filter(user=request.user).first()
+
+        # fetching all the wallet transactions made by the user using union from two models
+        transactions = TransactionDetails.objects.filter(
+            user=request.user,
+            payment_type='W'
+        ).only('transaction_id', 'transaction_start_time', 'transaction_amount', 'status').union(
+            AddMoneyTransactionDetails.objects.filter(
+                user=request.user,
+            ).only('transaction_id', 'transaction_start_time', 'transaction_amount', 'status')).order_by('-transaction_start_time')
+
+        payperview_transactions = PayPerViewTransaction.objects.filter(user_id=request.user)
+        payperview_video_ids = PayPerViewTransaction.objects.filter(user_id=request.user).values('video_id').distinct()
+        payperview_costs = SeriesVideos.objects.filter(
+            video_id__in=payperview_video_ids,
+        ).only('video_id__video_id', 'cost_of_video').union(
+            MovieVideo.objects.filter(
+                video_id__in=payperview_video_ids,
+            ).only('video_id__video_id', 'cost_of_video')
+        )
+
+        video_costs = {}
+        for obj in payperview_costs:
+            video_costs.update({obj.video_id.video_id: obj.cost_of_video})
+
+        all_trans = {}
+        for obj in transactions:
+            diff = (datetime.now(tz=timezone.utc) - obj.transaction_start_time).total_seconds()
+            all_trans.update({diff: (obj.transaction_id, obj.transaction_start_time, obj.transaction_amount*(-1), obj.status)})
+
+        for obj in payperview_transactions:
+            diff = (datetime.now(tz=timezone.utc) - obj.transaction_start_time).total_seconds()
+            all_trans.update({diff: (obj.transaction_id, obj.transaction_start_time, video_costs[obj.video_id.video_id]*(-1), 5)})
+
+        all_trans = {k: v for k, v in sorted(all_trans.items(), key=lambda item: item[0])}
+
+        context = {}
+        count = 1
+        # returning all the transactions
+        for key in all_trans.keys():
+            obj = all_trans[key]
+            context.update({'transaction_' + str(count): (obj[0], obj[1], obj[2], obj[3])})
+            count += 1
+
+        # returning response
+        return {'wallet_bal': user_details.wallet_money, 'add_money_form': add_money_form, 'context': context}
 
 
 @login_required(login_url='home_page')
@@ -80,6 +141,8 @@ def user_dashboard(request):
             }
             history_list.append(history_data)
         context['history_list'] = history_list
+        wallet_page_details = wallet_details(request)
+        context.update(wallet_page_details)
         return render(request,'dashboard/user_dashboard.html',context)
     else:
         return render(request, 'templates/404.html')

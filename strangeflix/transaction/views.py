@@ -105,7 +105,7 @@ def add_money(request):
 
             # generating instamojo payment request
             response = insta(request.user.email,request.user.username,'',request.build_absolute_uri(reverse('add_money_details')),amount)
-
+    
             # amounts are saved as negative to have difference between the amount paid and amount added to wallet
             amount = int(amount)*(-1)
 

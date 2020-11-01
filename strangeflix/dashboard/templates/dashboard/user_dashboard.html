@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html>
 
@@ -199,9 +201,8 @@
                             </li>
                             <li>
                                 <div class="list-group" id="list-tab" role="tablist">
-                                    <a class="special" id="list-roomrequest-list" data-toggle="list"
-                                        href="#list-roomrequest" role="tab" aria-controls="home">Room Requests<span
-                                            class="badge badge-light mx-1" id="upd-on-load">9</span></a>
+                                    <a class="special" id="wallet-list" data-toggle="list"
+                                        href="#wallet" role="tab" aria-controls="home">Wallet</a>
                                 </div>
                             </li>
 
@@ -323,35 +324,60 @@
                             </div>
                     </div>
                     </div>
-                    <div class="tab-pane fade show" id="list-roomrequest" role="tabpanel"
-                        aria-labelledby="list-roomrequest-list">
+                    <div class="tab-pane fade show" id="wallet" role="tabpanel"
+                        aria-labelledby="wallet-list">
                         <div class="container">
                             <div class="adm-tble">
-                                <h4 class="font-weight-bold my-5">Room Requests<i
+                                <h4 class="font-weight-bold my-5">Wallet<i
                                         class="arro text-secondary right mx-1"></i></h4>
-                                <table class="table table-dark">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" style="width:10%">
-                                                <h5 class="font-weight-bold">Id</h5>
-                                            </th>
-                                            <th scope="col" style="width:20%">
-                                                <h5 class="font-weight-bold">Title</h5>
-                                            </th>
-                                            <th scope="col" style="width:30%">
-                                                <h5 class="font-weight-bold">Description</h5>
-                                            </th>
-                                            <th scope="col" style="width:10%">
-                                                <h5 class="font-weight-bold">Host</h5>
-                                            </th>
-                                            <th scope="col" style="width:20%">
-                                                <h5 class="font-weight-bold">Action</h5>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="room-request">
-                                    </tbody>
-                                </table>
+                                        <div class="wallet-details">
+                                            <div class="text-center my-5">
+                                                <div style="margin-left:475px;text-align: center;height:relative;width: 400px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
+                                                    <h4 class="text-center my-5" style="padding-top:30px;">Wallet</h4>
+                                                    <div style="display: inline-block;width: 100%;">
+                                                        <div style="float: left;margin-left: 50px;">Wallet Balance</div>
+                                                        <div style="float: right;margin-right: 50px;">Rs. {{ wallet_bal }}</div>
+                                                    </div>
+                                                    <!-- add money form -->
+                                                    <form method='post' action="{% url "add_money" %}">
+                                                        {% csrf_token %}
+                                                        {{ add_money_form.amount|as_crispy_field }}
+                                                        <button type="submit" class="btn btn-primary" style="margin-left:30px;margin-top:20px;">Add Money</button>
+                                                    </form>
+                                                    <!-- wallet transactions -->
+                                                    <h5 class="text-left my-5" style="padding-top:30px;margin-left: 20px;">Transactions</h5>
+                                                    {% for key, value in context.items %}
+                                                    <div id = "transac{{ value.0 }}">
+                                                        <div style="margin-top:5px;display: inline-block;width: 100%;">
+                                                            {% if value.2 > 0 %}
+                                                                <div style="float: left;margin-left: 50px;">Amount Added</div>
+                                                            {% else %}
+                                                                <div style="float: left;margin-left: 50px;">Amount Paid</div>
+                                                            {% endif %}
+                                                            <div style="float: right;margin-right: 50px;">Rs. {{ value.2 }}</div>
+                                                        </div>
+                                                        <div style="display: inline-block;width: 100%;" class = "transacStatus">
+                                                            <div style="float: left;margin-left: 50px;font-size: 12px;">Status</div>
+                                                            {% if value.3 == 5 %}
+                                                                <div style="float: right;margin-right: 50px;color: green;font-size: 12px;">Success</div>
+                                                            {% elif value.3 == 2 %}
+                                                                <div style="float: right;margin-right: 50px;color: yellow;font-size: 12px;">Pending
+                                                                <button type="button" class="btn btn-warning btn-sm">Verify</button></div>
+                                                            {% else %}
+                                                                <div style="float: right;margin-right: 50px;color: red;font-size: 12px;">Failed</div>
+
+                                                            {% endif %}
+                                                        </div>
+                                                        <div style="display: inline-block;width: 100%;">
+                                                            <div style="float: left;margin-left: 50px;font-size: 12px;">Time</div>
+                                                            <div style="float: right;margin-right: 50px;font-size: 12px;">{{ value.1 }}</div>
+                                                        </div>
+                                                    </div>
+                                                        <hr>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
                             </div>
                         </div>
                     </div>
@@ -445,6 +471,10 @@
         $('#video-in-modal').on('hide.bs.modal', function (e) {
             document.getElementById('video').pause();
         })
+
+
+
+
     </script>
 
 
