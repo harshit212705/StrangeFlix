@@ -1,3 +1,4 @@
+// adjusting comments section on window resize and window load 
 window.addEventListener('resize', function (e) {
    var adjust = $('.player-wrapper').css('height');
    var hd = $('.ser-hd').css('height');
@@ -13,22 +14,22 @@ $('#movie-vid-comments').css('height', adjust);
 
 // theatre mode 
 
-$('.theatre__button').on('click', function (e) {
-   var chk = $('.theatre__button').attr('class');
-   if (chk == 'theatre__button') {
-      $('.playlist-container').css('display', 'none');
-      $('.c-visible-t-mode').css('display', 'block');
-      $('.player-wrapper').attr('class', 'col-xl-12 col-lg-12 col-md-12 player-wrapper');
-      $('.theatre__button').attr('class', 'theatre__button hellooo');
-      $('.video-body').css('padding', '0% 13%');
-   } else {
-      $('.playlist-container').css('display', 'block');
-      $('.c-visible-t-mode').css('display', 'none');
-      $('.player-wrapper').attr('class', 'col-xl-9 col-lg-8 col-md-7 player-wrapper');
-      $('.theatre__button').attr('class', 'theatre__button');
-      $('.video-body').css('padding', '0% 9%');
-   }
-});
+// $('.theatre__button').on('click', function (e) {
+//    var chk = $('.theatre__button').attr('class');
+//    if (chk == 'theatre__button') {
+//       $('.playlist-container').css('display', 'none');
+//       $('.c-visible-t-mode').css('display', 'block');
+//       $('.player-wrapper').attr('class', 'col-xl-12 col-lg-12 col-md-12 player-wrapper');
+//       $('.theatre__button').attr('class', 'theatre__button hellooo');
+//       $('.video-body').css('padding', '0% 13%');
+//    } else {
+//       $('.playlist-container').css('display', 'block');
+//       $('.c-visible-t-mode').css('display', 'none');
+//       $('.player-wrapper').attr('class', 'col-xl-9 col-lg-8 col-md-7 player-wrapper');
+//       $('.theatre__button').attr('class', 'theatre__button');
+//       $('.video-body').css('padding', '0% 9%');
+//    }
+// });
 
 
 
@@ -321,12 +322,16 @@ function initialize_movie_player() {
          // if already in full screen then exit
          if (document.fullscreen) {
                await document.exitFullscreen();
+               $('.pip__button').css('display','block');
+               $('.theatre__button').css('display','block');
                document.getElementById("movie-fs-ico").setAttribute("class", "fas fa-expand");
                movie_fulls.setAttribute("title", "fullscreen(f)");
          }
          // if not fullscreen then request for fullscreen mode
          else {
                await movie_player.requestFullscreen();
+               $('.pip__button').css('display','none');
+               $('.theatre__button').css('display','none');
                document.getElementById("movie-fs-ico").setAttribute("class", "fas fa-compress");
                movie_fulls.setAttribute("title", "exit fullscreen(f)");
          }
@@ -334,7 +339,16 @@ function initialize_movie_player() {
          console.log(error);
       }
    });
+   // on wait 
+   movie_video.addEventListener('waiting',function(){
+      if(movie_video.currentTime > 0)
+      document.querySelector('.d-on-wait').style.display="block";
+   })
 
+   // on canplay
+   movie_video.addEventListener('canplay',function(){
+      document.querySelector('.d-on-wait').style.display="none";
+   })
    // picutre-in-picture 
 
    movie_pip = document.getElementById("movie-pip");
@@ -424,6 +438,7 @@ function initialize_movie_player() {
       if (movie_chk == 'theatre__button') {
          var store=$('.d-wt-th').html();
          $('.d-wt-th').css('display', 'none');
+         $('.d-wt-th').empty();
          $('.d-on-th').html(store);
          $('.d-on-th').css('display', 'block');
          $('.player-wrapper').attr('class', 'col-xl-12 col-lg-12 col-md-12 player-wrapper');
@@ -431,6 +446,7 @@ function initialize_movie_player() {
          $('.video-body').css('padding', '0% 13%');
       } else {
          var store=$('.d-on-th').html();
+         $('.d-on-th').empty();
          $('.d-wt-th').html(store);
          $('.d-wt-th').css('display', 'block');
          $('.d-on-th').css('display', 'none');
@@ -441,7 +457,7 @@ function initialize_movie_player() {
       }
    });
 
-
+   // resume button 
    var vid = document.getElementById("movie-video");
    vid.onloadedmetadata = function() {
       var history_time = document.getElementById('playing_video_history_time').innerHTML;
@@ -460,7 +476,7 @@ function initialize_movie_player() {
             movie_currmins = "0" + movie_currmins;
          }
 
-         var resume_btn= '<div id="resume_btn" style="text-align: right;position:relative;top: -100px;"><button onclick="resume_play('+ history_time +')" style="opacity: 0.5;background: #272B2C;color: white;border: 1px solid white;">Resume playing at '+ movie_currmins +':'+ movie_currsecs +'</button></div>';
+         var resume_btn= '<div id="resume_btn" style="text-align: right;position:relative;top: -100px;"><button onclick="resume_play('+ history_time +')" class="btn btn-round btn-sm btn-danger">Resume playing at '+ movie_currmins +':'+ movie_currsecs +'</button></div>';
 
          $(resume_btn).insertAfter('.video-body');
          $('#resume_btn').fadeIn('slow', function(){
@@ -472,7 +488,7 @@ function initialize_movie_player() {
 
 
 
-
+// room channel 
 const roomChannel = new BroadcastChannel('room-channel');
 function getRoomList(){
     document.getElementById("room-list").innerHTML='';

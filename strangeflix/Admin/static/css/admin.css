@@ -1,3 +1,5 @@
+/* common css  */
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
@@ -14,7 +16,7 @@ p {
 }
 
 
-
+/* main section  */
 .main__section .row {
     margin: 0% 0% !important;
 }
@@ -218,6 +220,10 @@ ul {
     padding: 7% 3%;
 }
 
+
+
+
+/* media queries  */
 @media(max-width:1500px) {
 
     .series__added__form {
@@ -244,8 +250,9 @@ ul {
     .series__added__form {
         padding: 7% 0%;
     }
-    .episode__info{
-        padding-left:0%;
+
+    .episode__info {
+        padding-left: 0%;
     }
 }
 
@@ -467,10 +474,10 @@ ul {
 
 
 /* new changes  */
-img{
-    width:100%;
-    object-fit:fill;
-    height:15rem !important;
+img {
+    width: 100%;
+    object-fit: fill;
+    height: 15rem !important;
 }
 
 
@@ -485,9 +492,9 @@ img{
 
 
 .show-mr-button {
-    background: none!important;
+    background: none !important;
     border: none;
-    padding: 0!important;
+    padding: 0 !important;
     /*optional*/
     font-family: arial, sans-serif;
     /*input has OS specific font-family*/
@@ -495,7 +502,30 @@ img{
     text-decoration: underline;
     cursor: pointer;
 }
-button,input{
-    overflow:hidden !important;
+
+button,
+input {
+    overflow: hidden !important;
 }
 
+#verified-get-content,
+#verified-get-episodes,
+#verified-get-series,
+#verified-get-seasons,
+#get-movies,
+#get-series,
+#apnd,
+#uploaded_content,
+#uploaded_episodes,
+#movie_uploaded_content,
+#movie_uploaded_episodes,
+#get-verified-movies,
+#movie_verified_uploaded_episodes,
+#movie_verified_uploaded_content {
+    min-width: 100%;
+}
+
+
+.speco img{
+    height:500px !important;
+}

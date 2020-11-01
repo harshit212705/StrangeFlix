@@ -826,3 +826,35 @@ a {
   text-decoration: underline;
   cursor: pointer;
 }
+
+
+
+.contact-info {
+  padding: 1% 15%;
+}
+
+.bag {
+  background-color: #3b064d;
+}
+
+.pad {
+  padding: 1% 2%;
+}
+
+.fa-facebook,
+.fa-twitter,
+.fa-instagram,
+.fa-linkedin-in {
+  color: white;
+}
+
+.follow-section {
+  font-size: 1.8rem;
+  padding: 1% 2%;
+}
+
+@media (max-width:900px) {
+  .contact {
+    top: 5%;
+  }
+}

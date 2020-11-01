@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" href="{% static "/css/admin.css" %}">
 <link rel="stylesheet" href="{% static "/css/videoplayer.css" %}">
+<link rel="stylesheet" href="{% static "/css/admin-home.css" %}">
+
 </head>
 
 <body>
@@ -74,8 +76,71 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                         aria-labelledby="list-home-list">
-                     
+                        <!-- home section  -->
+                        <div class="example">
+                            <div class="clip">
+                                
+                              <div class="film"><div class="welcome-text">Welcome to the admin's dashboard.</div></div>
+                                
+                            </div>
+                            <hr style="border: 0;height: 3px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+                            
+                            <div class="clip">
+                                
+                              <div class="film">
+                                  <div class = "row">
+                                    <div class="col-sm welcome-head">
+                                        <div class="wel-text">
+                                  <div>Verify and manage uploaded series and movies</div>
+                                </div>
+                                </div>
+                              <div class="col-sm speco">
+                                <img src="{% static "/image/QU3H.gif" %}" alt="Add movies and series and get them verified." srcset="" height="300px"></div>
+                              </div>
+                                
+                            </div>
+                            </div>
+                            <hr style="border: 0;height: 3px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+
+                            <div class="clip">
+                                
+                                <div class="film">
+                                    <div class = "row">
+
+                                <div class="col-sm speco">
+                                    <img src="{% static "/image/giphy.webp" %}" alt="Add movies and series and get them verified." srcset="" height="300px"></div>
+                                    <div class="col-sm welcome-head">
+                                        <div class="wel-text">
+                                  <div>Manage comments,users and videos.</div>
+                                </div>
+                                </div>
+                                </div>
+                                  
+                              </div>
+                                
+                            </div>
+                            <hr style="border: 0;height: 3px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+
+                            <div class="clip">
+                                
+                                <div class="film">
+                                    <div class = "row">
+                                      <div class="col-sm welcome-head">
+                                          <div class="wel-text">
+                                    <div>Verify video and manage added series and movies</div>
+                                  </div>
+                                  </div>
+                                <div class="col-sm speco">
+                                  <img src="{% static "/images/admin-watch.jpg" %}" alt="Add movies and series and get them verified." srcset="" height="300px"></div>
+                                </div>
+                                  
+                              </div>
+                              </div>
+                              <hr style="border: 0;height: 3px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+
+                        </div>
                     </div>
+                    <!-- user type sction  -->
                     <div class="tab-pane fade show" id="list-users" role="tabpanel" aria-labelledby="list-users-list">
                         <div class="series__added__form">
                             <div class="list-group flex-md-row" id="list-user-tab" role="tablist">
@@ -89,6 +154,7 @@
                             <div class="tab-content my-5" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="list-usertable" role="tabpanel"
                                     aria-labelledby="list-usertable-list">
+                                    <!-- search a particular user  -->
                                     <div class="container my-5">
                                         <div class="row">
                                             <form class="form-inline my-3">
@@ -120,7 +186,9 @@
                                     aria-labelledby="list-changeuser-list">
                                     <div class="episode__info">
                                         <p id="user_id" hidden></p>
+                                        <!-- change user form  -->
                                         <form id="change-userform">
+                                            <!-- user id  -->
                                             <div class="form-group my-4">
                                                 <div class="row pado">
                                                     <div class="col-lg-3 col-md-3 col-sm-3">
@@ -132,6 +200,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- user type  -->
                                             <div class="form-group my-4">
                                                 <div class="row pado">
                                                     <div class="col-lg-3 col-md-3 col-sm-3">
@@ -161,6 +230,7 @@
                         </div>
 
                     </div>
+                    <!-- movie pending section  -->
                     <div class="tab-pane fade" id="list-movie" role="tabpanel" aria-labelledby="list-movie-list">
                         <div class="series__added__form">
                             <div class="list-group flex-md-row" id="list-movie-tab" role="tablist">
@@ -172,6 +242,7 @@
                                     aria-controls="list-movieinfo">Videos</a>
                             </div>
                             <div class="tab-content my-5" id="nav-tabContent">
+                                <!-- get pending movies  -->
                                 <div class="tab-pane fade show active" id="list-movieform" role="tabpanel"
                                     aria-labelledby="list-movieform-list">
                                     <div class="series__info my-5">
@@ -206,6 +277,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- pending series section  -->
                     <div class="tab-pane fade" id="list-series" role="tabpanel" aria-labelledby="list-series-list">
                         <div class="series__form">
                             <div class="list-group flex-md-row" id="list-series-tab" role="tablist">
@@ -2206,7 +2278,7 @@
                 }
             });
         });
-
+        // play video in modal 
         function play_video(video_id, video_url) {
             // Add code to launch modal by getting
             $('#insert-video').attr('src', video_url);
@@ -2284,7 +2356,9 @@
             rootMargin: '0px 0px -300px 0px',
             threshold: 0
         }
+        
 
+        //  call back for lazy loader 
         let callback = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2297,6 +2371,7 @@
 
         let observer = new IntersectionObserver(callback, options);
 
+        // function for observing images 
         function callit() {
             var imge = document.querySelectorAll("[data-src]");
 

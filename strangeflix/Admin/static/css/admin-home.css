@@ -1,8 +1,5 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
-
-
-/* welcome text  */
 .welcome-text{
     font-family: 'Staatliches', cursive;
     font-size: 5.5rem;
@@ -13,7 +10,6 @@
   text-align: center;
   margin:auto;
 }
-/* top section in home  */
 .example{
 
   float: left;
