@@ -18,5 +18,6 @@ urlpatterns = [
     path('provider/', include('provider.urls')),
     path('room/',include('room.urls')),
     path('admin/',include('Admin.urls')),
+    path('dashboard/',include('dashboard.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,
                                                                                            document_root=settings.MEDIA_ROOT)

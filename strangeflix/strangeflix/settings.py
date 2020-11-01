@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'transaction.apps.TransactionConfig',
     'provider.apps.ProviderConfig',
     'room.apps.RoomConfig',
+    'dashboard.apps.DashboardConfig',
 
     # social accounts additional apps
     'social_django', # add this
