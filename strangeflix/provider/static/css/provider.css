@@ -1,3 +1,5 @@
+/* common css  */
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #fff;
@@ -14,7 +16,7 @@ p {
 }
 
 
-
+/* main section  */
 .main__section .row {
     margin: 0% 0% !important;
 }
@@ -132,7 +134,7 @@ ul {
 }
 
 .fix ul a {
-    color: white;
+    /* color: white; */
 }
 
 #section1,
@@ -230,6 +232,8 @@ ul {
 }
 
 
+
+/* media queries  */
 @media(max-width:1500px) {
 
     .series__form,
@@ -466,130 +470,23 @@ ul {
     }
 }
 
-/* @media(max-width:1396px) {
 
-    .series__info,
-    .season__info,
-    .episode__info,
-    .adding__movie {
-        padding-left: 13%;
-    }
-    .middle-section{
-        -webkit-line-clamp: 3;
-    }
-}
-
-@media(max-width:80em) {
-    .media-full {
-        position: relative;
-        left: 10%;
-    }
+/* new changes  */
 
 
-
-    #sidebar {
-        min-width: 12em;
-    }
-
-    .padding-adder {
-        padding-left: 30%;
-    }
-
-
-    .series__form,
-    .series__added__form {
-        padding: 7% 11% 7% 0%;
-    }
-
-    .fix {
-        margin-left: 7%;
-        position: relative;
-    }
-
-    .series__info,
-    .season__info,
-    .episode__info,
-    .adding__movie {
-        padding-left: 6%;
-    }
-}
-
-@media(max-width:990px) {
-    .media-full {
-        position: relative;
-        left: 0%;
-    }
-    .middle-section{
-        -webkit-line-clamp: 2;
-    }
-}
-
-@media (max-width: 795px)
-{
-.col-md-8 {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-.episode__info{
-    padding-left:0%;
-}
-.middle-section{
-    -webkit-line-clamp: 3;
-}
-}
-@media(max-width:62em) {
-    .media-full {
-        position: relative;
-        left: 20%;
-    }
-
-    .series__form,
-    .series__added__form {
-        padding: 7% 7%;
-    }
-}
-
-@media(max-width:50em) {
-
-    .col-lg-2,
-    .col-sm-2,
-    .col-md-2 {
-        width: 100% !important;
-    }
-
-    .media-full {
-        left: 0;
-    }
-
-    .media-home {
-        position: absolute;
-        left: 0;
-    }
-
-    .wrapper {
-        display: block;
-        position: relative;
-    }
-
-    .fix {
-        display: none;
-    }
-
-    .fade-on-small {
-        display: none;
-    }
-
-    .series__form .list-group,.series__added__form .list-group {
-        flex-direction: row;
-    }
-} */
-
+/* images  */
 img{
     width:100%;
     object-fit:fill;
     height:15rem !important;
 }
 
-button,input{
+.speco img{
+    height:500px !important;
+}
+
+
+/* input  */
+input{
     overflow:hidden !important;
 }

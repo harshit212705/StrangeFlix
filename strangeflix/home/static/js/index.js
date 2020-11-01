@@ -1,3 +1,4 @@
+// carousel arrow display in each section 
 $(window).on('load', function() {
 
     // setting carousel arrows display
@@ -52,7 +53,7 @@ $(window).on('load', function() {
 
 });
 
-
+// function to set contents 
 function set_content_display(d1, d2, d3, d4, d5, d6, d7, d8) {
 
 	$('#video_with_comments').css('display', d1);
