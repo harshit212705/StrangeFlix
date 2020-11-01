@@ -50,6 +50,8 @@
                         <div style="float: left;margin-left: 50px;font-size: 12px;">Status</div>
                         {% if value.3 == 5 %}
                             <div style="float: right;margin-right: 50px;color: green;font-size: 12px;">Success</div>
+                        {% elif value.3 == 2 %}
+                            <div style="float: right;margin-right: 50px;color: blue;font-size: 12px;">Pending</div>
                         {% else %}
                             <div style="float: right;margin-right: 50px;color: red;font-size: 12px;">Failed</div>
                         {% endif %}

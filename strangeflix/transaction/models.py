@@ -81,7 +81,8 @@ class AddMoneyTransactionDetails(models.Model):
         (2, 'Pending'),
         (3, 'Sent'),
         (4, 'Completed'),
-        (5, 'Credit')
+        (5, 'Credit'),
+        (6, 'Refunded')
     )
 
     transaction_id = models.CharField(max_length=100,blank=True,default='', primary_key=True)
