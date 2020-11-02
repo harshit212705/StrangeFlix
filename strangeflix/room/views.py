@@ -12,35 +12,44 @@ from django.core import serializers
 # Create your views here.
 @login_required(login_url='home_page')
 def index(request):
-    context = {
-        'not_subscribed':''
-    }
-    # checking logged in user subscription plan details
-    subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
-    if subscribe:
-        not_subscribed = False
+    if request.user.is_authenticated and request.user.user_type == 'U':
+        context = {
+            'not_subscribed':''
+        }
+        # checking logged in user subscription plan details
+        subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+        if subscribe:
+            not_subscribed = False
+        else:
+            not_subscribed =True
+        context['not_subscribed'] = not_subscribed
+        return render(request, 'room/index.html',{'context': context})
     else:
-        not_subscribed =True
-    context['not_subscribed'] = not_subscribed
-    return render(request, 'room/index.html',{'context': context})
+        return render(request, 'templates/404.html')
 
+# View for room landing page
 @login_required
 def room(request, room_id):
-    room_detail = RoomControl.objects.filter( room_id = room_id).first()
-    if room_detail != None:
-        if room_detail.host_user == request.user:
-            return render(request, 'room/host.html', {
-                'room_id': room_id
-            })
-        elif request.user in room_detail.members.all():
-            return render(request, 'room/members.html', {
-                'room_id': room_id
-            })
+    if request.user.is_authenticated and request.user.user_type == 'U':
+        room_detail = RoomControl.objects.filter( room_id = room_id).first()
+        if room_detail != None:
+            if room_detail.host_user == request.user:
+                return render(request, 'room/host.html', {
+                    'room_id': room_id
+                })
+            elif request.user in room_detail.members.all():
+                return render(request, 'room/members.html', {
+                    'room_id': room_id,
+                    'hostuser':room_detail.host_user.username,
+                })
+            else:
+                return render(request, 'templates/404.html')
         else:
             return render(request, 'templates/404.html')
     else:
         return render(request, 'templates/404.html')
 
+#to add new room
 @csrf_exempt
 @login_required(login_url='home_page')
 def add_new_room(request):
@@ -67,7 +76,7 @@ def add_new_room(request):
             return JsonResponse({})
         
 
-
+# to get the rooms created by the user
 @csrf_exempt
 @login_required
 def get_host_rooms(request):
@@ -90,40 +99,19 @@ def get_host_rooms(request):
     else:
         return JsonResponse({})    
 
+# get the room details
 def room_details(request,room_id):
-    subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
-    if subscribe:
-        room_detail = RoomControl.objects.filter(host_user = request.user , room_id = room_id).first()
-        if(room_detail != None):
-            context = {
-                'room_id':room_detail.room_id,
-                'title':room_detail.title,
-                'description':room_detail.description,
-            }
-            return render(request, 'room/details.html',{'context': context})
-        else:
-            return render(request, 'templates/404.html')
-    else:
-        return render(request, 'templates/404.html')
-
-def member_room_details(request,room_id):
-    subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
-    if subscribe:
-        room_detail = RoomControl.objects.filter( room_id = room_id).first()
-        if(room_detail != None):
-            if request.user in room_detail.members.all():
+    if request.user.is_authenticated and request.user.user_type == 'U':
+        subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+        if subscribe:
+            room_detail = RoomControl.objects.filter(host_user = request.user , room_id = room_id).first()
+            if(room_detail != None):
                 context = {
                     'room_id':room_detail.room_id,
                     'title':room_detail.title,
                     'description':room_detail.description,
-                    'host':room_detail.host_user.username,
-                    'members': [],
                 }
-                members = []
-                for member in room_detail.members.all():
-                    members.append(member.username)
-                context['members'] = members
-                return render(request, 'room/myroomdetails.html',{'context': context})
+                return render(request, 'room/details.html',{'context': context})
             else:
                 return render(request, 'templates/404.html')
         else:
@@ -131,7 +119,36 @@ def member_room_details(request,room_id):
     else:
         return render(request, 'templates/404.html')
 
+#get the membership details of the user
+def member_room_details(request,room_id):
+    if request.user.is_authenticated and request.user.user_type == 'U':
+        subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
+        if subscribe:
+            room_detail = RoomControl.objects.filter( room_id = room_id).first()
+            if(room_detail != None):
+                if request.user in room_detail.members.all():
+                    context = {
+                        'room_id':room_detail.room_id,
+                        'title':room_detail.title,
+                        'description':room_detail.description,
+                        'host':room_detail.host_user.username,
+                        'members': [],
+                    }
+                    members = []
+                    for member in room_detail.members.all():
+                        members.append(member.username)
+                    context['members'] = members
+                    return render(request, 'room/myroomdetails.html',{'context': context})
+                else:
+                    return render(request, 'templates/404.html')
+            else:
+                return render(request, 'templates/404.html')
+        else:
+            return render(request, 'templates/404.html')
+    else:
+        return render(request, 'templates/404.html')
 
+#get the members of a room
 @csrf_exempt
 def get_room_members(request):
     if request.method == 'POST':
@@ -158,7 +175,7 @@ def get_room_members(request):
     else:
         return JsonResponse({})
 
-
+# send room request to the user
 @csrf_exempt
 def send_room_request(request):
     if request.method =='POST':
@@ -193,10 +210,11 @@ def send_room_request(request):
                 context['message'] = 'Request Sent'
                 return JsonResponse(context)
         else:
-            return render(request, 'templates/404.html')
+            return JsonResponse({})
     else:
-        return render(request, 'templates/404.html')
+        return JsonResponse({})
 
+# get the room membership list
 @csrf_exempt
 def get_my_rooms(request):
     if request.method =='POST':
@@ -229,6 +247,7 @@ def get_my_rooms(request):
     else:
         return JsonResponse({})
     
+# accept room invite
 @csrf_exempt
 def accept_room(request):
     if request.method =='POST':
@@ -241,10 +260,10 @@ def accept_room(request):
                 room_detail.members.add(request.user)
                 return JsonResponse({'message':'Room Accepted'})
             else:
-                return render(request, 'templates/404.html')
+                return JsonResponse({})
         else:
-            return render(request, 'templates/404.html')
-
+            return JsonResponse({})
+# reject room invite
 @csrf_exempt
 def reject_room(request):
     if request.method =='POST':
@@ -256,9 +275,9 @@ def reject_room(request):
                 room_detail.pending_request.remove(request.user)
                 return JsonResponse({'message':'Room Rejected'})
             else:
-                return render(request, 'templates/404.html')
+                return JsonResponse({})
         else:
-            return render(request, 'templates/404.html')
+            return JsonResponse({})
 
 
             

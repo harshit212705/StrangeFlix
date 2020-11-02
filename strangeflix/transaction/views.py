@@ -1,13 +1,14 @@
 # importing django modules
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404 ,JsonResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 # importing required models
 from accounts.models import CustomUser as User

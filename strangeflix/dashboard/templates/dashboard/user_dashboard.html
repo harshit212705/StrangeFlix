@@ -133,9 +133,8 @@
                                 {{ user.username }}
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{% url "user_dashboard" %}">Profile</a>
                                 <a class="dropdown-item" href="{% url "subscription_plans" %}">Subscribe</a>
-                                <a class="dropdown-item" href="{% url "wallet_details" %}">Wallet</a>
                                 <a class="dropdown-item" href="{% url "index" %}">My Rooms</a>
                                 <a class="dropdown-item" href="{% url "account_logout" %}">Logout</a>
                             </div>
@@ -205,6 +204,12 @@
                                         href="#wallet" role="tab" aria-controls="home">Wallet</a>
                                 </div>
                             </li>
+                            <li>
+                                <div class="list-group" id="list-tab" role="tablist">
+                                    <a class="special" id="subscription-list" data-toggle="list"
+                                        href="#subscription" role="tab" aria-controls="home">Subscriptions</a>
+                                </div>
+                            </li>
 
                         </ul>
                     </nav>
@@ -241,6 +246,7 @@
                         </div>
 
                     </div>
+                    <!-- Favourites of the user -->
                     <div class="tab-pane fade show" id="favourites" role="tabpanel" aria-labelledby="favourites-list">
                         <div class="container">
                             <div class="adm-tble">
@@ -280,6 +286,7 @@
                         </div>
 
                     </div>
+                    <!-- History of the user -->
                     <div class="tab-pane fade show" id="history" role="tabpanel" aria-labelledby="history-list">
                         <div class="container">
                             <div class="adm-tble">
@@ -324,6 +331,7 @@
                             </div>
                     </div>
                     </div>
+                    <!-- wallet details -->
                     <div class="tab-pane fade show" id="wallet" role="tabpanel"
                         aria-labelledby="wallet-list">
                         <div class="container">
@@ -369,7 +377,7 @@
                                                                 <div style="float: right;margin-right: 50px;color: green;font-size: 12px;">Success</div>
                                                             {% elif value.3 == 2 %}
                                                                 <div style="float: right;margin-right: 50px;color: yellow;font-size: 12px;">Pending
-                                                                <button type="button" class="btn btn-warning btn-sm">Verify</button></div>
+                                                                <button type="button" class="btn btn-warning btn-sm" onclick="check_payment_status('{{ value.0 }}')">Verify</button></div>
                                                             {% else %}
                                                                 <div style="float: right;margin-right: 50px;color: red;font-size: 12px;">Failed</div>
 
@@ -380,6 +388,74 @@
                                                             <div style="float: right;margin-right: 50px;font-size: 12px;">{{ value.1 }}</div>
                                                         </div>
                                                     </div>
+
+                                                        <hr>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- subscription details -->
+                    <div class="tab-pane fade show" id="subscription" role="tabpanel"
+                        aria-labelledby="subscription-list">
+                        <div class="container">
+                            <div class="adm-tble">
+                                <h4 class="font-weight-bold my-5">Subscriptions and Pay Per Views<i
+                                        class="arro text-secondary right mx-1"></i></h4>
+                                        <div class="wallet-details">
+                                            <div class="text-center my-5">
+                                                <div style="text-align: center;height:relative;width: auto;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
+                                                    <div class="row">
+                                                        <div class="col-lg-6" style="border-left: 1px solid white;">
+
+                                                        
+                                                    
+                                                            <!-- pay per view transactions -->
+                                                            <h5 class="text-left my-5" style="padding-top:30px;margin-left: 20px;">Subscriptions</h5>
+                                                            {% for subs in subscription_list %}
+                                                                <div style="margin-top:5px;display: inline-block;width: 100%;">
+                                                                        <div style="float: left;margin-left: 50px;">Amount</div>
+                                                                    <div style="float: right;margin-right: 50px;">Rs. {{ subs.amount }}</div>
+                                                                </div>
+                                                                <div style="display: inline-block;width: 100%;">
+                                                                    <div style="float: left;margin-left: 50px;font-size: 12px;">Time</div>
+                                                                    <div style="float: right;margin-right: 50px;font-size: 12px;">{{ subs.time }}</div>
+                                                                </div>
+                                                                <div style="display: inline-block;width: 100%;">
+                                                                    <div style="float: left;margin-left: 50px;font-size: 12px;">Validity</div>
+                                                                    <div style="float: right;margin-right: 50px;font-size: 12px;">{{ subs.end_date }}</div>
+                                                                </div>
+        
+                                                                <hr>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="col-lg-6" style="border-left: 1px solid white;">
+
+                                                        
+                                                    
+                                                    <!-- pay per view transactions -->
+                                                    <h5 class="text-left my-5" style="padding-top:30px;margin-left: 20px;">Pay Per Views</h5>
+                                                    {% for ppv in ppview_list %}
+                                                        <div style="margin-top:5px;display: inline-block;width: 100%;">
+                                                                <div style="float: left;margin-left: 50px;">Video</div>
+                                                            <div style="float: right;margin-right: 50px;">{{ ppv.video_name }}</div>
+                                                        </div>
+                                                        <div style="display: inline-block;width: 100%;">
+                                                            <div style="float: left;margin-left: 50px;font-size: 12px;">Amount</div>
+                                                            <div style="float: right;margin-right: 50px;font-size: 12px;">Rs. {{ ppv.amount }}</div>
+                                                        </div>
+                                                        <div style="display: inline-block;width: 100%;">
+                                                            <div style="float: left;margin-left: 50px;font-size: 12px;">Time</div>
+                                                            <div style="float: right;margin-right: 50px;font-size: 12px;">{{ ppv.time }}</div>
+                                                        </div>
+                                                        <div style="display: inline-block;width: 100%;">
+                                                            <div style="float: left;margin-left: 50px;font-size: 12px;">Validity</div>
+                                                            <div style="float: right;margin-right: 50px;font-size: 12px;">{{ ppv.end_date }}</div>
+                                                        </div>
 
                                                         <hr>
                                                     {% endfor %}
@@ -482,8 +558,53 @@
             document.getElementById('video').pause();
         })
 
+        function check_payment_status(transaction_id)
+        {
+            var data = {
+                'transaction_id': transaction_id
+            }
 
+            // adding data to javascript form which is to be send over ajax request
+            var formData = new FormData();
+            formData.append('data', JSON.stringify(data));
 
+            $.ajax({
+                type: 'POST',
+                url: '{% url "check_payment_status" %}',
+                data: formData,
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if(data.is_transaction_exists)
+                    {
+                        alert(data.is_transaction_exists);
+                    }
+                    else if(data.is_transaction_already_resolved)
+                    {
+                        alert(data.is_transaction_already_resolved);
+                    }
+                    else if(data.is_user_logged_in)
+                    {
+                        alert(data.is_user_logged_in);
+                    }
+                    else if(data.if_transaction_belongs_to_user)
+                    {
+                        alert(data.if_transaction_belongs_to_user);
+                    }
+                    else if(data.is_successful)
+                    {
+                        if(data.is_payment_failed)
+                            alert(data.is_payment_failed);
+                        else if(data.is_payment_refunded)
+                            alert(data.is_payment_refunded);
+                        var outer = document.getElementById("transac"+transaction_id);
+                        outer.getElementsByClassName("transacStatus")[0].innerHTML = '<div style="float: left;margin-left: 50px;font-size: 12px;">Status</div><div style="float: right;margin-right: 50px;color: red;font-size: 12px;">Failed</div>';
+                    }
+                }
+            });
+        }
 
     </script>
 

@@ -1,5 +1,5 @@
 //fetch room id
-
+alert("Add videos from the website in other tab.");
 const room_id = JSON.parse(document.getElementById('room-id').textContent);
 var checkList = JSON.parse(localStorage.getItem('roomlist'));
             if(checkList)
@@ -389,12 +389,6 @@ fulls.addEventListener("click", async function (event) {
 
 
 
-// theatre mode
-
-var theatre = document.querySelector(".theatre__button");
-theatre.addEventListener('click', function (e) {
-    var vp = document.querySelector("#video-player");
-});
 
 
 

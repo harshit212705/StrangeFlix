@@ -78,7 +78,7 @@
                         aria-labelledby="list-home-list">
                         <!-- home section  -->
                         <div class="example">
-                            <div class="clip">
+                            <div class="clip" style="margin-bottom: -30%;">
                                 
                               <div class="film"><div class="welcome-text">Welcome to the admin's dashboard.</div></div>
                                 
@@ -1522,10 +1522,7 @@
                                 data.all_series_season_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
                                 data.all_series_season_data[key][1] +
-                                '</p></div><div class="position-absolute" style="bottom:0"><p class="font-weight-bold '+ decide_color + '">Status - ' + data.all_series_season_data[key][
-                                    4
-                                ] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_added_episodes(' +
+                                '</p></div><div class="position-absolute" style="bottom:0"><button type="button" class="btn btn-primary btn-sm" onclick="go_to_added_episodes(' +
                                 key + ')">Go to episodes</button></div></div></div></div></div>';
 
                             $('#verified-get-seasons').append(htmlgen);

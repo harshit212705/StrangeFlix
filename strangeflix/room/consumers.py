@@ -5,7 +5,7 @@ from .models import RoomControl
 from channels.db import database_sync_to_async
 
 class ChatConsumer(AsyncWebsocketConsumer):
-
+    # when a user connect
     async def connect(self):
         self.user = self.scope['user']
         self.room_name = self.scope['url_route']['kwargs']['room_name']
@@ -27,16 +27,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         }
                 )
                 await self.accept()
-
+    # to check membership of the user
     @database_sync_to_async
     def check_if_member(self):
         return self.user in RoomControl.objects.filter(room_id = self.room_name).first().members.all()
     
-
+    # to check if user is host
     @database_sync_to_async
     def check_if_host(self):
         return self.user == RoomControl.objects.filter(room_id = self.room_name).first().host_user
-
+    # when a user exits
     async def disconnect(self, close_code):
         # Leave room group
         if(hasattr(self,'room_group_name')):

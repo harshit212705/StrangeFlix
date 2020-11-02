@@ -132,9 +132,8 @@
                                 {{ user.username }}
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{% url "user_dashboard" %}">Profile</a>
                                 <a class="dropdown-item" href="{% url "subscription_plans" %}">Subscribe</a>
-                                <a class="dropdown-item" href="{% url "wallet_details" %}">Wallet</a>
                                 <a class="dropdown-item" href="{% url "index" %}">My Rooms</a>
                                 <a class="dropdown-item" href="{% url "account_logout" %}">Logout</a>
                             </div>

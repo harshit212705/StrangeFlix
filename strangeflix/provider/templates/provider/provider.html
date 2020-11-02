@@ -22,7 +22,7 @@
 </head>
 
 <body>
-
+<div class="loader" id="loader"></div>
     <div class="main__section">
         <div class="row">
             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
@@ -82,7 +82,7 @@
                         aria-labelledby="list-home-list">
                         <!-- home section  -->
                         <div class="example">
-                            <div class="clip">
+                            <div class="clip" style="margin-bottom: -30%;">
                                 
                               <div class="film"><div class="welcome-text">Welcome to the provider's dashboard.</div>
                             </div>
@@ -1025,7 +1025,7 @@
         // submitting new series form using ajax call
         $("#seriesForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var series_name = document.getElementById('series_name').value;
             var series_description = document.getElementById('series__description').value;
@@ -1058,6 +1058,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#series-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_series_exists != '') {
@@ -1073,7 +1074,6 @@
                     } else if (data.is_thumbnail_mimetype_problem != '') {
                         alert(data.is_thumbnail_mimetype_problem);
                     } else if (data.is_successful != '') {
-
                         // setting series_id for the series created
                         document.getElementById('series_id').innerHTML = data.series_id;
 
@@ -1105,7 +1105,7 @@
         // submitting new season form using ajax call
         $("#seasonForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var series_id = document.getElementById('series_id').innerHTML;
             var season_no = document.getElementById('seasonvalue').value;
@@ -1135,6 +1135,8 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+
+                    $("#loader").hide();
                     $('#season-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_series_exists != '') {
@@ -1146,7 +1148,6 @@
                     } else if (data.is_thumbnail_mimetype_problem != '') {
                         alert(data.is_thumbnail_mimetype_problem);
                     } else if (data.is_successful != '') {
-
                         // setting the number of seasons already added
                         var seasoncount = $('#season-right li').length;
                         seasoncount++;
@@ -1194,7 +1195,7 @@
         // submitting new season episode form using ajax call
         $("#seasonepisodeForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show()
             // Extracting Form Data
             var series_season_id = document.getElementById('series_season_id').innerHTML;
             var episode_no = document.getElementById('series__season__episodeno').value;
@@ -1252,6 +1253,8 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+
+                    $("#loader").hide();
                     $('#episode-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_series_season_exists != '') {
@@ -1363,7 +1366,7 @@
         // submitting new season content form using ajax call
         $("#freecontentForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var series_season_id = document.getElementById('series_season_id').innerHTML;
             var content_name = document.getElementById('series__season__contentname').value;
@@ -1419,6 +1422,8 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
+
                     $('#content-submit').attr('disabled', false);
 
                     // checking and handling error conditions
@@ -1876,11 +1881,7 @@
                                 data.all_series_season_data[key][3] +
                                 '" alt="uploading" class="img-fluid"></div><div class="col-lg-6 col-md-6 col-sm-6"><div class="content mx-3"><div class="middle-section"><p>' +
                                 data.all_series_season_data[key][1] +
-                                '</p></div><div class="position-absolute" style="bottom:0;"><p class="font-weight-bold ' +
-                                decide_color + '">Status - ' + data.all_series_season_data[
-                                    key]
-                                [4] +
-                                '</p><button type="button" class="btn btn-primary btn-sm" onclick="go_to_episodes(' +
+                                '</p></div><div class="position-absolute" style="bottom:0;"><button type="button" class="btn btn-primary btn-sm" onclick="go_to_episodes(' +
                                 key + ')">Go to episodes</button></div></div></div></div></div>';
                             $('#previously-uploaded-seasons').append(htmlgen);
 
@@ -2154,7 +2155,7 @@
         // submitting new season form using ajax call
         $("#add-seasonForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show()
             // Extracting Form Data
             var series_id = document.getElementById('add_series_id').innerHTML;
             var season_no = document.getElementById('add-seasonvalue').value;
@@ -2184,7 +2185,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-
+                    $("#loader").hide();
                     $('#added-season-submit').attr('disabled', false);
 
                     // checking and handling error conditions
@@ -2251,6 +2252,7 @@
         $("#add-episodeForm").submit(function (e) {
             e.preventDefault(); //prevent default action
             // Extracting Form Data
+            $("#loader").show();
             var series_season_id = document.getElementById('add_series_season_id').innerHTML;
             var episode_no = document.getElementById('add__series__season__episodeno').value;
             var episode_name = document.getElementById('add__series__season__episodename').value;
@@ -2307,6 +2309,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#added-episode-submit').attr('disabled', false);
 
                     // checking and handling error conditions
@@ -2417,7 +2420,7 @@
         // submitting adding free content form in series in ADDED SECTION using ajax call
         $("#add-free-content-form").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var series_season_id = document.getElementById('add_series_season_id').innerHTML;
             var content_name = document.getElementById('add__series__season__contentname').value;
@@ -2471,6 +2474,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide()
                     $('#added-content-submit').attr('disabled', false);
 
                     // checking and handling error conditions
@@ -2596,7 +2600,7 @@
         // submitting new movie form using ajax call in ADD SECTION
         $("#movieForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var movie_name = document.getElementById('movie_name').value;
             var movie_description = document.getElementById('movie__description').value;
@@ -2627,6 +2631,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#movie-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
@@ -2667,7 +2672,7 @@
         // submitting movie video form using ajax call
         $("#movievideoForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var movie_id = document.getElementById('movie_id').innerHTML;
             var movie_videoname = document.getElementById('movie__videoname').value;
@@ -2723,6 +2728,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#movie-video-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
@@ -2826,7 +2832,7 @@
         // submitting movie free count form from ADDED SECTION using ajax call
         $("#moviefreecontentForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var movie_id = document.getElementById('movie_id').innerHTML;
             var movie_videoname = document.getElementById('movie__contentname').value;
@@ -2882,6 +2888,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#movie-content-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
@@ -3307,7 +3314,7 @@
         // submitting movie video form using ajax call
         $("#add-movievideoForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var movie_id = document.getElementById('add_movie_id').innerHTML;
             var movie_videoname = document.getElementById('add_movie__videoname').value;
@@ -3343,7 +3350,7 @@
                 'movie_videolinkorvideo': movie_videolinkorvideo,
                 'movie_link': movie_link,
                 'query_type': 'N',
-                'video_id': video_id,
+                'video_id': '',
             }
 
             // adding data to javascript form which is to be send over ajax request
@@ -3363,6 +3370,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#movie-add-video-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
@@ -3466,7 +3474,7 @@
         // submitting movie free content form from ADDED SECTION using ajax call
         $("#add-moviefreecontentForm").submit(function (e) {
             e.preventDefault(); //prevent default action
-
+            $("#loader").show();
             // Extracting Form Data
             var movie_id = document.getElementById('add_movie_id').innerHTML;
             var movie_videoname = document.getElementById('add_movie__contentname').value;
@@ -3522,6 +3530,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    $("#loader").hide();
                     $('#movie-add-content-submit').attr('disabled', false);
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
@@ -3748,6 +3757,7 @@
         function bind_edit_seriesepisodeForm(local_reference_id, episodecount) {
             // submitting new season episode form using ajax call
             $("#edit-add-episodeForm").submit(function (e) {
+                $("#loader").show();
                 e.preventDefault(); //prevent default action
                 // Extracting Form Data
                 var series_season_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
@@ -3807,6 +3817,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
+                        $("#loader").hide();
                         $('#edit-content-modal #added-episode-submit').attr('disabled', false);
 
                         // checking and handling error conditions
@@ -3908,7 +3919,7 @@
             // submitting adding free content form in series in ADDED SECTION using ajax call
             $("#edit-add-free-content-form").submit(function (e) {
                 e.preventDefault(); //prevent default action
-
+                $("#loader").show()
                 // Extracting Form Data
                 var series_season_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
                 var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
@@ -3962,6 +3973,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
+                        $("#loader").hide();
                         $('#edit-content-modal #added-content-submit').attr('disabled', false);
 
                         // checking and handling error conditions
@@ -4060,7 +4072,7 @@
             // submitting movie video form using ajax call
             $("#edit-add-movievideoForm").submit(function (e) {
                 e.preventDefault(); //prevent default action
-
+                $("#loader").show();
                 // Extracting Form Data
                 var movie_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
                 var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
@@ -4117,6 +4129,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
+                        $("#loader").hide();
                         $('#edit-content-modal #movie-add-video-submit').attr('disabled', false);
                         // checking and handling error conditions
                         if (data.is_movie_exists != '') {
@@ -4214,7 +4227,7 @@
             // submitting movie free content form from ADDED SECTION using ajax call FOR REJECTED VIDEOS
             $("#edit-add-moviefreecontentForm").submit(function (e) {
                 e.preventDefault(); //prevent default action
-
+                $("#loader").show()
                 // Extracting Form Data
                 var movie_id = document.querySelector('#edit-content-modal #modal_show_id').innerHTML;
                 var video_id = document.querySelector('#edit-content-modal #modal_video_id').innerHTML;
@@ -4271,6 +4284,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
+                        $("#loader").hide();
                         $('#edit-content-modal #movie-add-content-submit').attr('disabled', false);
                         // checking and handling error conditions
                         if (data.is_movie_exists != '') {

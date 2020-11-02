@@ -73,6 +73,7 @@ def wallet_details(request):
 
 
 @login_required(login_url='home_page')
+#To get all the dashboard data
 def user_dashboard(request):
     if request.user.is_authenticated:
         context = {
@@ -80,7 +81,10 @@ def user_dashboard(request):
             'wallet_balance' : '',
             'end_date':'',
             'favourite_list':'',
+            'subscription_list':'',
+            'ppview_list' : '',
         }
+        #check subscription
         subscribe = Subscriptions.objects.filter(user=request.user, end_date__gt=datetime.now(tz=timezone.utc)).order_by('-end_date').first()
         if subscribe:
             context['end_date'] = subscribe.end_date.strftime("%d %B, %Y, %I:%M %p")
@@ -90,6 +94,7 @@ def user_dashboard(request):
         user_details = UserDetails.objects.filter(user=request.user).first()
         context['wallet_balance'] = user_details.wallet_money
         favourite_list = []
+        #get favourite list
         favourites = request.user.favourites.all()
         for favourite in favourites:
             video = ''
@@ -116,6 +121,7 @@ def user_dashboard(request):
         context['favourite_list'] = favourite_list
 
         history_list = []
+        #Retrieve History of the user
         histories = History.objects.filter(user_id = request.user).order_by("-timestamp")
         for history in histories:
             video = ''
@@ -141,6 +147,38 @@ def user_dashboard(request):
             }
             history_list.append(history_data)
         context['history_list'] = history_list
+        subscription_list = []
+        #Retrieve subscription details
+        subscriptionall = Subscriptions.objects.filter(user = request.user).all()
+        for subs in subscriptionall:
+            subs_data = {
+                'amount':subs.sub_plan_id.plan_cost,
+                'time':subs.transaction_id.transaction_start_time.strftime("%b %d , %Y, %I:%M %p"),
+                'end_date':subs.end_date.strftime("%b %d , %Y, %I:%M %p"),
+            }
+            subscription_list.append(subs_data)
+        context['subscription_list'] = subscription_list
+        ppview_list = []
+        ppviews = PayPerViewTransaction.objects.filter(user_id = request.user)
+        for ppv in ppviews:
+            video = ''
+            if ppv.video_id.video_type == 2:
+                video_data = SeriesVideos.objects.filter(video_id = ppv.video_id).first()
+                video = video_data
+            elif ppv.video_id.video_type == 3:
+                video_data = MovieVideo.objects.filter(video_id = ppv.video_id).first()
+                video = video_data
+            end_date = ppv.transaction_start_time + timedelta(days=1)
+            ppv_data = {
+                'amount':video.cost_of_video,
+                'time':ppv.transaction_start_time.strftime("%b %d , %Y, %I:%M %p"),
+                'video_name':video.video_name,
+                'end_date': end_date.strftime("%b %d , %Y, %I:%M %p"),
+            }
+            ppview_list.append(ppv_data)
+        context['ppview_list'] = ppview_list
+
+
         wallet_page_details = wallet_details(request)
         context.update(wallet_page_details)
         return render(request,'dashboard/user_dashboard.html',context)

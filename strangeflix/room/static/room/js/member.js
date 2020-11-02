@@ -1,5 +1,6 @@
 //fetch room id
 const room_id = JSON.parse(document.getElementById('room-id').textContent);
+const hostuser = JSON.parse(document.getElementById('hostuser').textContent);
         //connect to respective room socket
         const chatSocket = new WebSocket(
             'ws://'
@@ -96,6 +97,13 @@ const room_id = JSON.parse(document.getElementById('room-id').textContent);
             }
             if(data.type === 'remove_user')
             {
+                console.log(hostuser)
+                console.log(data.user)
+                if(data.user == hostuser)
+                {
+                    alert("Host has left the room");
+                    window.location.assign("/room");
+                }
                 if(users.find((s)=> s===data.user))
                 {
                     const index = users.indexOf(data.user);
@@ -169,7 +177,7 @@ video.volume = 0;
 function updHelper(e)
 {
     const updTime = (e.offsetX / progress.offsetWidth) * video.duration;
-    const message = "Time Updata";
+    const message = "Time Update";
     chatSocket.send(JSON.stringify({
         'type' : 'upd',
         'message': message,
@@ -349,12 +357,6 @@ fulls.addEventListener("click", async function (event) {
 
 
 
-// theatre mode
-
-var theatre = document.querySelector(".theatre__button");
-theatre.addEventListener('click', function (e) {
-    var vp = document.querySelector("#video-player");
-});
 
 
 
