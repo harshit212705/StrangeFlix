@@ -26,6 +26,20 @@
 </head>
 
 <body onbeforeunload="save_history_before_unloading()">
+    <!-- notification modal -->
+        <div class="modal notify fade" id="notify-modal" tabindex="-1" role="dialog" aria-labelledby="notify-content"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header bg-danger">
+        <h7 class="modal-title" id="notify-content"></h7>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        </div>
+        </div>
+        </div>
     <!-- navbar section  -->
     <div class="navbar-section">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -621,6 +635,15 @@
     </script>
 
     <script>
+        function myalert(text)
+        {
+            // show modal with the content
+            $('#notify-content').text(text);
+            $('#notify-modal').modal('show');
+            setTimeout(() => {
+            $('#notify-modal').modal('hide');
+            }, 3000);
+        }
         // class to manage next and prevs of buttons
         class DoublyLinkedList {
             constructor() {
@@ -734,9 +757,9 @@
                         success: function (data) {
                             // checking and handling error conditions
                             if (data.is_video_exists != '') {
-                                alert(data.is_video_exists);
+                                myalert(data.is_video_exists);
                             } else if (data.is_subscribed == 'false') {
-                                alert('You are not subscribed for previous video!!');
+                                myalert('You are not subscribed for previous video!!');
                                 return -2;
                             } else if (data.is_subscribed == 'true') {
                                 playervid.pointer = playervid.pointer.prev;
@@ -744,12 +767,12 @@
                                 document.getElementById(ele_id).click();
                                 return playervid.pointer.data;
                             } else {
-                                alert('Some unexpected error has occured. Try again.');
+                                myalert('Some unexpected error has occured. Try again.');
                             }
                         }
                     });
                 } else {
-                    alert('No more episodes to left!!');
+                    myalert('No more episodes to left!!');
                     return -1;
                 }
             }
@@ -775,9 +798,9 @@
                         success: function (data) {
                             // checking and handling error conditions
                             if (data.is_video_exists != '') {
-                                alert(data.is_video_exists);
+                                myalert(data.is_video_exists);
                             } else if (data.is_subscribed == 'false') {
-                                alert('You are not subscribed for next video!!');
+                                myalert('You are not subscribed for next video!!');
                                 return -2;
                             } else if (data.is_subscribed == 'true') {
                                 playervid.pointer = playervid.pointer.next;
@@ -785,12 +808,12 @@
                                 document.getElementById(ele_id).click();
                                 return playervid.pointer.data;
                             } else {
-                                alert('Some unexpected error has occured. Try again.');
+                                myalert('Some unexpected error has occured. Try again.');
                             }
                         }
                     });
                 } else {
-                    alert('No more episodes to right!!');
+                    myalert('No more episodes to right!!');
                     return -1;
                 }
             }
@@ -833,13 +856,13 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_username_exists != '') {
-                        alert(data.is_username_exists);
+                        myalert(data.is_username_exists);
                     } else if (data.is_password_matches != '') {
-                        alert(data.is_password_matches);
+                        myalert(data.is_password_matches);
                     } else if (data.is_successful != '') {
                         window.location.href = data.redirect_url;
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -897,7 +920,7 @@
                             }
                             $('#search-results').append(results);
                         } else {
-                            alert('Some unexpected error has occured. Try again.');
+                            myalert('Some unexpected error has occured. Try again.');
                         }
                     }
                 });
@@ -933,7 +956,7 @@
                         set_content_display('none', 'none', 'none', 'none', 'none', 'none', 'none', 'none');
 
                         if (Object.keys(data.search_results).length == 0) {
-                            alert('No data found for ' + subcategory);
+                            myalert('No data found for ' + subcategory);
                         } else {
                             var results =
                                 '<div class="container-fluid my-5""><h4 class="font-weight-bold mx-5">Popular in ' +
@@ -987,7 +1010,7 @@
                         }
                         bind_control_arrow_search_results_subcategory();
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1017,13 +1040,13 @@
                     console.log('check');
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_subscribed == 'false') {
                         is_user_subscribed = false;
                     } else if (data.is_subscribed == 'true') {
                         is_user_subscribed = true;
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1051,7 +1074,7 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
-                        alert(data.is_movie_exists);
+                        myalert(data.is_movie_exists);
                     } else if (data.is_successful != '') {
 
                         $("#bg-wall").hide();
@@ -1149,7 +1172,7 @@
                                         is_user_subscribed = true;
 
                                     } else {
-                                        alert('Some unexpected error has occured. Try again.');
+                                        myalert('Some unexpected error has occured. Try again.');
                                     }
 
                                     htmlgen +=
@@ -1262,7 +1285,7 @@
                         callit();
                         oncallit();
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1294,11 +1317,11 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                        myalert(data.is_user_logged_in);
                     } else if (data.insufficient_balance != '') {
-                        alert(data.insufficient_balance);
+                        myalert(data.insufficient_balance);
                     } else if (data.is_successful != '') {
 
                         if (video_type == 'movie') {
@@ -1314,7 +1337,7 @@
                                 video_comments)
                         }
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1343,11 +1366,11 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                        myalert(data.is_user_logged_in);
                     } else if (data.insufficient_balance != '') {
-                        alert(data.insufficient_balance);
+                        myalert(data.insufficient_balance);
                     } else if (data.is_successful != '') {
                         var r = confirm("Paying Rs. " + data.video_cost);
                         if (r == true) {
@@ -1359,7 +1382,7 @@
                             // user cancelled payment for pay-per-view
                         }
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1388,7 +1411,7 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_series_exists != '') {
-                        alert(data.is_series_exists);
+                        myalert(data.is_series_exists);
                     } else if (data.is_successful != '') {
 
                         $("#bg-wall").hide();
@@ -1458,7 +1481,7 @@
                         callit();
                         oncallit();
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1486,7 +1509,7 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_season_exists != '') {
-                        alert(data.is_season_exists);
+                        myalert(data.is_season_exists);
                     } else if (data.is_successful != '') {
                         $("#bg-wall").hide();
                         save_history_before_unloading();
@@ -1689,7 +1712,7 @@
                         callit();
                         oncallit();
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1697,7 +1720,7 @@
 
         // HTML CODE FOR VIDEO PLAYER
         var playerhtml =
-            '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold">movie name</h4></div></div><!-- video-body  --><div class="video-body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video>   <div class="position-absolute d-on-wait" style="z-index:4;bottom:50%;left:50%;"><div class="spinner-border" role="status"></div></div>     </div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button onclick="prev_btn_pressed()" type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button onclick="next_btn_pressed()" type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-4 col-md-5 d-wt-th" ><div class="card comment"><div class="card-header ser-hd"><h4 class="text-center">Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div class="position-absolute mx-2 my-2 bt-heig" style="bottom:0"><form class="form-inline row" role="form"><div class="form-group col-xl-8 col-lg-8 col-md-8"><textarea class="form-control" id="comment_section" rows="2" type="text" placeholder="Your comments"></textarea></div><div class="form-group col-xl-4 col-lg-4 col-md-4"><button class="btn btn-danger btn-sm mx-1" type="button" onclick="comment_on_video()">comment</button></div></form></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-12 col-md-12"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row py-3 px-3"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-4 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><div class="position-absolute" style="bottom:0"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-1" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button>  <div class="dropdown" style="position: relative;display: inline-block;"><button onclick="getRoomList()" type="button" class="add-to-fav mx-1 dropbtn" data-toggle="tooltip" data-placement="bottom" title="Play in room" id="transfer-room"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="30" height="30" x="0" y="0" viewBox="0 0 80.13 80.13" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><circle r="40.065" cx="40.065" cy="40.065" fill="#da1f1f" shape="circle"/><g transform="matrix(0.7,0,0,0.7,12.019500732421879,12.019351673126224)"><g xmlns="http://www.w3.org/2000/svg">	<path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112   c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984   c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984   z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263   c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833   C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088   c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699   C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276   c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752   C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032   c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265   c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z" fill="#ffffff" data-original="#000000" style="" class=""/></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g></g></svg></span><p class="add-to-fav-title">Play in Room</p></button><div class="dropdown-content" id="room-list"> </div></div>  <button type="button" class="vid-flag mx-1" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div><div class="col-xl-3 col-lg-12 col-md-12 d-on-th"></div> </div></div></div>';
+            '<!-- video running section  --><div class="runner-section container-fluid"><div class="row"><!-- video-player  --><div class="col-xl-9 col-lg-8 col-md-7 player-wrapper"><!-- if paid  --><div class="player" id="movie-video-player"><!-- video-head  --><div class="video-head"><div class="text-white"><h3 class="font-weight-bold"></h4></div></div><!-- video-body  --><div class="video-body"><video poster="/static/images/video_loader.gif" class="player__video viewer" id="movie-video" preload="metadata"><source src="" id="movie-insert-vid" type="video/mp4"></video>   <div class="position-absolute d-on-wait" style="z-index:4;bottom:50%;left:50%;"><div class="spinner-border" role="status"></div></div>     </div><!-- video-footer  --><div class="video-footer"><div class="player__controls" id="movie-plact"><!-- progress-bar  --><div class="progress"><div class="progress__filled"></div></div><!-- play/pause --><button class="player__button toggle" data-toggle="tooltip" title="pause"><i id="movie-play-icon" class="fas fa-play"></i></button><!-- skip 10s backword --><button data-skip="-10" class="backword__button" data-toggle="tooltip" title="Skip -10s">«10s</button><!-- skip 10s forward --><button data-skip="10" class="forward__button" data-toggle="tooltip" title="Skip 10s">10s»</button><!-- volume  --><button class="volume__button" data-toggle="tooltip" title="mute" id="movie-volume"><i id="movie-vol-ico" class="fas fa-volume-up"></i></button><input type="range" name="volume" id="movie-vol-ran" class="player__slider" min="0" max="1" step="0.05" value="1"><!-- video timer  --><button id="movie-progressTime" class="timer__button"><span id="movie-current">00:00 / </span><span id="movie-duration">00:00</span></button><!-- playbackrate  --><!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> --><div class="fullscreen"><!-- setting  --><!-- <button id="movie-setting" class="setting__button" data-toggle="tooltip" title="setting"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button> --><button onclick="prev_btn_pressed()" type="button" class="prev-button mr-3"><i class="fas fa-step-backward"></i></button><button onclick="next_btn_pressed()" type="button" class="next-button"><i class="fas fa-step-forward"></i></button><div class="btn-group dropup"><button id="movie-setting" class="setting__button" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false"><span class="px-4"><i id="movie-setting-ico" class="fas fa-cog"></i></span></button><div class="dropdown-menu plbcrt"><a href="#" class="dropdown-item playbacki dis">Playback speed</a><a href="#" class="dropdown-item playback">0.25</a><a href="#" class="dropdown-item playback">0.5</a><a href="#" class="dropdown-item playback">1</a><a href="#" class="dropdown-item playback">1.25</a><a href="#" class="dropdown-item playback">1.5</a><a href="#" class="dropdown-item playback">1.75</a><a href="#" class="dropdown-item playback">2</a></div></div><!-- picture-in-picture  --><button id="movie-pip" class="pip__button" data-toggle="tooltip" title="picture-in-picture"><span class="px-4"><i id="movie-pip-ico" class="fas fa-window-maximize"></i></span></button><!-- theatre view  --><button class="theatre__button" data-toggle="tooltip" title="theatre mode"><span class="px-4"><i id="movie-th-ico" class="fas fa-arrows-alt-v"></i></span></button><!-- fullscreen  --><button id="movie-fs" class="fs__button" data-toggle="tooltip" title="fullscreen"><span class="px-4"><i id="movie-fs-ico" class="fas fa-expand"></i></span></button></div></div></div></div></div><!-- sidebar content  --><div class="col-xl-3 col-lg-4 col-md-5 d-wt-th" ><div class="card comment"><div class="card-header ser-hd"><h4 class="text-center">Comments</h4></div><div class="card-body"><ul id="movie-vid-comments"></ul><div class="position-absolute mx-2 my-2 bt-heig" style="bottom:0"><form class="form-inline row" role="form"><div class="form-group col-xl-8 col-lg-8 col-md-8"><textarea class="form-control" id="comment_section" rows="2" type="text" placeholder="Your comments"></textarea></div><div class="form-group col-xl-4 col-lg-4 col-md-4"><button class="btn btn-danger btn-sm mx-1" type="button" onclick="comment_on_video()">comment</button></div></form></div></div></div></div></div></div><div class="whole-sect"><div class="container-fluid"><div class="row"><div class="col-xl-9 col-lg-12 col-md-12"><!-- description flag section  --><div class="container-fluid descript-sect my-4"><div class="row py-3 px-3"><div class="col-xl-8 col-lg-8 col-md-8"><div class="vid-desc text-left pb-3"><div class="vid-hd py-1" id="video_description_1"></div><div class="vid-cat py-1" id="video_description_2"></div><div class="vid-des py-1" id="video_description_3"></div></div></div><div class="col-xl-4 col-lg-4 col-md-4 pb-3"><div class="flg-sect d-flex flex-row-reverse align-items-end"><div class="position-absolute" style="bottom:0"><button onclick="add_to_favourite()" type="button" class="add-to-fav mx-1" data-toggle="tooltip" data-placement="bottom" title="Add to favourites"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-plus"></i></span></span><p class="add-to-fav-title py-3">Favourites</p></button>  <div class="dropdown" style="position: relative;display: inline-block;"><button onclick="getRoomList()" type="button" class="add-to-fav mx-1 dropbtn" data-toggle="tooltip" data-placement="bottom" title="Play in room" id="transfer-room"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="30" height="30" x="0" y="0" viewBox="0 0 80.13 80.13" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><circle r="40.065" cx="40.065" cy="40.065" fill="#da1f1f" shape="circle"/><g transform="matrix(0.7,0,0,0.7,12.019500732421879,12.019351673126224)"><g xmlns="http://www.w3.org/2000/svg">	<path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112   c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984   c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984   z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263   c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833   C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088   c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699   C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276   c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752   C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032   c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265   c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z" fill="#ffffff" data-original="#000000" style="" class=""/></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g><g xmlns="http://www.w3.org/2000/svg"></g></g></svg></span><p class="add-to-fav-title">Play in Room</p></button><div class="dropdown-content" id="room-list"> </div></div>  <button type="button" class="vid-flag mx-1" data-toggle="modal" data-target="#flagVideoCenter"><span class="ico-cont bg-danger text-center py-2 px-2"><span class="py-3"><i style="color: white;" class="fas fa-flag"></i></span></span><p class="add-to-flag py-3">Report</p></button></div></div></div></div></div></div><div class="col-xl-3 col-lg-12 col-md-12 d-on-th"></div> </div></div></div>';
 
 
         // function to handle truncated comment
@@ -1816,9 +1839,9 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_subscribed == 'false') {
-                        alert('You have no active subscription pack. Buy a new one to enjoy streaming.');
+                        myalert('You have no active subscription pack. Buy a new one to enjoy streaming.');
                     } else if (data.is_subscribed == 'true') {
 
                         save_history_before_unloading();
@@ -1828,7 +1851,7 @@
                             video_tags, video_subcategory, video_language, video_cost, video_comments,
                             data.video_watched);
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -1840,7 +1863,7 @@
             video_language, video_cost, video_comments) {
 
             if (video_id == -1) {
-                alert('This episode is currently unavailable.');
+                myalert('This episode is currently unavailable.');
             } else {
                 // javascript data object
                 var data = {
@@ -1862,9 +1885,9 @@
                     success: function (data) {
                         // checking and handling error conditions
                         if (data.is_video_exists != '') {
-                            alert(data.is_video_exists);
+                            myalert(data.is_video_exists);
                         } else if (data.is_subscribed == 'false') {
-                            alert(
+                            myalert(
                                 'You are not allowed to watch this episode. Either subscribe or pay for video.'
                             );
                         } else if (data.is_subscribed == 'true') {
@@ -1880,7 +1903,7 @@
                                 scrollTop: '0px'
                             }, 1000);
                         } else {
-                            alert('Some unexpected error has occured. Try again.');
+                            myalert('Some unexpected error has occured. Try again.');
                         }
                     }
                 });
@@ -1937,10 +1960,10 @@
                     success: function (data) {
                         // checking and handling error conditions
                         if (data.is_video_exists != '') {
-                            alert(data.is_video_exists);
+                            myalert(data.is_video_exists);
                         } else if (data.is_subscribed == 'false') {
                             if (is_user_subscribed == true) {
-                                alert(
+                                myalert(
                                     'You are no longer subscribed. Buy a new plan to enjoy streaming!!'
                                 )
                             }
@@ -1948,7 +1971,7 @@
                         } else if (data.is_subscribed == 'true') {
                             is_user_subscribed = true;
                         } else {
-                            alert('Some unexpected error has occured. Try again.');
+                            myalert('Some unexpected error has occured. Try again.');
                         }
                     }
                 });
@@ -1995,14 +2018,14 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_comment_exists != '') {
-                        alert(data.is_comment_exists);
+                        myalert(data.is_comment_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                        myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
-                        alert(data.is_successful);
+                        myalert(data.is_successful);
                         $('#flagCommentCenter').modal('hide');
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -2042,14 +2065,14 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                        myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
-                        alert(data.is_successful);
+                        myalert(data.is_successful);
                         $('#flagVideoCenter').modal('hide');
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -2082,9 +2105,9 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                        myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
                         var add_comm =
                             '<li><div class="row media"><!-- video-desccription  --><div class="col-xl-10 col-lg-10 col-md-10 col-sm-10"><div class="media-body px-1"><div style="display: inline;"><span class="font-weight-bold">' +
@@ -2097,7 +2120,7 @@
 
                         $('#movie-vid-comments').append(add_comm);
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -2128,13 +2151,13 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                        myalert(data.is_video_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                        myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
-                        alert(data.is_successful);
+                        myalert(data.is_successful);
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                        myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -2166,14 +2189,14 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_movie_exists != '') {
-                        alert(data.is_movie_exists);
+                       myalert(data.is_movie_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                       myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
                         $('#movierateCenter').modal('hide');
-                        alert(data.is_successful);
+                       myalert(data.is_successful);
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                       myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -2205,14 +2228,14 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_series_exists != '') {
-                        alert(data.is_series_exists);
+                       myalert(data.is_series_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                       myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
                         $('#seriesrateCenter').modal('hide');
-                        alert(data.is_successful);
+                       myalert(data.is_successful);
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                       myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });
@@ -2241,13 +2264,13 @@
                 success: function (data) {
                     // checking and handling error conditions
                     if (data.is_video_exists != '') {
-                        alert(data.is_video_exists);
+                       myalert(data.is_video_exists);
                     } else if (data.is_user_logged_in != '') {
-                        alert(data.is_user_logged_in);
+                       myalert(data.is_user_logged_in);
                     } else if (data.is_successful != '') {
                         // video history saved to database
                     } else {
-                        alert('Some unexpected error has occured. Try again.');
+                       myalert('Some unexpected error has occured. Try again.');
                     }
                 }
             });

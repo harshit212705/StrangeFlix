@@ -1217,3 +1217,14 @@ a {
   display:none;
 }
 
+
+
+
+.notify .modal-dialog {
+  text-align: center;
+  min-width: 10% !important;
+ }
+ .notify .modal-header{
+  color:#fff;
+  padding:0.5rem !important;
+ }

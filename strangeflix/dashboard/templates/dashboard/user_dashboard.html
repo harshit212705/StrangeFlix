@@ -595,12 +595,18 @@
                     }
                     else if(data.is_successful)
                     {
-                        if(data.is_payment_failed)
-                            alert(data.is_payment_failed);
-                        else if(data.is_payment_refunded)
-                            alert(data.is_payment_refunded);
                         var outer = document.getElementById("transac"+transaction_id);
-                        outer.getElementsByClassName("transacStatus")[0].innerHTML = '<div style="float: left;margin-left: 50px;font-size: 12px;">Status</div><div style="float: right;margin-right: 50px;color: red;font-size: 12px;">Failed</div>';
+                        if(data.is_payment_failed)
+                        {
+                            alert(data.is_payment_failed);
+                            outer.getElementsByClassName("transacStatus")[0].innerHTML = '<div style="float: left;margin-left: 50px;font-size: 12px;">Status</div><div style="float: right;margin-right: 50px;color: red;font-size: 12px;">Failed</div>';
+                        }    
+                        else if(data.is_payment_refunded)
+                        {
+                            alert(data.is_payment_refunded);
+                            outer.getElementsByClassName("transacStatus")[0].innerHTML = '<div style="float: left;margin-left: 50px;font-size: 12px;">Status</div><div style="float: right;margin-right: 50px;color: green;font-size: 12px;">Refunded</div>';
+                        }
+                        
                     }
                 }
             });
